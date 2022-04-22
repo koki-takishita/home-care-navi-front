@@ -13,6 +13,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+pages/posts/*
+
 # Runtime data
 pids
 *.pid

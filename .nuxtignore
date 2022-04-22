@@ -1,0 +1,3 @@
+# postsを無視
+pages/posts/*.vue
+pages/posts
