@@ -42,12 +42,13 @@
                     to="/login"
                     width="120"
                     height="36"
+                    color="#FFF"
+                    depressed
                     outlined
-                    :color="color_g"
-                    >ログイン</v-btn
+                    ><p class="font-weight-bold ma-0 c-g">ログイン</p></v-btn
                   >
                   <v-btn width="120" height="36" :color="color_r" depressed
-                    >新規登録</v-btn
+                    ><p class="ma-0 c-w">新規登録</p></v-btn
                   >
                 </div>
               </div>
@@ -101,13 +102,13 @@
                 <v-btn
                   :width="120"
                   :height="36"
-                  :color="color_g"
-                  outlined
+                  :color="color_w"
+                  depressed
                   class="mr-2"
-                  >ログイン</v-btn
+                  ><p class="ma-0 c-g font-weight-bold">ログイン</p></v-btn
                 >
                 <v-btn :width="120" :height="36" :color="color_r" depressed
-                  >新規登録</v-btn
+                  ><p class="ma-0 c-w">新規登録</p></v-btn
                 >
               </div>
               <div class="mt-3">
@@ -170,7 +171,7 @@
     <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
     <v-main>
       <!-- アプリケーションに適切なgutterを提供 -->
-      <v-container fluid>
+      <v-container fluid class="pa-0">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
         <Nuxt />
@@ -317,5 +318,18 @@ main {
 
 .px-145 {
   padding: 5px 145px 60px;
+}
+
+.c-w {
+  color: white;
+  font-weight: bold;
+}
+
+.v-btn--outlined {
+  border: thin solid #d9dede;
+}
+
+.c-g {
+  color: #6d7570;
 }
 </style>

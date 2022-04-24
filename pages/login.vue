@@ -1,91 +1,149 @@
 <template>
-  <div class="login mx-auto">
-    <div class="login__header">
-      <div class="login__link text-right">
-        <NuxtLink
-          class="login__specialist-login-link text-decoration-none text-subtitle-2"
-          to="#"
-          >ケアマネージャーの方はこちら</NuxtLink
-        >
-      </div>
-      <p class="login__title text-h6 text-center">ログイン</p>
-    </div>
-    <v-form class="form">
-      <div class="form__list email-list">
-        <p class="form__email-label">メールアドレス</p>
-        <v-text-field
-          placeholder="例) homecarenavi@mail.com"
-          class="form__email-field"
-          dense
-          outlined
-          height="44"
-        ></v-text-field>
-      </div>
-      <div class="form__list password-list">
-        <p class="form__password-label">パスワード</p>
-        <v-text-field
-          placeholder="例) 半角英数文字8文字以上"
-          class="form__password-field"
-          dense
-          outlined
-          height="44"
-        ></v-text-field>
-      </div>
-      <NuxtLink
-        to="#"
-        class="form__link-password-forget text-decoration-none d-block text-right"
-        >パスワード忘れた</NuxtLink
-      >
-    </v-form>
-    <div class="btn mt-8">
-      <v-btn class="btn__login" block depressed color="#F06364" height="60">
-        <p class="btn__text mb-0 text-h6">ログイン</p>
-      </v-btn>
-    </div>
-    <div class="text-center mt-2">
-      <NuxtLink
-        class="login__sign-link text-decoration-none text-subtitle-2"
-        to="#"
-        >新規登録はこちら</NuxtLink
-      >
-    </div>
+  <div :class="marginTop">
+    <v-card
+      max-width="750"
+      min-width="375"
+      min-height="432"
+      :height="cardHeight"
+      outlined
+      class="mx-auto pa-4"
+    >
+      <v-card max-width="520" class="mx-auto" outlined>
+        <div class="d-md-none">
+          <div class="d-flex justify-space-between mb-6">
+            <v-card-title class="pa-0 font-weight-bold text-18px"
+              >ログイン</v-card-title
+            >
+            <NuxtLink to="#" class="text-decoration-none text-body-2 color-red"
+              >ケアマネジャーの方はこちら</NuxtLink
+            >
+          </div>
+        </div>
+        <div class="d-none d-md-block mb-6">
+          <NuxtLink
+            to="#"
+            class="d-block text-right text-decoration-none text-body-2 md-99 color-red"
+            >ケアマネジャーの方はこちら</NuxtLink
+          >
+          <p class="pa-0 mb-12 font-weight-bold text-18px text-center">
+            ログイン
+          </p>
+        </div>
+        <div>
+          <v-form class="form">
+            <div class="form__list email-list">
+              <p class="font-weight-bold mb-2">メールアドレス</p>
+              <v-text-field
+                placeholder="例) homecarenavi@mail.com"
+                class="form__email-field"
+                dense
+                outlined
+                height="44"
+              ></v-text-field>
+            </div>
+            <div class="form__list password-list">
+              <p class="mb-2 font-weight-bold">パスワード</p>
+              <v-text-field
+                placeholder="例) 半角英数文字8文字以上"
+                class="form__password-field"
+                dense
+                outlined
+                height="44"
+              ></v-text-field>
+            </div>
+            <NuxtLink
+              to="#"
+              class="form__link-password-forget text-decoration-none d-block text-right"
+              >パスワードを忘れた</NuxtLink
+            >
+          </v-form>
+        </div>
+        <div class="btn mt-8">
+          <v-btn
+            class="btn__login"
+            block
+            depressed
+            color="#F06364"
+            :height="btnHeight"
+            min-height="48"
+          >
+            <p class="btn__text mb-0 text-h6 font-weight-bold">ログイン</p>
+          </v-btn>
+        </div>
+        <div class="text-center mt-2">
+          <NuxtLink
+            class="login__sign-link text-decoration-none text-subtitle-2"
+            to="#"
+            >新規登録はこちら</NuxtLink
+          >
+        </div>
+      </v-card>
+    </v-card>
   </div>
 </template>
 <script>
 export default {
   layout: 'top',
+  computed: {
+    btnHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm':
+          return 48
+        case 'md':
+          return 60
+        case 'lg':
+          return 60
+        case 'xl':
+          return 60
+      }
+    },
+    marginTop() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 'mt-2'
+        case 'sm':
+          return 'mt-2'
+        case 'md':
+          return 'mt-10'
+        case 'lg':
+          return 'mt-10'
+        case 'xl':
+          return 'mt-10'
+      }
+    },
+    cardHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm':
+          return 432
+        case 'md':
+          return 487
+        case 'lg':
+          return 487
+        case 'xl':
+          return 487
+      }
+    },
+  },
 }
 </script>
+
 <style lang="sass" scoped>
+.color-red
+   color: #F06364
+.v-card
+   border: none
+.text-18px
+  font-size: 18px
 .login
-  width: 750px
-  height: 487px
-  padding: 16px 115px 64px
-  margin-top: 28px
-  background-color: white
-  border-radius: 5px
-  &__header
-    margin-bottom: 48px
-  &__title
-    margin: 0
-    font-weight: bold
   &__specialist-login-link
     color: #F06364
     margin-right: -99px
   &__sign-link
     color: #F06364
 .form
-  width: 520px
   &__list
     color: #6D7570
     font-size: 13px
-  &__form-password-list
-  &__email-label
-    margin-bottom: 8px
-    font-weight: bold
-  &__password-label
-    margin-bottom: 8px
-    font-weight: bold
   &__link-password-forget
     color: #6D7570
     font-size: 14px
@@ -94,18 +152,14 @@ export default {
     z-index: 1
 .password-list
   margin-top: -2px
-.btn
-  &__text
-    color: white
-    font-weight: bold
+.btn__text
+  color: white
+.md-99
+  margin-right: -99px
 </style>
 <!-- 【>>>】この記法が、sassだとうまく動かないため -->
 <style scoped>
 .v-text-field--outlined >>> fieldset {
-  border-color: #d9dede;
-}
-
-.v-text-field--slot >>> input {
   border-color: #d9dede;
 }
 </style>
