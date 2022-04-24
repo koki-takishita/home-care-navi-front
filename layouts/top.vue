@@ -2,7 +2,7 @@
   <v-app>
     <v-divider color="#F06364" class="ctr-p-1"></v-divider>
     <div class="d-none d-md-flex">
-      <v-app-bar :color="color_w">
+      <v-app-bar flat :color="color_w">
         <v-container>
           <v-row>
             <v-col md="4" class="d-flex align-center">
@@ -78,13 +78,7 @@
         </v-row>
       </v-app-bar>
     </div>
-    <v-navigation-drawer
-      v-model="drawer"
-      width="296"
-      color="#FFFFFF"
-      absolute
-      temporary
-    >
+    <v-navigation-drawer v-model="drawer" width="296" absolute temporary>
       <div>
         <v-card height="198" color="#F5F7F7" :tile="tile" outlined>
           <v-list-item>
@@ -269,6 +263,10 @@ export default {
 }
 </script>
 <style scoped>
+main {
+  background-color: #f5f7f7;
+}
+
 .text-10 {
   font-size: 10px;
 }
@@ -309,5 +307,9 @@ export default {
 
 .ctr-p-1 {
   padding-top: 1px;
+}
+
+.px-145 {
+  padding: 5px 145px 60px;
 }
 </style>

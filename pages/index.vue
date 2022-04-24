@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>ここはTOPページです</h1>
-    <p>ここから検索します</p>
+    <top />
+    <address-menu />
   </div>
 </template>
 <script>
