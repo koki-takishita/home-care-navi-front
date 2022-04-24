@@ -30,50 +30,15 @@
           </p>
         </div>
         <div>
-          <v-form class="form">
-            <div class="form__list email-list">
-              <p class="font-weight-bold mb-2">メールアドレス</p>
-              <v-text-field
-                placeholder="例) homecarenavi@mail.com"
-                class="form__email-field"
-                dense
-                outlined
-                height="44"
-              ></v-text-field>
-            </div>
-            <div class="form__list password-list">
-              <p class="mb-2 font-weight-bold">パスワード</p>
-              <v-text-field
-                placeholder="例) 半角英数文字8文字以上"
-                class="form__password-field"
-                dense
-                outlined
-                height="44"
-              ></v-text-field>
-            </div>
-            <NuxtLink
-              to="#"
-              class="form__link-password-forget text-decoration-none d-block text-right"
-              >パスワードを忘れた</NuxtLink
-            >
-          </v-form>
+          <Form />
         </div>
         <div class="btn mt-8">
-          <v-btn
-            class="btn__login"
-            block
-            depressed
-            color="#F06364"
-            :height="btnHeight"
-            min-height="48"
-          >
-            <p class="btn__text mb-0 text-h6 font-weight-bold">ログイン</p>
-          </v-btn>
+          <Btn />
         </div>
         <div class="text-center mt-2">
           <NuxtLink
             class="login__sign-link text-decoration-none text-subtitle-2"
-            to="#"
+            to="/users/new"
             >新規登録はこちら</NuxtLink
           >
         </div>
@@ -85,18 +50,6 @@
 export default {
   layout: 'top',
   computed: {
-    btnHeight() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'sm':
-          return 48
-        case 'md':
-          return 60
-        case 'lg':
-          return 60
-        case 'xl':
-          return 60
-      }
-    },
     marginTop() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
@@ -140,20 +93,6 @@ export default {
     margin-right: -99px
   &__sign-link
     color: #F06364
-.form
-  &__list
-    color: #6D7570
-    font-size: 13px
-  &__link-password-forget
-    color: #6D7570
-    font-size: 14px
-    margin-top: -18px
-    position: relative
-    z-index: 1
-.password-list
-  margin-top: -2px
-.btn__text
-  color: white
 .md-99
   margin-right: -99px
 </style>
