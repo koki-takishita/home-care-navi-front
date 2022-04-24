@@ -37,10 +37,16 @@
                   >
                 </div>
                 <div class="red--text line-style">
-                  <v-btn :width="120" :height="36" outlined :color="color_g"
+                  <v-btn
+                    nuxt
+                    to="/login"
+                    width="120"
+                    height="36"
+                    outlined
+                    :color="color_g"
                     >ログイン</v-btn
                   >
-                  <v-btn :width="120" :height="36" :color="color_r" depressed
+                  <v-btn width="120" height="36" :color="color_r" depressed
                     >新規登録</v-btn
                   >
                 </div>
