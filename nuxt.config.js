@@ -54,8 +54,15 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxt/http'],
 
+  http: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': 'http://localhost:3000',
+  },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
