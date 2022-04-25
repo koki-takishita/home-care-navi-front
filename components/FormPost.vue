@@ -6,6 +6,7 @@
         <div class="d-flex">
           <div class="font-weight-regular pt-5 mr-2">〒</div>
           <v-text-field
+            v-model="setPostcode"
             class="post-field pr-389 mt-2"
             dense
             outlined
@@ -18,6 +19,7 @@
     </div>
     <div>
       <v-text-field
+        v-model="setAddress"
         class="post-field"
         dense
         outlined
@@ -31,6 +33,24 @@
 <script>
 export default {
   name: 'FormPost',
+  computed: {
+    setPostcode: {
+      get() {
+        return this.post_code
+      },
+      set(newValue) {
+        return this.$emit('update:post_code', newValue)
+      },
+    },
+    setAddress: {
+      get() {
+        return this.address
+      },
+      set(newValue) {
+        return this.$emit('update:address', newValue)
+      },
+    },
+  },
 }
 </script>
 <style lang="sass" scoped>

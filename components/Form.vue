@@ -1,11 +1,47 @@
 <template>
   <v-form class="form">
     <div class="form__list email-list">
-      <label :for="link" class="font-weight-bold d-block">
-        {{ item.label }}
+      <label class="font-weight-bold d-block">
+        お名前
         <v-text-field
-          :id="link"
-          :placeholder="item.placeholder"
+          v-model="setName"
+          placeholder="田中太郎"
+          class="form__email-field mt-2"
+          dense
+          outlined
+          height="44"
+        >
+        </v-text-field>
+      </label>
+      <label class="font-weight-bold d-block">
+        メールアドレス
+        <v-text-field
+          v-model="setEmail"
+          placeholder="例）homecarenavi@mail.com"
+          class="form__email-field mt-2"
+          dense
+          outlined
+          height="44"
+        >
+        </v-text-field>
+      </label>
+      <label class="font-weight-bold d-block">
+        パスワード
+        <v-text-field
+          v-model="setPassword"
+          placeholder="半角英数字8文字以上"
+          class="form__email-field mt-2"
+          dense
+          outlined
+          height="44"
+        >
+        </v-text-field>
+      </label>
+      <label class="font-weight-bold d-block">
+        電話番号
+        <v-text-field
+          v-model="setPhone"
+          placeholder="000-0000-0000"
           class="form__email-field mt-2"
           dense
           outlined
@@ -38,8 +74,37 @@ export default {
   name: 'Form',
   props: ['item', 'index', 'width'],
   computed: {
-    link() {
-      return this.item.name + '-' + this.index
+    setName: {
+      get() {
+        return this.item
+      },
+      set(newValue) {
+        return this.$emit('update:name', newValue)
+      },
+    },
+    setEmail: {
+      get() {
+        return this.item
+      },
+      set(newValue) {
+        return this.$emit('update:email', newValue)
+      },
+    },
+    setPassword: {
+      get() {
+        return this.item
+      },
+      set(newValue) {
+        return this.$emit('update:password', newValue)
+      },
+    },
+    setPhone: {
+      get() {
+        return this.item
+      },
+      set(newValue) {
+        return this.$emit('update:phone', newValue)
+      },
     },
   },
 }

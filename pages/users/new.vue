@@ -15,13 +15,13 @@
           :path="FormTitle.path"
         />
         <Form
-          v-for="(item, i) in inputsItem"
-          :key="i"
-          :index="i"
-          :item="item"
+          :name.sync="name"
+          :email.sync="email"
+          :password.sync="password"
+          :phone.sync="phone"
         />
-        <FormPost />
-        <Btn :name="Btn.name" />
+        <FormPost :post_code.sync="post_code" :address.sync="address" />
+        <Btn :name="Btn.name" @click="registerUser" />
       </v-card>
     </v-card>
   </div>
@@ -31,16 +31,13 @@ export default {
   layout: 'top',
   data() {
     return {
-      inputsItem: [
-        { name: 'name', label: 'お名前', placeholder: '田中太郎' },
-        {
-          name: 'email',
-          label: 'メールアドレス',
-          placeholder: '例）homecarenavi@mail.com',
-        },
-        { name: 'password', label: 'パスワード', placeholder: 'パスワード' },
-        { name: 'phone-number', label: '電話番号', placeholder: '000-0000' },
-      ],
+      name: '',
+      email: '',
+      password: '',
+      phone: '',
+      post_code: '',
+      address: '',
+
       FormTitle: {
         title: '新規登録',
         link: 'ログインはこちら',
@@ -64,6 +61,22 @@ export default {
           return 'mt-10'
         case 'xl':
           return 'mt-10'
+      }
+    },
+  },
+  methods: {
+    async registerUser() {
+      try {
+        await this.$axios.post('/api/users', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          phone: this.phone,
+          post_code: this.post_code,
+          address: this.address,
+        })
+      } catch (error) {
+        this.error = e.response.data.errors.full_messages
       }
     },
   },
