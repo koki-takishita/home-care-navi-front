@@ -9,31 +9,28 @@
       class="mx-auto pa-4"
     >
       <v-card max-width="520" class="mx-auto" outlined>
-        <div class="d-md-none">
-          <div class="d-flex justify-space-between mb-6">
-            <v-card-title class="pa-0 font-weight-bold text-18px"
-              >ログイン</v-card-title
-            >
-            <NuxtLink to="#" class="text-decoration-none text-body-2 color-red"
-              >ケアマネジャーの方はこちら</NuxtLink
+        <FormTitle
+          :title="FormTitle.title"
+          :link="FormTitle.link"
+          :path="FormTitle.path"
+        />
+        <div>
+          <Form
+            v-for="(item, i) in inputItems"
+            :key="i"
+            :index="i"
+            :item="item"
+          />
+          <div class="p-foget-wrapper text-right">
+            <NuxtLink
+              to="#"
+              class="form__link-password-forget text-decoration-none"
+              >パスワードを忘れた</NuxtLink
             >
           </div>
         </div>
-        <div class="d-none d-md-block mb-6">
-          <NuxtLink
-            to="#"
-            class="d-block text-right text-decoration-none text-body-2 md-99 color-red"
-            >ケアマネジャーの方はこちら</NuxtLink
-          >
-          <p class="pa-0 mb-12 font-weight-bold text-18px text-center">
-            ログイン
-          </p>
-        </div>
-        <div>
-          <Form />
-        </div>
         <div class="btn mt-8">
-          <Btn />
+          <Btn :name="Btn.name" />
         </div>
         <div class="text-center mt-2">
           <NuxtLink
@@ -49,6 +46,30 @@
 <script>
 export default {
   layout: 'top',
+  data() {
+    return {
+      inputItems: [
+        {
+          name: 'email',
+          label: 'メールアドレス',
+          placeholder: '例）homecarenavi@mail.com',
+        },
+        {
+          name: 'password',
+          label: 'パスワード',
+          placeholder: '半角英数字8文字',
+        },
+      ],
+      FormTitle: {
+        title: 'ログイン',
+        link: 'ケアマネージャーの方はこちら',
+        path: '#',
+      },
+      Btn: {
+        name: 'ログイン',
+      },
+    }
+  },
   computed: {
     marginTop() {
       switch (this.$vuetify.breakpoint.name) {
@@ -81,8 +102,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.color-red
-   color: #F06364
 .v-card
    border: none
 .text-18px
@@ -95,6 +114,13 @@ export default {
     color: #F06364
 .md-99
   margin-right: -99px
+.form__link-password-forget
+  color: #6D7570
+  font-size: 14px
+  position: relative
+  z-index: 1
+.p-foget-wrapper
+  margin-top: -18px
 </style>
 <!-- 【>>>】この記法が、sassだとうまく動かないため -->
 <style scoped>

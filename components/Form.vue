@@ -1,15 +1,20 @@
 <template>
   <v-form class="form">
     <div class="form__list email-list">
-      <p class="font-weight-bold mb-2">メールアドレス</p>
+      <label :for="link" class="font-weight-bold mb-2 d-block">{{
+        item.label
+      }}</label>
       <v-text-field
-        placeholder="例) homecarenavi@mail.com"
+        :id="link"
+        :placeholder="item.placeholder"
         class="form__email-field"
         dense
         outlined
         height="44"
-      ></v-text-field>
+      >
+      </v-text-field>
     </div>
+    <!--
     <div class="form__list password-list">
       <p class="mb-2 font-weight-bold">パスワード</p>
       <v-text-field
@@ -25,11 +30,18 @@
       class="form__link-password-forget text-decoration-none d-block text-right"
       >パスワードを忘れた</NuxtLink
     >
+-->
   </v-form>
 </template>
 <script>
 export default {
   name: 'Form',
+  props: ['item', 'index'],
+  computed: {
+    link() {
+      return this.item.name + '-' + this.index
+    },
+  },
 }
 </script>
 <style lang="sass" scoped>
@@ -43,6 +55,6 @@ export default {
     margin-top: -18px
     position: relative
     z-index: 1
-.password-list
-  margin-top: -2px
+/* .password-list
+  margin-top: -2px */
 </style>

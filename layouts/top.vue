@@ -43,11 +43,16 @@
                     width="120"
                     height="36"
                     color="#FFF"
-                    depressed
                     outlined
+                    depressed
                     ><p class="font-weight-bold ma-0 c-g">ログイン</p></v-btn
                   >
-                  <v-btn width="120" height="36" :color="color_r" depressed
+                  <v-btn
+                    to="/users/new"
+                    width="120"
+                    height="36"
+                    :color="color_r"
+                    depressed
                     ><p class="ma-0 c-w">新規登録</p></v-btn
                   >
                 </div>
@@ -102,12 +107,18 @@
                 <v-btn
                   :width="120"
                   :height="36"
-                  :color="color_w"
+                  outlined
                   depressed
                   class="mr-2"
+                  to="/login"
                   ><p class="ma-0 c-g font-weight-bold">ログイン</p></v-btn
                 >
-                <v-btn :width="120" :height="36" :color="color_r" depressed
+                <v-btn
+                  to="/users/new"
+                  :width="120"
+                  :height="36"
+                  :color="color_r"
+                  depressed
                   ><p class="ma-0 c-w">新規登録</p></v-btn
                 >
               </div>
@@ -331,5 +342,10 @@ main {
 
 .c-g {
   color: #6d7570;
+}
+
+.v-btn {
+  background-color: white;
+  color: white;
 }
 </style>

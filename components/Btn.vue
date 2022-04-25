@@ -7,12 +7,13 @@
     :height="btnHeight"
     min-height="48"
   >
-    <p class="btn__text mb-0 text-h6 font-weight-bold">ログイン</p>
+    <p class="btn__text mb-0 text-h6 font-weight-bold">{{ name }}</p>
   </v-btn>
 </template>
 <script>
 export default {
   layout: 'btn',
+  props: ['name'],
   computed: {
     btnHeight() {
       switch (this.$vuetify.breakpoint.name) {
