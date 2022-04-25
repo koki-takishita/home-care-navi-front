@@ -20,6 +20,7 @@
           :index="i"
           :item="item"
         />
+        <FormPost />
         <Btn :name="Btn.name" />
       </v-card>
     </v-card>
@@ -71,4 +72,6 @@ export default {
 <style lang="sass" scoped>
 .v-card
   border: none
+.w-107
+  width: 107px
 </style>

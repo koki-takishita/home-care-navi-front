@@ -1,18 +1,18 @@
 <template>
   <v-form class="form">
     <div class="form__list email-list">
-      <label :for="link" class="font-weight-bold mb-2 d-block">{{
-        item.label
-      }}</label>
-      <v-text-field
-        :id="link"
-        :placeholder="item.placeholder"
-        class="form__email-field"
-        dense
-        outlined
-        height="44"
-      >
-      </v-text-field>
+      <label :for="link" class="font-weight-bold d-block">
+        {{ item.label }}
+        <v-text-field
+          :id="link"
+          :placeholder="item.placeholder"
+          class="form__email-field mt-2"
+          dense
+          outlined
+          height="44"
+        >
+        </v-text-field>
+      </label>
     </div>
     <!--
     <div class="form__list password-list">
@@ -36,7 +36,7 @@
 <script>
 export default {
   name: 'Form',
-  props: ['item', 'index'],
+  props: ['item', 'index', 'width'],
   computed: {
     link() {
       return this.item.name + '-' + this.index
