@@ -17,6 +17,23 @@
 <script>
 export default {
   layout: 'application',
+  /*
+  async asyncData({ params, $http }) {
+    const post = await $http.$post(`http://localhost:3000/api/users`,
+      { user: { name: 'bar',
+                email: 'foobar@example.com',
+                password: 'foo',
+                password_confirmation: 'foo',
+                phone_number: 111,
+                post_code: 111,
+                address: "aiueo",
+                user_type: 0,
+              }
+        }
+     )
+    return { post }
+  },
+*/
   data() {
     return {
       email: '',
