@@ -8,13 +8,11 @@
           確認メールを送付いたしました。
         </p>
       </div>
-      <a
-        href="../top"
-        class="mx-auto mt-4 text-center top-link mb-16"
-        style="color: #f06364"
-      >
-        <p>ホームケアナビトップに戻る</p>
-      </a>
+      <div class="mx-auto mt-4 text-center top-link mb-16">
+        <a href="../top" style="color: #f06364">
+          <p>ホームケアナビトップに戻る</p>
+        </a>
+      </div>
     </v-card-text>
   </v-card>
 </template>
