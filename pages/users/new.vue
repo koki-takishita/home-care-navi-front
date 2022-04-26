@@ -40,21 +40,26 @@ export default {
   },
   methods: {
     async submit() {
-      /* this.response = await this.$http.$get('http://localhost:3000/api/users') */
-      this.response = await this.$http.$post(
-        'http://localhost:3000/api/users',
-        {
-          user: {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            password_confirmation: this.password_confirmation,
-            phone_number: this.phone_number,
-            post_code: this.post_code,
-            address: this.address,
-          },
-        }
-      )
+      try {
+        /* this.response = await this.$http.$get('http://localhost:3000/api/users') */
+        this.response = await this.$http.$post(
+          'http://localhost:3000/api/users',
+          {
+            user: {
+              name: this.name,
+              email: this.email,
+              password: this.password,
+              password_confirmation: this.password_confirmation,
+              phone_number: this.phone_number,
+              post_code: this.post_code,
+              address: this.address,
+            },
+          }
+        )
+        window.location.href = 'http://localhost:8000/users/send'
+      } catch (error) {
+        this.error = e.response.data.errors.full_messages
+      }
     },
   },
 }

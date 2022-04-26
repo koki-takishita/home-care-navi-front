@@ -9,7 +9,7 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
-        name: 'top',
+        name: 'toppage',
         path: '/',
         component: resolve(__dirname, 'pages/top.vue'),
       })
