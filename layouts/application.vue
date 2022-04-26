@@ -2,7 +2,7 @@
   <v-app>
     <v-divider color="#F06364" class="ctr-p-1"></v-divider>
     <div class="d-none d-md-flex">
-      <v-app-bar :color="color_w">
+      <v-app-bar :color="color_w" flat>
         <v-container>
           <v-row>
             <v-col md="4" class="d-flex align-center">
@@ -168,9 +168,9 @@
     </v-navigation-drawer>
 
     <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
-    <v-main>
+    <v-main class="color-gray">
       <!-- アプリケーションに適切なgutterを提供 -->
-      <v-container fluid>
+      <v-container fluid class="pa-0">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
         <Nuxt />
@@ -309,5 +309,9 @@ export default {
 
 .ctr-p-1 {
   padding-top: 1px;
+}
+
+.color-gray {
+  background-color: #d9dede;
 }
 </style>

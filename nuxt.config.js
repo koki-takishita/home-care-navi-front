@@ -1,6 +1,21 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  server: {
+    port: 8000, // デフォルト: 3000
+    host: '0.0.0.0', // デフォルト: localhost,
+    timing: false,
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'top',
+        path: '/',
+        component: resolve(__dirname, 'pages/top.vue'),
+      })
+    },
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - front',
@@ -39,13 +54,20 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['@nuxt/http'],
 
+  http: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': 'http://localhost:3000',
+  },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
