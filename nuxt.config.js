@@ -9,7 +9,7 @@ export default {
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
-        name: 'top',
+        name: 'toppage',
         path: '/',
         component: resolve(__dirname, 'pages/top.vue'),
       })
@@ -66,6 +66,7 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
       dark: false,
       themes: {
