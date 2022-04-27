@@ -49,20 +49,31 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    // https://axios.nuxtjs.org/setup
-    '@nuxtjs/axios',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxt/http'],
-
-  http: {
-    proxy: true,
+  modules: [
+    // https://axios.nuxtjs.org/setup
+    '@nuxtjs/axios',
+  ],
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: false,
+      home: '/',
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/login', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
+          user: false,
+        },
+      },
+    },
   },
 
-  proxy: {
-    '/api/': 'http://localhost:3000',
-  },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
