@@ -13,6 +13,7 @@
                     src="~/assets/images/header-icon.svg"
                     width="157.44"
                     height="28"
+                    @click="topPage"
                   />
                 </p>
               </div>
@@ -37,10 +38,20 @@
                   >
                 </div>
                 <div class="red--text line-style">
-                  <v-btn :width="120" :height="36" outlined :color="color_g"
+                  <v-btn
+                    href="/login"
+                    :width="120"
+                    :height="36"
+                    outlined
+                    :color="color_g"
                     >ログイン</v-btn
                   >
-                  <v-btn :width="120" :height="36" :color="color_r" depressed
+                  <v-btn
+                    href="/users/new"
+                    :width="120"
+                    :height="36"
+                    :color="color_r"
+                    depressed
                     >新規登録</v-btn
                   >
                 </div>
@@ -99,6 +110,7 @@
               <div class="header-style mt-3 text-caption ma-0">ゲストさん</div>
               <div class="d-flex justify-center ma-0 mt-6">
                 <v-btn
+                  href="/login"
                   :width="120"
                   :height="36"
                   :color="color_g"
@@ -106,7 +118,12 @@
                   class="mr-2"
                   >ログイン</v-btn
                 >
-                <v-btn :width="120" :height="36" :color="color_r" depressed
+                <v-btn
+                  href="/users/new"
+                  :width="120"
+                  :height="36"
+                  :color="color_r"
+                  depressed
                   >新規登録</v-btn
                 >
               </div>
@@ -265,6 +282,11 @@ export default {
       group: null,
       tile: false,
     }
+  },
+  methods: {
+    topPage() {
+      window.location.href = 'http://localhost:8000/top'
+    },
   },
 }
 </script>
