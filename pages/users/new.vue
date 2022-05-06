@@ -93,7 +93,7 @@ export default {
       ],
       address: '',
       addressRules: [(value) => !!value || '住所は必須項目です'],
-      response: ''
+      response: '',
     }
   },
   methods: {
