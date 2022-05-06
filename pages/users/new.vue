@@ -52,44 +52,47 @@ export default {
       match: 'Foobar',
       name: '',
       nameRules: [
-        (v) => !!v || 'お名前は必須項目です',
-        (v) => v.length <= 30 || '名前は30文字以下で入力してください',
+        (value) => !!value || 'お名前は必須項目です',
+        (value) => value.length <= 30 || '名前は30文字以下で入力してください',
       ],
       email: '',
       emailRules: [
-        (v) => !!v || 'メールアドレスは必須項目です',
-        (v) =>
+        (value) => !!value || 'メールアドレスは必須項目です',
+        (value) =>
           /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/.test(
-            v
+            value
           ) || '有効なメールアドレスではありません',
-        (v) =>
-          v.length <= 256 || 'メールアドレスは255文字以下で入力してください',
+        (value) =>
+          value.length <= 256 ||
+          'メールアドレスは255文字以下で入力してください',
       ],
       password: '',
       passwordRules: [
-        (v) => !!v || 'パスワードは必須項目です',
-        (v) =>
-          v.length <= 32 || 'パスワードは8文字以上32文字以下で入力してください',
-        (v) =>
-          v.length >= 8 || 'パスワードは8文字以上32文字以下で入力してください',
+        (value) => !!value || 'パスワードは必須項目です',
+        (value) =>
+          value.length <= 32 ||
+          'パスワードは8文字以上32文字以下で入力してください',
+        (value) =>
+          value.length >= 8 ||
+          'パスワードは8文字以上32文字以下で入力してください',
       ],
       password_confirmation: '',
       password_confirmationRules: [
-        (v) => !!v || 'パスワード確認は必須項目です',
-        (v) => v === this.password || 'パスワードが一致していません',
+        (value) => !!value || 'パスワード確認は必須項目です',
+        (value) => value === this.password || 'パスワードが一致していません',
       ],
       phone_number: '',
       phone_numberRules: [
-        (v) => !!v || '電話番号は必須項目です',
-        (v) => /^0\d{9,10}$/.test(v) || '有効な電話番号ではありません',
+        (value) => !!value || '電話番号は必須項目です',
+        (value) => /^0\d{9,10}$/.test(value) || '有効な電話番号ではありません',
       ],
       post_code: '',
       post_codeRules: [
-        (v) => !!v || '郵便番号は必須項目です',
-        (v) => /^[0-9]{7}$/.test(v) || '有効な郵便番号ではありません',
+        (value) => !!value || '郵便番号は必須項目です',
+        (value) => /^[0-9]{7}$/.test(value) || '有効な郵便番号ではありません',
       ],
       address: '',
-      addressRules: [(v) => !!v || '住所は必須項目です'],
+      addressRules: [(value) => !!value || '住所は必須項目です'],
       response: '',
     }
   },
