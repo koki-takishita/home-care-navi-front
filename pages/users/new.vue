@@ -34,7 +34,6 @@
         <v-text-field
           v-model="post_code"
           :rules="post_codeRules"
-          :counter="max"
           label="郵便番号"
         />
         <v-text-field v-model="address" :rules="addressRules" label="住所" />
@@ -82,14 +81,12 @@ export default {
       phone_number: '',
       phone_numberRules: [
         (v) => !!v || '電話番号は必須項目です',
-        (v) =>
-          /^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/.test(v) ||
-          '有効な電話番号ではありません',
+        (v) => /^0\d{9,10}$/.test(v) || '有効な電話番号ではありません',
       ],
       post_code: '',
       post_codeRules: [
         (v) => !!v || '郵便番号は必須項目です',
-        (v) => /^\d{7}$/.test(v) || '有効な郵便番号ではありません',
+        (v) => /^[0-9]{7}$/.test(v) || '有効な郵便番号ではありません',
       ],
       address: '',
       addressRules: [(v) => !!v || '住所は必須項目です'],
@@ -101,7 +98,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.success = true
         this.response = await this.$http.$post(
-          'http://localhost:3000/api/users',
+          'https://home-care-navi-api.herokuapp.com/api/users',
           {
             user: {
               name: this.name,
