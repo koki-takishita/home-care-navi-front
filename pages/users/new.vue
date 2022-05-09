@@ -100,20 +100,23 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         this.success = true
-        this.response = await this.$http.$post(
-          'https://home-care-navi-api.herokuapp.com/api/users',
-          {
-            user: {
-              name: this.name,
-              email: this.email,
-              password: this.password,
-              password_confirmation: this.password_confirmation,
-              phone_number: this.phone_number,
-              post_code: this.post_code,
-              address: this.address,
-            },
-          }
-        )
+        try {
+          const response = await this.$axios.$post(`users`, {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.password_confirmation,
+            phone_number: this.phone_number,
+            post_code: this.post_code,
+            address: this.address,
+            confirm_success_url: 'http://localhost:8000',
+          })
+          this.$router.push('/users/send')
+          return response
+        } catch (error) {
+          console.log(error)
+          return error
+        }
       } else {
         this.success = false
       }
