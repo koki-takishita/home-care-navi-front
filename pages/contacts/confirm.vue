@@ -17,14 +17,12 @@
           <p>この内容で送信してよろしいですか？</p>
         </div>
         <v-card-actions>
-          <v-btn to="/contacts/sucsess" class="info" block large @click="submit"
-            >送信する</v-btn
-          >
+          <v-btn to="/contacts/sucsess" class="info" block large>
+            送信する
+          </v-btn>
         </v-card-actions>
         <v-card-actions>
-          <v-btn to="/contacts/new" class="info" block large @click="submit"
-            >戻る</v-btn
-          >
+          <v-btn to="/contacts/new" class="info" block large> 戻る </v-btn>
         </v-card-actions>
       </v-form>
     </v-card-text>

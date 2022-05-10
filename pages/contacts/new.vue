@@ -38,9 +38,9 @@
           type="password"
         />
         <v-card-actions>
-          <v-btn to="/contacts/confirm" class="info" block large @click="submit"
-            >この内容で問い合わせる</v-btn
-          >
+          <v-btn to="/contacts/confirm" class="info" block large>
+            この内容で問い合わせる
+          </v-btn>
         </v-card-actions>
       </v-form>
     </v-card-text>
