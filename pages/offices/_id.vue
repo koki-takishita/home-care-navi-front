@@ -4,6 +4,9 @@
       <v-col cols="12" sm="12" md="6">
         <v-card outlined tile height="338">
           <v-card-title>事業所画像（大）</v-card-title>
+          <v-card-title v-if($route.params.id)>
+            {{ $route.params.id }}
+          </v-card-title>
         </v-card>
         <v-card class="sm-no" outlined tile height="85">
           <v-card-title>事業所画像（小５枚）</v-card-title>
