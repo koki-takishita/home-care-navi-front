@@ -214,12 +214,12 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="#"
+                    to="/privacy_policy"
                     class="text-overline mr-5 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
+                    to="/terms"
                     class="text-overline mr-5 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
@@ -237,12 +237,12 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="#"
+                to="/privacy_policy"
                 class="text-overline mr-5 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="#"
+                to="/terms"
                 class="text-overline mr-5 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
