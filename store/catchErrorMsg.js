@@ -3,7 +3,7 @@ export const state = () => ({
 })
 export const getters = {
   getMsg: (state) => state.msg,
-  emptyState: (state) => state.msg.lenght,
+  emptyState: (state) => state.msg.length,
 }
 export const mutations = {
   setMsg(state, msg) {

@@ -45,6 +45,7 @@
   </v-card>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   layout: 'application',
   data() {
@@ -97,6 +98,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('catchErrorMsg', ['clearMsg']),
     async submit() {
       if (this.$refs.form.validate()) {
         this.success = true
@@ -111,10 +113,10 @@ export default {
             address: this.address,
             confirm_success_url: 'http://localhost:8000',
           })
+          this.clearMsg()
           this.$router.push('/users/send')
           return response
         } catch (error) {
-          console.log(error)
           return error
         }
       } else {
