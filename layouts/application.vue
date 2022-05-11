@@ -224,7 +224,7 @@
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
+                    to="/contacts/new"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -247,7 +247,7 @@
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="#"
+                to="/contacts/new"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >
