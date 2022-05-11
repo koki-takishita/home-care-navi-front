@@ -190,6 +190,7 @@
       <v-container fluid class="pa-0">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
+        <ErrorMsg />
         <Nuxt />
       </v-container>
     </v-main>
