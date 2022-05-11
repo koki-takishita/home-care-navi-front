@@ -4,41 +4,70 @@
       <h1 class="display-1">新規登録</h1>
     </v-card-title>
     <v-card-text>
-      <v-form ref="form">
-        <v-text-field v-model="name" :rules="nameRules" label="お名前" />
+      <v-form v-model="form.valid">
         <v-text-field
-          v-model="email"
-          :rules="emailRules"
+          v-model="form.name"
+          label="お名前"
+          :rules="[formValidates.required]"
+        />
+
+        <v-text-field
+          v-model="form.email"
           type="email"
           label="メールアドレス"
+          :rules="[formValidates.required, formValidates.email]"
         />
+
         <v-text-field
-          v-model="password"
-          :rules="passwordRules"
-          type="password"
+          v-model="form.password"
           label="パスワード"
-        />
-        <v-text-field
-          v-model="password_confirmation"
-          :rules="password_confirmationRules"
           type="password"
-          label="パスワード確認"
+          :rules="[
+            formValidates.required,
+            formValidates.typeCheckString,
+            formValidates.password,
+          ]"
         />
+
         <v-text-field
-          v-model="phone_number"
-          :rules="phone_numberRules"
+          v-model="form.password_confirmation"
+          label="パスワード確認"
+          type="password"
+          :rules="[
+            formValidates.required,
+            formValidates.typeCheckString,
+            formValidates.confirmCheck,
+          ]"
+        />
+
+        <v-text-field
+          v-model="form.phone_number"
           maxlength="13"
           type="tel"
           label="電話番号"
+          :rules="[formValidates.required, formValidates.phoneNumber]"
+          placeholder="080-1234-5678"
+          persistent-placeholder
         />
+
         <v-text-field
-          v-model="post_code"
-          :rules="post_codeRules"
+          v-model="form.post_code"
           label="郵便番号"
+          :rules="[formValidates.required, formValidates.postCode]"
+          placeholder="123-4567"
+          persistent-placeholder
         />
-        <v-text-field v-model="address" :rules="addressRules" label="住所" />
+
+        <v-text-field
+          v-model="form.address"
+          label="住所"
+          :rules="[formValidates.required]"
+        />
+
         <v-card-actions>
-          <v-btn class="info" @click="submit">新規登録</v-btn>
+          <v-btn class="info" :disabled="!form.valid" @click="sign_up()"
+            >新規登録</v-btn
+          >
         </v-card-actions>
       </v-form>
     </v-card-text>
@@ -50,77 +79,64 @@ export default {
   layout: 'application',
   data() {
     return {
-      match: 'Foobar',
-      name: '',
-      nameRules: [
-        (value) => !!value || 'お名前は必須項目です',
-        (value) => value.length <= 30 || '名前は30文字以下で入力してください',
-      ],
-      email: '',
-      emailRules: [
-        (value) => !!value || 'メールアドレスは必須項目です',
-        (value) =>
-          /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/.test(
-            value
-          ) || '有効なメールアドレスではありません',
-        (value) =>
-          value.length <= 256 ||
-          'メールアドレスは255文字以下で入力してください',
-      ],
-      password: '',
-      passwordRules: [
-        (value) => !!value || 'パスワードは必須項目です',
-        (value) =>
-          value.length <= 32 ||
-          'パスワードは8文字以上32文字以下で入力してください',
-        (value) =>
-          value.length >= 8 ||
-          'パスワードは8文字以上32文字以下で入力してください',
-      ],
-      password_confirmation: '',
-      password_confirmationRules: [
-        (value) => !!value || 'パスワード確認は必須項目です',
-        (value) => value === this.password || 'パスワードが一致していません',
-      ],
-      phone_number: '',
-      phone_numberRules: [
-        (value) => !!value || '電話番号は必須項目です',
-        (value) => /^0\d{9,10}$/.test(value) || '有効な電話番号ではありません',
-      ],
-      post_code: '',
-      post_codeRules: [
-        (value) => !!value || '郵便番号は必須項目です',
-        (value) => /^[0-9]{7}$/.test(value) || '有効な郵便番号ではありません',
-      ],
-      address: '',
-      addressRules: [(value) => !!value || '住所は必須項目です'],
-      response: '',
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        phone_number: '',
+        post_code: '',
+        address: '',
+        valid: false,
+      },
+      formValidates: {
+        required: (value) => !!value || '必須項目です',
+        typeCheckString: (value) => {
+          const format = /^[a-zA-Z0-9]+$/g
+          return format.test(value) || '入力できるのは半角英数字のみです'
+        },
+        email: (value) => {
+          const format =
+            // eslint-disable-next-line no-control-regex
+            /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
+          return format.test(value) || '正しいメールアドレスを入力してください'
+        },
+        password: (value) =>
+          (value.length >= 8 && value.length <= 16) ||
+          '8文字以上16文字未満で入力してください',
+        confirmCheck: (value) =>
+          value === this.form.password || 'パスワードが一致しません',
+        phoneNumber: (value) => {
+          const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
+          return format.test(value) || '正しい電話番号ではありません'
+        },
+        postCode: (value) => {
+          const format = /^[0-9]{3}-[0-9]{4}$/g
+          return format.test(value) || '正しい郵便番号ではありません'
+        },
+      },
     }
   },
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
-    async submit() {
-      if (this.$refs.form.validate()) {
-        this.success = true
-        try {
-          const response = await this.$axios.$post(`users`, {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            password_confirmation: this.password_confirmation,
-            phone_number: this.phone_number,
-            post_code: this.post_code,
-            address: this.address,
-            confirm_success_url: 'http://localhost:8000',
-          })
-          this.clearMsg()
-          this.$router.push('/users/send')
-          return response
-        } catch (error) {
-          return error
-        }
-      } else {
-        this.success = false
+    async sign_up() {
+      try {
+        const response = await this.$axios.$post(`users`, {
+          name: this.form.name,
+          email: this.form.email,
+          password: this.form.password,
+          password_confirmation: this.form.password_confirmation,
+          phone_number: this.form.phone_number,
+          post_code: this.form.post_code,
+          address: this.form.address,
+          confirm_success_url: 'http://localhost:8000',
+        })
+        this.clearMsg()
+        this.$router.push('/users/send')
+        return response
+      } catch (error) {
+        console.log(error)
+        return error
       }
     },
   },
