@@ -5,64 +5,114 @@
     </v-card-title>
     <v-card-text>
       <v-form v-model="form.valid">
-        <v-text-field
-          v-model="form.name"
-          label="お名前"
-          :rules="[formValidates.required]"
-        />
+        <div class="">
+          <label class="font-color-gray font-weight-black text-caption"
+            >お名前
+            <v-text-field
+              v-model="form.name"
+              class="set-width-343 overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              placeholder="田中 太郎"
+              outlined
+              dense
+              height="44"
+              :rules="[formValidates.required]"
+          /></label>
+        </div>
 
-        <v-text-field
-          v-model="form.email"
-          type="email"
-          label="メールアドレス"
-          :rules="[formValidates.required, formValidates.email]"
-        />
+        <div class="mt-n-2 email-field">
+          <label class="font-color-gray font-weight-black text-caption"
+            >メールアドレス
+            <v-text-field
+              v-model="form.email"
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              outlined
+              dense
+              placeholder="例) homecarenavi@mail.com"
+              type="email"
+              height="44"
+              :rules="[formValidates.required, formValidates.email]"
+          /></label>
+        </div>
 
-        <v-text-field
-          v-model="form.password"
-          label="パスワード"
-          type="password"
-          :rules="[
-            formValidates.required,
-            formValidates.typeCheckString,
-            formValidates.password,
-          ]"
-        />
+        <div class="mt-n-2 password-field">
+          <label class="font-color-gray font-weight-black text-caption"
+            >パスワード
+            <v-text-field
+              v-model="form.password"
+              outlined
+              dense
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              type="password"
+              placeholder="半角英数字8文字以上"
+              :rules="[
+                formValidates.required,
+                formValidates.typeCheckString,
+                formValidates.password,
+              ]"
+          /></label>
+        </div>
 
-        <v-text-field
-          v-model="form.password_confirmation"
-          label="パスワード確認"
-          type="password"
-          :rules="[
-            formValidates.required,
-            formValidates.typeCheckString,
-            formValidates.confirmCheck,
-          ]"
-        />
+        <div class="mt-n-2 password-confirmation-field">
+          <label class="font-color-gray font-weight-black text-caption"
+            >パスワード確認
+            <v-text-field
+              v-model="form.password_confirmation"
+              outlined
+              dense
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              type="password"
+              :rules="[
+                formValidates.required,
+                formValidates.typeCheckString,
+                formValidates.confirmCheck,
+              ]"
+          /></label>
+        </div>
 
-        <v-text-field
-          v-model="form.phone_number"
-          maxlength="13"
-          type="tel"
-          label="電話番号"
-          :rules="[formValidates.required, formValidates.phoneNumber]"
-          placeholder="080-1234-5678"
-          persistent-placeholder
-        />
+        <div class="mt-n-2 phnone-number-field">
+          <label class="font-color-gray font-weight-black text-caption"
+            >電話番号
+            <v-text-field
+              v-model="form.phone_number"
+              outlined
+              dense
+              placeholder="080-1234-5678"
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              type="tel"
+              :rules="[formValidates.required, formValidates.phoneNumber]"
+          /></label>
+        </div>
 
-        <v-text-field
-          v-model="form.post_code"
-          label="郵便番号"
-          :rules="[formValidates.required, formValidates.postCode]"
-          placeholder="123-4567"
-          persistent-placeholder
-        />
+        <div>
+          <v-text-field
+            v-model="form.post_code"
+            outlined
+            dense
+            height="44"
+            class="post-form"
+            :rules="[formValidates.required, formValidates.postCode]"
+            placeholder="123-4567"
+          >
+            <template #prepend>
+              <v-icon class="text-decoration-none mt-2" tag="div" size="16">
+                〒
+              </v-icon>
+            </template>
+          </v-text-field>
+        </div>
 
-        <v-text-field
-          v-model="form.address"
-          label="住所"
-          :rules="[formValidates.required]"
-        />
+        <div class="mt-n2">
+          <v-text-field
+            v-model="form.address"
+            outlined
+            dense
+            height="44"
+            class="address-form"
+            :rules="[formValidates.required]"
+            placeholder="123-4567"
+          >
+          </v-text-field>
+        </div>
 
         <v-card-actions>
           <v-btn class="info" :disabled="!form.valid" @click="sign_up()"
@@ -112,7 +162,9 @@ export default {
         },
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
-          return format.test(value) || '正しい郵便番号ではありません'
+          return (
+            format.test(value) || '正しい郵便番号ではありません 例) 000-0000'
+          )
         },
       },
     }
@@ -142,3 +194,37 @@ export default {
   },
 }
 </script>
+<style scoped>
+.set-width-343 {
+  width: 343px;
+}
+
+.set-height-44 {
+  height: 44px;
+}
+
+/* stylelint-disable */
+.v-text-field--outlined >>> fieldset {
+  border-color: #d9dede;
+}
+
+.post-form >>> fieldset {
+  width: 107px;
+}
+
+.post-form >>> .v-text-field__slot {
+  max-width: 82px;
+}
+
+.mt-n-2 {
+  margin-top: -2px;
+}
+
+.font-color-gray {
+  color: #6d7570;
+}
+
+::v-deep input::placeholder {
+  color: #d9dede !important;
+}
+</style>
