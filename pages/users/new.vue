@@ -1,75 +1,160 @@
 <template>
-  <v-card width="750" class="mx-auto mt-2">
-    <v-card-title>
-      <h1 class="display-1">新規登録</h1>
-    </v-card-title>
+  <v-card width="750" class="mx-auto">
+    <div class="px-4 pt-4 d-none d-sm-block">
+      <p class="mb-0 text-right">
+        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+          >ログインはこちら</NuxtLink
+        >
+      </p>
+      <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
+    </div>
+    <div class="px-4 pt-4 d-flex justify-space-between d-sm-none">
+      <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
+      <p class="mb-0 text-right">
+        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+          >ログインはこちら</NuxtLink
+        >
+      </p>
+    </div>
+
     <v-card-text>
-      <v-form v-model="form.valid">
-        <v-text-field
-          v-model="form.name"
-          label="お名前"
-          :rules="[formValidates.required]"
-        />
+      <div class="form-wrapper mx-auto">
+        <v-form v-model="form.valid">
+          <div class="set-width-343">
+            <label class="font-color-gray font-weight-black text-caption"
+              >お名前
+              <v-text-field
+                id="name"
+                v-model="form.name"
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+                placeholder="田中 太郎"
+                outlined
+                dense
+                height="44"
+                :rules="[formValidates.required]"
+            /></label>
+          </div>
 
-        <v-text-field
-          v-model="form.email"
-          type="email"
-          label="メールアドレス"
-          :rules="[formValidates.required, formValidates.email]"
-        />
+          <div class="mt-n-2">
+            <label class="font-color-gray font-weight-black text-caption"
+              >メールアドレス
+              <v-text-field
+                v-model="form.email"
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                outlined
+                dense
+                placeholder="例) homecarenavi@mail.com"
+                type="email"
+                height="44"
+                :rules="[formValidates.required, formValidates.email]"
+            /></label>
+          </div>
 
-        <v-text-field
-          v-model="form.password"
-          label="パスワード"
-          type="password"
-          :rules="[
-            formValidates.required,
-            formValidates.typeCheckString,
-            formValidates.password,
-          ]"
-        />
+          <div class="mt-n-2 password-field">
+            <label class="font-color-gray font-weight-black text-caption"
+              >パスワード
+              <v-text-field
+                v-model="form.password"
+                outlined
+                dense
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                type="password"
+                placeholder="半角英数字8文字以上"
+                :rules="[
+                  formValidates.required,
+                  formValidates.typeCheckString,
+                  formValidates.password,
+                ]"
+            /></label>
+          </div>
 
-        <v-text-field
-          v-model="form.password_confirmation"
-          label="パスワード確認"
-          type="password"
-          :rules="[
-            formValidates.required,
-            formValidates.typeCheckString,
-            formValidates.confirmCheck,
-          ]"
-        />
+          <div class="mt-n-2 password-confirmation-field">
+            <label class="font-color-gray font-weight-black text-caption"
+              >パスワード確認
+              <v-text-field
+                v-model="form.password_confirmation"
+                outlined
+                dense
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                type="password"
+                :rules="[
+                  formValidates.required,
+                  formValidates.typeCheckString,
+                  formValidates.confirmCheck,
+                ]"
+            /></label>
+          </div>
 
-        <v-text-field
-          v-model="form.phone_number"
-          maxlength="13"
-          type="tel"
-          label="電話番号"
-          :rules="[formValidates.required, formValidates.phoneNumber]"
-          placeholder="080-1234-5678"
-          persistent-placeholder
-        />
+          <div class="mt-n-2 phnone-number-field">
+            <label
+              class="font-color-gray font-weight-black text-caption set-max-width-520"
+              >電話番号
+              <v-text-field
+                v-model="form.phone_number"
+                outlined
+                dense
+                placeholder="080-1234-5678"
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                type="tel"
+                :rules="[formValidates.required, formValidates.phoneNumber]"
+            /></label>
+          </div>
 
-        <v-text-field
-          v-model="form.post_code"
-          label="郵便番号"
-          :rules="[formValidates.required, formValidates.postCode]"
-          placeholder="123-4567"
-          persistent-placeholder
-        />
+          <div>
+            <v-text-field
+              v-model="form.post_code"
+              outlined
+              dense
+              height="44"
+              class="post-form"
+              :rules="[formValidates.required, formValidates.postCode]"
+              placeholder="123-4567"
+            >
+              <template #prepend>
+                <v-icon class="text-decoration-none mt-2" tag="div" size="16">
+                  〒
+                </v-icon>
+              </template>
+            </v-text-field>
+          </div>
 
-        <v-text-field
-          v-model="form.address"
-          label="住所"
-          :rules="[formValidates.required]"
-        />
+          <div class="mt-n2">
+            <v-text-field
+              v-model="form.address"
+              outlined
+              dense
+              height="44"
+              class="address-form set-max-width-520"
+              :rules="[formValidates.required]"
+              placeholder="東京都世田谷区祖父谷4-3-15"
+            >
+            </v-text-field>
+          </div>
 
-        <v-card-actions>
-          <v-btn class="info" :disabled="!form.valid" @click="sign_up()"
-            >新規登録</v-btn
-          >
-        </v-card-actions>
-      </v-form>
+          <v-card-actions class="pa-0">
+            <v-btn
+              class="error pa-0 text-h6 d-none d-sm-block"
+              block
+              :disabled="!form.valid"
+              max-width="520"
+              min-width="343"
+              height="60"
+              @click="sign_up()"
+              >新規登録</v-btn
+            >
+            <v-btn
+              class="error pa-0 ma-0 text-h6 d-block d-sm-none"
+              block
+              :disabled="!form.valid"
+              max-width="520"
+              min-width="343"
+              height="48"
+              @click="sign_up()"
+              >新規登録</v-btn
+            >
+          </v-card-actions>
+        </v-form>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -112,7 +197,9 @@ export default {
         },
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
-          return format.test(value) || '正しい郵便番号ではありません'
+          return (
+            format.test(value) || '正しい郵便番号ではありません 例) 000-0000'
+          )
         },
       },
     }
@@ -129,7 +216,7 @@ export default {
           phone_number: this.form.phone_number,
           post_code: this.form.post_code,
           address: this.form.address,
-          confirm_success_url: 'http://localhost:8000',
+          confirm_success_url: 'http://localhost:8000/top',
         })
         this.clearMsg()
         this.$router.push('/users/send')
@@ -142,3 +229,54 @@ export default {
   },
 }
 </script>
+<style scoped>
+.link-color {
+  color: #f06364;
+}
+
+.form-wrapper {
+  max-width: 520px;
+}
+
+.px-px-115 {
+  padding: 0 115px;
+}
+
+.set-width-343 {
+  width: 343px;
+}
+
+.set-height-44 {
+  height: 44px;
+}
+
+/* stylelint-disable */
+.v-text-field--outlined >>> fieldset {
+  border-color: #d9dede;
+}
+
+.post-form >>> fieldset {
+  width: 107px;
+}
+
+.post-form >>> .v-text-field__slot {
+  max-width: 82px;
+}
+
+.mt-n-2 {
+  margin-top: -2px;
+}
+
+.font-color-gray {
+  color: #6d7570;
+}
+
+::v-deep input::placeholder {
+  color: #d9dede !important;
+}
+
+.set-max-width-520 {
+  max-width: 520px;
+  min-width: 343px;
+}
+</style>
