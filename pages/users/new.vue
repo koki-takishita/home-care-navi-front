@@ -218,11 +218,9 @@ export default {
           address: this.form.address,
           confirm_success_url: 'http://localhost:8000/top',
         })
-        this.clearMsg()
         this.$router.push('/users/send')
         return response
       } catch (error) {
-        console.log(error)
         return error
       }
     },
