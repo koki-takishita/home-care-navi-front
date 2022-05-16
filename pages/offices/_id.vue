@@ -188,7 +188,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .sticky {
   position: sticky;
   top: 40px;
@@ -259,5 +259,27 @@ td {
 .holiday-detail {
   font-size: 11px;
   color: #707f89;
+}
+
+@media screen and (max-width: 959px) {
+  /* sm以下で表示しない */
+  .sm-under-no {
+    display: none;
+  }
+  .office-name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+@media screen and (min-width: 961px) {
+  /* md以上で表示しない */
+  .md-over-no {
+    display: none;
+  }
+  .office-name {
+    font-size: 28px;
+    font-weight: bold;
+  }
 }
 </style>

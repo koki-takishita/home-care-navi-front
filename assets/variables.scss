@@ -2,24 +2,3 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
-@media (max-width: 959px) {
-  /* sm以下で表示しない */
-  .sm-under-no {
-    display: none;
-  }
-  .office-name {
-    font-size: 20px;
-    font-weight: bold;
-  }
-}
-
-@media (min-width: 961px) {
-  /* md以上で表示しない */
-  .md-over-no {
-    display: none;
-  }
-  .office-name {
-    font-size: 28px;
-    font-weight: bold;
-  }
-}
