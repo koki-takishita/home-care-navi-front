@@ -1,5 +1,5 @@
 <template>
-  <v-card width="750" class="mx-auto">
+  <v-card width="750" class="mx-auto mb-2">
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
         <NuxtLink to="#" class="text-overline text-decoration-none link-color"
@@ -218,11 +218,9 @@ export default {
           address: this.form.address,
           confirm_success_url: 'http://localhost:8000/top',
         })
-        this.clearMsg()
         this.$router.push('/users/send')
         return response
       } catch (error) {
-        console.log(error)
         return error
       }
     },

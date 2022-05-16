@@ -4,7 +4,8 @@
       v-for="(msg, i) in msgs"
       :key="i"
       type="error"
-      width="750"
+      max-width="750"
+      min-width="350"
       class="mx-auto mb-2"
     >
       {{ msg }}
