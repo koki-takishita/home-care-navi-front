@@ -22,3 +22,48 @@ export default {
   css: ['~/assets/variables.scss'],
 }
 </script>
+
+<style scoped>
+.text-center {
+  margin-top: 32px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.mb-16 {
+  margin-bottom: 64px;
+}
+
+.top-link {
+  width: 343px;
+  height: 20px;
+}
+
+.title-text {
+  font-size: 20px;
+}
+
+.ml-145 {
+  margin-left: 145px;
+}
+
+.ml-697 {
+  margin-left: 697;
+}
+
+.ml-75 {
+  margin-left: 7.5px;
+}
+
+.item-list {
+  display: flex;
+  justify-content: center;
+}
+
+.v-btn-content {
+  position: absolute;
+  bottom: 32px;
+}
+</style>
