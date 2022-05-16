@@ -1,7 +1,7 @@
 <template>
   <v-card width="750" class="mx-auto my-6">
     <v-card-title>
-      <h5 class="font-weight-bold darkgray--text pb-2 text-h5">利用規約</h5>
+      <h4 class="font-weight-bold darkgray--text pb-2">利用規約</h4>
     </v-card-title>
     <v-card-text>
       <p class="text-body-1 font-weight-bold gray--text mb-2">
