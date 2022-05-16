@@ -2,6 +2,7 @@
   <div>
     <h1>ここはTOPページです</h1>
     <p>ここから検索します</p>
+    <v-btn @click.prevent="logout">ログアウト</v-btn>
   </div>
 </template>
 <script>
@@ -17,5 +18,10 @@ export default {
     return { post }
   }
   */
+  methods: {
+    logout() {
+      this.$logout()
+    },
+  },
 }
 </script>

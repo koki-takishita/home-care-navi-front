@@ -16,8 +16,28 @@ export default function ({ $axios, store }) {
       store.commit('catchErrorMsg/setMsg', msg)
     }
   })
+
+  $axios.onRequest((config) => {
+    config.headers.client = window.localStorage.client
+    config.headers['access-token'] = window.localStorage.getItem('access-token')
+    config.headers.uid = window.localStorage.uid
+    config.headers.expiry = window.localStorage.expiry
+  })
+
   $axios.onResponse((response) => {
     console.log(`[LOG]::onResponse::${response}`)
     store.commit('catchErrorMsg/clearMsg')
+    const headers = response.headers
+    if (
+      headers.client &&
+      headers.uid &&
+      headers.expiry &&
+      headers['access-token']
+    ) {
+      localStorage.setItem('access-token', headers['access-token'])
+      localStorage.setItem('client', headers.client)
+      localStorage.setItem('uid', headers.uid)
+      localStorage.setItem('expiry', headers.expiry)
+    }
   })
 }

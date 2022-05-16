@@ -39,7 +39,7 @@
                 </div>
                 <div class="red--text line-style">
                   <v-btn
-                    href="/login"
+                    href="/users/login"
                     :width="120"
                     :height="36"
                     outlined
@@ -110,7 +110,7 @@
               <div class="header-style mt-3 text-caption ma-0">ゲストさん</div>
               <div class="d-flex justify-center ma-0 mt-6">
                 <v-btn
-                  href="/login"
+                  href="/users/login"
                   :width="120"
                   :height="36"
                   :color="color_g"
@@ -190,6 +190,7 @@
       <v-container fluid class="pa-0">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
+        <p>ログイン済み？ {{ $auth.loggedIn }}</p>
         <ErrorMsg />
         <Nuxt />
       </v-container>
