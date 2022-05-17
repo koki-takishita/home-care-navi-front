@@ -1,20 +1,7 @@
 export default function ({ $axios, store }) {
   $axios.onError((error) => {
-    console.log(`[LOG]::onError::${error}`)
-    if (error.response === undefined) {
-      store.commit('catchErrorMsg/clearMsg')
-      const msg = [
-        '送信ができませんでした。しばらく経ってから再度お願いします。',
-      ]
-      store.commit('catchErrorMsg/setMsg', msg)
-      return
-    }
-    const code = error.response.status
-    const msg = error.response.data.errors.full_messages
-    if (code === 422) {
-      store.commit('catchErrorMsg/clearMsg')
-      store.commit('catchErrorMsg/setMsg', msg)
-    }
+    networkError(store, error)
+    authError422and401(store, error)
   })
 
   $axios.onRequest((config) => {
@@ -25,7 +12,6 @@ export default function ({ $axios, store }) {
   })
 
   $axios.onResponse((response) => {
-    console.log(`[LOG]::onResponse::${response}`)
     store.commit('catchErrorMsg/clearMsg')
     const headers = response.headers
     if (
@@ -40,4 +26,33 @@ export default function ({ $axios, store }) {
       localStorage.setItem('expiry', headers.expiry)
     }
   })
+}
+
+export const networkError = function (store, error) {
+  if (error.response === undefined) {
+    store.commit('catchErrorMsg/clearMsg')
+    const msg = ['送信ができませんでした。しばらく経ってから再度お願いします。']
+    store.commit('catchErrorMsg/setMsg', msg)
+  }
+}
+
+export const authError422and401 = function (store, error) {
+  const code = error.response.status
+  if (code === 422) {
+    error422(store, error)
+  } else if (code === 401) {
+    error401(store, error)
+  }
+}
+
+export const error422 = function (store, error) {
+  const msg = error.response.data.errors.full_messages
+  store.commit('catchErrorMsg/clearMsg')
+  store.commit('catchErrorMsg/setMsg', msg)
+}
+
+export const error401 = function (store, error) {
+  const msg = error.response.data.errors
+  store.commit('catchErrorMsg/clearMsg')
+  store.commit('catchErrorMsg/setMsg', msg)
 }
