@@ -48,33 +48,26 @@
               <v-col class="pl-0" cols="10">
                 <div>
                   <table>
-                    <table>
-                      <tbody>
-                        <template v-for="n in 1">
-                          <tr v-if="n % 10 === 1" :key="n">
-                            <th>日</th>
-                            <th>月</th>
-                            <th>火</th>
-                            <th>水</th>
-                            <th>木</th>
-                            <th>金</th>
-                            <th>土</th>
-                          </tr>
-                          <tr
-                            :key="n"
-                            :class="{ even: n % 2 === 0, odd: n % 2 === 1 }"
-                          >
-                            <td>{{ n }}</td>
-                            <td>{{ n }}</td>
-                            <td>{{ n }}</td>
-                            <td>{{ n }}</td>
-                            <td>{{ n }}</td>
-                            <td>{{ n }}</td>
-                            <td>{{ n }}</td>
-                          </tr>
-                        </template>
-                      </tbody>
-                    </table>
+                    <tbody>
+                      <tr>
+                        <th>日</th>
+                        <th>月</th>
+                        <th>火</th>
+                        <th>水</th>
+                        <th>木</th>
+                        <th>金</th>
+                        <th>土</th>
+                      </tr>
+                      <tr>
+                        <td>{{ 1 }}</td>
+                        <td>{{ 1 }}</td>
+                        <td>{{ 1 }}</td>
+                        <td>{{ 1 }}</td>
+                        <td>{{ 1 }}</td>
+                        <td>{{ 1 }}</td>
+                        <td>{{ 1 }}</td>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
               </v-col>
@@ -134,33 +127,26 @@
             <v-col>
               <div>
                 <table>
-                  <table>
-                    <tbody>
-                      <template v-for="n in 1">
-                        <tr v-if="n % 10 === 1" :key="n">
-                          <th>日</th>
-                          <th>月</th>
-                          <th>火</th>
-                          <th>水</th>
-                          <th>木</th>
-                          <th>金</th>
-                          <th>土</th>
-                        </tr>
-                        <tr
-                          :key="n"
-                          :class="{ even: n % 2 === 0, odd: n % 2 === 1 }"
-                        >
-                          <td>{{ n }}</td>
-                          <td>{{ n }}</td>
-                          <td>{{ n }}</td>
-                          <td>{{ n }}</td>
-                          <td>{{ n }}</td>
-                          <td>{{ n }}</td>
-                          <td>{{ n }}</td>
-                        </tr>
-                      </template>
-                    </tbody>
-                  </table>
+                  <tbody>
+                    <tr>
+                      <th>日</th>
+                      <th>月</th>
+                      <th>火</th>
+                      <th>水</th>
+                      <th>木</th>
+                      <th>金</th>
+                      <th>土</th>
+                    </tr>
+                    <tr>
+                      <td>{{ 1 }}</td>
+                      <td>{{ 1 }}</td>
+                      <td>{{ 1 }}</td>
+                      <td>{{ 1 }}</td>
+                      <td>{{ 1 }}</td>
+                      <td>{{ 1 }}</td>
+                      <td>{{ 1 }}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div class="mt-4 mb-4 holiday-detail">営業日の説明が入ります</div>
