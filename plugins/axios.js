@@ -14,7 +14,7 @@ export default function ({ $axios, store }) {
   })
 }
 
-export const networkError = function (store, error) {
+function networkError(store, error) {
   if (error.response === undefined) {
     store.commit('catchErrorMsg/clearMsg')
     const msg = ['送信ができませんでした。しばらく経ってから再度お願いします。']
@@ -22,7 +22,7 @@ export const networkError = function (store, error) {
   }
 }
 
-export const authError422and401 = function (store, error) {
+function authError422and401(store, error) {
   const code = error.response.status
   if (code === 422) {
     error422(store, error)
@@ -31,26 +31,26 @@ export const authError422and401 = function (store, error) {
   }
 }
 
-export const error422 = function (store, error) {
+function error422(store, error) {
   const msg = error.response.data.errors.full_messages
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
 }
 
-export const error401 = function (store, error) {
+function error401(store, error) {
   const msg = error.response.data.errors
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
 }
 
-export const setAuthInfoToHeader = function (config) {
+function setAuthInfoToHeader(config) {
   config.headers.client = window.localStorage.client
   config.headers['access-token'] = window.localStorage.getItem('access-token')
   config.headers.uid = window.localStorage.uid
   config.headers.expiry = window.localStorage.expiry
 }
 
-export const setAuthInfoToLocalStorage = function (response) {
+function setAuthInfoToLocalStorage(response) {
   const headers = response.headers
   if (
     headers.client &&
