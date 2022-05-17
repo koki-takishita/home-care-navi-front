@@ -34,9 +34,6 @@ export default {
     login() {
       this.$login(this.loginInfo)
     },
-    logout() {
-      this.$logout(this.loginInfo)
-    },
   },
 }
 </script>

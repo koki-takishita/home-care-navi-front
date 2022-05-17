@@ -1,6 +1,5 @@
 export default function ({ $auth }, inject) {
-  /* eslint-disable */
-  inject('logout', (tmp) => {
+  inject('logout', () => {
     logout($auth)
 
     async function logout(auth) {
