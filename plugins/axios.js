@@ -5,26 +5,12 @@ export default function ({ $axios, store }) {
   })
 
   $axios.onRequest((config) => {
-    config.headers.client = window.localStorage.client
-    config.headers['access-token'] = window.localStorage.getItem('access-token')
-    config.headers.uid = window.localStorage.uid
-    config.headers.expiry = window.localStorage.expiry
+    setAuthInfoToHeader(config)
   })
 
   $axios.onResponse((response) => {
     store.commit('catchErrorMsg/clearMsg')
-    const headers = response.headers
-    if (
-      headers.client &&
-      headers.uid &&
-      headers.expiry &&
-      headers['access-token']
-    ) {
-      localStorage.setItem('access-token', headers['access-token'])
-      localStorage.setItem('client', headers.client)
-      localStorage.setItem('uid', headers.uid)
-      localStorage.setItem('expiry', headers.expiry)
-    }
+    setAuthInfoToLocalStorage(response)
   })
 }
 
@@ -55,4 +41,26 @@ export const error401 = function (store, error) {
   const msg = error.response.data.errors
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
+}
+
+export const setAuthInfoToHeader = function (config) {
+  config.headers.client = window.localStorage.client
+  config.headers['access-token'] = window.localStorage.getItem('access-token')
+  config.headers.uid = window.localStorage.uid
+  config.headers.expiry = window.localStorage.expiry
+}
+
+export const setAuthInfoToLocalStorage = function (response) {
+  const headers = response.headers
+  if (
+    headers.client &&
+    headers.uid &&
+    headers.expiry &&
+    headers['access-token']
+  ) {
+    localStorage.setItem('access-token', headers['access-token'])
+    localStorage.setItem('client', headers.client)
+    localStorage.setItem('uid', headers.uid)
+    localStorage.setItem('expiry', headers.expiry)
+  }
 }
