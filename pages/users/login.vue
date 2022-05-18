@@ -12,7 +12,9 @@
           type="password"
         />
         <v-card-actions>
-          <v-btn class="info" @click.prevent="login">ログイン</v-btn>
+          <v-btn class="info" @click.prevent="$login(loginInfo)"
+            >ログイン</v-btn
+          >
         </v-card-actions>
       </v-form>
     </v-card-text>
@@ -29,11 +31,6 @@ export default {
         password: '',
       },
     }
-  },
-  methods: {
-    login() {
-      this.$login(this.loginInfo)
-    },
   },
 }
 </script>
