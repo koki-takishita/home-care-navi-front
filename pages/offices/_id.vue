@@ -155,7 +155,6 @@
           <v-row class="mx-auto mt-auto max-width">
             <v-col class="office-name" cols="10">{{ office.name }} </v-col>
             <v-col class="pl-0" ols="2">
-              <v-hover></v-hover>
               <v-btn fab depressed>
                 <v-icon large color="white">mdi-star</v-icon>
               </v-btn>
