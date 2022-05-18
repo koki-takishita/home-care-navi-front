@@ -2,15 +2,18 @@ export default function ({ $axios, store }) {
   $axios.onError((error) => {
     networkError(store, error)
     authError422and401(store, error)
+    // console.log("[LOG]::onError")
   })
 
   $axios.onRequest((config) => {
     setAuthInfoToHeader(config)
+    // console.log("[LOG]::onRequest")
   })
 
   $axios.onResponse((response) => {
     store.commit('catchErrorMsg/clearMsg')
     setAuthInfoToLocalStorage(response)
+    // console.log("[LOG]::onResponse")
   })
 }
 
@@ -51,6 +54,7 @@ function setAuthInfoToHeader(config) {
 }
 
 function setAuthInfoToLocalStorage(response) {
+  // TODO メソッドの名前が適切でないかも、ログイン処理が成功したらみたいなのがほしい
   const headers = response.headers
   if (
     headers.client &&
@@ -58,6 +62,7 @@ function setAuthInfoToLocalStorage(response) {
     headers.expiry &&
     headers['access-token']
   ) {
+    // TODO ログイン処理が成功したら、localstorageに保存されるというのを表現する
     localStorage.setItem('access-token', headers['access-token'])
     localStorage.setItem('client', headers.client)
     localStorage.setItem('uid', headers.uid)

@@ -1,4 +1,4 @@
-export default function ({ $auth }, inject) {
+export default function ({ $auth, redirect, store }, inject) {
   inject('logout', () => {
     logout()
   })
@@ -7,8 +7,13 @@ export default function ({ $auth }, inject) {
     try {
       const response = await $auth.logout()
       authDataDeleteToLocalStorage()
+      // TODO 成功時にstoreにtype入れ込む
+      store.commit('catchErrorMsg/setType', 'success')
+      store.commit('catchErrorMsg/setMsg', ['ログアウトしました'])
+      redirect('/top')
       return response
     } catch (error) {
+      // TODO 失敗時にstoreにtype入れ込む
       return error
     }
   }

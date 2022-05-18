@@ -1,4 +1,4 @@
-export default function ({ $auth, redirect }, inject) {
+export default function ({ $auth, redirect, store }, inject) {
   inject('login', (loginInfo) => {
     login(loginInfo)
   })
@@ -8,6 +8,8 @@ export default function ({ $auth, redirect }, inject) {
       const response = await $auth.loginWith('local', {
         data: loginInfo,
       })
+      store.commit('catchErrorMsg/setType', 'success')
+      store.commit('catchErrorMsg/setMsg', ['ログインしました'])
       redirect('/top')
       return response
     } catch (error) {
