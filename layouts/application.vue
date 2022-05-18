@@ -5,7 +5,7 @@
       <v-app-bar :color="color_w" flat>
         <v-container>
           <v-row>
-            <v-col md="4" class="d-flex align-center">
+            <v-col md="2" class="d-flex align-center">
               <div class="red--text">
                 <p class="ma-0">
                   <img
@@ -18,34 +18,46 @@
                 </p>
               </div>
             </v-col>
-            <v-col md="8" class="ml-auto">
+            <v-col md="10" class="ml-auto">
               <div class="d-flex justify-end">
-                <div class="mr-8 d-flex align-center">
-                  <NuxtLink
-                    to="#"
-                    class="header-style text-overline mr-5 text-decoration-none mr-5"
-                    >閲覧履歴</NuxtLink
-                  >
-                  <NuxtLink
-                    to="#"
-                    class="header-style text-overline mr-5 text-decoration-none mr-5"
-                    >ブックマーク</NuxtLink
-                  >
-                  <NuxtLink
-                    to="#"
-                    class="header-style text-overline text-decoration-none"
-                    >予約履歴</NuxtLink
-                  >
-                </div>
-                <div v-if="$auth.loggedIn" class="red--text line-style">
-                  <v-btn
-                    :width="120"
-                    :height="36"
-                    color="error"
-                    depressed
-                    @click.prevent="$logout()"
-                    >ログアウト</v-btn
-                  >
+                <div v-if="$auth.loggedIn">
+                  <div class="mr-8 d-flex align-center">
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline mr-5 text-decoration-none"
+                      >閲覧履歴</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline mr-5 text-decoration-none"
+                      >ブックマーク</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline text-decoration-none mr-5"
+                      >予約履歴</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline text-decoration-none mr-5"
+                      >お礼投稿履歴</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline text-decoration-none mr-5"
+                      >登録情報</NuxtLink
+                    >
+                    <div class="red--text line-style">
+                      <v-btn
+                        :width="120"
+                        :height="36"
+                        color="error"
+                        depressed
+                        @click.prevent="$logout()"
+                        >ログアウト</v-btn
+                      >
+                    </div>
+                  </div>
                 </div>
                 <div v-else class="red--text line-style">
                   <v-btn
