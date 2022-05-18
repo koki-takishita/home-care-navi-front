@@ -3,7 +3,7 @@
     <v-alert
       v-for="(msg, i) in msgs"
       :key="i"
-      type="error"
+      :type="type"
       max-width="750"
       min-width="350"
       class="mx-auto mb-2"
@@ -18,17 +18,18 @@ export default {
   data() {
     return {
       msgs: [],
+      type: 'error',
     }
   },
   computed: {
-    ...mapGetters('catchErrorMsg', ['getMsg', 'emptyState']),
-    changeMsg() {
-      return this.getMsg
-    },
+    ...mapGetters('catchErrorMsg', ['getMsg', 'getType', 'emptyState']),
   },
   watch: {
     getMsg() {
-      this.msgs = this.$store.state.catchErrorMsg.msg
+      this.msgs = this.getMsg
+    },
+    getType() {
+      this.type = this.getType
     },
   },
 }
