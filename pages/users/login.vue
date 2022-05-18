@@ -5,14 +5,14 @@
     </v-card-title>
     <v-card-text>
       <v-form>
-        <v-text-field v-model="form.email" label="メールアドレス" />
+        <v-text-field v-model="loginInfo.email" label="メールアドレス" />
         <v-text-field
-          v-model="form.password"
+          v-model="loginInfo.password"
           label="パスワード"
           type="password"
         />
         <v-card-actions>
-          <v-btn class="info" @click="login()">ログイン</v-btn>
+          <v-btn class="info" @click.prevent="login">ログイン</v-btn>
         </v-card-actions>
       </v-form>
     </v-card-text>
@@ -24,26 +24,15 @@ export default {
   layout: 'application',
   data() {
     return {
-      form: {
+      loginInfo: {
         email: '',
         password: '',
       },
     }
   },
   methods: {
-    // loginメソッドの呼び出し
-    async login() {
-      try {
-        const response = await this.$auth.loginWith('local', {
-          data: this.form,
-        })
-        console.log('try')
-        console.log(response)
-      } catch (error) {
-        console.log('エラー')
-        console.log(this.$auth)
-        console.log(error)
-      }
+    login() {
+      this.$login(this.loginInfo)
     },
   },
 }

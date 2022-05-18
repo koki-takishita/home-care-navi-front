@@ -37,9 +37,19 @@
                     >予約履歴</NuxtLink
                   >
                 </div>
-                <div class="red--text line-style">
+                <div v-if="$auth.loggedIn" class="red--text line-style">
                   <v-btn
-                    href="/login"
+                    :width="120"
+                    :height="36"
+                    color="error"
+                    depressed
+                    @click.prevent="$logout()"
+                    >ログアウト</v-btn
+                  >
+                </div>
+                <div v-else class="red--text line-style">
+                  <v-btn
+                    href="/users/login"
                     :width="120"
                     :height="36"
                     outlined
@@ -50,7 +60,7 @@
                     href="/users/new"
                     :width="120"
                     :height="36"
-                    :color="color_r"
+                    color="error"
                     depressed
                     >新規登録</v-btn
                   >
@@ -108,9 +118,25 @@
                 />
               </v-list-item-title>
               <div class="header-style mt-3 text-caption ma-0">ゲストさん</div>
-              <div class="d-flex justify-center ma-0 mt-6">
+
+              <div
+                v-if="$auth.loggedIn"
+                class="d-flex justify-center ma-0 mt-6"
+              >
                 <v-btn
-                  href="/login"
+                  href="/users/login"
+                  :width="120"
+                  :height="36"
+                  color="error"
+                  class="mr-2"
+                  depressed
+                  @click.prevent="$logout()"
+                  >ログアウト</v-btn
+                >
+              </div>
+              <div v-else class="d-flex justify-center ma-0 mt-6">
+                <v-btn
+                  href="/users/login"
                   :width="120"
                   :height="36"
                   :color="color_g"
@@ -122,7 +148,7 @@
                   href="/users/new"
                   :width="120"
                   :height="36"
-                  :color="color_r"
+                  color="error"
                   depressed
                   >新規登録</v-btn
                 >

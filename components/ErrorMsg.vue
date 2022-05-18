@@ -22,10 +22,13 @@ export default {
   },
   computed: {
     ...mapGetters('catchErrorMsg', ['getMsg', 'emptyState']),
+    changeMsg() {
+      return this.getMsg
+    },
   },
   watch: {
-    emptyState() {
-      this.msgs = this.getMsg
+    getMsg() {
+      this.msgs = this.$store.state.catchErrorMsg.msg
     },
   },
 }
