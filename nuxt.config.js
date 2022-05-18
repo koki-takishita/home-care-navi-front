@@ -65,20 +65,24 @@ export default {
   },
   auth: {
     redirect: {
-      login: '/login',
-      logout: '/login',
+      login: false,
+      logout: false,
       callback: false,
-      home: '/',
+      home: false,
     },
     strategies: {
       local: {
+        token: {
+          property: false,
+        },
         endpoints: {
-          login: { url: '/api/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/api/logout', method: 'post', propertyName: false },
+          login: { url: '/users/sign_in', method: 'post' },
+          logout: { url: '/users/sign_out', method: 'delete' },
           user: false,
         },
       },
     },
+    plugins: ['~/plugins/login.js', '~/plugins/logout.js'],
   },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
