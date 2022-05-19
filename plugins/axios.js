@@ -31,6 +31,8 @@ function authError422and401(store, error) {
     error422(store, error)
   } else if (code === 401) {
     error401(store, error)
+  } else if (code === 500) {
+    error500(store)
   }
 }
 
@@ -42,6 +44,12 @@ function error422(store, error) {
 
 function error401(store, error) {
   const msg = error.response.data.errors
+  store.commit('catchErrorMsg/clearMsg')
+  store.commit('catchErrorMsg/setMsg', msg)
+}
+
+function error500(store) {
+  const msg = ['サーバー側のエラーです。しばらく経ってから再度お願いします。']
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
 }
