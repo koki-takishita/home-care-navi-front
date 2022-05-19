@@ -23,7 +23,7 @@
       </p>
     </div>
 
-    <div class="pa-4 pt-0">
+    <div class="pa-4 pt-0 mt-6">
       <div class="form-wrapper mx-auto">
         <v-form v-model="loginInfo.valid">
           <label class="font-color-gray font-weight-black text-caption"
@@ -33,8 +33,9 @@
               :rules="[formValidates.required, formValidates.email]"
               outlined
               dense
+              height="44"
               placeholder="homecarenavi@mail.com"
-              class="font-weight-regular"
+              class="font-weight-regular mt-2"
           /></label>
 
           <label class="font-color-gray font-weight-black text-caption"
@@ -48,8 +49,9 @@
               ]"
               outlined
               dense
+              height="44"
               placeholder="半角英数字8文字以上"
-              class="font-weight-regular"
+              class="font-weight-regular mt-2"
               type="password"
           /></label>
 
