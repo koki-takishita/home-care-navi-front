@@ -2,7 +2,9 @@
   <v-card width="750" class="mx-auto mb-2">
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
-        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+        <NuxtLink
+          to="/users/login"
+          class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
       </p>
@@ -11,7 +13,9 @@
     <div class="px-4 pt-4 d-flex justify-space-between d-sm-none">
       <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
       <p class="mb-0 text-right">
-        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+        <NuxtLink
+          to="/users/login"
+          class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
       </p>
@@ -139,6 +143,16 @@
               max-width="520"
               min-width="343"
               height="60"
+              @click="sign_up()"
+              >新規登録</v-btn
+            >
+            <v-btn
+              class="error pa-0 ma-0 text-h6 d-block d-sm-none"
+              block
+              :disabled="!form.valid"
+              max-width="520"
+              min-width="343"
+              height="48"
               @click="sign_up()"
               >新規登録</v-btn
             >
