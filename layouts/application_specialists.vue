@@ -29,7 +29,7 @@
               <div class="d-flex justify-end">
                 <div class="red--text line-style">
                   <v-btn
-                    href="/login"
+                    href="/specialists/login"
                     :width="120"
                     :height="36"
                     outlined
@@ -37,7 +37,7 @@
                     >ログイン</v-btn
                   >
                   <v-btn
-                    href="/users/specialists_new"
+                    href="new"
                     :width="120"
                     :height="36"
                     color="warning"
@@ -63,6 +63,13 @@
                   src="~/assets/images/header-icon.svg"
                   width="157.44"
                   height="28"
+                />
+                <img
+                  class="mb-1"
+                  src="~/assets/images/staff-header-icon.svg"
+                  width="36"
+                  height="16"
+                  @click="topPage"
                 />
               </div>
             </v-toolbar-title>
@@ -96,11 +103,18 @@
                   width="137.76"
                   height="28"
                 />
+                <img
+                  class="mb-1"
+                  src="~/assets/images/staff-header-icon.svg"
+                  width="36"
+                  height="16"
+                  @click="topPage"
+                />
               </v-list-item-title>
               <div class="header-style mt-3 text-caption ma-0">ゲストさん</div>
               <div class="d-flex justify-center ma-0 mt-6">
                 <v-btn
-                  href="/login"
+                  href="/specialists/login"
                   :width="120"
                   :height="36"
                   :color="color_g"
@@ -109,8 +123,8 @@
                   >ログイン</v-btn
                 >
                 <v-btn
-                  :color="color_g"
-                  href="/users/specialists_new"
+                  color="warning"
+                  href="new"
                   :width="120"
                   :height="36"
                   depressed
@@ -119,58 +133,14 @@
               </div>
               <div class="mt-3">
                 <NuxtLink
-                  to="#"
+                  to="/users/new"
                   class="link-style text-overline mr-5 text-decoration-none mr-5"
-                  >ケアマネージャーの方はこちら</NuxtLink
+                  >利用者の方はこちら</NuxtLink
                 >
               </div>
             </v-list-item-content>
           </v-list-item>
         </v-card>
-
-        <v-list nav dense class="pa-0">
-          <v-list-item-group v-model="group">
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >閲覧履歴</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >ブックマーク</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >予約状況確認</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-          </v-list-item-group>
-        </v-list>
       </div>
     </v-navigation-drawer>
 
@@ -180,6 +150,7 @@
       <v-container fluid class="pa-0">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
+        <ErrorMsg />
         <Nuxt />
       </v-container>
     </v-main>

@@ -2,7 +2,9 @@
   <v-card width="750" class="mx-auto mb-2 mt-2">
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
-        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+        <NuxtLink
+          to="/specialists/login"
+          class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
       </p>
@@ -11,7 +13,9 @@
     <div class="px-4 pt-4 d-flex justify-space-between d-sm-none">
       <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
       <p class="mb-0 text-right">
-        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+        <NuxtLink
+          to="/specialists/login"
+          class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
       </p>
@@ -216,9 +220,9 @@ export default {
           phone_number: this.form.phone_number,
           post_code: this.form.post_code,
           address: this.form.address,
-          confirm_success_url: 'http://localhost:8000/top',
+          confirm_success_url: 'http://localhost:8000/specialists/login',
         })
-        this.$router.push('/users/specialists_send')
+        this.$router.push('/specialists/users/send')
         return response
       } catch (error) {
         return error
