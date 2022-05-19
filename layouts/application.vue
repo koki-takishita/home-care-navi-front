@@ -176,7 +176,7 @@
           </v-list-item>
         </v-card>
 
-        <v-list nav dense class="pa-0" v-if="$auth.loggedIn">
+        <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
