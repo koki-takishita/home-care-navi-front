@@ -9,7 +9,7 @@
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
         <NuxtLink to="#" class="text-overline text-decoration-none link-color"
-          >ケアマネージャの方はこちら</NuxtLink
+          >ケアマネージャーの方はこちら</NuxtLink
         >
       </p>
       <h6 class="display-1 text-center text-h6 font-weight-black">ログイン</h6>
