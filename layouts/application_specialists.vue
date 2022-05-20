@@ -133,7 +133,7 @@
               </div>
               <div class="mt-3">
                 <NuxtLink
-                  to="/users/new"
+                  to="/users/login"
                   class="link-style text-overline mr-5 text-decoration-none mr-5"
                   >利用者の方はこちら</NuxtLink
                 >

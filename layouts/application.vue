@@ -167,7 +167,7 @@
               </div>
               <div class="mt-3">
                 <NuxtLink
-                  to="#"
+                  to="/specialists/login"
                   class="link-style text-overline mr-5 text-decoration-none mr-5"
                   >ケアマネージャーの方はこちら</NuxtLink
                 >
