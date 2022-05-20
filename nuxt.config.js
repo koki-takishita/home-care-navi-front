@@ -61,7 +61,7 @@ export default {
   ],
 
   axios: {
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://localhost:3000/api' || process.env.baseURL,
   },
   auth: {
     redirect: {
