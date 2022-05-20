@@ -6,6 +6,8 @@
       :type="type"
       max-width="750"
       min-width="350"
+      v-model="alert"
+      dismissible
       class="mx-auto mb-2"
     >
       {{ msg }}
