@@ -1,28 +1,31 @@
 export const state = () => ({
   msg: [],
+  type: [],
 })
 export const getters = {
   getMsg: (state) => state.msg,
   emptyState: (state) => state.msg.length,
+  getType: (state) => state.type,
 }
 export const mutations = {
   setMsg(state, msg) {
-    console.log(`[LOG::mutations::setMsg]::レスポンスメッセージ ${msg}`)
-    console.log(`[LOG::mutations::setMsg]::state.msg ${state.msg}`)
     state.msg = msg
   },
   clearMsg(state) {
     state.msg = ''
-    console.log(`[LOG::mutatins::clearMsg]::state.msg ${state.msg}`)
+  },
+  setType(state, type) {
+    state.type = type
   },
 }
 export const actions = {
   setMsg({ commit }, msg) {
-    console.log(`[LOG::actions::setMsg]::レスポンスメッセージ ${msg}`)
     commit('setMsg', msg)
   },
   clearMsg({ commit }) {
-    console.log(`[LOG::actions::clearMsg]::state.msg ${state.msg}`)
     commit('clearMsg')
+  },
+  setType({ commit }, type) {
+    commit('setType', type)
   },
 }
