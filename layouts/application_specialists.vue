@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-divider color="#F06364" class="ctr-p-1"></v-divider>
+    <v-divider color="#F09C3C" class="ctr-p-1"></v-divider>
     <div class="d-none d-md-flex">
       <v-app-bar :color="color_w" flat>
         <v-container>
           <v-row>
-            <v-col md="2" class="d-flex align-center">
+            <v-col md="4" class="d-flex align-center">
               <div class="red--text">
                 <p class="ma-0">
                   <img
@@ -15,53 +15,21 @@
                     height="28"
                     @click="topPage"
                   />
+                  <img
+                    class="mb-1"
+                    src="~/assets/images/staff-header-icon.svg"
+                    width="36"
+                    height="16"
+                    @click="topPage"
+                  />
                 </p>
               </div>
             </v-col>
-            <v-col md="10" class="ml-auto">
+            <v-col md="8" class="ml-auto">
               <div class="d-flex justify-end">
-                <div v-if="$auth.loggedIn">
-                  <div class="mr-8 d-flex align-center">
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline mr-5 text-decoration-none"
-                      >閲覧履歴</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline mr-5 text-decoration-none"
-                      >ブックマーク</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline text-decoration-none mr-5"
-                      >予約履歴</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline text-decoration-none mr-5"
-                      >お礼投稿履歴</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline text-decoration-none mr-5"
-                      >登録情報</NuxtLink
-                    >
-                    <div class="red--text line-style">
-                      <v-btn
-                        :width="120"
-                        :height="36"
-                        color="error"
-                        depressed
-                        @click.prevent="$logout()"
-                        >ログアウト</v-btn
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div v-else class="red--text line-style">
+                <div class="red--text line-style">
                   <v-btn
-                    href="/users/login"
+                    href="/specialists/login"
                     :width="120"
                     :height="36"
                     outlined
@@ -69,10 +37,10 @@
                     >ログイン</v-btn
                   >
                   <v-btn
-                    href="/users/new"
+                    href="new"
                     :width="120"
                     :height="36"
-                    color="error"
+                    color="warning"
                     depressed
                     >新規登録</v-btn
                   >
@@ -95,6 +63,13 @@
                   src="~/assets/images/header-icon.svg"
                   width="157.44"
                   height="28"
+                />
+                <img
+                  class="mb-1"
+                  src="~/assets/images/staff-header-icon.svg"
+                  width="36"
+                  height="16"
+                  @click="topPage"
                 />
               </div>
             </v-toolbar-title>
@@ -128,27 +103,18 @@
                   width="137.76"
                   height="28"
                 />
+                <img
+                  class="mb-1"
+                  src="~/assets/images/staff-header-icon.svg"
+                  width="36"
+                  height="16"
+                  @click="topPage"
+                />
               </v-list-item-title>
               <div class="header-style mt-3 text-caption ma-0">ゲストさん</div>
-
-              <div
-                v-if="$auth.loggedIn"
-                class="d-flex justify-center ma-0 mt-6"
-              >
+              <div class="d-flex justify-center ma-0 mt-6">
                 <v-btn
-                  href="/users/login"
-                  :width="120"
-                  :height="36"
-                  color="error"
-                  class="mr-2"
-                  depressed
-                  @click.prevent="$logout()"
-                  >ログアウト</v-btn
-                >
-              </div>
-              <div v-else class="d-flex justify-center ma-0 mt-6">
-                <v-btn
-                  href="/users/login"
+                  href="/specialists/login"
                   :width="120"
                   :height="36"
                   :color="color_g"
@@ -157,94 +123,24 @@
                   >ログイン</v-btn
                 >
                 <v-btn
-                  href="/users/new"
+                  color="warning"
+                  href="new"
                   :width="120"
                   :height="36"
-                  color="error"
                   depressed
                   >新規登録</v-btn
                 >
               </div>
               <div class="mt-3">
                 <NuxtLink
-                  to="/specialists/login"
+                  to="/users/login"
                   class="link-style text-overline mr-5 text-decoration-none mr-5"
-                  >ケアマネージャーの方はこちら</NuxtLink
+                  >利用者の方はこちら</NuxtLink
                 >
               </div>
             </v-list-item-content>
           </v-list-item>
         </v-card>
-
-        <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
-          <v-list-item-group v-model="group">
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >閲覧履歴</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >ブックマーク</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >予約履歴</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >お礼投稿履歴</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >登録情報</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-          </v-list-item-group>
-        </v-list>
       </div>
     </v-navigation-drawer>
 
@@ -279,17 +175,17 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="/privacy_policy"
+                    to="#"
                     class="text-overline mr-5 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="/terms"
+                    to="#"
                     class="text-overline mr-5 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="/contacts/new"
+                    to="#"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -302,17 +198,17 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="/privacy_policy"
+                to="#"
                 class="text-overline mr-5 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="/terms"
+                to="#"
                 class="text-overline mr-5 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="/contacts/new"
+                to="#"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >
@@ -341,6 +237,7 @@ export default {
     return {
       justify: [],
       color_w: '#FFFFFF',
+      color_y: '#F09C3C',
       color_g: '#6D7570',
       color_r: '#F06364',
       drawer: false,
@@ -375,7 +272,7 @@ export default {
 }
 
 .link-style {
-  color: #f06364;
+  color: #f09c3c;
 }
 
 .btn-style {

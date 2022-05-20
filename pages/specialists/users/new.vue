@@ -1,9 +1,9 @@
 <template>
-  <v-card width="750" class="mx-auto mb-2">
+  <v-card width="750" class="mx-auto mb-2 mt-2">
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
         <NuxtLink
-          to="/users/login"
+          to="/specialists/login"
           class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
@@ -14,7 +14,7 @@
       <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
       <p class="mb-0 text-right">
         <NuxtLink
-          to="/users/login"
+          to="/specialists/login"
           class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
@@ -137,7 +137,7 @@
 
           <v-card-actions class="pa-0">
             <v-btn
-              class="error pa-0 text-h6 d-none d-sm-block"
+              class="warning pa-0 text-h6 d-none d-sm-block"
               block
               :disabled="!form.valid"
               max-width="520"
@@ -165,7 +165,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
   data() {
     return {
       form: {
@@ -212,7 +212,7 @@ export default {
     ...mapActions('catchErrorMsg', ['clearMsg']),
     async sign_up() {
       try {
-        const response = await this.$axios.$post(`users`, {
+        const response = await this.$axios.$post(`specialists/users`, {
           name: this.form.name,
           email: this.form.email,
           password: this.form.password,
@@ -220,9 +220,9 @@ export default {
           phone_number: this.form.phone_number,
           post_code: this.form.post_code,
           address: this.form.address,
-          confirm_success_url: 'http://localhost:8000/top',
+          confirm_success_url: 'http://localhost:8000/specialists/login',
         })
-        this.$router.push('/users/send')
+        this.$router.push('/specialists/users/send')
         return response
       } catch (error) {
         return error
@@ -233,7 +233,7 @@ export default {
 </script>
 <style scoped>
 .link-color {
-  color: #f06364;
+  color: #f09c3c;
 }
 
 .form-wrapper {

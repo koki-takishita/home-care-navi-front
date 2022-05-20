@@ -1,6 +1,13 @@
-export default function ({ $auth, redirect, store }, inject) {
+export default function ({ $auth, redirect, store, $axios }, inject) {
   inject('login', (loginInfo) => {
     login(loginInfo)
+  })
+
+  $axios.onRequest((config) => {
+    console.log(config)
+    if (config.url === '/login') {
+      setAuthInfoToHeader(config)
+    }
   })
 
   async function login(loginInfo) {
@@ -16,4 +23,11 @@ export default function ({ $auth, redirect, store }, inject) {
       return error
     }
   }
+}
+
+function setAuthInfoToHeader(config) {
+  config.headers.client = window.localStorage.client
+  config.headers['access-token'] = window.localStorage.getItem('access-token')
+  config.headers.uid = window.localStorage.uid
+  config.headers.expiry = window.localStorage.expiry
 }
