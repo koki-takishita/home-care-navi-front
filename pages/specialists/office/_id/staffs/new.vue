@@ -18,7 +18,7 @@
             <v-file-input
               v-model="image"
               :rules="[formValidates.fileSizeCheck]"
-              accept="image/png, image/jpeg, image/jpg"
+              accept="image/*"
               prepend-icon="mdi-camera"
               label="画像をアップロードする"
               class="mt-6 mr-4 ml-3"
@@ -98,7 +98,7 @@ export default {
         fileSizeCheck: (value) =>
           !value ||
           value.size <= 10000000 ||
-          'ファイルサイズは10MB以下でアップロードしてください',
+          '画像サイズは10MB以下でアップロードしてください',
         nameCountCheck: (value) =>
           value.length <= 31 || '30文字以下で入力してください',
         kanaCheck: (value) => {
