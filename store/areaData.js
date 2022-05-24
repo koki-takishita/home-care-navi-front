@@ -96,15 +96,15 @@ export const actions = {
   clearCurrentPrefecture({ commit }) {
     commit('clearCurrentPrefecture')
   },
-  async setCities({ commit }, chooseCity) {
+  async setCities({ commit }, choosePrefecture) {
     try {
-      const encodeString = encodeURI(chooseCity)
+      const encodeString = encodeURI(choosePrefecture)
       const res = await this.$apiToAddressJson.$get(
         requestMethods.cities + encodeString
       )
       const fetchCities = res.response.location
       commit('setCities', fetchCities)
-      commit('setCurrentPrefecture', chooseCity)
+      commit('setCurrentPrefecture')
     } catch (error) {
       return error
     }
