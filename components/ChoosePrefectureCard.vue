@@ -30,10 +30,9 @@ export default {
     ...mapGetters('areaData', ['getPrefectures']),
   },
   methods: {
-    ...mapActions('areaData', ['setCities', 'clearTowns']),
+    ...mapActions('areaData', ['setCities']),
     fetchCities(choosePrefecture) {
       this.setCities(choosePrefecture)
-      this.clearTowns()
     },
   },
 }

@@ -43,12 +43,12 @@ export default {
       'setPrefectures',
       'setCities',
       'clearCities',
-      'clearTowns',
+      'clearCurrentPrefecture',
     ]),
     fetchAreas(chooseArea) {
       this.setPrefectures(chooseArea)
       this.clearCities()
-      this.clearTowns()
+      this.clearCurrentPrefecture()
     },
     fetchAreaToTokyo() {
       this.setPrefectures('関東')

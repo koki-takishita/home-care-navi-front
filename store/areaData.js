@@ -1,9 +1,3 @@
-export const state = () => ({
-  prefectures: [],
-  cities: [],
-  towns: [],
-})
-
 const areas = {
   hokaido: ['北海道'],
   touhoku: ['青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県'],
@@ -42,11 +36,17 @@ const areas = {
 
 const requestMethods = {
   cities: 'json?method=getCities&prefecture=',
-  towns: 'json?method=getTowns&city=',
 }
+
+export const state = () => ({
+  prefectures: [],
+  currentPrefecture: '',
+  cities: [],
+})
 
 export const getters = {
   getPrefectures: (state) => state.prefectures,
+  getCurrentPrefecture: (state) => state.currentPrefecture,
   getCities: (state) => state.cities,
 }
 
@@ -54,17 +54,17 @@ export const mutations = {
   setPrefectures(state, prefectures) {
     state.prefectures = prefectures
   },
+  setCurrentPrefecture(state, prefecture) {
+    state.currentPrefecture = prefecture
+  },
+  clearCurrentPrefecture(state) {
+    state.currentPrefecture = ''
+  },
   setCities(state, cities) {
     state.cities = cities
   },
   clearCities(state) {
     state.cities = []
-  },
-  setTowns(state, towns) {
-    state.towns = towns
-  },
-  clearTowns(state) {
-    state.towns = []
   },
 }
 
@@ -90,6 +90,12 @@ export const actions = {
       commit('setPrefectures', areas.kyusyuOkinawa)
     }
   },
+  setCurrentPrefecture({ commit }, prefecture) {
+    commit('setCurrentPrefecture', prefecture)
+  },
+  clearCurrentPrefecture({ commit }) {
+    commit('clearCurrentPrefecture')
+  },
   async setCities({ commit }, chooseCity) {
     try {
       const encodeString = encodeURI(chooseCity)
@@ -98,26 +104,12 @@ export const actions = {
       )
       const fetchCities = res.response.location
       commit('setCities', fetchCities)
+      commit('setCurrentPrefecture', chooseCity)
     } catch (error) {
       return error
     }
   },
   clearCities({ commit }) {
     commit('clearCities')
-  },
-  async setTowns({ commit }, chooseTown) {
-    try {
-      const encodeString = encodeURI(chooseTown)
-      const res = await this.$apiToAddressJson.$get(
-        requestMethods.towns + encodeString
-      )
-      const fetchTowns = res.response.location
-      commit('setTowns', fetchTowns)
-    } catch (error) {
-      return error
-    }
-  },
-  clearTowns({ commit }) {
-    commit('clearTowns')
   },
 }

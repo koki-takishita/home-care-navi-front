@@ -15,37 +15,50 @@
     </v-list>
     <div class="d-flex ml-n3">
       <v-btn min-width="80" min-height="40" class="mr-2">クリア</v-btn>
-      <v-btn min-width="160" min-height="40" color="error" @click="fetchTowns()"
+      <v-btn
+        min-width="160"
+        min-height="40"
+        color="error"
+        @click="SearchForOfficesChosenByAddress"
         >検索する</v-btn
       >
     </div>
   </v-card>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
       cities: [],
-      selectedCity: '',
+      chooseCity: '',
+      choosePrefecture: '',
     }
   },
   watch: {
     getCities() {
       this.cities = this.getCities
     },
+    getCurrentPrefecture() {
+      this.choosePrefecture = this.getCurrentPrefecture
+    },
   },
   computed: {
-    ...mapGetters('areaData', ['getCities']),
+    ...mapGetters('areaData', ['getCities', 'getCurrentPrefecture']),
   },
   methods: {
-    ...mapActions('areaData', ['setTowns']),
-    fetchTowns() {
-      const chooseCity = this.selectedCity
-      this.setTowns(chooseCity)
-    },
     checkItem(chooseItem) {
-      this.selectedCity = chooseItem
+      this.chooseCity = chooseItem
+    },
+    async SearchForOfficesChosenByAddress() {
+      try {
+        const prefecture = encodeURI(this.choosePrefecture)
+        const city = encodeURI(this.chooseCity)
+        const requestUrl = `offices?prefecture=${prefecture}&city=${city}`
+        await this.$axios.$get(requestUrl)
+      } catch (error) {
+        return error
+      }
     },
   },
 }
