@@ -104,7 +104,7 @@ export const actions = {
       )
       const fetchCities = res.response.location
       commit('setCities', fetchCities)
-      commit('setCurrentPrefecture')
+      commit('setCurrentPrefecture', choosePrefecture)
     } catch (error) {
       return error
     }
