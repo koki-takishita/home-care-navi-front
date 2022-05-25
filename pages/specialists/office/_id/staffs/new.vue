@@ -1,31 +1,30 @@
 <template>
-  <v-col cols="12" md="8" lg="7" xl="7" class="mx-auto">
-    <p class="mb-0 text-left">
+  <div>
+    <p class="mb-0 text-left link-width mx-auto">
       <NuxtLink
         to=""
         class="text-overline text-decoration-none link-color sm-under-no"
         >＜ スタッフ情報一覧にもどる</NuxtLink
       >
     </p>
-    <v-card class="mx-auto mb-2 p-0">
+    <v-card class="mx-auto mb-2 p-0" width="750">
       <v-col cols="12"><h3>スタッフ登録</h3></v-col>
       <v-form v-model="valid">
-        <v-col md="10">
-          <v-row>
-            <v-avatar size="100" color="grey lighten-3" class="ml-3">
-              <v-icon size="70" color="white">mdi-account</v-icon>
-            </v-avatar>
-            <v-file-input
-              v-model="image"
-              :rules="[formValidates.fileSizeCheck]"
-              accept="image/*"
-              prepend-icon="mdi-camera"
-              label="画像をアップロードする"
-              class="mt-6 mr-4 ml-3"
-            >
-            </v-file-input>
-          </v-row>
-        </v-col>
+        <v-row>
+          <v-avatar size="100" color="grey lighten-3" class="ml-6 my-4">
+            <v-icon size="70" color="white">mdi-account</v-icon>
+          </v-avatar>
+          <v-file-input
+            v-model="image"
+            truncate-length="20"
+            :rules="[formValidates.fileSizeCheck]"
+            accept="image/*"
+            prepend-icon="mdi-camera"
+            label="画像をアップロードする"
+            class="mt-15 ml-3 image-form"
+          >
+          </v-file-input>
+        </v-row>
         <v-col cols="12">
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名
@@ -85,7 +84,7 @@
         </v-col>
       </v-form>
     </v-card>
-  </v-col>
+  </div>
 </template>
 
 <script>
@@ -149,8 +148,8 @@ export default {
   color: #6d7570;
 }
 
-.max-width {
-  max-width: 750px;
+.link-width {
+  width: 750px;
 }
 
 @media screen and (max-width: 959px) {
@@ -158,5 +157,9 @@ export default {
   .sm-under-no {
     display: none;
   }
+}
+/* stylelint-disable */
+.image-form >>> .v-input__slot {
+  width: 200px;
 }
 </style>
