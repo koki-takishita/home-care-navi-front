@@ -55,6 +55,7 @@ export default {
     async SearchForOfficesChosenByAddress() {
       if (this.chooseItems.length === 0) {
         alert('市町村を１つ以上選択してください。')
+        return
       }
       try {
         const prefecture = encodeURI(this.choosePrefecture)
