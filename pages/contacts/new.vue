@@ -6,9 +6,9 @@
       </h4>
     </div>
     <v-card-text>
-      <div class="form-wrapper mx-auto">
+      <div>
         <v-form v-model="form.valid">
-          <div class="set-width-343">
+          <div>
             <label class="font-color-gray font-weight-black text-caption"
               >お名前
               <v-text-field
@@ -28,7 +28,7 @@
               >返信用メールアドレス
               <v-text-field
                 v-model="form.email"
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                 outlined
                 dense
                 placeholder="homecarenavi@mail.com"
@@ -40,25 +40,26 @@
 
           <label class="font-color-gray font-weight-black text-caption">
             利用者区分
-            <v-row class="set-width-343">
+            <v-row>
               <v-col>
                 <v-select
+                  v-model="form.types"
                   :items="items"
+                  outlined
                   dense
-                  placeholder="選択してください"
+                  placeholder="ユーザー"
                   :rules="[formValidates.required]"
                 ></v-select>
               </v-col>
             </v-row>
           </label>
-          <label class="font-color-gray font-weight-black text-caption"
+          <label class="font-color-gray text-caption"
             >お問い合わせ内容
             <v-textarea
+              v-model="form.content"
               outlined
               required="required"
               placeholder="入力してください"
-              solo
-              type="password"
               :rules="[formValidates.required]"
             />
           </label>
@@ -101,6 +102,7 @@ export default {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
+
         email: (value) => {
           const format =
             // eslint-disable-next-line no-control-regex
