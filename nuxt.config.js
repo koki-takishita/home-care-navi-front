@@ -60,9 +60,6 @@ export default {
     '@nuxtjs/auth',
   ],
 
-  axios: {
-    baseURL: 'http://localhost:3000/api',
-  },
   auth: {
     redirect: {
       login: false,
