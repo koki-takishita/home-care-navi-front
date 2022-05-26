@@ -1,8 +1,9 @@
 <template>
   <div class="w-390">
-    <v-card min-height="324" max-width="375" class="pa-4">
+    <v-card min-height="324" max-width="375" class="pa-4" outlined>
       <v-btn block color="error" min-height="48" outlined>
-        現在地から探す
+        <v-icon small>mdi-map-marker</v-icon>
+        <span class="font-weight-black ml-2">現在地から探す</span>
       </v-btn>
       <div class="mt-3 d-flex justify-space-between flex-wrap w-343 h-232">
         <v-card
@@ -12,9 +13,12 @@
           outlined
           max-height="72"
           min-width="109"
+          class="d-flex align-center"
           @click="fetchAreas(area)"
         >
-          {{ area }}
+          <v-card-text class="text-center font-weight-black">
+            {{ area }}
+          </v-card-text>
         </v-card>
       </div>
     </v-card>
