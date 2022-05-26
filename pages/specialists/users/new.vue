@@ -147,7 +147,7 @@
               >新規登録</v-btn
             >
             <v-btn
-              class="error pa-0 ma-0 text-h6 d-block d-sm-none"
+              class="warning pa-0 ma-0 text-h6 d-block d-sm-none"
               block
               :disabled="!form.valid"
               max-width="520"
