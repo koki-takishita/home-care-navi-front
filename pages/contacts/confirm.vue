@@ -1,42 +1,59 @@
 <template>
-  <v-card width="750" class="mx-auto my-6">
-    <v-card-title>
-      <h4 class="display-1">入力内容をご確認ください。</h4>
-    </v-card-title>
+  <v-card width="750" class="mx-auto my-2">
+    <div class="px-4 pt-4 d-sm-block">
+      <h4 class="display-1 text-h6 font-weight-black">
+        入力内容をご確認ください
+      </h4>
+    </div>
     <v-card-text>
       <v-form>
+        <p class="font-color-gray font-weight-black">お名前</p>
         <p>
-          お名前<br />
           {{ name }}
         </p>
 
+        <p class="font-color-gray font-weight-black">返信用メールアドレス</p>
         <p>
-          返信用メールアドレス<br />
           {{ email }}
         </p>
+
+        <p class="font-color-gray font-weight-black">利用者区分</p>
         <p>
-          利用者区分<br />
           {{ types }}
         </p>
 
+        <p class="font-color-gray font-weight-black">お問い合わせ内容</p>
         <p>
-          お問い合わせ内容<br />
           {{ content }}
         </p>
 
         <div class="text-center mt-12">
-          <p>この内容で送信してよろしいですか？</p>
+          <p class="font-color-gray font-weight-black">
+            この内容で送信してよろしいですか？
+          </p>
         </div>
         <v-card-actions>
-          <v-btn to="/contacts/sucsess" class="info" block large>
+          <v-btn
+            to="/contacts/sucsess"
+            block
+            large
+            class="error text-h6 block"
+            max-width="520"
+            min-width="343"
+            height="60"
+          >
             送信する
           </v-btn>
         </v-card-actions>
-        <v-card-actions>
-          <NuxtLink class="text-decoration-none text-senter" to="/contacts/new">
+        <div class="mx-auto mt-4 text-center top-link mb-4">
+          <a
+            href="/contacts/new"
+            style="color: #f06364"
+            class="text-decoration-none"
+          >
             もどる
-          </NuxtLink>
-        </v-card-actions>
+          </a>
+        </div>
       </v-form>
     </v-card-text>
   </v-card>

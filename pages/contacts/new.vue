@@ -1,83 +1,79 @@
 <template>
   <v-card width="750" class="mx-auto mb-2">
     <div class="px-4 pt-4 d-sm-block">
-      <h4 class="display-1 text-center text-h6 font-weight-black">
-        お問い合わせ
-      </h4>
+      <h4 class="display-1 text-h6 font-weight-black">お問い合わせ</h4>
     </div>
     <v-card-text>
-      <div>
-        <v-form v-model="form.valid">
-          <div>
-            <label class="font-color-gray font-weight-black text-caption"
-              >お名前
-              <v-text-field
-                id="name"
-                v-model="form.name"
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
-                placeholder="田中 太郎"
-                outlined
-                dense
-                height="44"
-                :rules="[formValidates.required]"
-            /></label>
-          </div>
-
-          <div class="mt-n-2">
-            <label class="font-color-gray font-weight-black text-caption"
-              >返信用メールアドレス
-              <v-text-field
-                v-model="form.email"
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
-                outlined
-                dense
-                placeholder="homecarenavi@mail.com"
-                type="email"
-                height="44"
-                :rules="[formValidates.required, formValidates.email]"
-            /></label>
-          </div>
-
-          <label class="font-color-gray font-weight-black text-caption">
-            利用者区分
-            <v-row>
-              <v-col>
-                <v-select
-                  v-model="form.types"
-                  :items="items"
-                  outlined
-                  dense
-                  placeholder="ユーザー"
-                  :rules="[formValidates.required]"
-                ></v-select>
-              </v-col>
-            </v-row>
-          </label>
-          <label class="font-color-gray text-caption"
-            >お問い合わせ内容
-            <v-textarea
-              v-model="form.content"
+      <v-form v-model="form.valid">
+        <div>
+          <label class="font-color-gray font-weight-black text-caption"
+            >お名前
+            <v-text-field
+              id="name"
+              v-model="form.name"
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              placeholder="田中 太郎"
               outlined
-              required="required"
-              placeholder="入力してください"
+              dense
+              height="44"
               :rules="[formValidates.required]"
-            />
-          </label>
+          /></label>
+        </div>
 
-          <v-card-actions class="pa-0">
-            <v-btn
-              class="error text-h6 block"
-              block
-              :disabled="!form.valid"
-              max-width="520"
-              min-width="343"
-              height="60"
-              @click="sendConfirmpage"
-              >この内容で問い合わせる</v-btn
-            >
-          </v-card-actions>
-        </v-form>
-      </div>
+        <div class="mt-n-2">
+          <label class="font-color-gray font-weight-black text-caption"
+            >返信用メールアドレス
+            <v-text-field
+              v-model="form.email"
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              outlined
+              dense
+              placeholder="homecarenavi@mail.com"
+              type="email"
+              height="44"
+              :rules="[formValidates.required, formValidates.email]"
+          /></label>
+        </div>
+
+        <label class="font-color-gray font-weight-black text-caption">
+          利用者区分
+          <v-row>
+            <v-col>
+              <v-select
+                v-model="form.types"
+                :items="items"
+                outlined
+                dense
+                placeholder="ユーザー"
+                :rules="[formValidates.required]"
+              ></v-select>
+            </v-col>
+          </v-row>
+        </label>
+        <label class="font-color-gray text-caption"
+          >お問い合わせ内容
+          <v-textarea
+            v-model="form.content"
+            outlined
+            required="required"
+            placeholder="入力してください"
+            :rules="[formValidates.required]"
+          />
+        </label>
+
+        <v-card-actions class="pa-0">
+          <v-btn
+            class="error text-h6 block"
+            block
+            :disabled="!form.valid"
+            max-width="520"
+            min-width="343"
+            height="60"
+            @click="sendConfirmpage"
+            >この内容で問い合わせる</v-btn
+          >
+        </v-card-actions>
+      </v-form>
     </v-card-text>
   </v-card>
 </template>
