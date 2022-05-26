@@ -1,11 +1,3 @@
-## 例
-
-[link](https://dev.classmethod.jp/articles/pull-request-template/)
-
-## チケットへのリンク
-
-- https://example.com
-
 ## やったこと
 
 - このプルリクで何をしたのか？
