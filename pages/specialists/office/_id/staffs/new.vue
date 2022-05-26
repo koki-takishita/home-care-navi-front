@@ -2,7 +2,7 @@
   <div>
     <p class="mb-0 text-left link-width mx-auto">
       <NuxtLink
-        to=""
+        to="."
         class="text-overline text-decoration-none link-color sm-under-no"
         >＜ スタッフ情報一覧にもどる</NuxtLink
       >
@@ -70,13 +70,14 @@
             depressed
             :disabled="!valid"
             color="warning"
+            to="."
             @click="send"
           >
             登録する
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to=""
+              to="."
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -127,10 +128,10 @@ export default {
         params.append('image', this.image)
       }
       try {
-        // `specialists/offices/${id}/staffs`
         await this.$axios.$post(`specialists/offices/${id}/staffs`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
+        this.$router.push('.')
       } catch (error) {
         return error
       }
@@ -138,7 +139,6 @@ export default {
   },
 }
 </script>
-
 <style scoped>
 .link-color {
   color: #ee7b1a;
