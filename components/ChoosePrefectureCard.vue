@@ -7,8 +7,8 @@
           :key="i"
           @click="fetchCities(prefecture)"
         >
-          <v-list-item-content>
-            {{ prefecture }}
+          <v-list-item-content class="text-button">
+            <span class="">{{ prefecture }}</span>
           </v-list-item-content>
           <v-list-item-icon>
             <v-icon block>mdi-chevron-right</v-icon>
