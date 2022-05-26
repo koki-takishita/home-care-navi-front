@@ -4,7 +4,7 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
   })
 
   $axios.onRequest((config) => {
-    console.log(config)
+    // console.log(config)
     if (config.url === '/login') {
       setAuthInfoToHeader(config)
     }
