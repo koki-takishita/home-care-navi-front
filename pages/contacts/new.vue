@@ -66,14 +66,13 @@
 
           <v-card-actions class="pa-0">
             <v-btn
-              to="/contacts/confirm"
               class="error text-h6 block"
               block
               :disabled="!form.valid"
               max-width="520"
               min-width="343"
               height="60"
-              @click="contact()"
+              @click="sendConfirmpage"
               >この内容で問い合わせる</v-btn
             >
           </v-card-actions>
@@ -102,20 +101,27 @@ export default {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
-
         email: (value) => {
           const format =
             // eslint-disable-next-line no-control-regex
             /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
-        methods: {
-          contact() {
-            this.$router.push('/contacts/comfirm')
-          },
-        },
       },
     }
+  },
+  methods: {
+    sendConfirmpage() {
+      this.$router.push({
+        path: '/contacts/confirm',
+        query: {
+          name: this.form.name,
+          email: this.form.email,
+          types: this.form.types,
+          content: this.form.content,
+        },
+      })
+    },
   },
 }
 </script>

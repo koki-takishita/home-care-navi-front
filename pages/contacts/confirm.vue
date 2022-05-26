@@ -5,13 +5,24 @@
     </v-card-title>
     <v-card-text>
       <v-form>
-        <p>お名前</p>
+        <p>
+          お名前<br />
+          {{ name }}
+        </p>
 
-        <p>返信用メールアドレス</p>
+        <p>
+          返信用メールアドレス<br />
+          {{ email }}
+        </p>
+        <p>
+          利用者区分<br />
+          {{ types }}
+        </p>
 
-        <p>利用者区分</p>
-
-        <p>お問い合わせ内容</p>
+        <p>
+          お問い合わせ内容<br />
+          {{ content }}
+        </p>
 
         <div class="text-center mt-12">
           <p>この内容で送信してよろしいですか？</p>
@@ -22,7 +33,9 @@
           </v-btn>
         </v-card-actions>
         <v-card-actions>
-          <v-btn to="/contacts/new" class="info" block large> 戻る </v-btn>
+          <NuxtLink class="text-decoration-none text-senter" to="/contacts/new">
+            もどる
+          </NuxtLink>
         </v-card-actions>
       </v-form>
     </v-card-text>
@@ -32,23 +45,24 @@
 <script>
 export default {
   layout: 'application',
+  data() {
+    return {
+      name: '',
+      email: '',
+      types: '',
+      content: '',
+    }
+  },
   methods: {
-    contact() {
-      this.$router.push('/contacts/sucsses')
+    setParameter() {
+      this.name = this.$route.query.name
+      this.email = this.$route.query.email
+      this.types = this.$route.query.types
+      this.content = this.$route.query.content
     },
   },
+  mounted() {
+    this.setParameter()
+  },
 }
-/*      methods: {
-    async submit() {
-      /* this.response = await this.$http.$get('http://localhost:3000/api/users') */
-
-/*      this.response = await this.$http.$post(
-        'http://localhost:3000/api/contacts',
-        {
-          user: {
-            name: this.name,
-            email: this.email,
-          },
-        }
-        */
 </script>
