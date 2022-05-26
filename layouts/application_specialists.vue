@@ -124,7 +124,7 @@
                 >
                 <v-btn
                   color="warning"
-                  href="new"
+                  href="/specialists/users/new"
                   :width="120"
                   :height="36"
                   depressed
@@ -135,7 +135,7 @@
                 <NuxtLink
                   to="/users/login"
                   class="link-style text-overline mr-5 text-decoration-none mr-5"
-                  >利用者の方はこちら</NuxtLink
+                  >一般の方はこちら</NuxtLink
                 >
               </div>
             </v-list-item-content>

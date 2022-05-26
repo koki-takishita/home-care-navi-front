@@ -4,7 +4,7 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
   })
 
   $axios.onRequest((config) => {
-    console.log(config)
+    // console.log(config)
     if (config.url === '/login') {
       setAuthInfoToHeader(config)
     }
@@ -17,7 +17,7 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
       })
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログインしました'])
-      redirect('/top')
+      redirect(loginInfo.redirecttUrl)
       return response
     } catch (error) {
       return error
