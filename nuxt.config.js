@@ -60,9 +60,6 @@ export default {
     '@nuxtjs/auth',
   ],
 
-  axios: {
-    baseURL: 'http://localhost:3000/api',
-  },
   auth: {
     redirect: {
       login: false,
@@ -76,8 +73,8 @@ export default {
           property: false,
         },
         endpoints: {
-          login: { url: '/users/sign_in', method: 'post' },
-          logout: { url: '/users/sign_out', method: 'delete' },
+          login: { url: '/login', method: 'post' },
+          logout: { url: '/logout', method: 'delete' },
           user: false,
         },
       },
