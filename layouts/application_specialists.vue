@@ -27,7 +27,52 @@
             </v-col>
             <v-col md="8" class="ml-auto">
               <div class="d-flex justify-end">
-                <div class="red--text line-style">
+                <div v-if="$auth.loggedIn">
+                  <div class="mr-8 d-flex align-center">
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline mr-5 text-decoration-none"
+                      >事業所情報編集</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline mr-5 text-decoration-none"
+                      >スタッフ情報</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline mr-5 text-decoration-none"
+                      >お礼一覧</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline text-decoration-none mr-5"
+                      >予約状況確認</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline text-decoration-none mr-5"
+                      >利用者情報管理</NuxtLink
+                    >
+                    <NuxtLink
+                      to="#"
+                      class="header-style text-overline text-decoration-none mr-5"
+                      >登録情報</NuxtLink
+                    >
+                    <div class="red--text line-style">
+                      <v-btn
+                        :width="120"
+                        :height="36"
+                        color="warning"
+                        depressed
+                        @click.prevent="$logout(logoutInfo)"
+                        >ログアウト</v-btn
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div v-else class="red--text line-style">
                   <v-btn
                     href="/specialists/login"
                     :width="120"
@@ -37,7 +82,7 @@
                     >ログイン</v-btn
                   >
                   <v-btn
-                    href="new"
+                    href="/specialists/users/new"
                     :width="120"
                     :height="36"
                     color="warning"
@@ -112,7 +157,22 @@
                 />
               </v-list-item-title>
               <div class="header-style mt-3 text-caption ma-0">ゲストさん</div>
-              <div class="d-flex justify-center ma-0 mt-6">
+              <div
+                v-if="$auth.loggedIn"
+                class="d-flex justify-center ma-0 mt-6"
+              >
+                <v-btn
+                  href="/users/login"
+                  :width="120"
+                  :height="36"
+                  color="warning"
+                  class="mr-2"
+                  depressed
+                  @click.prevent="$logout(logoutInfo)"
+                  >ログアウト</v-btn
+                >
+              </div>
+              <div v-else class="d-flex justify-center ma-0 mt-6">
                 <v-btn
                   href="/specialists/login"
                   :width="120"
@@ -141,6 +201,88 @@
             </v-list-item-content>
           </v-list-item>
         </v-card>
+        <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
+          <v-list-item-group v-model="group">
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+              <v-list-item-title>
+                <NuxtLink
+                  to="#"
+                  class="text-decoration-none text-body-2 navi-style"
+                  >事業所情報編集</NuxtLink
+                >
+              </v-list-item-title>
+              <v-list-item-icon class="ma-0 mt-2">
+                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider color="#D9DEDE"></v-divider>
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+              <v-list-item-title>
+                <NuxtLink
+                  to="#"
+                  class="text-decoration-none text-body-2 navi-style"
+                  >スタッフ情報</NuxtLink
+                >
+              </v-list-item-title>
+              <v-list-item-icon class="ma-0 mt-2">
+                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider color="#D9DEDE"></v-divider>
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+              <v-list-item-title>
+                <NuxtLink
+                  to="#"
+                  class="text-decoration-none text-body-2 navi-style"
+                  >お礼一覧</NuxtLink
+                >
+              </v-list-item-title>
+              <v-list-item-icon class="ma-0 mt-2">
+                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider color="#D9DEDE"></v-divider>
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+              <v-list-item-title>
+                <NuxtLink
+                  to="#"
+                  class="text-decoration-none text-body-2 navi-style"
+                  >予約状況確認</NuxtLink
+                >
+              </v-list-item-title>
+              <v-list-item-icon class="ma-0 mt-2">
+                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider color="#D9DEDE"></v-divider>
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+              <v-list-item-title>
+                <NuxtLink
+                  to="#"
+                  class="text-decoration-none text-body-2 navi-style"
+                  >利用者情報管理</NuxtLink
+                >
+              </v-list-item-title>
+              <v-list-item-icon class="ma-0 mt-2">
+                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider color="#D9DEDE"></v-divider>
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+              <v-list-item-title>
+                <NuxtLink
+                  to="#"
+                  class="text-decoration-none text-body-2 navi-style"
+                  >登録情報</NuxtLink
+                >
+              </v-list-item-title>
+              <v-list-item-icon class="ma-0 mt-2">
+                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider color="#D9DEDE"></v-divider>
+          </v-list-item-group>
+        </v-list>
       </div>
     </v-navigation-drawer>
 
@@ -235,6 +377,10 @@ export default {
   layout: 'top',
   data() {
     return {
+      logoutInfo: {
+        redirecttUrl: '/specialists/login',
+        valid: false,
+      },
       justify: [],
       color_w: '#FFFFFF',
       color_y: '#F09C3C',
@@ -245,9 +391,10 @@ export default {
       tile: false,
     }
   },
+
   methods: {
     topPage() {
-      window.location.href = 'http://localhost:8000/top'
+      window.location.href = 'http://localhost:8000/specialists/login'
     },
   },
 }

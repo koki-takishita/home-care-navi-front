@@ -53,7 +53,7 @@
                         :height="36"
                         color="error"
                         depressed
-                        @click.prevent="$logout()"
+                        @click.prevent="$logout(logoutInfo)"
                         >ログアウト</v-btn
                       >
                     </div>
@@ -142,7 +142,7 @@
                   color="error"
                   class="mr-2"
                   depressed
-                  @click.prevent="$logout()"
+                  @click.prevent="$logout(logoutInfo)"
                   >ログアウト</v-btn
                 >
               </div>
@@ -339,6 +339,10 @@ export default {
   layout: 'top',
   data() {
     return {
+      logoutInfo: {
+        redirecttUrl: '/top',
+        valid: false,
+      },
       justify: [],
       color_w: '#FFFFFF',
       color_g: '#6D7570',
