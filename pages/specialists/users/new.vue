@@ -212,7 +212,7 @@ export default {
     ...mapActions('catchErrorMsg', ['clearMsg']),
     async sign_up() {
       try {
-        const response = await this.$axios.$post(`specialists/users`, {
+        const response = await this.$apiToSpecialistJson.$post(`users`, {
           name: this.form.name,
           email: this.form.email,
           password: this.form.password,

@@ -1,26 +1,51 @@
-export default function ({ $auth, redirect, store, $axios }, inject) {
+export default function (
+  { $auth, redirect, store, $axios, $apiToSpecialistJson },
+  inject
+) {
   inject('login', (loginInfo) => {
     login(loginInfo)
   })
 
   $axios.onRequest((config) => {
-    // console.log(config)
-    if (config.url === '/login') {
+    console.log(config)
+    if (
+      config.url === '/login' ||
+      $apiToSpecialistJson === 'specialists/login'
+    ) {
       setAuthInfoToHeader(config)
     }
   })
 
   async function login(loginInfo) {
-    try {
-      const response = await $auth.loginWith('local', {
-        data: loginInfo,
-      })
-      store.commit('catchErrorMsg/setType', 'success')
-      store.commit('catchErrorMsg/setMsg', ['ログインしました'])
-      redirect(loginInfo.redirecttUrl)
-      return response
-    } catch (error) {
-      return error
+    if (loginInfo.user_type === 'customer') {
+      try {
+        const response = await $auth.loginWith('local', {
+          data: loginInfo,
+        })
+        store.commit('catchErrorMsg/setType', 'success')
+        store.commit('catchErrorMsg/setMsg', ['ログインしました'])
+        redirect(loginInfo.redirecttUrl)
+        return response
+      } catch (error) {
+        return error
+      }
+    } else if (loginInfo.user_type === 'specialist') {
+      try {
+        console.log(loginInfo)
+        const response = await $apiToSpecialistJson.$post('login', {
+          email: loginInfo.email,
+          password: loginInfo.password,
+          redirecttUrl: loginInfo.redirecttUrl,
+          user_type: 'specialists',
+          valid: true,
+        })
+        store.commit('catchErrorMsg/setType', 'success')
+        store.commit('catchErrorMsg/setMsg', ['ログインしました'])
+        redirect(loginInfo.redirecttUrl)
+        return response
+      } catch (error) {
+        return error
+      }
     }
   }
 }

@@ -120,6 +120,7 @@ export default {
         email: '',
         password: '',
         redirecttUrl: '/specialists/users/new',
+        user_type: 'specialist',
         valid: false,
       },
       formValidates: {
