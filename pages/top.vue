@@ -1,12 +1,12 @@
 <template>
   <div class="w-990 mx-auto mt-n2 mb-2">
     <SubTitle />
-    <div class="mx-auto h-74 d-flex align-end">
+    <div class="mx-auto h-74 d-none d-md-flex align-end">
       <p class="color-dark-gray font-weight-black text-body-1">
         エリアから探す
       </p>
     </div>
-    <div class="d-flex justify-space-between">
+    <div :class="toggleClassByBreakpoints">
       <ChooseAreaCard />
       <ChoosePrefectureCard />
       <ChooseCityCard />
@@ -16,6 +16,22 @@
 <script>
 export default {
   layout: 'application',
+  data() {
+    return {
+      toggleSize: 960,
+      mobileStyle: '',
+      pcStyle: 'd-flex justify-space-between',
+    }
+  },
+  computed: {
+    toggleClassByBreakpoints() {
+      if (this.$vuetify.breakpoint.width < this.toggleSize) {
+        return this.mobileStyle
+      } else {
+        return this.pcStyle
+      }
+    },
+  },
 }
 </script>
 <style scoped>
