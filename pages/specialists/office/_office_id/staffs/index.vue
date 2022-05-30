@@ -51,7 +51,7 @@
       large
       color="white"
       class="mt-8 mb-10"
-      to="staffs/new"
+      @click="goStaffNewPage"
     >
       <div class="delete-button">
         <v-icon class="mb-1">mdi-plus</v-icon>
@@ -64,13 +64,24 @@
 <script>
 export default {
   layout: 'application_specialists',
-  async asyncData({ $axios, params }) {
-    let staffs = []
-    const id = `${params.id}`
-    await $axios
-      .$get(`specialists/offices/${id}/staffs`)
-      .then((res) => (staffs = res))
-    return { staffs }
+  data() {
+    return {
+      staffs: [],
+      officeId: this.$route.params.office_id,
+    }
+  },
+  async fetch() {
+    this.staffs = await fetch(
+      // home-care-navi-v2/api/specialists/offices/${this.officeId}/staffs
+      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
+    ).then((res) => res.json())
+  },
+  methods: {
+    goStaffNewPage() {
+      this.$store.commit('catchErrorMsg/setType', '')
+      this.$store.commit('catchErrorMsg/clearMsg')
+      this.$router.push('staffs/new')
+    },
   },
 }
 </script>
