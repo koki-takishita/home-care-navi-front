@@ -33,7 +33,13 @@
               >
             </v-col>
             <v-col cols="8" class="pr-6">
-              <v-btn block depressed color="warning">編集する</v-btn>
+              <v-btn
+                block
+                depressed
+                color="warning"
+                :to="`staffs/${staff.id}/edit`"
+                >編集する</v-btn
+              >
             </v-col>
           </v-row>
         </v-card>
@@ -65,9 +71,6 @@ export default {
       .$get(`specialists/offices/${id}/staffs`)
       .then((res) => (staffs = res))
     return { staffs }
-  },
-  data() {
-    return {}
   },
 }
 </script>

@@ -2,7 +2,7 @@
   <div>
     <p class="mb-0 text-left link-width mx-auto">
       <NuxtLink
-        to="."
+        to=".."
         class="text-overline text-decoration-none link-color sm-under-no"
         >＜ スタッフ情報一覧にもどる</NuxtLink
       >
@@ -70,14 +70,13 @@
             depressed
             :disabled="!valid"
             color="warning"
-            to="."
             @click="send"
           >
-            登録する
+            変更する
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to="."
+              to=".."
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -108,7 +107,8 @@ export default {
         introductionCountCheck: (value) =>
           value.length <= 81 || '80文字以下で入力してください',
       },
-      office_id: this.$route.params.id,
+      office_id: this.$route.params.office_id,
+      staff_id: this.$route.params.staff_id,
       name: '',
       kana: '',
       introduction: '',
@@ -118,7 +118,8 @@ export default {
   },
   methods: {
     async send() {
-      const id = this.office_id
+      const officeId = this.office_id
+      const staffId = this.staff_id
       const params = new FormData()
       params.append('office_id', this.office_id)
       params.append('name', this.name)
@@ -128,10 +129,14 @@ export default {
         params.append('image', this.image)
       }
       try {
-        await this.$axios.$post(`specialists/offices/${id}/staffs`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
-        this.$router.push('.')
+        await this.$axios.$put(
+          `specialists/offices/${officeId}/staffs/${staffId}`,
+          params,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+        )
+        this.$router.push('..')
       } catch (error) {
         return error
       }
