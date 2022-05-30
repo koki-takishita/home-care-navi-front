@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="test()">
     <div class="d-none d-md-block">
       <div class="w-390">
         <v-card min-height="324" max-width="375" class="pa-4" outlined>
@@ -65,7 +65,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -80,7 +80,22 @@ export default {
         '四国',
         '九州沖縄',
       ],
+      display: true,
     }
+  },
+  watch: {
+    /*
+    getCount_area() {
+      if( 2 <= this.getCount_area && this.$vuetify.breakpoint.smAndDown ) { this.display = false }
+      //else if(this.getCount_area <= 1 || this.$vuetify.breakpoint.mdAndUp) { this.display = true }
+    },
+    setDisplay() {
+      this.display = true
+    },
+*/
+  },
+  computed: {
+    ...mapGetters('areaData', ['getCount_area']),
   },
   methods: {
     ...mapActions('areaData', [
@@ -98,6 +113,18 @@ export default {
     fetchAreaToTokyo() {
       this.setPrefectures('関東')
       this.setCities('東京都')
+    },
+    test() {
+      // TODO ブレイキングポイントがモバイル用 + countが2以上
+      if (this.$vuetify.breakpoint.mdAndUp) {
+        return true
+      } else if (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) {
+        console.log('はいった')
+        console.log(this.getCount_area)
+        console.log('this.$vuetify.breakpoint.smAndDown')
+        return false
+      }
+      return true
     },
   },
   mounted() {
