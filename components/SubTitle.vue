@@ -18,8 +18,18 @@
         </div>
       </v-card>
     </div>
-    <div class="d-block d-md-none">
-      <p>test</p>
+    <div class="d-block d-md-none mt-3">
+      <v-card outlined tile class="d-flex justify-center" min-height="90">
+        <div class="my-auto set-color">
+          <p class="ma-0 text-h6 font-weight-black">
+            安心して介護をお願いしたいから。
+          </p>
+          <p class="ma-0 font-size-set">
+            ホームケアナビは、ケアマネージャーの検索ができるサービスです。
+          </p>
+        </div>
+        <v-icon large color="#F8BBD0"> mdi-cards-heart </v-icon>
+      </v-card>
     </div>
   </div>
 </template>
@@ -45,5 +55,9 @@ export default {}
 
 ::v-deep input::placeholder {
   color: #d9dede !important;
+}
+
+.font-size-set {
+  font-size: 0.5em;
 }
 </style>
