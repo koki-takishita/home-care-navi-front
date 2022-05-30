@@ -1,20 +1,27 @@
 <template>
-  <v-card outlined max-width="990" min-height="245" class="mx-auto">
-    <div class="text-center set-color font-weight-black mt-12">
-      <p class="fs-28 mb-2">安心して介護をお願いしたいから。</p>
-      <p class="text-caption mb-0">
-        ホームケアナビは、ケアマネージャーの検索ができるサービスです。
-      </p>
+  <div>
+    <div class="d-none d-md-block">
+      <v-card outlined max-width="990" min-height="245" class="mx-auto">
+        <div class="text-center set-color font-weight-black mt-12">
+          <p class="fs-28 mb-2">安心して介護をお願いしたいから。</p>
+          <p class="text-caption mb-0">
+            ホームケアナビは、ケアマネージャーの検索ができるサービスです。
+          </p>
+        </div>
+        <div class="mt-6 max-width-720 mx-auto">
+          <v-text-field
+            placeholder="事業所名、市町村など"
+            append-icon="mdi-magnify"
+            outlined
+            rounded
+          ></v-text-field>
+        </div>
+      </v-card>
     </div>
-    <div class="mt-6 max-width-720 mx-auto">
-      <v-text-field
-        placeholder="事業所名、市町村など"
-        append-icon="mdi-magnify"
-        outlined
-        rounded
-      ></v-text-field>
+    <div class="d-block d-md-none">
+      <p>test</p>
     </div>
-  </v-card>
+  </div>
 </template>
 <script>
 export default {}
