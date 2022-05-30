@@ -25,7 +25,8 @@ export default {
   },
   computed: {
     toggleClassByBreakpoints() {
-      if (this.$vuetify.breakpoint.width < this.toggleSize) {
+      // TODO mountedでやろうと思ったけど、mountedだとページの幅を変えた時が検知しない
+      if (this.$vuetify.breakpoint.smAndDown) {
         return this.mobileStyle
       } else {
         return this.pcStyle
