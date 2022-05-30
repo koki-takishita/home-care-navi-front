@@ -70,6 +70,9 @@ export default {
       content: '',
     }
   },
+  mounted() {
+    this.setParameter()
+  },
   methods: {
     setParameter() {
       this.name = this.$route.query.name
@@ -77,9 +80,6 @@ export default {
       this.types = this.$route.query.types
       this.content = this.$route.query.content
     },
-  },
-  mounted() {
-    this.setParameter()
   },
 }
 </script>

@@ -85,7 +85,7 @@
     </div>
 
     <div class="d-md-none d-sm-flex">
-      <v-app-bar class="py-0" :color="color_w" max-height="52">
+      <v-app-bar class="py-0" :color="color_w" flat max-height="52">
         <v-row>
           <v-col sm="6">
             <v-toolbar-title class="fill-height d-flex">
