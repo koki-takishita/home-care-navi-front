@@ -392,9 +392,6 @@ export default {
     }
   },
 
-  created() {
-    console.log('aaa')
-  },
   methods: {
     topPage() {
       window.location.href = 'http://localhost:8000/specialists/login'
