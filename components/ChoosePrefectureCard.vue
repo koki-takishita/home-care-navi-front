@@ -20,9 +20,9 @@
         </v-card>
       </div>
     </div>
-    <div class="d-block d-md-none">
-      <h2>エリアから探す</h2>
-      <div class="w-283 pa-4">
+    <div class="d-block d-md-none pa-4">
+      <h3 class="mb-4">エリアを選択してください</h3>
+      <div class="w-283">
         <!--<v-btn @click="backArea()">戻る</v-btn>-->
         <v-card color="blue" outlined class="pl-2" @click="backArea()">
           <v-icon>mdi-chevron-left</v-icon>
