@@ -145,6 +145,7 @@ export default {
       'set_one_city',
       'increment_city',
       'increment_prefecture',
+      'increment_area',
     ]),
     async SearchForOfficesChosenByAddress() {
       if (this.chooseItems.length === 0) {
@@ -182,12 +183,15 @@ export default {
       this.chooseItems = []
       this.set_one_city()
       this.set_one_prefecture()
+      this.increment_area()
     },
     countUp() {
       if (this.chooseItems.length >= 1) {
         this.increment_city()
       } else if (this.chooseItems.length === 0) {
         this.set_one_city()
+        console.log('countup')
+        // this.increment_area()
       }
     },
   },
