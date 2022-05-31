@@ -17,6 +17,7 @@
               :value="cities[i].city"
               hide-details
               color="red"
+              @click="countUp()"
             >
             </v-checkbox>
             <v-list-item-content class="text-button pa-0 ml-n2">
@@ -78,6 +79,7 @@
               :value="cities[i].city"
               hide-details
               color="red"
+              @click="countUp()"
             >
             </v-checkbox>
             <v-list-item-content class="text-button pa-0 ml-n2">
@@ -134,10 +136,16 @@ export default {
       'getCities',
       'getCurrentPrefecture',
       'getCount_prefecture',
+      'getCount_city',
     ]),
   },
   methods: {
-    ...mapActions('areaData', ['set_one_prefecture']),
+    ...mapActions('areaData', [
+      'set_one_prefecture',
+      'set_one_city',
+      'increment_city',
+      'increment_prefecture',
+    ]),
     async SearchForOfficesChosenByAddress() {
       if (this.chooseItems.length === 0) {
         alert('市町村を１つ以上選択してください。')
@@ -159,10 +167,7 @@ export default {
       this.chooseItems = []
     },
     displayControll() {
-      // vuexにcheckboxにチェックが入ったかを記録
-      if (
-        this.$vuetify.breakpoint.mdAndUp /* || this.chooseItems.length > 0 */
-      ) {
+      if (this.$vuetify.breakpoint.mdAndUp || this.getCount_city > 1) {
         return true
       } else if (
         (this.$vuetify.breakpoint.smAndDown &&
@@ -174,7 +179,16 @@ export default {
       return true
     },
     backPrefecture() {
+      this.chooseItems = []
+      this.set_one_city()
       this.set_one_prefecture()
+    },
+    countUp() {
+      if (this.chooseItems.length >= 1) {
+        this.increment_city()
+      } else if (this.chooseItems.length === 0) {
+        this.set_one_city()
+      }
     },
   },
 }

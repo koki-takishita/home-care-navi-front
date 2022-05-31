@@ -65,6 +65,7 @@ export const state = () => ({
   cities: [],
   count_area: 0,
   count_prefecture: 0,
+  count_city: 0,
 })
 
 export const getters = {
@@ -74,6 +75,7 @@ export const getters = {
   getCities: (state) => state.cities,
   getCount_area: (state) => state.count_area,
   getCount_prefecture: (state) => state.count_prefecture,
+  getCount_city: (state) => state.count_city,
 }
 
 export const mutations = {
@@ -115,6 +117,12 @@ export const mutations = {
   },
   set_one_prefecture(state) {
     state.count_prefecture = 1
+  },
+  increment_city(state) {
+    state.count_city++
+  },
+  set_one_city(state) {
+    state.count_city = 1
   },
 }
 
@@ -189,5 +197,11 @@ export const actions = {
   },
   set_one_prefecture({ commit }) {
     commit('set_one_prefecture')
+  },
+  increment_city({ commit }) {
+    commit('increment_city')
+  },
+  set_one_city({ commit }) {
+    commit('set_one_city')
   },
 }

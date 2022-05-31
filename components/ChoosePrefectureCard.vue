@@ -81,8 +81,15 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions('areaData', ['setCities', 'set_one_area']),
+    ...mapActions('areaData', [
+      'setCities',
+      'set_one_area',
+      'set_one_city',
+      'set_one_prefecture',
+    ]),
     fetchCities(choosePrefecture) {
+      this.set_one_city()
+      this.set_one_prefecture()
       this.setCities(choosePrefecture)
     },
     displayControll() {

@@ -84,7 +84,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('areaData', ['getCount_area', 'getCount_prefecture']),
+    ...mapGetters('areaData', [
+      'getCount_area',
+      'getCount_prefecture',
+      'getCount_city',
+    ]),
   },
   methods: {
     ...mapActions('areaData', [
@@ -92,8 +96,12 @@ export default {
       'setCities',
       'clearCities',
       'clearCurrentPrefecture',
+      'set_one_city',
+      'set_one_prefecture',
     ]),
     fetchAreas(chooseArea) {
+      this.set_one_city()
+      this.set_one_prefecture()
       this.setPrefectures(chooseArea)
       this.clearCities()
       this.clearCurrentPrefecture()
@@ -109,7 +117,8 @@ export default {
         return true
       } else if (
         (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) ||
-        this.getCount_prefecture > 1
+        this.getCount_prefecture > 1 ||
+        this.getCount_city > 1
       ) {
         return false
       }
