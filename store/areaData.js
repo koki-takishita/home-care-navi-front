@@ -1,37 +1,57 @@
-const areas = {
-  hokaido: ['北海道'],
-  touhoku: ['青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県'],
-  koushinetsuHokuriku: [
-    '新潟県',
-    '富山県',
-    '石川県',
-    '福井県',
-    '山梨県',
-    '長野県',
-  ],
-  kanto: [
-    '東京都',
-    '神奈川県',
-    '埼玉県',
-    '千葉県',
-    '茨城県',
-    '栃木県',
-    '群馬県',
-  ],
-  kansai: ['滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県'],
-  tokai: ['岐阜県', '静岡県', '愛知県', '三重県'],
-  tyugoku: ['鳥取県', '島根県', '岡山県', '広島県', '山口県'],
-  shikoku: ['徳島県', '香川県', '愛媛県', '高知県'],
-  kyusyuOkinawa: [
-    '福岡県',
-    '佐賀県',
-    '長崎県',
-    '熊本県',
-    '大分県',
-    '宮崎県',
-    '鹿児島県',
-    '沖縄',
-  ],
+const Areas = {
+  Hokaido: {
+    name: '北海道',
+    prefectures: ['北海道'],
+  },
+  Tohoku: {
+    name: '東北',
+    prefectures: ['青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県'],
+  },
+  KoushinetsuHokuriku: {
+    name: '甲信越北陸',
+    prefectures: ['新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県'],
+  },
+  Kanto: {
+    name: '関東',
+    prefectures: [
+      '東京都',
+      '神奈川県',
+      '埼玉県',
+      '千葉県',
+      '茨城県',
+      '栃木県',
+      '群馬県',
+    ],
+  },
+  Kansai: {
+    name: '関西',
+    prefectures: ['滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県'],
+  },
+  Tokai: {
+    name: '東海',
+    prefectures: ['岐阜県', '静岡県', '愛知県', '三重県'],
+  },
+  Tyugoku: {
+    name: '中国',
+    prefectures: ['鳥取県', '島根県', '岡山県', '広島県', '山口県'],
+  },
+  Shikoku: {
+    name: '四国',
+    prefectures: ['徳島県', '香川県', '愛媛県', '高知県'],
+  },
+  KyusyuOkinawa: {
+    name: '九州沖縄',
+    prefectures: [
+      '福岡県',
+      '佐賀県',
+      '長崎県',
+      '熊本県',
+      '大分県',
+      '宮崎県',
+      '鹿児島県',
+      '沖縄',
+    ],
+  },
 }
 
 const requestMethods = {
@@ -94,23 +114,23 @@ export const actions = {
   setPrefectures({ commit }, chooseArea) {
     commit('increment_area')
     if (chooseArea === '北海道') {
-      commit('setPrefectures', areas.hokaido)
+      commit('setPrefectures', Areas.Hokaido.prefectures)
     } else if (chooseArea === '東北') {
-      commit('setPrefectures', areas.touhoku)
+      commit('setPrefectures', Areas.Tohoku.prefectures)
     } else if (chooseArea === '甲信越北陸') {
-      commit('setPrefectures', areas.koushinetsuHokuriku)
+      commit('setPrefectures', Areas.KoushinetsuHokuriku.prefectures)
     } else if (chooseArea === '関東') {
-      commit('setPrefectures', areas.kanto)
+      commit('setPrefectures', Areas.Kanto.prefectures)
     } else if (chooseArea === '関西') {
-      commit('setPrefectures', areas.kansai)
+      commit('setPrefectures', Areas.Kansai.prefectures)
     } else if (chooseArea === '東海') {
-      commit('setPrefectures', areas.tokai)
+      commit('setPrefectures', Areas.Tokai.prefectures)
     } else if (chooseArea === '中国') {
-      commit('setPrefectures', areas.tyugoku)
+      commit('setPrefectures', Areas.Tyugoku.prefectures)
     } else if (chooseArea === '四国') {
-      commit('setPrefectures', areas.shikoku)
+      commit('setPrefectures', Areas.Shikoku.prefectures)
     } else if (chooseArea === '九州沖縄') {
-      commit('setPrefectures', areas.kyusyuOkinawa)
+      commit('setPrefectures', Areas.KyusyuOkinawa.prefectures)
     }
   },
   setCurrentPrefecture({ commit }, prefecture) {

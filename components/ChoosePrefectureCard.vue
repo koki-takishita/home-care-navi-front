@@ -69,7 +69,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions('areaData', ['setCities', 'decrement_area']),
+    ...mapActions('areaData', ['setCities', 'set_one_area']),
     fetchCities(choosePrefecture) {
       this.setCities(choosePrefecture)
     },
@@ -85,7 +85,7 @@ export default {
       return true
     },
     backArea() {
-      this.decrement_area()
+      this.set_one_area()
     },
   },
 }
