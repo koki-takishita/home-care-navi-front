@@ -61,12 +61,14 @@ const requestMethods = {
 export const state = () => ({
   prefectures: [],
   currentPrefecture: '',
+  currentArea: '',
   cities: [],
   count_area: 0,
   count_prefecture: 0,
 })
 
 export const getters = {
+  getCurrentArea: (state) => state.currentArea,
   getPrefectures: (state) => state.prefectures,
   getCurrentPrefecture: (state) => state.currentPrefecture,
   getCities: (state) => state.cities,
@@ -75,6 +77,12 @@ export const getters = {
 }
 
 export const mutations = {
+  setCurrentArea(state, area) {
+    state.currentArea = area
+  },
+  clearCurrentArea(state) {
+    state.currentArea = ''
+  },
   setPrefectures(state, prefectures) {
     state.prefectures = prefectures
   },
@@ -111,7 +119,15 @@ export const mutations = {
 }
 
 export const actions = {
+  setCurrentArea({ commit }, chooseArea) {
+    commit('setCurrentPrefecture', chooseArea)
+  },
+  clearCurrentArea({ commit }) {
+    commit('clearCurrentArea')
+  },
   setPrefectures({ commit }, chooseArea) {
+    commit('clearCurrentArea')
+    commit('setCurrentArea', chooseArea)
     commit('increment_area')
     if (chooseArea === '北海道') {
       commit('setPrefectures', Areas.Hokaido.prefectures)

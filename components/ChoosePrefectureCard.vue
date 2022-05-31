@@ -23,13 +23,20 @@
     <div class="d-block d-md-none pa-4">
       <h3 class="mb-4">エリアを選択してください</h3>
       <div class="w-283">
-        <!--<v-btn @click="backArea()">戻る</v-btn>-->
-        <v-card color="blue" outlined class="pl-2" @click="backArea()">
-          <v-icon>mdi-chevron-left</v-icon>
-          <p class="mb-0"></p>
+        <v-card
+          color="grey lighten-1"
+          outlined
+          class="d-flex pl-2"
+          min-height="40"
+          hover
+          @click="backArea()"
+        >
+          <v-icon block>mdi-chevron-left</v-icon>
+          <p class="text-body-2 my-auto">{{ selectedArea }}地方</p>
         </v-card>
-        <v-card min-height="324" max-width="960" class="pa-6 pt-5" outlined>
-          <v-list dense class="overflow-auto">
+        <v-card max-width="960" class="pa-6 pt-5" outlined>
+          <v-list dense class="overflow-auto pt-0">
+            <p>{{ selectedArea }}</p>
             <v-list-item
               v-for="(prefecture, i) in prefectures"
               :key="i"
@@ -54,15 +61,20 @@ export default {
   data() {
     return {
       prefectures: [],
+      selectedArea: '',
     }
   },
   watch: {
     getPrefectures() {
       this.prefectures = this.getPrefectures
     },
+    getCurrentArea() {
+      this.selectedArea = this.getCurrentArea
+    },
   },
   computed: {
     ...mapGetters('areaData', [
+      'getCurrentArea',
       'getPrefectures',
       'getCount_prefecture',
       'getCount_area',
