@@ -28,7 +28,7 @@
           </v-row>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
-              <v-btn block depressed outlined
+              <v-btn block depressed outlined @click="deleteStaff(staff.id)"
                 ><div class="delete-button">削除</div></v-btn
               >
             </v-col>
@@ -81,6 +81,19 @@ export default {
       this.$store.commit('catchErrorMsg/setType', '')
       this.$store.commit('catchErrorMsg/clearMsg')
       this.$router.push('staffs/new')
+    },
+    async deleteStaff(id) {
+      const isDeleted = '本当に削除してもよろしいですか？'
+      if (window.confirm(isDeleted)) {
+        try {
+          await this.$axios.$delete(
+            `specialists/offices/${this.officeId}/staffs/${id}`
+          )
+          window.location.reload()
+        } catch (error) {
+          return error
+        }
+      }
     },
   },
 }
