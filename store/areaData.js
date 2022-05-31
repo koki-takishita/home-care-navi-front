@@ -42,12 +42,16 @@ export const state = () => ({
   prefectures: [],
   currentPrefecture: '',
   cities: [],
+  count_area: 0,
+  count_prefecture: 0,
 })
 
 export const getters = {
   getPrefectures: (state) => state.prefectures,
   getCurrentPrefecture: (state) => state.currentPrefecture,
   getCities: (state) => state.cities,
+  getCount_area: (state) => state.count_area,
+  getCount_prefecture: (state) => state.count_prefecture,
 }
 
 export const mutations = {
@@ -66,10 +70,29 @@ export const mutations = {
   clearCities(state) {
     state.cities = []
   },
+  increment_area(state) {
+    state.count_area++
+  },
+  decrement_area(state) {
+    state.count_area--
+  },
+  set_one_area(state) {
+    state.count_area = 1
+  },
+  increment_prefecture(state) {
+    state.count_prefecture++
+  },
+  decrement_prefecture(state) {
+    state.count_prefecture--
+  },
+  set_one_prefecture(state) {
+    state.count_prefecture = 1
+  },
 }
 
 export const actions = {
   setPrefectures({ commit }, chooseArea) {
+    commit('increment_area')
     if (chooseArea === '北海道') {
       commit('setPrefectures', areas.hokaido)
     } else if (chooseArea === '東北') {
@@ -103,6 +126,7 @@ export const actions = {
         requestMethods.cities + encodeString
       )
       const fetchCities = res.response.location
+      commit('increment_prefecture')
       commit('setCities', fetchCities)
       commit('setCurrentPrefecture', choosePrefecture)
     } catch (error) {
@@ -111,5 +135,23 @@ export const actions = {
   },
   clearCities({ commit }) {
     commit('clearCities')
+  },
+  increment_area({ commit }) {
+    commit('increment_area')
+  },
+  decrement_area({ commit }) {
+    commit('decrement_area')
+  },
+  increment_prefecture({ commit }) {
+    commit('increment_prefecture')
+  },
+  decrement_prefecture({ commit }) {
+    commit('decrement_prefecture')
+  },
+  set_one_area({ commit }) {
+    commit('set_one_area')
+  },
+  set_one_prefecture({ commit }) {
+    commit('set_one_prefecture')
   },
 }
