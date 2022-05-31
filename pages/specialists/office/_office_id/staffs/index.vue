@@ -28,12 +28,18 @@
           </v-row>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
-              <v-btn block depressed outlined
+              <v-btn block depressed outlined @click="deleteStaff(staff.id)"
                 ><div class="delete-button">削除</div></v-btn
               >
             </v-col>
             <v-col cols="8" class="pr-6">
-              <v-btn block depressed color="warning">編集する</v-btn>
+              <v-btn
+                block
+                depressed
+                color="warning"
+                :to="`staffs/${staff.id}/edit`"
+                >編集する</v-btn
+              >
             </v-col>
           </v-row>
         </v-card>
@@ -45,7 +51,7 @@
       large
       color="white"
       class="mt-8 mb-10"
-      to="staffs/new"
+      @click="goStaffNewPage"
     >
       <div class="delete-button">
         <v-icon class="mb-1">mdi-plus</v-icon>
@@ -58,16 +64,37 @@
 <script>
 export default {
   layout: 'application_specialists',
-  async asyncData({ $axios, params }) {
-    let staffs = []
-    const id = `${params.id}`
-    await $axios
-      .$get(`specialists/offices/${id}/staffs`)
-      .then((res) => (staffs = res))
-    return { staffs }
-  },
   data() {
-    return {}
+    return {
+      staffs: [],
+      officeId: this.$route.params.office_id,
+    }
+  },
+  async fetch() {
+    this.staffs = await fetch(
+      // home-care-navi-v2/api/specialists/offices/${this.officeId}/staffs
+      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
+    ).then((res) => res.json())
+  },
+  methods: {
+    goStaffNewPage() {
+      this.$store.commit('catchErrorMsg/setType', '')
+      this.$store.commit('catchErrorMsg/clearMsg')
+      this.$router.push('staffs/new')
+    },
+    async deleteStaff(id) {
+      const isDeleted = '本当に削除してもよろしいですか？'
+      if (window.confirm(isDeleted)) {
+        try {
+          await this.$axios.$delete(
+            `specialists/offices/${this.officeId}/staffs/${id}`
+          )
+          window.location.reload()
+        } catch (error) {
+          return error
+        }
+      }
+    },
   },
 }
 </script>

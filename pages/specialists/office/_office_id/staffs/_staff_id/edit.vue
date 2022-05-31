@@ -2,7 +2,7 @@
   <div>
     <p class="mb-0 text-left link-width mx-auto">
       <NuxtLink
-        to="."
+        to=".."
         class="text-overline text-decoration-none link-color sm-under-no"
         >＜ スタッフ情報一覧にもどる</NuxtLink
       >
@@ -12,7 +12,11 @@
       <v-form v-model="valid">
         <v-row>
           <v-avatar size="100" color="grey lighten-3" class="ml-6 my-4">
-            <v-icon size="70" color="white">mdi-account</v-icon>
+            <v-img
+              v-if="staff.image_url !== null"
+              :src="staff.image_url"
+            ></v-img>
+            <v-icon v-else size="60" color="white">mdi-account</v-icon>
           </v-avatar>
           <v-file-input
             v-model="image"
@@ -29,7 +33,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名
             <v-text-field
-              v-model="name"
+              v-model="staff.name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="田中 太郎"
@@ -40,7 +44,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名(ふりがな)
             <v-text-field
-              v-model="kana"
+              v-model="staff.kana"
               :rules="[
                 formValidates.required,
                 formValidates.nameCountCheck,
@@ -55,7 +59,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ紹介文
             <v-textarea
-              v-model="introduction"
+              v-model="staff.introduction"
               :rules="[formValidates.introductionCountCheck]"
               class="mt-2 font-weight-regular"
               height="80"
@@ -70,14 +74,13 @@
             depressed
             :disabled="!valid"
             color="warning"
-            to="."
             @click="send"
           >
-            登録する
+            変更する
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to="."
+              to=".."
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -91,6 +94,15 @@
 <script>
 export default {
   layout: 'application_specialists',
+  async asyncData({ $axios, params }) {
+    let array = []
+    const officeId = `${params.office_id}`
+    const staffId = `${params.staff_id}`
+    await $axios
+      .$get(`specialists/offices/${officeId}/staffs/${staffId}`)
+      .then((res) => (array = res))
+    return { staff: array }
+  },
   data() {
     return {
       formValidates: {
@@ -108,30 +120,36 @@ export default {
         introductionCountCheck: (value) =>
           value.length <= 81 || '80文字以下で入力してください',
       },
-      office_id: this.$route.params.id,
-      name: '',
-      kana: '',
-      introduction: '',
+      office_id: this.$route.params.office_id,
+      staff_id: this.$route.params.staff_id,
       image: null,
       valid: false,
+      staff: [],
     }
   },
   methods: {
     async send() {
-      const id = this.office_id
+      const officeId = this.office_id
+      const staffId = this.staff_id
       const params = new FormData()
-      params.append('office_id', this.office_id)
-      params.append('name', this.name)
-      params.append('kana', this.kana)
-      params.append('introduction', this.introduction)
+      params.append('office_id', this.staff.office_id)
+      params.append('name', this.staff.name)
+      params.append('kana', this.staff.kana)
+      params.append('introduction', this.staff.introduction)
       if (this.image !== null) {
         params.append('image', this.image)
       }
       try {
-        await this.$axios.$post(`specialists/offices/${id}/staffs`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
-        this.$router.push('.')
+        await this.$axios.$put(
+          `specialists/offices/${officeId}/staffs/${staffId}`,
+          params,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+        )
+        this.$store.commit('catchErrorMsg/setType', 'success')
+        this.$store.commit('catchErrorMsg/setMsg', ['変更しました'])
+        this.$router.push('..')
       } catch (error) {
         return error
       }
