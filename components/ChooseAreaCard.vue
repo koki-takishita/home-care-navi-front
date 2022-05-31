@@ -84,7 +84,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('areaData', ['getCount_area']),
+    ...mapGetters('areaData', ['getCount_area', 'getCount_prefecture']),
   },
   methods: {
     ...mapActions('areaData', [
@@ -107,7 +107,10 @@ export default {
       // TODO ブレイキングポイントがモバイル用 + countが2以上
       if (this.$vuetify.breakpoint.mdAndUp) {
         return true
-      } else if (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) {
+      } else if (
+        (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) ||
+        this.getCount_prefecture > 1
+      ) {
         return false
       }
       return true
