@@ -83,7 +83,10 @@ export default {
     async SendSuccessPage() {
       try {
         const response = await this.$axios.$post(`contacts`, {
-          test: 'test',
+          name: this.name,
+          email: this.email,
+          types: this.types,
+          content: this.content,
         })
         this.$router.push('/contacts/success')
         return response
