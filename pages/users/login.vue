@@ -120,6 +120,7 @@ export default {
         email: '',
         password: '',
         redirecttUrl: '/top',
+        user_type: 'customer',
         valid: false,
       },
       formValidates: {
