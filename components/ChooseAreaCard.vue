@@ -1,5 +1,5 @@
 <template>
-  <div v-if="test()">
+  <div v-if="displayControll()">
     <div class="d-none d-md-block">
       <div class="w-390">
         <v-card min-height="324" max-width="375" class="pa-4" outlined>
@@ -83,19 +83,12 @@ export default {
       display: true,
     }
   },
-  watch: {
-    /*
-    getCount_area() {
-      if( 2 <= this.getCount_area && this.$vuetify.breakpoint.smAndDown ) { this.display = false }
-      //else if(this.getCount_area <= 1 || this.$vuetify.breakpoint.mdAndUp) { this.display = true }
-    },
-    setDisplay() {
-      this.display = true
-    },
-*/
-  },
   computed: {
-    ...mapGetters('areaData', ['getCount_area']),
+    ...mapGetters('areaData', [
+      'getCount_area',
+      'getCount_prefecture',
+      'getCount_city',
+    ]),
   },
   methods: {
     ...mapActions('areaData', [
@@ -103,8 +96,12 @@ export default {
       'setCities',
       'clearCities',
       'clearCurrentPrefecture',
+      'set_one_city',
+      'set_one_prefecture',
     ]),
     fetchAreas(chooseArea) {
+      this.set_one_city()
+      this.set_one_prefecture()
       this.setPrefectures(chooseArea)
       this.clearCities()
       this.clearCurrentPrefecture()
@@ -114,14 +111,15 @@ export default {
       this.setPrefectures('関東')
       this.setCities('東京都')
     },
-    test() {
+    displayControll() {
       // TODO ブレイキングポイントがモバイル用 + countが2以上
       if (this.$vuetify.breakpoint.mdAndUp) {
         return true
-      } else if (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) {
-        console.log('はいった')
-        console.log(this.getCount_area)
-        console.log('this.$vuetify.breakpoint.smAndDown')
+      } else if (
+        (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) ||
+        this.getCount_prefecture > 1 ||
+        this.getCount_city > 1
+      ) {
         return false
       }
       return true
