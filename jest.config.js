@@ -16,5 +16,4 @@ module.exports = {
     '<rootDir>/pages/**/*.vue',
   ],
   testEnvironment: 'jsdom',
-  preset: 'jest-puppeteer',
 }
