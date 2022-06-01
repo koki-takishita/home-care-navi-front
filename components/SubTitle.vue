@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="displayControll()">
     <div class="d-none d-md-block">
       <v-card outlined max-width="990" min-height="245" class="mx-auto">
         <div class="text-center set-color font-weight-black mt-12">
@@ -34,7 +34,22 @@
   </div>
 </template>
 <script>
-export default {}
+import { mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters('areaData', ['getCount_area']),
+  },
+  methods: {
+    displayControll() {
+      if (this.$vuetify.breakpoint.mdAndUp) {
+        return true
+      } else if (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) {
+        return false
+      }
+      return true
+    },
+  },
+}
 </script>
 <style scoped>
 .fs-28 {
