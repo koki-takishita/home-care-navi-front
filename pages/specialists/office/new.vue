@@ -29,28 +29,63 @@
           <label class="font-color-gray font-weight-black text-caption"
             >休業日
           </label>
-          <v-row class="mt-2 mb-2">
+          <v-row class="mt-2 mb-2 mx-auto">
             <v-col cols="1" class="mx-5"
-              >日<input v-model="selected" value="日" type="checkbox"
-            /></v-col>
+              ><label
+                >日<input
+                  v-model="selected"
+                  value="日"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
             <v-col cols="1" class="mx-5"
-              >月<input v-model="selected" value="月" type="checkbox"
-            /></v-col>
+              ><label
+                >月<input
+                  v-model="selected"
+                  value="月"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
             <v-col cols="1" class="mx-5"
-              >火<input v-model="selected" value="火" type="checkbox"
-            /></v-col>
+              ><label
+                >火<input
+                  v-model="selected"
+                  value="火"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
             <v-col cols="1" class="mx-5"
-              >水<input v-model="selected" value="水" type="checkbox"
-            /></v-col>
+              ><label
+                >水<input
+                  v-model="selected"
+                  value="水"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
             <v-col cols="1" class="mx-5"
-              >木<input v-model="selected" value="木" type="checkbox"
-            /></v-col>
+              ><label
+                >木<input
+                  v-model="selected"
+                  value="木"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
             <v-col cols="1" class="mx-5"
-              >金<input v-model="selected" value="金" type="checkbox"
-            /></v-col>
+              ><label
+                >金<input
+                  v-model="selected"
+                  value="金"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
             <v-col cols="1" class="mx-5"
-              >土<input v-model="selected" value="土" type="checkbox"
-            /></v-col>
+              ><label
+                >土<input
+                  v-model="selected"
+                  value="土"
+                  type="checkbox"
+                  class="mr-3" /></label
+            ></v-col>
           </v-row>
           <label class="font-color-gray font-weight-black text-caption"
             >営業日に関する説明
@@ -193,23 +228,20 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      console.log(this.flags)
+      // console.log(this.flags)
       this.flags = 0
     },
   },
 }
 </script>
 <style scoped>
-.link-color {
-  color: #ee7b1a;
-}
-
 .font-color-gray {
   color: #6d7570;
 }
 
-.link-width {
-  width: 750px;
+input[type='checkbox'] {
+  transform: scale(1.8);
+  margin: 0 6px 0 0;
 }
 
 /* stylelint-disable */
