@@ -222,7 +222,7 @@ export default {
           address: this.form.address,
           confirm_success_url: 'http://localhost:8000/top',
         })
-        this.$router.push('/users/send')
+        this.$router.push('/users//send')
         return response
       } catch (error) {
         return error

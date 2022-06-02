@@ -88,7 +88,7 @@ export default {
           types: this.types,
           content: this.content,
         })
-        this.$router.push('/contacts/success')
+        this.$router.push('/users/contacts/success')
         return response
       } catch (error) {
         return error

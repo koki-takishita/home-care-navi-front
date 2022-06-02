@@ -80,7 +80,7 @@
 
 <script>
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
   data() {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
@@ -109,7 +109,7 @@ export default {
   methods: {
     SendConfirmPage() {
       this.$router.push({
-        path: '/contacts/confirm',
+        path: '/specialists/contacts/confirm',
         query: {
           name: this.form.name,
           email: this.form.email,

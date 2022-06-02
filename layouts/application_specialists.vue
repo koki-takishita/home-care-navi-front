@@ -317,17 +317,17 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="#"
+                    to="/specialists/privacy_policy"
                     class="text-overline mr-5 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
+                    to="/specialists/terms"
                     class="text-overline mr-5 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
+                    to="/specialists/contacts/new"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -340,17 +340,17 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="#"
+                to="/specialists/privacy_policy"
                 class="text-overline mr-5 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="#"
+                to="/specialists/terms"
                 class="text-overline mr-5 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="#"
+                to="/specialists/contacts/new"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >
