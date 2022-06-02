@@ -72,8 +72,8 @@ export default {
   },
   async fetch() {
     this.staffs = await fetch(
-      // home-care-navi-v2/api/specialists/offices/${this.officeId}/staffs
-      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
+      // `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
+      `https://home-care-navi-api-v2.herokuapp.com/api/specialists/offices/${this.officeId}/staffs`
     ).then((res) => res.json())
   },
   methods: {
