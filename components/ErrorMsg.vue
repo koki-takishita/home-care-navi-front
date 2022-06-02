@@ -3,6 +3,7 @@
     <v-alert
       v-for="(msg, i) in msgs"
       :key="i"
+      v-model="alert"
       :type="type"
       max-width="750"
       min-width="350"
