@@ -1,7 +1,7 @@
 export default function ({ $auth, redirect, store }, inject) {
   inject('logout', (logoutInfo) => {
     logout(logoutInfo)
-    console.log(logoutInfo)
+    // console.log(logoutInfo)
   })
   async function logout(logoutInfo) {
     try {
