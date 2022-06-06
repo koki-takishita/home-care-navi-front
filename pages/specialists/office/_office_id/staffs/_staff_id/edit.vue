@@ -94,15 +94,6 @@
 <script>
 export default {
   layout: 'application_specialists',
-  async asyncData({ $axios, params }) {
-    let array = []
-    const officeId = `${params.office_id}`
-    const staffId = `${params.staff_id}`
-    await $axios
-      .$get(`specialists/offices/${officeId}/staffs/${staffId}`)
-      .then((res) => (array = res))
-    return { staff: array }
-  },
   data() {
     return {
       formValidates: {
@@ -127,7 +118,23 @@ export default {
       staff: [],
     }
   },
+  mounted() {
+    this.getStaff()
+  },
   methods: {
+    async getStaff() {
+      try {
+        this.$setId(this.office_id, this.staff_id)
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/staffs/${this.staff_id}`
+        )
+        this.staff = response
+        console.log(this.staff)
+      } catch (error) {
+        return error
+      }
+    },
+
     async send() {
       const officeId = this.office_id
       const staffId = this.staff_id

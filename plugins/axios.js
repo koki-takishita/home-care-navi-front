@@ -59,7 +59,27 @@ const setAuthInfoToLocalStorage = function (response) {
   }
 }
 
-export default function ({ $axios, store }) {
+export default function ({ $axios, store }, inject) {
+  inject('setId', (officeId, staffId) => {
+    setId(officeId, staffId)
+  })
+
+  function setId(officeId, staffId) {
+    $axios.onRequest((config) => {
+      if (config.url === `specialists/offices/${officeId}/staffs`) {
+        setAuthInfoToHeader(config)
+      } else if (
+        config.url === `specialists/offices/${officeId}/staffs/${staffId}`
+      ) {
+        setAuthInfoToHeader(config)
+        console.log('発火')
+        console.log(config.url)
+      } else {
+        console.log('発火してない')
+      }
+    })
+  }
+
   // TODO onResponseError onRequestErrorで分けたい
   $axios.onError((error) => {
     networkError(store, error)

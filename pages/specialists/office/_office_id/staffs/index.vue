@@ -64,19 +64,46 @@
 <script>
 export default {
   layout: 'application_specialists',
+  /* async asyncData({ $axios, params }) {
+    let array = []
+    const officeId = `${params.office_id}`
+    await $axios
+      .$get(`specialists/offices/${officeId}/staffs`)
+      .then((res) => (array = res))
+    return { staffs: array }
+  }, */
   data() {
     return {
       staffs: [],
-      officeId: this.$route.params.office_id,
+      office_id: this.$route.params.office_id,
     }
   },
-  async fetch() {
-    this.staffs = await fetch(
+  /* async fetch() {
+      this.staffs = await this.$axios.$get(
       // home-care-navi-v2/api/specialists/offices/${this.officeId}/staffs
-      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
-    ).then((res) => res.json())
+      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`, { headers: {
+            'access-token': localStorage.getItem('access-token'),
+            uid: localStorage.getItem('uid'),
+            client: localStorage.getItem('client'),
+            expiry: localStorage.getItem('expiry')
+          }}
+    )
+  }, */
+  mounted() {
+    this.getStaffs()
   },
   methods: {
+    async getStaffs() {
+      try {
+        this.$setId(this.office_id)
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/staffs`
+        )
+        this.staffs = response
+      } catch (error) {
+        return error
+      }
+    },
     goStaffNewPage() {
       this.$store.commit('catchErrorMsg/setType', '')
       this.$store.commit('catchErrorMsg/clearMsg')
@@ -87,7 +114,7 @@ export default {
       if (window.confirm(isDeleted)) {
         try {
           await this.$axios.$delete(
-            `specialists/offices/${this.officeId}/staffs/${id}`
+            `specialists/offices/${this.office_id}/staffs/${id}`
           )
           window.location.reload()
         } catch (error) {
