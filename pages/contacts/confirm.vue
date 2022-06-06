@@ -34,13 +34,13 @@
         </div>
         <v-card-actions>
           <v-btn
-            to="/contacts/sucsess"
             block
             large
             class="error text-h6 block"
             max-width="520"
             min-width="343"
             height="60"
+            @click="SendSuccessPage"
           >
             送信する
           </v-btn>
@@ -79,6 +79,20 @@ export default {
       this.email = this.$route.query.email
       this.types = this.$route.query.types
       this.content = this.$route.query.content
+    },
+    async SendSuccessPage() {
+      try {
+        const response = await this.$axios.$post(`contacts`, {
+          name: this.name,
+          email: this.email,
+          types: this.types,
+          content: this.content,
+        })
+        this.$router.push('/contacts/success')
+        return response
+      } catch (error) {
+        return error
+      }
     },
   },
 }
