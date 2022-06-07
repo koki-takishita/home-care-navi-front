@@ -26,6 +26,17 @@
               dense
               height="44"
           /></label>
+          <v-file-input
+            v-model="officeImages"
+            multiple
+            :rules="[formValidates.fileSizeCheck]"
+            truncate-length="20"
+            accept="image/*"
+            prepend-icon="mdi-camera"
+            label="事業所画像をアップロードする"
+            class="image-form"
+          >
+          </v-file-input>
           <label class="font-color-gray font-weight-black text-caption"
             >休業日
           </label>
@@ -180,6 +191,11 @@ export default {
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
+        fileSizeCheck: (value) => {
+          console.log(`value.log:::${value}`)
+          console.log(`valueLength.log:::${value.length}`)
+          console.log(`valueSize.log:::${value.size}`)
+        },
         businessDayDetailCountCheck: (value) =>
           value.length <= 120 || '120文字以下で入力してください',
         phoneNumber: (value) => {
@@ -195,6 +211,7 @@ export default {
       },
       name: '',
       title: '',
+      officeImages: [],
       flags: 0,
       business_day_detail: '',
       phone_number: '',
@@ -228,7 +245,25 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      // console.log(this.flags)
+      const params = new FormData()
+      const officeImagesNum = this.officeImages.length
+      params.append('name', this.name)
+      params.append('title', this.title)
+      if (officeImagesNum >= 6) {
+        this.$store.commit('catchErrorMsg/setType', 'error')
+        this.$store.commit('catchErrorMsg/setMsg', [
+          '事業所画像は5枚以下でアップロードしてください',
+        ])
+      } else {
+        params.append('officeImages', this.officeImages)
+      }
+      params.append('flags', this.flags)
+      params.append('business_day_detail', this.business_day_detail)
+      params.append('phone_number', this.phone_number)
+      params.append('fax_number', this.fax_number)
+      params.append('post_code', this.post_code)
+      params.append('address', this.address)
+      console.log(officeImagesNum)
       this.flags = 0
     },
   },
@@ -251,5 +286,9 @@ input[type='checkbox'] {
 
 .post-form >>> .v-text-field__slot {
   max-width: 82px;
+}
+
+.image-form >>> .v-input__slot {
+  width: 300px;
 }
 </style>
