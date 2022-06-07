@@ -115,7 +115,12 @@ export default {
       staff_id: this.$route.params.staff_id,
       image: null,
       valid: false,
-      staff: [],
+      staff: {
+        name: '',
+        kana: '',
+        introduction: '',
+        image_url: '',
+      },
     }
   },
   mounted() {
@@ -124,12 +129,10 @@ export default {
   methods: {
     async getStaff() {
       try {
-        this.$setId(this.office_id, this.staff_id)
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/staffs/${this.staff_id}`
         )
         this.staff = response
-        console.log(this.staff)
       } catch (error) {
         return error
       }
@@ -154,8 +157,6 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$store.commit('catchErrorMsg/setType', 'success')
-        this.$store.commit('catchErrorMsg/setMsg', ['変更しました'])
         this.$router.push('..')
       } catch (error) {
         return error

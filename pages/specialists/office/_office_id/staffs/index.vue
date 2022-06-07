@@ -51,7 +51,7 @@
       large
       color="white"
       class="mt-8 mb-10"
-      @click="goStaffNewPage"
+      to="staffs/new"
     >
       <div class="delete-button">
         <v-icon class="mb-1">mdi-plus</v-icon>
@@ -64,38 +64,19 @@
 <script>
 export default {
   layout: 'application_specialists',
-  /* async asyncData({ $axios, params }) {
-    let array = []
-    const officeId = `${params.office_id}`
-    await $axios
-      .$get(`specialists/offices/${officeId}/staffs`)
-      .then((res) => (array = res))
-    return { staffs: array }
-  }, */
   data() {
     return {
       staffs: [],
       office_id: this.$route.params.office_id,
     }
   },
-  /* async fetch() {
-      this.staffs = await this.$axios.$get(
-      // home-care-navi-v2/api/specialists/offices/${this.officeId}/staffs
-      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`, { headers: {
-            'access-token': localStorage.getItem('access-token'),
-            uid: localStorage.getItem('uid'),
-            client: localStorage.getItem('client'),
-            expiry: localStorage.getItem('expiry')
-          }}
-    )
-  }, */
   mounted() {
     this.getStaffs()
   },
   methods: {
     async getStaffs() {
       try {
-        this.$setId(this.office_id)
+        // this.$setId(this.office_id)
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/staffs`
         )
@@ -103,11 +84,6 @@ export default {
       } catch (error) {
         return error
       }
-    },
-    goStaffNewPage() {
-      this.$store.commit('catchErrorMsg/setType', '')
-      this.$store.commit('catchErrorMsg/clearMsg')
-      this.$router.push('staffs/new')
     },
     async deleteStaff(id) {
       const isDeleted = '本当に削除してもよろしいですか？'

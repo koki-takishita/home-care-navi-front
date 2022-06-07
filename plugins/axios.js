@@ -17,11 +17,24 @@ const authError422and401 = function (store, error) {
   }
 }
 
-const setAuthInfoToHeader = function (config) {
+/* const setAuthInfoToHeader = function (config) {
   config.headers.client = window.localStorage.client
   config.headers['access-token'] = window.localStorage.getItem('access-token')
   config.headers.uid = window.localStorage.uid
   config.headers.expiry = window.localStorage.expiry
+} */
+
+const setAuthInfoToHeader = function (config) {
+  const client = window.localStorage.client
+  const accessToken = window.localStorage.getItem('access-token')
+  const uid = window.localStorage.uid
+  const expiry = window.localStorage.expiry
+  if (client && accessToken && uid && expiry) {
+    config.headers.client = window.localStorage.client
+    config.headers['access-token'] = window.localStorage.getItem('access-token')
+    config.headers.uid = window.localStorage.uid
+    config.headers.expiry = window.localStorage.expiry
+  }
 }
 
 const error422 = function (store, error) {
@@ -59,27 +72,7 @@ const setAuthInfoToLocalStorage = function (response) {
   }
 }
 
-export default function ({ $axios, store }, inject) {
-  inject('setId', (officeId, staffId) => {
-    setId(officeId, staffId)
-  })
-
-  function setId(officeId, staffId) {
-    $axios.onRequest((config) => {
-      if (config.url === `specialists/offices/${officeId}/staffs`) {
-        setAuthInfoToHeader(config)
-      } else if (
-        config.url === `specialists/offices/${officeId}/staffs/${staffId}`
-      ) {
-        setAuthInfoToHeader(config)
-        console.log('発火')
-        console.log(config.url)
-      } else {
-        console.log('発火してない')
-      }
-    })
-  }
-
+export default function ({ $axios, store }) {
   // TODO onResponseError onRequestErrorで分けたい
   $axios.onError((error) => {
     networkError(store, error)
@@ -94,8 +87,6 @@ export default function ({ $axios, store }, inject) {
   })
 
   $axios.onRequest((config) => {
-    if (config.url === '/logout') {
-      setAuthInfoToHeader(config)
-    }
+    setAuthInfoToHeader(config)
   })
 }
