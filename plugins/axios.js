@@ -17,11 +17,24 @@ const authError422and401 = function (store, error) {
   }
 }
 
-const setAuthInfoToHeader = function (config) {
+/* const setAuthInfoToHeader = function (config) {
   config.headers.client = window.localStorage.client
   config.headers['access-token'] = window.localStorage.getItem('access-token')
   config.headers.uid = window.localStorage.uid
   config.headers.expiry = window.localStorage.expiry
+} */
+
+const setAuthInfoToHeader = function (config) {
+  const client = window.localStorage.client
+  const accessToken = window.localStorage.getItem('access-token')
+  const uid = window.localStorage.uid
+  const expiry = window.localStorage.expiry
+  if (client && accessToken && uid && expiry) {
+    config.headers.client = window.localStorage.client
+    config.headers['access-token'] = window.localStorage.getItem('access-token')
+    config.headers.uid = window.localStorage.uid
+    config.headers.expiry = window.localStorage.expiry
+  }
 }
 
 const error422 = function (store, error) {
@@ -74,8 +87,6 @@ export default function ({ $axios, store }) {
   })
 
   $axios.onRequest((config) => {
-    if (config.url === '/logout') {
-      setAuthInfoToHeader(config)
-    }
+    setAuthInfoToHeader(config)
   })
 }
