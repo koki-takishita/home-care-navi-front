@@ -378,7 +378,7 @@ export default {
   data() {
     return {
       logoutInfo: {
-        redirecttUrl: '/specialists/login',
+        redirectUrl: '/specialists/login',
         valid: false,
       },
       justify: [],
