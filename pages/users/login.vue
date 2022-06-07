@@ -8,7 +8,9 @@
   >
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
-        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+        <NuxtLink
+          to="/specialists/login"
+          class="text-overline text-decoration-none link-color"
           >ケアマネージャーの方はこちら</NuxtLink
         >
       </p>
@@ -17,7 +19,9 @@
     <div class="px-4 pt-4 d-flex justify-space-between d-sm-none">
       <h6 class="display-1 text-center text-h6 font-weight-black">ログイン</h6>
       <p class="mb-0 text-right">
-        <NuxtLink to="#" class="text-overline text-decoration-none link-color"
+        <NuxtLink
+          to="/specialists/login"
+          class="text-overline text-decoration-none link-color"
           >ケアマネージャーの方はこちら</NuxtLink
         >
       </p>
@@ -115,6 +119,8 @@ export default {
       loginInfo: {
         email: '',
         password: '',
+        redirecttUrl: '/top',
+        user_type: 'customer',
         valid: false,
       },
       formValidates: {

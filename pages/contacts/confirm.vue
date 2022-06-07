@@ -1,29 +1,59 @@
 <template>
-  <v-card width="750" class="mx-auto my-6">
-    <v-card-title>
-      <h4 class="display-1">入力内容をご確認ください。</h4>
-    </v-card-title>
+  <v-card width="750" class="mx-auto my-2">
+    <div class="px-4 pt-4 d-sm-block">
+      <h4 class="display-1 text-h6 font-weight-black">
+        入力内容をご確認ください
+      </h4>
+    </div>
     <v-card-text>
       <v-form>
-        <p>お名前</p>
+        <p class="font-color-gray font-weight-black">お名前</p>
+        <p>
+          {{ name }}
+        </p>
 
-        <p>返信用メールアドレス</p>
+        <p class="font-color-gray font-weight-black">返信用メールアドレス</p>
+        <p>
+          {{ email }}
+        </p>
 
-        <p>利用者区分</p>
+        <p class="font-color-gray font-weight-black">利用者区分</p>
+        <p>
+          {{ types }}
+        </p>
 
-        <p>お問い合わせ内容</p>
+        <p class="font-color-gray font-weight-black">お問い合わせ内容</p>
+        <p>
+          {{ content }}
+        </p>
 
         <div class="text-center mt-12">
-          <p>この内容で送信してよろしいですか？</p>
+          <p class="font-color-gray font-weight-black">
+            この内容で送信してよろしいですか？
+          </p>
         </div>
         <v-card-actions>
-          <v-btn to="/contacts/sucsess" class="info" block large>
+          <v-btn
+            to="/contacts/sucsess"
+            block
+            large
+            class="error text-h6 block"
+            max-width="520"
+            min-width="343"
+            height="60"
+          >
             送信する
           </v-btn>
         </v-card-actions>
-        <v-card-actions>
-          <v-btn to="/contacts/new" class="info" block large> 戻る </v-btn>
-        </v-card-actions>
+        <div class="mx-auto mt-4 text-center top-link mb-4">
+          <a
+            href="/contacts/new"
+            style="color: #f06364"
+            class="text-decoration-none"
+          >
+            もどる
+          </a>
+        </div>
       </v-form>
     </v-card-text>
   </v-card>
@@ -32,23 +62,24 @@
 <script>
 export default {
   layout: 'application',
+  data() {
+    return {
+      name: '',
+      email: '',
+      types: '',
+      content: '',
+    }
+  },
+  mounted() {
+    this.setParameter()
+  },
   methods: {
-    contact() {
-      this.$router.push('/contacts/sucsses')
+    setParameter() {
+      this.name = this.$route.query.name
+      this.email = this.$route.query.email
+      this.types = this.$route.query.types
+      this.content = this.$route.query.content
     },
   },
 }
-/*      methods: {
-    async submit() {
-      /* this.response = await this.$http.$get('http://localhost:3000/api/users') */
-
-/*      this.response = await this.$http.$post(
-        'http://localhost:3000/api/contacts',
-        {
-          user: {
-            name: this.name,
-            email: this.email,
-          },
-        }
-        */
 </script>

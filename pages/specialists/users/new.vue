@@ -147,7 +147,7 @@
               >新規登録</v-btn
             >
             <v-btn
-              class="error pa-0 ma-0 text-h6 d-block d-sm-none"
+              class="warning pa-0 ma-0 text-h6 d-block d-sm-none"
               block
               :disabled="!form.valid"
               max-width="520"
@@ -212,7 +212,7 @@ export default {
     ...mapActions('catchErrorMsg', ['clearMsg']),
     async sign_up() {
       try {
-        const response = await this.$axios.$post(`specialists/users`, {
+        const response = await this.$axios.$post(`specialists//users`, {
           name: this.form.name,
           email: this.form.email,
           password: this.form.password,
@@ -220,7 +220,8 @@ export default {
           phone_number: this.form.phone_number,
           post_code: this.form.post_code,
           address: this.form.address,
-          confirm_success_url: 'http://localhost:8000/specialists/login',
+          confirm_success_url:
+            'https://home-care-navi-api-v2.herokuapp.com/specialists/login',
         })
         this.$router.push('/specialists/users/send')
         return response
