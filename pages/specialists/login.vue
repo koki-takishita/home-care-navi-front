@@ -75,7 +75,7 @@
               max-width="520"
               min-width="343"
               height="60"
-              @click.prevent="$login(loginInfo)"
+              @click.prevent="$specialistLogin(loginInfo)"
               >ログイン</v-btn
             >
 
@@ -86,7 +86,7 @@
               max-width="520"
               min-width="343"
               height="48"
-              @click.prevent="$login(loginInfo)"
+              @click.prevent="$specialistLogin(loginInfo)"
               >ログイン</v-btn
             >
           </v-card-actions>
@@ -120,6 +120,7 @@ export default {
         email: '',
         password: '',
         redirecttUrl: '/specialists/users/new',
+        user_type: 'specialist',
         valid: false,
       },
       formValidates: {
