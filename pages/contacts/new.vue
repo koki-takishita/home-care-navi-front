@@ -69,6 +69,7 @@
             max-width="520"
             min-width="343"
             height="60"
+            href="/contacts/confirm"
             @click="SendConfirmPage"
             >この内容で問い合わせる</v-btn
           >
@@ -106,17 +107,31 @@ export default {
       },
     }
   },
+  mounted() {
+    const name = localStorage.getItem('name')
+    const email = localStorage.getItem('email')
+    const types = localStorage.getItem('types')
+    const content = localStorage.getItem('content')
+    if (name != null) {
+      this.form.name = localStorage.getItem('name')
+    }
+    if (email != null) {
+      this.form.email = localStorage.getItem('email')
+    }
+    if (types != null) {
+      this.form.types = localStorage.getItem('types')
+    }
+    if (content != null) {
+      this.form.content = localStorage.getItem('content')
+    }
+  },
+
   methods: {
     SendConfirmPage() {
-      this.$router.push({
-        path: '/contacts/confirm',
-        query: {
-          name: this.form.name,
-          email: this.form.email,
-          types: this.form.types,
-          content: this.form.content,
-        },
-      })
+      localStorage.setItem('name', this.form.name)
+      localStorage.setItem('email', this.form.email)
+      localStorage.setItem('types', this.form.types)
+      localStorage.setItem('content', this.form.content)
     },
   },
 }

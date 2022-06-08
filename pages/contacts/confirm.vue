@@ -40,16 +40,17 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage"
+            @click="SendSuccessPage(), test()"
           >
+            <!--@click="SendSuccessPage()"-->
             送信する
           </v-btn>
         </v-card-actions>
         <div class="mx-auto mt-4 text-center top-link mb-4">
           <a
-            href="/contacts/new"
             style="color: #f06364"
             class="text-decoration-none"
+            href="/contacts/new"
           >
             もどる
           </a>
@@ -70,16 +71,30 @@ export default {
       content: '',
     }
   },
+
   mounted() {
-    this.setParameter()
+    if (localStorage.getItem('name')) {
+      this.name = localStorage.getItem('name')
+    } else {
+      this.name = ''
+    }
+    if (localStorage.getItem('email')) {
+      this.email = localStorage.getItem('email')
+    } else {
+      this.email = ''
+    }
+    if (localStorage.getItem('types')) {
+      this.types = localStorage.getItem('types')
+    } else {
+      this.types = ''
+    }
+    if (localStorage.getItem('content')) {
+      this.content = localStorage.getItem('content')
+    } else {
+      this.content = ''
+    }
   },
   methods: {
-    setParameter() {
-      this.name = this.$route.query.name
-      this.email = this.$route.query.email
-      this.types = this.$route.query.types
-      this.content = this.$route.query.content
-    },
     async SendSuccessPage() {
       try {
         const response = await this.$axios.$post(`contacts`, {
@@ -93,6 +108,12 @@ export default {
       } catch (error) {
         return error
       }
+    },
+    test() {
+      localStorage.removeItem('name')
+      localStorage.removeItem('email')
+      localStorage.removeItem('types')
+      localStorage.removeItem('content')
     },
   },
 }
