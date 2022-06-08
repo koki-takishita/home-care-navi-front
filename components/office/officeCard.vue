@@ -9,7 +9,7 @@
       >
         <font color="#F06364">web予約可</font>
       </v-chip>
-      <v-card-title class="py-2 px-0 d-flex justify-space-between">
+      <v-card-title class="py-2 px-0 d-flex flex-nowrap">
         <!--<h5 class="set-max-layout text-truncate">{{ office.name }}</h5>-->
         <h5 class="set-max-layout">{{ office.name }}</h5>
         <!--<v-avatar color="#F5F7F7">-->
@@ -18,6 +18,7 @@
           @mouseover="hoverActive()"
           @mouseleave="hoverRelease()"
           @click="toggleBookmark()"
+          class="ml-auto"
         >
           <!--<v-icon>fa-star</v-icon>-->
           <v-icon :color="icon.color">{{ icon.state }}</v-icon>
@@ -59,9 +60,9 @@
         </div>
       </v-card-text>
 
-      <v-card max-height="61" tile outlined class="reset-border-style">
+      <v-card min-height="61" tile outlined class="reset-border-style">
         <v-row no-gutters>
-          <v-col cols="1">
+          <v-col cols="1" class="text-center">
             <v-icon color="#AEB5B2">mdi-account</v-icon>
           </v-col>
           <v-col cols="11">
@@ -79,7 +80,7 @@
 
       <v-row no-gutters align="center" class="mt-3">
         <v-col cols="2">
-          <p class="font-weight-black text-caption mb-0">
+          <p class="font-weight-black text-caption mb-0 text-center">
             <font color="#6D7570">営業日</font>
           </p>
         </v-col>
@@ -139,7 +140,6 @@ export default {
 </script>
 <style scoped>
 .set-max-layout {
-  max-width: 275px;
   max-height: 50px;
   line-height: normal;
 }
