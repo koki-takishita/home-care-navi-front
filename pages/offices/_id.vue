@@ -289,15 +289,26 @@
 <script>
 export default {
   layout: 'application',
-  async asyncData({ $axios, params }) {
-    let office = []
-    const id = `${params.id}`
-    await $axios.$get(`offices/${id}`).then((res) => (office = res))
-    return { office }
-  },
-
   data() {
-    return {}
+    return {
+      office_id: this.$route.params.id,
+      office: {
+        selected_flags: '',
+      },
+    }
+  },
+  mounted() {
+    this.getOffice()
+  },
+  methods: {
+    async getOffice() {
+      try {
+        const response = await this.$axios.$get(`offices/${this.office_id}`)
+        this.office = response
+      } catch (error) {
+        return error
+      }
+    },
   },
 }
 </script>
