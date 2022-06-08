@@ -69,7 +69,7 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="sendConfirmpage"
+            @click="SendConfirmPage"
             >この内容で問い合わせる</v-btn
           >
         </v-card-actions>
@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    sendConfirmpage() {
+    SendConfirmPage() {
       this.$router.push({
         path: '/contacts/confirm',
         query: {
