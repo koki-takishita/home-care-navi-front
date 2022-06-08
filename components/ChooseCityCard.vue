@@ -147,11 +147,16 @@ export default {
       'increment_prefecture',
       'increment_area',
     ]),
-    async SearchForOfficesChosenByAddress() {
+    SearchForOfficesChosenByAddress() {
       if (this.chooseItems.length === 0) {
         alert('市町村を１つ以上選択してください。')
         return
       }
+      this.$router.push({
+        path: '/offices',
+        query: { prefecture: this.choosePrefecture, cities: this.chooseItems },
+      })
+      /*
       try {
         const prefecture = encodeURI(this.choosePrefecture)
         const arry = []
@@ -163,6 +168,7 @@ export default {
       } catch (error) {
         return error
       }
+      */
     },
     clearChoosenItems() {
       this.chooseItems = []
