@@ -40,7 +40,7 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage(), test()"
+            @click="SendSuccessPage(), ContactsDataBack()"
           >
             <!--@click="SendSuccessPage()"-->
             送信する
@@ -109,7 +109,7 @@ export default {
         return error
       }
     },
-    test() {
+    ContactsDataBack() {
       localStorage.removeItem('name')
       localStorage.removeItem('email')
       localStorage.removeItem('types')
