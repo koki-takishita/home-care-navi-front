@@ -40,16 +40,16 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage"
+            @click="SendSuccessPage(), RemoveItemFromLocalStorage()"
           >
             送信する
           </v-btn>
         </v-card-actions>
         <div class="mx-auto mt-4 text-center top-link mb-4">
           <a
-            href="/contacts/new"
             style="color: #f06364"
             class="text-decoration-none"
+            href="/contacts/new"
           >
             もどる
           </a>
@@ -71,15 +71,18 @@ export default {
     }
   },
   mounted() {
-    this.setParameter()
+    const name = localStorage.getItem('name')
+    const email = localStorage.getItem('email')
+    const types = localStorage.getItem('types')
+    const content = localStorage.getItem('content')
+    if (name != null && email != null && types != null && content != null) {
+      this.name = localStorage.getItem('name')
+      this.email = localStorage.getItem('email')
+      this.types = localStorage.getItem('types')
+      this.content = localStorage.getItem('content')
+    }
   },
   methods: {
-    setParameter() {
-      this.name = this.$route.query.name
-      this.email = this.$route.query.email
-      this.types = this.$route.query.types
-      this.content = this.$route.query.content
-    },
     async SendSuccessPage() {
       try {
         const response = await this.$axios.$post(`contacts`, {
@@ -93,6 +96,12 @@ export default {
       } catch (error) {
         return error
       }
+    },
+    RemoveItemFromLocalStorage() {
+      localStorage.removeItem('name')
+      localStorage.removeItem('email')
+      localStorage.removeItem('types')
+      localStorage.removeItem('content')
     },
   },
 }
