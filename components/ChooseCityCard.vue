@@ -152,9 +152,16 @@ export default {
         alert('市町村を１つ以上選択してください。')
         return
       }
+      console.log(this.chooseItems)
+      const arry = []
+      Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
+        arry.push(value)
+      })
+      console.log(arry.join())
+
       this.$router.push({
         path: '/offices',
-        query: { prefecture: this.choosePrefecture, cities: this.chooseItems },
+        query: { prefecture: this.choosePrefecture, cities: arry.join() },
       })
       /*
       try {

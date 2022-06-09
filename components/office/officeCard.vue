@@ -9,16 +9,17 @@
       >
         <font color="#F06364">web予約可</font>
       </v-chip>
+
       <v-card-title class="py-2 px-0 d-flex flex-nowrap">
         <!--<h5 class="set-max-layout text-truncate">{{ office.name }}</h5>-->
         <h5 class="set-max-layout">{{ office.name }}</h5>
         <!--<v-avatar color="#F5F7F7">-->
         <v-avatar
           color="#F5F7F7"
+          class="ml-auto"
           @mouseover="hoverActive()"
           @mouseleave="hoverRelease()"
           @click="toggleBookmark()"
-          class="ml-auto"
         >
           <!--<v-icon>fa-star</v-icon>-->
           <v-icon :color="icon.color">{{ icon.state }}</v-icon>
