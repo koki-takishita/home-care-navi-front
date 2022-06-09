@@ -40,7 +40,7 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage(), RemoveItem()"
+            @click="SendSuccessPage(), RemoveItemFromLocalStorage()"
           >
             送信する
           </v-btn>
@@ -97,7 +97,7 @@ export default {
         return error
       }
     },
-    RemoveItem() {
+    RemoveItemFromLocalStorage() {
       localStorage.removeItem('name')
       localStorage.removeItem('email')
       localStorage.removeItem('types')
