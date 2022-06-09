@@ -40,9 +40,8 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage(), ContactsDataBack()"
+            @click="SendSuccessPage(), RemoveItem()"
           >
-            <!--@click="SendSuccessPage()"-->
             送信する
           </v-btn>
         </v-card-actions>
@@ -71,27 +70,16 @@ export default {
       content: '',
     }
   },
-
   mounted() {
-    if (localStorage.getItem('name')) {
+    const name = localStorage.getItem('name')
+    const email = localStorage.getItem('email')
+    const types = localStorage.getItem('types')
+    const content = localStorage.getItem('content')
+    if (name != null && email != null && types != null && content != null) {
       this.name = localStorage.getItem('name')
-    } else {
-      this.name = ''
-    }
-    if (localStorage.getItem('email')) {
       this.email = localStorage.getItem('email')
-    } else {
-      this.email = ''
-    }
-    if (localStorage.getItem('types')) {
       this.types = localStorage.getItem('types')
-    } else {
-      this.types = ''
-    }
-    if (localStorage.getItem('content')) {
       this.content = localStorage.getItem('content')
-    } else {
-      this.content = ''
     }
   },
   methods: {
@@ -109,7 +97,7 @@ export default {
         return error
       }
     },
-    ContactsDataBack() {
+    RemoveItem() {
       localStorage.removeItem('name')
       localStorage.removeItem('email')
       localStorage.removeItem('types')
