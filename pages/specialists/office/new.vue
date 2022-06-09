@@ -278,7 +278,7 @@ export default {
     },
   },
   methods: {
-    send() {
+    async send() {
       if (this.selected.includes('日')) {
         this.flags += 1
       }
