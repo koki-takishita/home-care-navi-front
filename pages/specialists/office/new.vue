@@ -225,10 +225,6 @@ export default {
             console.log(fileArray)
             console.log(typeof fileArray) */
           })
-          if (imageFlag === false) {
-            imageFlag = true
-            this.images = image
-          }
           return true
         },
         fileLengthCheck: (value) =>
