@@ -26,20 +26,6 @@
               dense
               height="44"
           /></label>
-          <v-file-input
-            v-model="images"
-            multiple
-            :rules="[
-              formValidates.fileSizeCheck,
-              formValidates.fileLengthCheck,
-            ]"
-            truncate-length="30"
-            accept="image/*"
-            prepend-icon="mdi-camera"
-            label="事業所画像をアップロード（5枚まで）"
-            class="image-form"
-          >
-          </v-file-input>
           <label class="font-color-gray font-weight-black text-caption"
             >休業日
           </label>
@@ -115,7 +101,7 @@
               </v-checkbox>
             </v-col>
           </v-row>
-          <div v-show="isShow" class="error-text mb-3">
+          <div v-show="isShow" class="holiday-error-text mb-3">
             休業日を選択してください
           </div>
           <label class="font-color-gray font-weight-black text-caption"
@@ -149,13 +135,14 @@
             >FAX
             <v-text-field
               v-model="fax_number"
-              :rules="[formValidates.required, formValidates.phoneNumber]"
-              class="mt-2 font-weight-regular"
+              :rules="[formValidates.faxNumber]"
+              class="mt-2 mb-2 font-weight-regular"
               placeholder="090-8765-4321"
               outlined
               dense
               height="44"
-          /></label>
+            /><!-- <div v-show="faxErrorIsShow" class="fax-error-text">正しいFAXではありません</div> --></label
+          >
         </v-col>
         <v-text-field
           v-model="post_code"
@@ -176,6 +163,7 @@
           <div class="mt-n2">
             <v-text-field
               v-model="address"
+              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
@@ -211,19 +199,19 @@ export default {
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
-        fileSizeCheck: (values) =>
+        /* fileSizeCheck: (values) =>
           !values ||
           !values.some((value) => value.size >= 10000000) ||
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
-          value.length <= 5 || '画像は5枚以下にしてください',
+          value.length <= 5 || '画像は5枚以下にしてください', */
         holidayLengthCheck: (values) => {
-          const arry = []
+          const array = []
           Array.prototype.forEach.call(Object(values), (value) => {
-            arry.push(value)
+            array.push(value)
             this.isShow = false
           })
-          return arry.length >= 1
+          return array.length >= 1
         },
         businessDayDetailCountCheck: (value) =>
           value.length <= 120 || '120文字以下で入力してください',
@@ -231,6 +219,14 @@ export default {
           const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
           return format.test(value) || '正しい電話番号ではありません'
         },
+        faxNumber: (value) =>
+          value === '' || value.match(/^\d{2,4}-\d{2,4}-\d{4}$/g) || 'test',
+        /* if(value === '' || value.match(/^\d{2,4}-\d{2,4}-\d{4}$/g)){
+          this.faxErrorIsShow = false
+          console.log(this.valid)
+        }else{
+          return 'test'
+        } */
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
           return (
@@ -240,8 +236,6 @@ export default {
       },
       name: '',
       title: '',
-      images: [],
-      parseImages: [],
       flags: 0,
       business_day_detail: '',
       phone_number: '',
@@ -251,7 +245,7 @@ export default {
       selected: [],
       valid: false,
       isShow: true,
-      user_id: '2',
+      faxErrorIsShow: false,
     }
   },
   watch: {
@@ -262,6 +256,25 @@ export default {
         }
       },
     },
+    /* fax_number:{
+      handler(){
+        if(this.fax_number === '' || this.fax_number.match(/^\d{2,4}-\d{2,4}-\d{4}$/g)){
+          this.faxErrorIsShow = false
+          console.log(this.valid)
+        }else{
+          this.faxErrorIsShow = true
+          this.valid = false
+          console.log(this.valid)
+        }
+      }
+    }, */
+    /* faxErrorIsShow:{
+      handler(){
+        if(this.faxErrorIsShow === false){
+          this.
+        }
+      }
+    } */
   },
   methods: {
     async send() {
@@ -286,13 +299,9 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      /* for (let i = 0; i <= this.images.length; i++) {
-        this.images = 
-      } */
       const params = new FormData()
       params.append('name', this.name)
       params.append('title', this.title)
-      params.append('images', this.images)
       params.append('flags', this.flags)
       params.append('business_day_detail', this.business_day_detail)
       params.append('phone_number', this.phone_number)
@@ -300,9 +309,7 @@ export default {
       params.append('post_code', this.post_code)
       params.append('address', this.address)
       try {
-        await this.$axios.$post(`offices`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
+        await this.$axios.$post(`offices`, params)
       } catch (error) {
         return error
       }
@@ -321,9 +328,13 @@ input[type='checkbox'] {
   margin: 0 6px 0 0;
 }
 
-.error-text {
+.holiday-error-text {
   color: red;
   text-align: center;
+}
+
+.fax-error-text {
+  color: #fc7569;
 }
 
 /* stylelint-disable */
