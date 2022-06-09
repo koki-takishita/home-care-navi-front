@@ -271,6 +271,11 @@ export default {
         console.log(this.selected)
       },
     },
+    images: {
+      handler() {
+        console.log(this.images.length)
+      },
+    },
   },
   methods: {
     async send() {
@@ -295,23 +300,26 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
+      const params = new FormData()
       const array = []
       Array.prototype.forEach.call(Object(this.images), (value) => {
         array.push(value)
         console.log(`arry::${array}`)
         console.log(array)
         console.log(typeof array)
-        this.isShow = false
       })
-      /* console.log(`for前のlength::${this.images.length}`)
-      for(let i = 0; i <= this.images.length; i++){
-              this.images = this.images[i]
+      // console.log(`for前のlength::${this.images.length}`)
+      /* for(let i = 0; i <= 5; i++){
+        if(this.images[i] === null){
+          continue
+        }
+        params.append('images', this.images[i])
+              // this.images = this.images[i]
               console.log(i)
-              console.log(`for最中のlength::${this.images.length}`)
-              console.log(this.images)
+              // console.log(`for最中のlength::${this.images.length}`)
+              console.log(this.images[i])
               console.log('発火')
         } */
-      const params = new FormData()
       params.append('name', this.name)
       params.append('title', this.title)
       params.append('images', array)
