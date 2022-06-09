@@ -273,12 +273,12 @@ export default {
     },
     images: {
       handler() {
-        console.log(this.images.length)
+        console.log(this.images[0])
       },
     },
   },
   methods: {
-    async send() {
+    send() {
       if (this.selected.includes('日')) {
         this.flags += 1
       }
@@ -329,8 +329,11 @@ export default {
       params.append('fax_number', this.fax_number)
       params.append('post_code', this.post_code)
       params.append('address', this.address)
+      console.log(params)
       try {
-        await this.$axios.$post(`offices`, params)
+        await this.$axios.$post(`offices`, params, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
       } catch (error) {
         return error
       }
