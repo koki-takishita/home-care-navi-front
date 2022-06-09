@@ -29,11 +29,7 @@
           <v-file-input
             v-model="images"
             multiple
-            :rules="[
-              formValidates.fileSizeCheck,
-              formValidates.fileLengthCheck,
-              formValidates.file,
-            ]"
+            :rules="[formValidates.fileLengthCheck]"
             truncate-length="30"
             accept="image/*"
             prepend-icon="mdi-camera"
@@ -213,20 +209,10 @@ export default {
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
-        fileSizeCheck: (values) =>
+        /* fileSizeCheck: (values) =>
           !values ||
           !values.some((value) => value.size >= 10000000) ||
-          '画像サイズは10MB以下でアップロードしてください',
-        file: (values) => {
-          const fileArray = []
-          Array.prototype.forEach.call(Object(values), (value) => {
-            fileArray.push(value)
-            /* console.log(`array::${fileArray}`)
-            console.log(fileArray)
-            console.log(typeof fileArray) */
-          })
-          return true
-        },
+          '画像サイズは10MB以下でアップロードしてください', */
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
         holidayLengthCheck: (values) => {
@@ -263,6 +249,7 @@ export default {
       name: '',
       title: '',
       images: [],
+      imageArray: [],
       flags: 0,
       business_day_detail: '',
       phone_number: '',
@@ -282,15 +269,6 @@ export default {
           this.isShow = true
         }
         console.log(this.selected)
-      },
-    },
-    fileArray: {
-      handler() {
-        /* Array.prototype.forEach.call(Object(this.images), (image) => {
-            this.array.push(image)
-            console.log('発火')
-          }) */
-        console.log(fileArray)
       },
     },
   },
@@ -317,10 +295,26 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
+      const array = []
+      Array.prototype.forEach.call(Object(this.images), (value) => {
+        array.push(value)
+        console.log(`arry::${array}`)
+        console.log(array)
+        console.log(typeof array)
+        this.isShow = false
+      })
+      /* console.log(`for前のlength::${this.images.length}`)
+      for(let i = 0; i <= this.images.length; i++){
+              this.images = this.images[i]
+              console.log(i)
+              console.log(`for最中のlength::${this.images.length}`)
+              console.log(this.images)
+              console.log('発火')
+        } */
       const params = new FormData()
       params.append('name', this.name)
       params.append('title', this.title)
-      params.append('images', this.images)
+      params.append('images', array)
       params.append('flags', this.flags)
       params.append('business_day_detail', this.business_day_detail)
       params.append('phone_number', this.phone_number)
