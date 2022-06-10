@@ -308,7 +308,7 @@ export default {
       params.append('post_code', this.post_code)
       params.append('address', this.address)
       try {
-        await this.$axios.$post(`offices`, params, {
+        await this.$axios.$post(`specialists/offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
       } catch (error) {
