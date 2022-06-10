@@ -29,7 +29,10 @@
           <v-file-input
             v-model="images"
             multiple
-            :rules="[formValidates.fileLengthCheck]"
+            :rules="[
+              formValidates.fileLengthCheck,
+              formValidates.fileSizeCheck,
+            ]"
             truncate-length="30"
             accept="image/*"
             prepend-icon="mdi-camera"
@@ -209,19 +212,16 @@ export default {
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
-        /* fileSizeCheck: (values) =>
+        fileSizeCheck: (values) =>
           !values ||
           !values.some((value) => value.size >= 10000000) ||
-          '画像サイズは10MB以下でアップロードしてください', */
+          '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
         holidayLengthCheck: (values) => {
           const array = []
           Array.prototype.forEach.call(Object(values), (value) => {
             array.push(value)
-            /* console.log(`arry::${array}`)
-            console.log(array)
-            console.log(typeof array) */
             this.isShow = false
           })
           return values.length >= 1
@@ -249,7 +249,6 @@ export default {
       name: '',
       title: '',
       images: [],
-      imageArray: [],
       flags: 0,
       business_day_detail: '',
       phone_number: '',
@@ -258,7 +257,6 @@ export default {
       address: '',
       selected: [],
       valid: false,
-      imageFlag: false,
       isShow: true,
     }
   },
@@ -268,12 +266,6 @@ export default {
         if (this.selected.length === 0) {
           this.isShow = true
         }
-        console.log(this.selected)
-      },
-    },
-    images: {
-      handler() {
-        console.log(this.images[0])
       },
     },
   },
@@ -301,35 +293,20 @@ export default {
         this.flags += 64
       }
       const params = new FormData()
-      const array = []
-      Array.prototype.forEach.call(Object(this.images), (value) => {
-        array.push(value)
-        console.log(`arry::${array}`)
-        console.log(array)
-        console.log(typeof array)
-      })
-      // console.log(`for前のlength::${this.images.length}`)
-      /* for(let i = 0; i <= 5; i++){
-        if(this.images[i] === null){
-          continue
-        }
-        params.append('images', this.images[i])
-              // this.images = this.images[i]
-              console.log(i)
-              // console.log(`for最中のlength::${this.images.length}`)
-              console.log(this.images[i])
-              console.log('発火')
-        } */
       params.append('name', this.name)
       params.append('title', this.title)
-      params.append('images', array)
+      for (let index = 0; index <= 5; index++) {
+        if (this.images[index] === undefined) {
+          continue
+        }
+        params.append('images[]', this.images[index])
+      }
       params.append('flags', this.flags)
       params.append('business_day_detail', this.business_day_detail)
       params.append('phone_number', this.phone_number)
       params.append('fax_number', this.fax_number)
       params.append('post_code', this.post_code)
       params.append('address', this.address)
-      console.log(params)
       try {
         await this.$axios.$post(`offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
