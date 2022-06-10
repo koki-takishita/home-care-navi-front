@@ -152,30 +152,17 @@ export default {
         alert('市町村を１つ以上選択してください。')
         return
       }
-      console.log(this.chooseItems)
       const arry = []
       Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
-        arry.push(value)
+        arry.push(encodeURI(value))
       })
-      console.log(arry.join())
-
       this.$router.push({
         path: '/offices',
-        query: { prefecture: this.choosePrefecture, cities: arry.join() },
+        query: {
+          prefecture: encodeURI(this.choosePrefecture),
+          cities: arry.join(),
+        },
       })
-      /*
-      try {
-        const prefecture = encodeURI(this.choosePrefecture)
-        const arry = []
-        Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
-          arry.push(encodeURI(value))
-        })
-        const requestUrl = `offices?prefecture=${prefecture}&city=${arry}`
-        await this.$axios.$get(requestUrl)
-      } catch (error) {
-        return error
-      }
-      */
     },
     clearChoosenItems() {
       this.chooseItems = []
@@ -203,8 +190,6 @@ export default {
         this.increment_city()
       } else if (this.chooseItems.length === 0) {
         this.set_one_city()
-        console.log('countup')
-        // this.increment_area()
       }
     },
   },

@@ -3,7 +3,6 @@
     <v-row no-gutters>
       <v-col cols="12" sm="4" md="3">
         <!--コンポーネントにする エリア選択-->
-
         <v-card class="pa-2" outlined tile>test1</v-card>
         <v-card class="pa-2" outlined tile>test2</v-card>
         <!---->
@@ -14,11 +13,12 @@
             <h3>検索結果</h3>
             <p>999件(仮)</p>
           </div>
-          <v-row>
+          <v-row v-if="empty">
             <v-col v-for="(office, i) in offices" :key="i" cols="12" md="6">
               <officeCard :office="office" />
             </v-col>
           </v-row>
+          <p v-else>条件にマッチする事業所は存在しません</p>
         </v-container>
       </v-col>
     </v-row>
@@ -28,35 +28,22 @@
 export default {
   layout: 'application',
   async asyncData({ $axios, query }) {
-    console.log(query.prefecture)
-    console.log(query.cities)
+    // console.log(`県の情報::${query.prefecture}`)
+    // console.log(`市の情報::${query.cities}`)
     try {
       const res = await $axios.$get(
         `offices?prefecture=${query.prefecture}&cities=${query.cities}`
       )
-      console.log(`Log::${res.office}`)
-      return { getObj: res }
+      return { offices: res }
     } catch (error) {
+      // リロードして消えるようだったら有効化 console.log(error)
       return error
     }
   },
   data() {
     return {
-      offices: [
-        {
-          id: 1,
-          name: 'ああああああああああああああああああああああああ最大３０文字',
-          address: '新浜松駅 徒歩５分',
-          staffCount: 'スタッフ数５人',
-          phone: '000-0000-0000',
-          details: {
-            text: 'あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ',
-          },
-          thanks: {
-            text: 'ああああああああああああああああああああああああああああああああああああああああああああああああああ',
-          },
-        },
-      ],
+      offices: [],
+      empty: true,
       getObj: {},
     }
   },
