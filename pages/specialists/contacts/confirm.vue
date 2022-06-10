@@ -49,7 +49,7 @@
           <a
             style="color: #f06364"
             class="text-decoration-none"
-            href="/contacts/new"
+            href="/specialists/contacts/new"
           >
             もどる
           </a>
@@ -61,7 +61,7 @@
 
 <script>
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
   data() {
     return {
       name: '',
@@ -91,7 +91,7 @@ export default {
           types: this.types,
           content: this.content,
         })
-        this.$router.push('/contacts/success')
+        this.$router.push('/specialists/contacts/success')
         return response
       } catch (error) {
         return error

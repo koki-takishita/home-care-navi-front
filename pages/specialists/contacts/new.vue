@@ -69,7 +69,7 @@
             max-width="520"
             min-width="343"
             height="60"
-            href="/contacts/confirm"
+            href="/specialists/contacts/confirm"
             @click="SendConfirmPage"
             >この内容で問い合わせる</v-btn
           >
@@ -81,7 +81,7 @@
 
 <script>
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
   data() {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
