@@ -4,7 +4,7 @@
       <h4 class="display-1 text-h6 font-weight-black">お問い合わせ</h4>
     </div>
     <v-card-text>
-      <v-form v-model="form.valid">
+      <v-form v-model="valid">
         <div>
           <label class="font-color-gray font-weight-black text-caption"
             >お名前
@@ -65,7 +65,7 @@
           <v-btn
             class="error text-h6 block"
             block
-            :disabled="!form.valid"
+            :disabled="!valid"
             max-width="520"
             min-width="343"
             height="60"
@@ -83,7 +83,6 @@
 export default {
   layout: 'application_specialists',
   data() {
-    return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
       form: {
         name: '',
@@ -91,7 +90,6 @@ export default {
         types: '',
         content: '',
         valid: false,
-      },
       formValidates: {
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
