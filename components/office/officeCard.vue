@@ -110,18 +110,14 @@ export default {
   },
   computed: {
     displayDetail() {
-      if (this.office.detail.detail === undefined) {
-        return this.office.detail.message
-      } else {
-        return this.office.detail.detail
-      }
+      return this.office.detail.detail === undefined
+        ? this.office.detail.message
+        : this.office.detail.detail
     },
     displayComments() {
-      if (this.office.thank.comments === undefined) {
-        return this.office.thank.message
-      } else {
-        return this.office.thank.comments
-      }
+      return this.office.thank.comments === undefined
+        ? this.office.detail.message
+        : this.office.thank.comments
     },
   },
   mounted() {
