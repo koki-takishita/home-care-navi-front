@@ -49,7 +49,7 @@
           <font color="#6D7570">{{ displayDetail }}</font>
         </div>
       </v-card-text>
-      <v-card min-height="61" tile outlined class="reset-border-style">
+      <v-card min-height="61" tile outlined color="rgba(169, 240, 209, 16%)">
         <v-row no-gutters>
           <v-col cols="1" class="text-center">
             <v-icon color="#AEB5B2">mdi-account</v-icon>
@@ -73,7 +73,26 @@
           </p>
         </v-col>
         <v-col cols="10">
-          <v-card min-height="56"> 休日のコンポーネント作る </v-card>
+          <v-card min-height="56" tile outlined class="reset-border-style">
+            <table rules="cols" frame="border">
+              <thead>
+                <tr>
+                  <th v-for="(day, i) in week" :key="i">
+                    <font size="1" :color="switchColor(day)">{{ day }}</font>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td v-for="(item, i) in holidayArray" :key="i" align="center">
+                    <v-icon small :color="switchColor(item)">
+                      {{ toggleSymbol(item) }}
+                    </v-icon>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -106,6 +125,9 @@ export default {
           title: this.office.phone_number,
         },
       ],
+      week: ['日', '月', '火', '水', '木', '金', '土'],
+      binaryNumber: [64, 32, 16, 8, 4, 2, 1],
+      holidayArray: [],
     }
   },
   computed: {
@@ -122,6 +144,7 @@ export default {
   },
   mounted() {
     this.listItems[0].text = this.office.name
+    this.conversionBinaryToholidayArray(this.office.flags)
   },
   methods: {
     hoverActive() {
@@ -137,6 +160,40 @@ export default {
       // お気に入り済みなら、解除処理
       // お気に入りしてないなら、登録処理
       console.log('toggleBookmark発火')
+    },
+    conversionBinaryToholidayArray(holiday) {
+      this.binaryNumber.forEach((n) => {
+        if (holiday >= n) {
+          holiday = holiday - n
+          this.holidayArray.push(1)
+        } else {
+          this.holidayArray.push(0)
+        }
+      })
+    },
+    toggleSymbol(n) {
+      return n === 1 ? 'mdi-close' : 'mdi-circle-outline'
+    },
+    switchColor(item) {
+      if (typeof item === 'string') {
+        // 曜日の色を切替
+        switch (item) {
+          case '土':
+            return '#2E6EE6'
+          case '日':
+            return '#E23E5D'
+          default:
+            return '#2E3331'
+        }
+      } else {
+        // 1,0で色切替
+        switch (item) {
+          case 0:
+            return '#F09C3C'
+          default:
+            return '#AEB5B2'
+        }
+      }
     },
   },
 }
@@ -162,7 +219,20 @@ export default {
 /* stylelint-disable */
 .reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
   border: 0px;
-  background-color: rgba(169, 240, 209, 0.16);
 }
 /* stylelint-enable */
+
+table {
+  width: 100%;
+  height: 100%;
+  border-color: #d9dede;
+}
+
+th {
+  background-color: #f5f5f5;
+}
+
+td {
+  height: 35px;
+}
 </style>
