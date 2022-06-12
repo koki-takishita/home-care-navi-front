@@ -13,12 +13,12 @@
             <h3>検索結果</h3>
             <p>999件(仮)</p>
           </div>
-          <v-row v-if="empty">
+          <v-row v-if="offices.length">
             <v-col v-for="(office, i) in offices" :key="i" cols="12" md="6">
               <officeCard :office="office" />
             </v-col>
           </v-row>
-          <p v-else>条件にマッチする事業所は存在しません</p>
+          <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
         </v-container>
       </v-col>
     </v-row>

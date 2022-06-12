@@ -22,7 +22,14 @@
         </v-avatar>
       </v-card-title>
       <div class="d-flex">
-        <v-card max-height="90" min-height="90" max-width="120" min-width="120"
+        <v-card
+          tile
+          outlined
+          max-height="90"
+          min-height="90"
+          max-width="120"
+          min-width="120"
+          class="reset-border-style"
           >写真が入る</v-card
         >
         <v-list dense class="pt-0">
@@ -148,18 +155,20 @@ export default {
   },
   methods: {
     hoverActive() {
-      console.log('hoverActive発火')
       this.icon.color = '#F09C3C'
     },
     hoverRelease() {
       // お気に入り済みなら、なにもしない
-      console.log('hoverRelease発火')
       this.icon.color = '#D9DEDE'
     },
     toggleBookmark() {
       // お気に入り済みなら、解除処理
       // お気に入りしてないなら、登録処理
-      console.log('toggleBookmark発火')
+      if (this.$auth.loggedIn) {
+        alert('お気に入り機能はまだ実装されていません。')
+      } else {
+        alert('お気に入り機能はログインしたら利用できます。')
+      }
     },
     conversionBinaryToholidayArray(holiday) {
       this.binaryNumber.forEach((n) => {
