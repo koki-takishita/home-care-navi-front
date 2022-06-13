@@ -26,13 +26,13 @@
               v-for="index in office.image_url.length"
               :key="index"
               :class="{ current: active === index - 1 }"
+              class="mx-1"
               @click="current(index)"
             >
               <v-img
                 :src="office.image_url[index - 1]"
                 height="50"
                 width="70"
-                class="mx-1"
               ></v-img>
             </li>
           </div>
@@ -486,12 +486,9 @@ td {
   margin-bottom: 16px;
   & li {
     cursor: pointer;
-    opacity: 0.4;
-    &:hover {
-      opacity: 1;
-    }
     &.current {
-      opacity: 1;
+      border: solid;
+      border-color: #f8615e;
     }
   }
 }
