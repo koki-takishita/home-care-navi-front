@@ -508,12 +508,11 @@ td {
 }
 
 .prev {
-  margin-top: 140px;
-  color: #00000032;
+  margin-top: 150px;
 }
 
 .next {
-  margin-top: 140px;
+  margin-top: 150px;
 }
 
 .active {
