@@ -6,13 +6,27 @@
           <v-img :src="office.image_url[active]" height="338">
             <v-row>
               <v-col cols="6">
-                <v-btn class="prev" fab depressed icon @click="prev">
+                <v-btn
+                  class="prev ml-3"
+                  fab
+                  depressed
+                  color="#0000004F"
+                  small
+                  @click="prev"
+                >
                   <v-icon color="white" x-large>mdi-chevron-left</v-icon>
                 </v-btn>
               </v-col>
               <v-col cols="6">
                 <div class="text-right">
-                  <v-btn class="next" fab depressed icon @click="next">
+                  <v-btn
+                    class="next mr-3"
+                    fab
+                    depressed
+                    color="#0000004F"
+                    small
+                    @click="next"
+                  >
                     <v-icon color="white" x-large>mdi-chevron-right</v-icon>
                   </v-btn>
                 </div>
@@ -495,6 +509,7 @@ td {
 
 .prev {
   margin-top: 140px;
+  color: #00000032;
 }
 
 .next {
