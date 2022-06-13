@@ -119,7 +119,7 @@ export default {
       loginInfo: {
         email: '',
         password: '',
-        redirectUrl: '/specialists/users/new',
+        redirectUrl: '/specialists/office/new',
         user_type: 'specialist',
         valid: false,
       },
