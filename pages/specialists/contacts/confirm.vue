@@ -36,11 +36,11 @@
           <v-btn
             block
             large
-            class="error text-h6 block"
+            class="warning text-h6 block"
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage(), RemoveItemFromLocalStorage()"
+            @click="SendSuccessPage(), RemoveItemFromSessionStorage()"
           >
             送信する
           </v-btn>
@@ -71,15 +71,15 @@ export default {
     }
   },
   mounted() {
-    const name = localStorage.getItem('name')
-    const email = localStorage.getItem('email')
-    const types = localStorage.getItem('types')
-    const content = localStorage.getItem('content')
+    const name = sessionStorage.getItem('name')
+    const email = sessionStorage.getItem('email')
+    const types = sessionStorage.getItem('types')
+    const content = sessionStorage.getItem('content')
     if (name != null && email != null && types != null && content != null) {
-      this.name = localStorage.getItem('name')
-      this.email = localStorage.getItem('email')
-      this.types = localStorage.getItem('types')
-      this.content = localStorage.getItem('content')
+      this.name = sessionStorage.getItem('name')
+      this.email = sessionStorage.getItem('email')
+      this.types = sessionStorage.getItem('types')
+      this.content = sessionStorage.getItem('content')
     }
   },
   methods: {
@@ -97,11 +97,11 @@ export default {
         return error
       }
     },
-    RemoveItemFromLocalStorage() {
-      localStorage.removeItem('name')
-      localStorage.removeItem('email')
-      localStorage.removeItem('types')
-      localStorage.removeItem('content')
+    RemoveItemFromSessionStorage() {
+      sessionStorage.removeItem('name')
+      sessionStorage.removeItem('email')
+      sessionStorage.removeItem('types')
+      sessionStorage.removeItem('content')
     },
   },
 }

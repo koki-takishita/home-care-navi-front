@@ -106,24 +106,24 @@ export default {
     }
   },
   mounted() {
-    const name = localStorage.getItem('name')
-    const email = localStorage.getItem('email')
-    const types = localStorage.getItem('types')
-    const content = localStorage.getItem('content')
+    const name = sessionStorage.getItem('name')
+    const email = sessionStorage.getItem('email')
+    const types = sessionStorage.getItem('types')
+    const content = sessionStorage.getItem('content')
     if (name != null && email != null && types != null && content != null) {
-      this.name = localStorage.getItem('name')
-      this.email = localStorage.getItem('email')
-      this.types = localStorage.getItem('types')
-      this.content = localStorage.getItem('content')
+      this.name = sessionStorage.getItem('name')
+      this.email = sessionStorage.getItem('email')
+      this.types = sessionStorage.getItem('types')
+      this.content = sessionStorage.getItem('content')
     }
   },
 
   methods: {
     SendConfirmPage() {
-      localStorage.setItem('name', this.name)
-      localStorage.setItem('email', this.email)
-      localStorage.setItem('types', this.types)
-      localStorage.setItem('content', this.content)
+      sessionStorage.setItem('name', this.name)
+      sessionStorage.setItem('email', this.email)
+      sessionStorage.setItem('types', this.types)
+      sessionStorage.setItem('content', this.content)
     },
   },
 }
