@@ -1,6 +1,5 @@
 <template>
   <v-container class="pt-10">
-    {{ staffs.length }}
     <v-row>
       <v-col cols="12" sm="12" md="6">
         <v-card outlined tile height="338">
