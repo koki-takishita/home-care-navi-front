@@ -10,7 +10,7 @@ export default function ({ $auth, redirect, store }, inject) {
       // TODO 成功時にstoreにtype入れ込む
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログアウトしました'])
-      redirect(logoutInfo.redirecttUrl)
+      redirect(logoutInfo.redirectUrl)
       return response
     } catch (error) {
       // TODO 失敗時にstoreにtype入れ込む

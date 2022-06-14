@@ -3,17 +3,60 @@
     <v-row>
       <v-col cols="12" sm="12" md="6">
         <v-card outlined tile height="338">
-          <v-card-title>画像大</v-card-title>
+          <v-img :src="office.image_url[active]" height="338">
+            <v-row>
+              <v-col cols="6">
+                <v-btn
+                  class="prev ml-3"
+                  fab
+                  depressed
+                  color="#0000004F"
+                  small
+                  @click="prev"
+                >
+                  <v-icon color="white" x-large>mdi-chevron-left</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <div class="text-right">
+                  <v-btn
+                    class="next mr-3"
+                    fab
+                    depressed
+                    color="#0000004F"
+                    small
+                    @click="next"
+                  >
+                    <v-icon color="white" x-large>mdi-chevron-right</v-icon>
+                  </v-btn>
+                </div>
+              </v-col>
+            </v-row>
+          </v-img>
         </v-card>
         <v-card class="sm-under-no" outlined tile height="85">
-          <v-card-title>事業所画像（小５枚）</v-card-title>
+          <div class="thumbnails">
+            <li
+              v-for="index in office.image_url.length"
+              :key="index"
+              :class="{ current: active === index - 1 }"
+              class="mx-1"
+              @click="current(index)"
+            >
+              <v-img
+                :src="office.image_url[index - 1]"
+                height="50"
+                width="70"
+              ></v-img>
+            </li>
+          </div>
         </v-card>
         <v-card class="md-over-no" outlined tile>
           <v-row class="mx-auto mt-auto max-width">
             <v-col class="office-name" cols="10">{{ office.name }}</v-col>
             <v-col cols="2">
-              <v-btn fab depressed>
-                <v-icon>mdi-star</v-icon>
+              <v-btn fab depressed small>
+                <v-icon color="white">mdi-star</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -27,11 +70,11 @@
               <v-icon>mdi-map-marker</v-icon>
               <div class="my-auto">東京駅 徒歩5分</div>
               <v-icon>mdi-account</v-icon>
-              <div class="my-auto">スタッフ数 5人</div>
+              <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
             </div>
           </v-col>
           <v-col class="pt-0" md="12" xs="6">
-            <div><v-icon large>mdi-phone</v-icon>{{ office.phone_number }}</div>
+            <v-icon large>mdi-phone</v-icon>{{ office.phone_number }}
             <div class="flex">
               <div class="fax pr-1">FAX</div>
               <div class="my-auto">{{ office.fax_number }}</div>
@@ -136,12 +179,15 @@
               </v-col>
             </v-row>
             <div class="mt-4 md-over-no holiday-detail">
-              営業日の説明が入ります
+              {{ office.business_day_detail }}
             </div>
           </v-col>
         </v-card>
         <v-card class="mt-6" outlined tile height="491">
-          <v-card-title>事業所タイトル</v-card-title>
+          <v-col class="office-title" cols="12">{{ office.title }} </v-col>
+          <v-col class="title_detail" cols="12"
+            >{{ office.title_detail }}
+          </v-col>
         </v-card>
         <v-card class="mt-6" outlined tile height="599">
           <v-card-title> スタッフ紹介 </v-card-title>
@@ -169,7 +215,7 @@
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="my-auto">東京駅 徒歩5分</div>
                 <v-icon>mdi-account</v-icon>
-                <div class="my-auto">スタッフ数 5人</div>
+                <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
               </div>
             </v-col>
             <v-col class="pt-0" md="12" xs="6">
@@ -289,15 +335,64 @@
 <script>
 export default {
   layout: 'application',
-  async asyncData({ $axios, params }) {
-    let office = []
-    const id = `${params.id}`
-    await $axios.$get(`offices/${id}`).then((res) => (office = res))
-    return { office }
-  },
-
   data() {
-    return {}
+    return {
+      office_id: this.$route.params.id,
+      active: 0, // 事業所画像が現在何番目か
+      office: {
+        selected_flags: '',
+        image_url: [],
+      },
+      staffs: {},
+    }
+  },
+  mounted() {
+    this.getOffice()
+    this.getStaffs()
+  },
+  methods: {
+    async getOffice() {
+      try {
+        const response = await this.$axios.$get(`offices/${this.office_id}`)
+        this.office = response
+      } catch (error) {
+        return error
+      }
+    },
+    async getStaffs() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/staffs`
+        )
+        this.staffs = response
+      } catch (error) {
+        return error
+      }
+    },
+    // サムネイルをクリックしたらその番号にする
+    // indexは1から始まるので、-1として配列の番号と合わせる
+    current(index) {
+      this.active = index - 1
+    },
+    // 左矢印（前へ）
+    prev() {
+      // activeが0以下なら一番最後の画像へもどる
+      if (this.active <= 0) {
+        this.active = this.office.image_url.length - 1
+      } else {
+        this.active--
+      }
+    },
+    // 右矢印（次へ）
+    next() {
+      // 配列の数が0~5つで6つになるので、-1とする
+      // 5番目のときにnextしたら0番目に戻る
+      if (this.active >= this.office.image_url.length - 1) {
+        this.active = 0
+      } else {
+        this.active++
+      }
+    },
   },
 }
 </script>
@@ -330,24 +425,19 @@ td {
   border-right: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
   box-shadow: 1px 1px 0 0 #fff inset, -1px -1px 0 0 #fff inset;
-  padding: 4px 12px;
-}
-
-.even {
-  background-color: #fafafa;
 }
 
 .flex {
   display: flex;
 }
 
-.height {
-  max-height: none;
-  min-height: min-content;
-}
-
 .office-tel {
   font-size: 13px;
+  color: #707f89;
+}
+
+.title_detail {
+  font-size: 14px;
   color: #707f89;
 }
 
@@ -375,6 +465,11 @@ td {
   color: #707f89;
 }
 
+.office-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 959px) {
   /* sm以下で表示しない */
   .sm-under-no {
@@ -394,6 +489,50 @@ td {
   .office-name {
     font-size: 28px;
     font-weight: bold;
+  }
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  & li {
+    cursor: pointer;
+    &.current {
+      border: solid;
+      border-color: #f8615e;
+    }
+  }
+}
+
+.prev {
+  margin-top: 150px;
+}
+
+.next {
+  margin-top: 150px;
+}
+
+.active {
+  &-enter {
+    opacity: 0;
+    &-to {
+      opacity: 1;
+    }
+    &-active {
+      transition: opacity 0.5s;
+    }
+  }
+  &-leave {
+    opacity: 1;
+    &-to {
+      opacity: 0;
+    }
+    &-active {
+      transition: opacity 0.5s;
+    }
   }
 }
 </style>

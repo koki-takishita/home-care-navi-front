@@ -26,67 +26,98 @@
               dense
               height="44"
           /></label>
+          <v-file-input
+            v-model="images"
+            multiple
+            :rules="[
+              formValidates.fileLengthCheck,
+              formValidates.fileSizeCheck,
+            ]"
+            truncate-length="30"
+            accept="image/*"
+            prepend-icon="mdi-camera"
+            label="事業所画像をアップロード（5枚まで）"
+            class="image-form"
+          >
+          </v-file-input>
           <label class="font-color-gray font-weight-black text-caption"
             >休業日
           </label>
           <v-row class="mt-2 mb-2 mx-auto">
             <v-col cols="1" class="mx-5"
-              ><label
-                >日<input
-                  v-model="selected"
-                  value="日"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              ><div class="ml-1">日</div>
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="日"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
             <v-col cols="1" class="mx-5"
-              ><label
-                >月<input
-                  v-model="selected"
-                  value="月"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              >月
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="月"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
             <v-col cols="1" class="mx-5"
-              ><label
-                >火<input
-                  v-model="selected"
-                  value="火"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              >火
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="火"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
             <v-col cols="1" class="mx-5"
-              ><label
-                >水<input
-                  v-model="selected"
-                  value="水"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              >水
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="水"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
             <v-col cols="1" class="mx-5"
-              ><label
-                >木<input
-                  v-model="selected"
-                  value="木"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              >木
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="木"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
             <v-col cols="1" class="mx-5"
-              ><label
-                >金<input
-                  v-model="selected"
-                  value="金"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              >金
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="金"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
             <v-col cols="1" class="mx-5"
-              ><label
-                >土<input
-                  v-model="selected"
-                  value="土"
-                  type="checkbox"
-                  class="mr-3" /></label
-            ></v-col>
+              >土
+              <v-checkbox
+                v-model="selected"
+                :rules="[formValidates.holidayLengthCheck]"
+                value="土"
+                class="mr-3"
+              >
+              </v-checkbox>
+            </v-col>
           </v-row>
+          <div v-show="isShow" class="holiday-error-text mb-3">
+            休業日を選択してください
+          </div>
           <label class="font-color-gray font-weight-black text-caption"
             >営業日に関する説明
             <v-textarea
@@ -118,8 +149,8 @@
             >FAX
             <v-text-field
               v-model="fax_number"
-              :rules="[formValidates.required, formValidates.phoneNumber]"
-              class="mt-2 font-weight-regular"
+              :rules="[formValidates.faxNumber]"
+              class="mt-2 mb-2 font-weight-regular"
               placeholder="090-8765-4321"
               outlined
               dense
@@ -145,6 +176,7 @@
           <div class="mt-n2">
             <v-text-field
               v-model="address"
+              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
@@ -172,6 +204,7 @@
 <script>
 export default {
   layout: 'application_specialists',
+  middleware: 'authentication',
   data() {
     return {
       formValidates: {
@@ -180,11 +213,32 @@ export default {
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
+        fileSizeCheck: (values) =>
+          !values ||
+          !values.some((value) => value.size >= 10000000) ||
+          '画像サイズは10MB以下でアップロードしてください',
+        fileLengthCheck: (value) =>
+          value.length <= 5 || '画像は5枚以下にしてください',
+        holidayLengthCheck: (values) => {
+          const array = []
+          Array.prototype.forEach.call(Object(values), (value) => {
+            array.push(value)
+            this.isShow = false
+          })
+          return values.length >= 1
+        },
         businessDayDetailCountCheck: (value) =>
           value.length <= 120 || '120文字以下で入力してください',
         phoneNumber: (value) => {
           const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
           return format.test(value) || '正しい電話番号ではありません'
+        },
+        faxNumber: (value) => {
+          if (value === '' || value.match(/^\d{2,4}-\d{2,4}-\d{4}$/g)) {
+            return true
+          } else {
+            return '正しいFAXではありません'
+          }
         },
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
@@ -195,6 +249,7 @@ export default {
       },
       name: '',
       title: '',
+      images: [],
       flags: 0,
       business_day_detail: '',
       phone_number: '',
@@ -203,10 +258,20 @@ export default {
       address: '',
       selected: [],
       valid: false,
+      isShow: true,
     }
   },
+  watch: {
+    selected: {
+      handler() {
+        if (this.selected.length === 0) {
+          this.isShow = true
+        }
+      },
+    },
+  },
   methods: {
-    send() {
+    async send() {
       if (this.selected.includes('日')) {
         this.flags += 1
       }
@@ -228,7 +293,28 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      // console.log(this.flags)
+      const params = new FormData()
+      params.append('name', this.name)
+      params.append('title', this.title)
+      for (let index = 0; index <= 5; index++) {
+        if (this.images[index] === undefined) {
+          continue
+        }
+        params.append('images[]', this.images[index])
+      }
+      params.append('flags', this.flags)
+      params.append('business_day_detail', this.business_day_detail)
+      params.append('phone_number', this.phone_number)
+      params.append('fax_number', this.fax_number)
+      params.append('post_code', this.post_code)
+      params.append('address', this.address)
+      try {
+        await this.$axios.$post(`specialists/offices`, params, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+      } catch (error) {
+        return error
+      }
       this.flags = 0
     },
   },
@@ -244,6 +330,11 @@ input[type='checkbox'] {
   margin: 0 6px 0 0;
 }
 
+.holiday-error-text {
+  color: red;
+  text-align: center;
+}
+
 /* stylelint-disable */
 .post-form >>> fieldset {
   width: 107px;
@@ -251,5 +342,9 @@ input[type='checkbox'] {
 
 .post-form >>> .v-text-field__slot {
   max-width: 82px;
+}
+
+.image-form >>> .v-input__slot {
+  width: 320px;
 }
 </style>

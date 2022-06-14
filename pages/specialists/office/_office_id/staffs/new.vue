@@ -90,6 +90,7 @@
 <script>
 export default {
   layout: 'application_specialists',
+  middleware: 'authentication',
   data() {
     return {
       formValidates: {
@@ -130,8 +131,6 @@ export default {
         await this.$axios.$post(`specialists/offices/${id}/staffs`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
-        this.$store.commit('catchErrorMsg/setType', 'success')
-        this.$store.commit('catchErrorMsg/setMsg', ['登録しました'])
         this.$router.push('.')
       } catch (error) {
         return error
