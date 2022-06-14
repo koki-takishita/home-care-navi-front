@@ -2,7 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   server: {
-    port: process.env.PORT || 8000, // デフォルト: 3000
+    port: 8000, // デフォルト: 3000
     host: '0.0.0.0', // デフォルト: localhost,
     timing: false,
   },
@@ -59,6 +59,9 @@ export default {
     '@nuxtjs/auth',
   ],
 
+  axios: {
+    baseURL: 'http://localhost:3000/api',
+  },
   auth: {
     redirect: {
       login: false,
