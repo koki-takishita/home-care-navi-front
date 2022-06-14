@@ -258,19 +258,36 @@
         </v-card>
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >事業所情報編集</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
+            <div v-if="office === true">
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="#"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >事業所情報編集</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+            </div>
+            <div v-else>
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="#"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >事業所登録</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+            </div>
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
                 <NuxtLink
@@ -457,7 +474,6 @@ export default {
     },
   },
   mounted() {
-    console.log('マウンテッド')
     if (typeof window.localStorage.office_data !== 'undefined') {
       this.office = true
     } else {
