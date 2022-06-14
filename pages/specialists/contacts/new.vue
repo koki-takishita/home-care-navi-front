@@ -81,7 +81,7 @@
 
 <script>
 export default {
-  layout: 'application_specialists',
+  layout: 'application',
   data() {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
