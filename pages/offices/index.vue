@@ -4,14 +4,19 @@
       <v-col cols="12" sm="4" md="3">
         <!--コンポーネントにする エリア選択-->
         <v-card class="pa-2" outlined tile>test1</v-card>
-        <v-card class="pa-2" outlined tile>test2</v-card>
+        <officeAreaList
+          v-if="!$vuetify.breakpoint.xs"
+          :cities="cities"
+          :prefecture="prefecture"
+          :selected-list="selectedList"
+        />
         <!---->
       </v-col>
       <v-col cols="12" sm="8" md="9">
         <v-container class="grey lighten-1 pt-0">
           <div>
             <h3>検索結果</h3>
-            <p>999件(仮)</p>
+            <p class="font-weight-black">{{ offices.length }}件</p>
           </div>
           <v-row v-if="offices.length">
             <v-col v-for="(office, i) in offices" :key="i" cols="12" md="6">
@@ -28,13 +33,20 @@
 export default {
   layout: 'application',
   async asyncData({ $axios, query }) {
-    // console.log(`県の情報::${query.prefecture}`)
-    // console.log(`市の情報::${query.cities}`)
+    const prefecture = query.prefecture
+    const cities = query.cities
+    const selectedList = query.selectedList
+    console.log(query)
     try {
-      const res = await $axios.$get(
-        `offices?prefecture=${query.prefecture}&cities=${query.cities}`
+      const offices = await $axios.$get(
+        `offices?prefecture=${prefecture}&cities=${cities}`
       )
-      return { offices: res }
+      return {
+        offices,
+        prefecture,
+        cities,
+        selectedList,
+      }
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
       return error
@@ -43,8 +55,9 @@ export default {
   data() {
     return {
       offices: [],
-      empty: true,
       getObj: {},
+      prefecture: [],
+      cities: [],
     }
   },
 }

@@ -8,23 +8,25 @@
         class="pa-6 pt-5 pb-3 d-flex flex-column"
       >
         <v-list class="overflow-auto mb-auto" max-height="240">
-          <v-list-item v-for="(city, i) in cities" :key="i" dense>
-            <v-checkbox
-              v-model="chooseItems"
-              class="mt-n1"
-              multiple
-              dense
-              :value="cities[i].city"
-              hide-details
-              color="red"
-              @click="countUp()"
-            >
-            </v-checkbox>
-            <v-list-item-content class="text-button pa-0 ml-n2">
-              {{ city.city }}
-            </v-list-item-content>
-            <v-icon block>mdi-chevron-right</v-icon>
-          </v-list-item>
+          <v-list-item-group v-model="chooseItems" multiple active-class="">
+            <v-list-item v-for="(city, i) in cities" :key="i" dense>
+              <template #default="{ active }">
+                <v-checkbox
+                  :input-value="active"
+                  class="mt-n1"
+                  dense
+                  hide-details
+                  color="red"
+                  @click="countUp()"
+                >
+                </v-checkbox>
+                <v-list-item-content class="text-button pa-0 ml-n2">
+                  {{ city.city }}
+                </v-list-item-content>
+                <v-icon block>mdi-chevron-right</v-icon>
+              </template>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
         <div class="d-flex ml-n3">
           <v-btn
@@ -154,13 +156,14 @@ export default {
       }
       const arry = []
       Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
-        arry.push(encodeURI(value))
+        arry.push(encodeURI(this.cities[value].city))
       })
       this.$router.push({
         path: '/offices',
         query: {
           prefecture: encodeURI(this.choosePrefecture),
           cities: arry.join(),
+          selectedList: this.chooseItems,
         },
       })
     },
