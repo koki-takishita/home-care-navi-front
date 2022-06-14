@@ -70,11 +70,8 @@ export default {
       office_id: this.$route.params.office_id,
     }
   },
-  async fetch() {
-    this.staffs = await fetch(
-      // `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
-      `https://home-care-navi-api-v2.herokuapp.com/api/specialists/offices/${this.officeId}/staffs`
-    ).then((res) => res.json())
+  mounted() {
+    this.getStaffs()
   },
   methods: {
     async getStaffs() {
