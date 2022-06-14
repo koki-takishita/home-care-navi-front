@@ -70,7 +70,7 @@
               <v-icon>mdi-map-marker</v-icon>
               <div class="my-auto">東京駅 徒歩5分</div>
               <v-icon>mdi-account</v-icon>
-              <div class="my-auto">スタッフ数 5人</div>
+              <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
             </div>
           </v-col>
           <v-col class="pt-0" md="12" xs="6">
