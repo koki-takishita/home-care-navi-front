@@ -45,7 +45,7 @@
             color="error"
             depressed
             class="font-weight-black"
-            @click="SearchForOfficesChosenByAddress"
+            @click="SearchForOfficesChosenByAddress()"
             >検索する</v-btn
           >
         </div>
@@ -71,24 +71,25 @@
         class="pa-6 pt-5 pb-3 d-flex flex-column"
       >
         <v-list class="overflow-auto mb-auto pt-0" max-height="240">
-          <p>{{ choosePrefecture }}</p>
-          <v-list-item v-for="(city, i) in cities" :key="i" dense>
-            <v-checkbox
-              v-model="chooseItems"
-              class="mt-n1"
-              multiple
-              dense
-              :value="cities[i].city"
-              hide-details
-              color="red"
-              @click="countUp()"
-            >
-            </v-checkbox>
-            <v-list-item-content class="text-button pa-0 ml-n2">
-              {{ city.city }}
-            </v-list-item-content>
-            <v-icon block>mdi-chevron-right</v-icon>
-          </v-list-item>
+          <v-list-item-group v-model="chooseItems" multiple active-class="">
+            <v-list-item v-for="(city, i) in cities" :key="i" dense>
+              <template #default="{ active }">
+                <v-checkbox
+                  :input-value="active"
+                  class="mt-n1"
+                  dense
+                  hide-details
+                  color="red"
+                  @click="countUp()"
+                >
+                </v-checkbox>
+                <v-list-item-content class="text-button pa-0 ml-n2">
+                  {{ city.city }}
+                </v-list-item-content>
+                <v-icon block>mdi-chevron-right</v-icon>
+              </template>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
         <div class="wrapper">
           <v-btn
@@ -105,7 +106,7 @@
             color="error"
             depressed
             class="font-weight-black"
-            @click="SearchForOfficesChosenByAddress"
+            @click="SearchForOfficesChosenByAddress()"
             >検索する</v-btn
           >
         </div>
@@ -132,10 +133,15 @@ export default {
     getCurrentPrefecture() {
       this.choosePrefecture = this.getCurrentPrefecture
     },
+    getCurrentArea() {
+      this.chooseArea = this.getCurrentArea
+    },
   },
   computed: {
     ...mapGetters('areaData', [
+      '',
       'getCities',
+      'getCurrentArea',
       'getCurrentPrefecture',
       'getCount_prefecture',
       'getCount_city',
@@ -161,6 +167,7 @@ export default {
       this.$router.push({
         path: '/offices',
         query: {
+          area: encodeURI(this.chooseArea),
           prefecture: encodeURI(this.choosePrefecture),
           cities: arry.join(),
           selectedList: this.chooseItems,

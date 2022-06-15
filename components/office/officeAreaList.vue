@@ -29,7 +29,6 @@
             </v-list-item-group>
           </v-list>
         </v-card>
-        <v-btn color="primary" @click="e1 = 2"> Continue </v-btn>
       </v-stepper-content>
       <v-stepper-content step="2" class="pa-0">
         <v-card
@@ -38,10 +37,10 @@
           tile
           outlined
         >
+          <v-chip pill outlined @click="backAreaList()">{{
+            selectedArea()
+          }}</v-chip>
           <v-list>
-            <v-chip pill outlined @click="backAreaList()">{{
-              areas[selectedAreaNum]
-            }}</v-chip>
             <v-list-item-group
               v-model="selectedPrefectureNum"
               active-class="font-weight-black"
@@ -62,20 +61,19 @@
             </v-list-item-group>
           </v-list>
         </v-card>
-        <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
       </v-stepper-content>
       <v-stepper-content step="3" class="pa-0">
         <v-card tile outlined class="reset-border-style" color="grey lighten-1">
+          <v-chip pill outlined @click="backAreaList()">{{
+            selectedArea()
+          }}</v-chip>
+          <v-chip pill outlined @click="backPrefectureList()">{{
+            selectedPrefecture()
+          }}</v-chip>
           <v-list class="overflow-auto" max-height="500">
-            <v-chip pill outlined @click="backAreaList()">{{
-              areas[selectedAreaNum]
-            }}</v-chip>
-            <v-chip pill outlined @click="backPrefectureList()">{{
-              fetchPrefectures[selectedPrefectureNum]
-            }}</v-chip>
             <v-list-item-group
               v-model="selectedCityNum"
-              active-class="font-weight-black"
+              active-class=""
               multiple
             >
               <v-list-item v-for="(city, i) in fetchCities" :key="i" dense>
@@ -90,7 +88,7 @@
                     >
                     </v-checkbox>
                   </v-list-item-action>
-                  <v-list-item-content class="text-button pa-0 ml-n7">
+                  <v-list-item-content class="pa-0 ml-n7">
                     {{ city.city }}
                   </v-list-item-content>
                   <v-icon block>mdi-chevron-right</v-icon>
@@ -98,35 +96,24 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-          <div class="d-flex ml-n3">
-            <v-btn
-              min-width="80"
-              min-height="40"
-              class="mr-2"
-              outlined
-              depressed
-            >
-              <span class="color-red">クリア</span></v-btn
-            >
-            <v-btn
-              min-width="160"
-              min-height="40"
-              color="error"
-              depressed
-              class="font-weight-black"
-              >検索する</v-btn
-            >
-          </div>
+          <v-btn
+            min-height="40"
+            color="error"
+            depressed
+            class="font-weight-black"
+            @click="searchOffice()"
+            >検索する</v-btn
+          >
         </v-card>
-        <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   layout: 'application',
-  props: ['cities', 'prefecture', 'selectedList'],
+  props: ['area', 'prefecture', 'cities', 'selectedList'],
   data() {
     return {
       areas: [
@@ -149,17 +136,15 @@ export default {
     }
   },
   async fetch() {
-    /*  ケースA 県ある・市町村ある
-        - 市町村のリスト表示 チェック済み
-        渡された市町村で、該当する市町村リクエスト
-
-        ケースB 県ある・市町村ない
-        - 市町村リスト表示 チェックなし
-        ケースC 県ない・市町村ない
-        - エリアリスト表示
-     */
-    // [Mdn Doc about Accept header] https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Accept
-    const list = this.selectedList.map((string) => Number(string))
+    // console.log(this._props)
+    if (this.propsUndefined()) {
+      this.e1 = 1
+      return
+    }
+    const list = []
+    for (let i = 0; i < this.selectedList.length; i++) {
+      list.push(Number(this.selectedList[i]))
+    }
     this.selectedCityNum = list
     try {
       const prefecture = this.prefecture
@@ -173,13 +158,55 @@ export default {
       return error
     }
   },
+  computed: {
+    ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
+  },
   methods: {
+    searchOffice() {
+      const arry = []
+      for (let i = 0; i < this.selectedCityNum.length; i++) {
+        arry.push(this.selectedCityNum[i])
+      }
+      let selectedCities = []
+      const cityArry = this.fetchCities
+      selectedCities = arry.map(function (num) {
+        return encodeURI(cityArry[num].city)
+      })
+      const area = encodeURI(this.selectedArea())
+      const prefecture = encodeURI(this.selectedPrefecture())
+      const cities = selectedCities.join()
+      const selectedList = this.selectedCityNum
+      this.$emit('child-event', area, prefecture, cities, selectedList)
+    },
+    propsUndefined() {
+      return this.area === 'undefined'
+    },
+    selectedArea() {
+      const area = decodeURI(this._props.area)
+      if (this.selectedAreaNum === '') {
+        return area
+      }
+      return this.areas[this.selectedAreaNum]
+    },
+    selectedPrefecture() {
+      const prefecture = decodeURI(this.prefecture)
+      if (this.selectedPrefectureNum === '') {
+        return prefecture
+      }
+      return this.fetchPrefectures[this.selectedPrefectureNum]
+    },
     backAreaList() {
       this.selectedCityNum = []
+      this.selectedAreaNum = []
+      this.selectedPrefectureNum = []
       this.e1 = 1
     },
     backPrefectureList() {
+      if (this.fetchPrefectures.length === 0) {
+        this.FetchPrefectures(decodeURI(this._props.area))
+      }
       this.selectedCityNum = []
+      this.selectedPrefectureNum = []
       this.e1 = 2
     },
     movePrefecturesList(area) {
@@ -190,7 +217,7 @@ export default {
       this.FetchCities(prefecture)
       this.e1 = 3
     },
-    async FetchPrefectures(area) {
+    FetchPrefectures(area) {
       switch (area) {
         case '甲信越北陸':
           this.fetchPrefectures = [
@@ -219,15 +246,7 @@ export default {
           if (area === '九州沖縄') {
             area = '九州'
           }
-          try {
-            const res = await this.$apiToAddressJson.$get(
-              `json?method=getPrefectures&area=${area}`
-            )
-            this.fetchPrefectures = res.response.prefecture
-          } catch (error) {
-            console.log(error)
-            return error
-          }
+          this.FetchPrefecture(area)
       }
     },
     async FetchCities(prefecture) {
@@ -236,6 +255,17 @@ export default {
           `json?method=getCities&prefecture=${prefecture}`
         )
         this.fetchCities = res.response.location
+      } catch (error) {
+        console.log(error)
+        return error
+      }
+    },
+    async FetchPrefecture(area) {
+      try {
+        const res = await this.$apiToAddressJson.$get(
+          `json?method=getPrefectures&area=${area}`
+        )
+        this.fetchPrefectures = res.response.prefecture
       } catch (error) {
         console.log(error)
         return error

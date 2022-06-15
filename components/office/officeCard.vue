@@ -1,5 +1,12 @@
 <template>
-  <v-card outlined tile min-height="418" min-width="355">
+  <v-card
+    outlined
+    tile
+    min-height="418"
+    min-width="355"
+    class="cursor-pointer"
+    @click.native="moveShow()"
+  >
     <v-container>
       <v-chip
         class="text-caption px-1 font-weight-bold"
@@ -16,7 +23,7 @@
           class="ml-auto"
           @mouseover="hoverActive()"
           @mouseleave="hoverRelease()"
-          @click="toggleBookmark()"
+          @click.stop="toggleBookmark()"
         >
           <v-icon :color="icon.color">{{ icon.state }}</v-icon>
         </v-avatar>
@@ -154,6 +161,9 @@ export default {
     this.conversionBinaryToholidayArray(this.office.flags)
   },
   methods: {
+    moveShow() {
+      this.$router.push({ path: `/offices/${this.office.id}` })
+    },
     hoverActive() {
       this.icon.color = '#F09C3C'
     },
@@ -243,5 +253,9 @@ th {
 
 td {
   height: 35px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>
