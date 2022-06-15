@@ -1,5 +1,3 @@
-feature/office-detail-form
-
 <template>
   <div>
     <v-card class="mx-auto mb-2 p-0" width="750">
