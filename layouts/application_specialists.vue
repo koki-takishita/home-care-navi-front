@@ -39,7 +39,7 @@
                             v-bind="attrs"
                             v-on="on"
                           >
-                            ケアマネメニュー
+                            メニュー
                             <v-icon>mdi-menu-down</v-icon>
                           </v-btn>
                         </template>
