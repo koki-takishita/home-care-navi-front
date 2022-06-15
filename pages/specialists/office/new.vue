@@ -1,3 +1,5 @@
+feature/office-detail-form
+
 <template>
   <div>
     <v-card class="mx-auto mb-2 p-0" width="750">
@@ -26,6 +28,19 @@
               dense
               height="44"
           /></label>
+          <label class="font-color-gray font-weight-black text-caption"
+            >特徴詳細
+            <v-textarea
+              v-model="title_detail"
+              :rules="[formValidates.businessDayDetailCountCheck]"
+              class="mt-2 font-weight-regular"
+              placeholder="特徴詳細のテキストを入れてください"
+              height="105"
+              outlined
+              dense
+            >
+            </v-textarea
+          ></label>
           <v-file-input
             v-model="images"
             multiple
@@ -185,6 +200,208 @@
             >
             </v-text-field>
           </div>
+
+          <label class="font-color-gray font-weight-black text-caption"
+            >類型
+            <v-text-field
+              v-model="service_type"
+              :rules="[
+                formValidates.required,
+                formValidates.serviceTypeCountCheck,
+              ]"
+              class="mt-2 font-weight-regular"
+              placeholder="例）介護付きホーム"
+              outlined
+              dense
+              height="44"
+          /></label>
+
+          <v-expansion-panels accordion multiple class="mb-10">
+            <v-expansion-panel>
+              <v-expansion-panel-header
+                class="detail-panel-header"
+                color="warning"
+              >
+                施設概要を登録する（任意）
+              </v-expansion-panel-header>
+              <v-expansion-panel-content class="mt-6">
+                <v-sheet class="pa-3">
+                  <v-form ref="form">
+                    <v-avatar
+                      size="320"
+                      color="grey lighten-3"
+                      tile
+                      class="ml-8 mb-4"
+                    >
+                      <v-img
+                        v-if="uploadImageUrl_1 !== null"
+                        :src="uploadImageUrl_1"
+                      />
+                    </v-avatar>
+
+                    <v-file-input
+                      v-model="image_detail_1"
+                      truncate-length="30"
+                      accept="image/*"
+                      show-size
+                      label="特徴画像1をアップロード"
+                      prepend-icon="mdi-camera"
+                      class="image-form"
+                      @change="detailImage_1Picked"
+                    ></v-file-input>
+                  </v-form>
+                </v-sheet>
+                <label class="font-color-gray font-weight-black text-caption"
+                  >特徴画像1の説明（任意）
+                  <v-textarea
+                    v-model="text_detail_1"
+                    :rules="[formValidates.businessDayDetailCountCheck]"
+                    class="mt-2 font-weight-regular"
+                    placeholder="特徴画像1に関する説明テキストを入れてください"
+                    height="105"
+                    outlined
+                    dense
+                  >
+                  </v-textarea
+                ></label>
+                <v-sheet class="pa-3">
+                  <v-form ref="form">
+                    <v-avatar
+                      size="320"
+                      color="grey lighten-3"
+                      tile
+                      class="ml-8 mb-4"
+                    >
+                      <v-img
+                        v-if="uploadImageUrl_2 !== null"
+                        :src="uploadImageUrl_2"
+                      />
+                    </v-avatar>
+                    <v-file-input
+                      v-model="image_detail_2"
+                      truncate-length="30"
+                      accept="image/*"
+                      show-size
+                      label="特徴画像2をアップロード"
+                      prepend-icon="mdi-camera"
+                      class="image-form"
+                      @change="detailImage_2Picked"
+                    ></v-file-input>
+                  </v-form>
+                </v-sheet>
+                <label class="font-color-gray font-weight-black text-caption"
+                  >特徴画像2の説明（任意）
+                  <v-textarea
+                    v-model="text_detail_2"
+                    :rules="[formValidates.businessDayDetailCountCheck]"
+                    class="mt-2 font-weight-regular"
+                    placeholder="特徴画像2に関する説明テキストを入れてください"
+                    height="105"
+                    outlined
+                    dense
+                  >
+                  </v-textarea
+                ></label>
+                <v-form>
+                  <label class="font-color-gray font-weight-black text-caption"
+                    >開設年月（任意）
+                  </label>
+                  <label>
+                    <div>
+                      <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template #activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="open_date"
+                            label="開設年月"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="open_date"
+                          locale="jp-ja"
+                          :day-format="(date) => new Date(date).getDate()"
+                          :active-picker.sync="activePicker"
+                          :max="
+                            new Date(
+                              Date.now() -
+                                new Date().getTimezoneOffset() * 60000
+                            )
+                              .toISOString()
+                              .substr(0, 10)
+                          "
+                          min="1950-01-01"
+                          @change="save"
+                        ></v-date-picker>
+                      </v-menu>
+                    </div>
+                  </label>
+                  <label class="font-color-gray font-weight-black text-caption"
+                    >居室数（任意）
+                    <v-select
+                      v-model="rooms"
+                      :items="items"
+                      height="44"
+                      class="room-form"
+                    ></v-select>
+                  </label>
+                  <label class="font-color-gray font-weight-black text-caption"
+                    >入居時の要件（任意）
+                    <v-text-field
+                      v-model="requirement"
+                      class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+                      placeholder="例）満60歳以上の方"
+                      outlined
+                      dense
+                      height="44"
+                      :rules="[formValidates.requirementCountCheck]"
+                  /></label>
+                  <label class="font-color-gray font-weight-black text-caption"
+                    >共用設備（任意）
+                    <v-text-field
+                      v-model="facility"
+                      class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+                      placeholder="例）エントランス、個浴、大浴場"
+                      outlined
+                      dense
+                      height="44"
+                      :rules="[formValidates.facilityCountCheck]"
+                  /></label>
+                  <label class="font-color-gray font-weight-black text-caption"
+                    >経営・事業主体（任意）
+                    <v-text-field
+                      v-model="management"
+                      class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+                      placeholder="例）株式会社ホームケアナビ"
+                      outlined
+                      dense
+                      height="44"
+                      :rules="[formValidates.managementCountCheck]"
+                  /></label>
+                  <label class="font-color-gray font-weight-black text-caption"
+                    >公式サイトURL（任意）
+                    <v-text-field
+                      v-model="link"
+                      class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+                      placeholder="例）https://www.google.co.jp/"
+                      outlined
+                      dense
+                      height="44"
+                      :rules="[formValidates.linkNameCheck]"
+                  /></label>
+                </v-form>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
           <v-btn
             x-large
             block
@@ -202,6 +419,9 @@
 </template>
 
 <script>
+const maxRoom = 101
+const totalRooms = [...Array(maxRoom).keys()]
+
 export default {
   layout: 'application_specialists',
   middleware: 'authentication',
@@ -219,6 +439,8 @@ export default {
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
+        fileDetailLengthCheck: (value) =>
+          value.length <= 2 || '画像は2枚以下にしてください',
         holidayLengthCheck: (values) => {
           const array = []
           Array.prototype.forEach.call(Object(values), (value) => {
@@ -246,9 +468,29 @@ export default {
             format.test(value) || '正しい郵便番号ではありません 例) 000-0000'
           )
         },
+        serviceTypeCountCheck: (value) =>
+          value.length <= 50 || '50文字以下で入力してください',
+        roomsNumberCheck: (value) => {
+          const format = /^[1-9]{1}[0-9]{0,2}$/g
+          return format.test(value) || '正しく数字を入れてください'
+        },
+        requirementCountCheck: (value) =>
+          value.length <= 50 || '50文字以下で入力してください',
+        facilityCountCheck: (value) =>
+          value.length <= 50 || '50文字以下で入力してください',
+        managementCountCheck: (value) =>
+          value.length <= 50 || '50文字以下で入力してください',
+        linkNameCheck: (value) => {
+          const format = /^https?:\/{2}[\w/:%#$&?()~.=+-]+/g
+          return (
+            format.test(value) ||
+            'WEBサイトのURLを入力して下さい 例) http://example.com'
+          )
+        },
       },
       name: '',
       title: '',
+      title_detail: '',
       images: [],
       flags: 0,
       business_day_detail: '',
@@ -256,6 +498,25 @@ export default {
       fax_number: '',
       post_code: '',
       address: '',
+      detail: '',
+      service_type: '',
+      input_image: null,
+      uploadImageUrl_1: '',
+      image_detail_1: [],
+      text_detail_1: '',
+      uploadImageUrl_2: '',
+      image_detail_2: [],
+      text_detail_2: '',
+      open_date: '',
+      activePicker: null,
+      date: null,
+      menu: false,
+      items: totalRooms,
+      rooms: '',
+      requirement: '',
+      facility: '',
+      management: '',
+      link: '',
       selected: [],
       valid: false,
       isShow: true,
@@ -271,6 +532,34 @@ export default {
     },
   },
   methods: {
+    detailImage_1Picked(file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        const detailImage = new FileReader()
+        detailImage.readAsDataURL(file)
+        detailImage.addEventListener('load', () => {
+          this.uploadImageUrl_1 = detailImage.result
+        })
+      } else {
+        this.uploadImageUrl_1 = ''
+      }
+    },
+    detailImage_2Picked(file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        const detailImage = new FileReader()
+        detailImage.readAsDataURL(file)
+        detailImage.addEventListener('load', () => {
+          this.uploadImageUrl_2 = detailImage.result
+        })
+      } else {
+        this.uploadImageUrl_2 = ''
+      }
+    },
     async send() {
       if (this.selected.includes('日')) {
         this.flags += 1
@@ -317,6 +606,9 @@ export default {
       }
       this.flags = 0
     },
+    save(date) {
+      this.$refs.menu.save(date)
+    },
   },
 }
 </script>
@@ -334,7 +626,6 @@ input[type='checkbox'] {
   color: red;
   text-align: center;
 }
-
 /* stylelint-disable */
 .post-form >>> fieldset {
   width: 107px;
@@ -346,5 +637,12 @@ input[type='checkbox'] {
 
 .image-form >>> .v-input__slot {
   width: 320px;
+}
+.room-form >>> .v-input__slot {
+  width: 82px;
+}
+.detail-panel-header {
+  color: white;
+  font-weight: bold;
 }
 </style>
