@@ -23,5 +23,6 @@ export default function ({ $auth, redirect, store }, inject) {
     localStorage.removeItem('expiry')
     localStorage.removeItem('client')
     localStorage.removeItem('uid')
+    localStorage.removeItem('office_data')
   }
 }
