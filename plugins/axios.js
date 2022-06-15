@@ -58,7 +58,6 @@ const error500 = function (store) {
 const setAuthInfoToLocalStorage = function (response) {
   // TODO メソッドの名前が適切でないかも、ログイン処理が成功したらみたいなのがほしい
   const headers = response.headers
-  console.log(headers.office_data)
   if (headers.office_data) {
     localStorage.setItem('office_data', headers.office_data)
   }
