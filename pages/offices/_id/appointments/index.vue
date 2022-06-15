@@ -272,6 +272,7 @@ export default {
       }
     },
     sendConfirmPage() {
+      this.currentTime = new Date().getTime()
       // 現在のUNIX時間から、有効期限を設定する(UNIX時間は単位が秒なので、秒数を足す)
       // https://keisan.casio.jp/exec/system/1526004418
       const expiry = Math.floor(this.currentTime / 1000) + 180
