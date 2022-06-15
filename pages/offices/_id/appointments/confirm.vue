@@ -53,6 +53,11 @@
         <v-btn x-large block depressed color="error">
           この内容で予約する
         </v-btn>
+        <p class="mb-0 text-center">
+          <NuxtLink to="." class="text-overline text-decoration-none link-color"
+            >もどる</NuxtLink
+          >
+        </p>
       </v-col>
     </v-card>
   </div>
