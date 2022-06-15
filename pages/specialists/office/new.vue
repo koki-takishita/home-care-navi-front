@@ -312,6 +312,7 @@ export default {
         await this.$axios.$post(`specialists/offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
+        localStorage.setItem('office_data', 'true')
       } catch (error) {
         return error
       }
