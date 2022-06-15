@@ -291,7 +291,7 @@ export default {
 </script>
 <style scoped>
 .link-color {
-  color: #ee7b1a;
+  color: #e44343;
 }
 
 .font-color-gray {
