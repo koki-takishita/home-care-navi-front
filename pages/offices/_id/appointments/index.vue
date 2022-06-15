@@ -144,6 +144,7 @@
 <script>
 export default {
   layout: 'application',
+  middleware: 'authentication',
   data() {
     return {
       formValidates: {
@@ -273,7 +274,7 @@ export default {
     sendConfirmPage() {
       // 現在のUNIX時間から、有効期限を設定する(UNIX時間は単位が秒なので、秒数を足す)
       // https://keisan.casio.jp/exec/system/1526004418
-      const expiry = Math.floor(this.currentTime / 1000) + 180
+      const expiry = Math.floor(this.currentTime / 1000) + 60
       localStorage.setItem('appointments.meet_date', this.meet_date)
       localStorage.setItem('appointments.meet_time', this.meet_time)
       localStorage.setItem('appointments.name', this.name)
