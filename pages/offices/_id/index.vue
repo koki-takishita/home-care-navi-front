@@ -228,7 +228,15 @@
               </div>
             </v-col>
             <v-col cols="12">
-              <v-btn x-large block depressed color="error"> WEB予約する </v-btn>
+              <v-btn
+                x-large
+                block
+                depressed
+                color="error"
+                @click="goAppointmentsPage"
+              >
+                WEB予約する
+              </v-btn>
             </v-col>
             <v-col class="py-1" cols="12">
               <div class="holiday-pc">営業日</div>
@@ -392,6 +400,9 @@ export default {
       } else {
         this.active++
       }
+    },
+    goAppointmentsPage() {
+      this.$router.push(`/offices/${this.office_id}/appointments`)
     },
   },
 }
