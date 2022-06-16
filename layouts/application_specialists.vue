@@ -59,7 +59,7 @@
                             <v-list-item>
                               <v-list-item-title>
                                 <NuxtLink
-                                  to="#"
+                                  to="/specialists/office/new"
                                   class="header-style text-overline text-decoration-none mr-5"
                                   >事業所登録</NuxtLink
                                 ></v-list-item-title
@@ -69,7 +69,7 @@
                           <v-list-item>
                             <v-list-item-title>
                               <NuxtLink
-                                to="#"
+                                to="/specialists/office/1/staffs"
                                 class="header-style text-overline text-decoration-none mr-5"
                                 >スタッフ情報</NuxtLink
                               ></v-list-item-title
@@ -277,7 +277,7 @@
               <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
                 <v-list-item-title>
                   <NuxtLink
-                    to="#"
+                    to="/specialists/office/new"
                     class="text-decoration-none text-body-2 navi-style"
                     >事業所登録</NuxtLink
                   >
@@ -291,7 +291,7 @@
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
                 <NuxtLink
-                  to="#"
+                  to="/specialists/office/1/staffs"
                   class="text-decoration-none text-body-2 navi-style"
                   >スタッフ情報</NuxtLink
                 >
@@ -479,9 +479,6 @@ export default {
       this.office = true
     } else {
       this.office = false
-    }
-    if (localStorage.getItem('myOfficeId') !== null) {
-      this.office_id = localStorage.getItem('myOfficeId')
     }
   },
 

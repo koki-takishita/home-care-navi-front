@@ -12,7 +12,6 @@ export default {
   data() {
     return {
       office_id: this.$route.params.office_id,
-      res_office_id: '',
       office: [],
     }
   },
@@ -25,9 +24,8 @@ export default {
         const response = await this.$axios.$get(
           `specialists/offices/${this.office.id}`
         )
-        this.res_office_id = response.id
-        if (this.res_office_id - this.office_id !== 0) {
-          this.$router.push(`/specialists/office/${this.res_office_id}/edit`)
+        if (response.id - this.office_id !== 0) {
+          this.$router.push(`/specialists/office/${response.id}/edit`)
         } else {
           this.office = response
         }

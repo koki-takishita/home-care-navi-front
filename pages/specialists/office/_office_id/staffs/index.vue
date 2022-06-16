@@ -69,12 +69,26 @@ export default {
     return {
       staffs: [],
       office_id: this.$route.params.office_id,
+      office: [],
     }
   },
   mounted() {
+    this.getOffice()
     this.getStaffs()
   },
   methods: {
+    async getOffice() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office.id}`
+        )
+        if (response.id - this.office_id !== 0) {
+          this.$router.push(`/specialists/office/${response.id}/staffs`)
+        }
+      } catch (error) {
+        return error
+      }
+    },
     async getStaffs() {
       try {
         // this.$setId(this.office_id)
