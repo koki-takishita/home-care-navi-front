@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="12" md="6">
         <v-card outlined tile height="338">
-          <v-img :src="office.image_url[active]" height="338">
+          <v-img :src="office.images[active]" height="338">
             <v-row>
               <v-col cols="6">
                 <v-btn
@@ -37,14 +37,14 @@
         <v-card class="sm-under-no" outlined tile height="85">
           <div class="thumbnails">
             <li
-              v-for="index in office.image_url.length"
+              v-for="index in office.images.length"
               :key="index"
               :class="{ current: active === index - 1 }"
               class="mx-1"
               @click="current(index)"
             >
               <v-img
-                :src="office.image_url[index - 1]"
+                :src="office.images[index - 1]"
                 height="50"
                 width="70"
               ></v-img>
@@ -70,14 +70,14 @@
               <v-icon>mdi-map-marker</v-icon>
               <div class="my-auto">東京駅 徒歩5分</div>
               <v-icon>mdi-account</v-icon>
-              <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
+              <div class="my-auto">スタッフ数 {{ office.staffs.length }}人</div>
             </div>
           </v-col>
           <v-col class="pt-0" md="12" xs="6">
-            <v-icon large>mdi-phone</v-icon>{{ office.phone_number }}
+            <v-icon large>mdi-phone</v-icon>{{ office.office.phone_number }}
             <div class="flex">
               <div class="fax pr-1">FAX</div>
-              <div class="my-auto">{{ office.fax_number }}</div>
+              <div class="my-auto">{{ office.office.fax_number }}</div>
             </div>
           </v-col>
           <v-col cols="12"
@@ -104,7 +104,9 @@
                       <tr>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('sunday')"
+                            v-if="
+                              office.office.selected_flags.includes('sunday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -114,7 +116,9 @@
                         </td>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('monday')"
+                            v-if="
+                              office.office.selected_flags.includes('monday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -124,7 +128,9 @@
                         </td>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('tuesday')"
+                            v-if="
+                              office.office.selected_flags.includes('tuesday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -134,7 +140,9 @@
                         </td>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('wednesday')"
+                            v-if="
+                              office.office.selected_flags.includes('wednesday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -144,7 +152,9 @@
                         </td>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('thursday')"
+                            v-if="
+                              office.office.selected_flags.includes('thursday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -154,7 +164,9 @@
                         </td>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('friday')"
+                            v-if="
+                              office.office.selected_flags.includes('friday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -164,7 +176,9 @@
                         </td>
                         <td class="py-2">
                           <v-icon
-                            v-if="office.selected_flags.includes('saturday')"
+                            v-if="
+                              office.office.selected_flags.includes('saturday')
+                            "
                             class="d-flex"
                             >mdi-close</v-icon
                           >
@@ -179,14 +193,16 @@
               </v-col>
             </v-row>
             <div class="mt-4 md-over-no holiday-detail">
-              {{ office.business_day_detail }}
+              {{ office.office.business_day_detail }}
             </div>
           </v-col>
         </v-card>
         <v-card class="mt-6" outlined tile height="491">
-          <v-col class="office-title" cols="12">{{ office.title }} </v-col>
+          <v-col class="office-title" cols="12"
+            >{{ office.office.title }}
+          </v-col>
           <v-col class="title_detail" cols="12"
-            >{{ office.title_detail }}
+            >{{ office.office.title_detail }}
           </v-col>
         </v-card>
         <v-card class="mt-6" outlined tile height="599">
@@ -199,7 +215,9 @@
       <v-col cols="12" sm="12" md="6">
         <v-card class="sm-under-no sticky" outlined tile>
           <v-row class="mx-auto mt-auto max-width">
-            <v-col class="office-name" cols="10">{{ office.name }} </v-col>
+            <v-col class="office-name" cols="10"
+              >{{ office.office.name }}
+            </v-col>
             <v-col class="pl-0" ols="2">
               <v-btn fab depressed>
                 <v-icon large color="white">mdi-star</v-icon>
@@ -207,24 +225,26 @@
             </v-col>
             <v-col cols="12">
               <div class="office-tel">
-                〒{{ office.post_code }}
+                〒{{ office.office.post_code }}
                 <br />
-                {{ office.address }}
+                {{ office.office.address }}
               </div>
               <div class="mt-3 flex access-and-staff">
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="my-auto">東京駅 徒歩5分</div>
                 <v-icon>mdi-account</v-icon>
-                <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
+                <div class="my-auto">
+                  スタッフ数 {{ office.staffs.length }}人
+                </div>
               </div>
             </v-col>
             <v-col class="pt-0" md="12" xs="6">
               <div>
-                <v-icon large>mdi-phone</v-icon>{{ office.phone_number }}
+                <v-icon large>mdi-phone</v-icon>{{ office.office.phone_number }}
               </div>
               <div class="flex">
                 <div class="fax pr-1">FAX</div>
-                <div class="my-auto">{{ office.fax_number }}</div>
+                <div class="my-auto">{{ office.office.fax_number }}</div>
               </div>
             </v-col>
             <v-col cols="12">
@@ -257,7 +277,7 @@
                     <tr>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('sunday')"
+                          v-if="office.office.selected_flags.includes('sunday')"
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -267,7 +287,7 @@
                       </td>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('monday')"
+                          v-if="office.office.selected_flags.includes('monday')"
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -277,7 +297,9 @@
                       </td>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('tuesday')"
+                          v-if="
+                            office.office.selected_flags.includes('tuesday')
+                          "
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -287,7 +309,9 @@
                       </td>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('wednesday')"
+                          v-if="
+                            office.office.selected_flags.includes('wednesday')
+                          "
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -297,7 +321,9 @@
                       </td>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('thursday')"
+                          v-if="
+                            office.office.selected_flags.includes('thursday')
+                          "
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -307,7 +333,7 @@
                       </td>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('friday')"
+                          v-if="office.office.selected_flags.includes('friday')"
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -317,7 +343,9 @@
                       </td>
                       <td class="py-2">
                         <v-icon
-                          v-if="office.selected_flags.includes('saturday')"
+                          v-if="
+                            office.office.selected_flags.includes('saturday')
+                          "
                           class="d-flex"
                           >mdi-close</v-icon
                         >
@@ -330,7 +358,7 @@
                 </table>
               </div>
               <div class="mt-4 mb-4 holiday-detail">
-                {{ office.business_day_detail }}
+                {{ office.office.business_day_detail }}
               </div>
             </v-col>
           </v-row>
@@ -349,30 +377,18 @@ export default {
       active: 0, // 事業所画像が現在何番目か
       office: {
         selected_flags: '',
-        image_url: [],
+        images: [],
       },
-      staffs: {},
     }
   },
   mounted() {
     this.getOffice()
-    this.getStaffs()
   },
   methods: {
     async getOffice() {
       try {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
         this.office = response
-      } catch (error) {
-        return error
-      }
-    },
-    async getStaffs() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/staffs`
-        )
-        this.staffs = response
       } catch (error) {
         return error
       }
@@ -386,7 +402,7 @@ export default {
     prev() {
       // activeが0以下なら一番最後の画像へもどる
       if (this.active <= 0) {
-        this.active = this.office.image_url.length - 1
+        this.active = this.office.images.length - 1
       } else {
         this.active--
       }
@@ -395,14 +411,18 @@ export default {
     next() {
       // 配列の数が0~5つで6つになるので、-1とする
       // 5番目のときにnextしたら0番目に戻る
-      if (this.active >= this.office.image_url.length - 1) {
+      if (this.active >= this.office.images.length - 1) {
         this.active = 0
       } else {
         this.active++
       }
     },
     goAppointmentsPage() {
-      this.$router.push(`/offices/${this.office_id}/appointments`)
+      if (!this.$auth.loggedIn) {
+        return alert('ログインをする必要があります')
+      } else {
+        this.$router.push(`/offices/${this.office_id}/appointments`)
+      }
     },
   },
 }
