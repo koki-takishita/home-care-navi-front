@@ -438,12 +438,10 @@ export default {
           !values.some((value) => value.size >= 10000000) ||
           '画像サイズは10MB以下でアップロードしてください',
         fileDetailSizeCheck: (value) =>
-          value.size >= 10000000 ||
+          value.size <= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
-        fileDetailLengthCheck: (value) =>
-          value.length <= 2 || '画像は2枚以下にしてください',
         holidayLengthCheck: (values) => {
           const array = []
           Array.prototype.forEach.call(Object(values), (value) => {
@@ -503,7 +501,6 @@ export default {
       address: '',
       detail: '',
       service_type: '',
-      input_image: null,
       uploadImageUrl_1: '',
       image_detail_1: [],
       text_detail_1: '',
@@ -600,6 +597,23 @@ export default {
       params.append('fax_number', this.fax_number)
       params.append('post_code', this.post_code)
       params.append('address', this.address)
+
+      params.append('title_detail', this.title_detail)
+      params.append('text_detail_1', this.text_detail_1)
+      params.append('service_type', this.service_type)
+
+      params.append('image_detail_1', this.image_detail_1)
+      params.append('text_detail_1', this.text_detail_1)
+      params.append('image_detail_2', this.image_detail_2)
+      params.append('text_detail_2', this.text_detail_2)
+
+      params.append('open_date', this.open_date)
+      params.append('rooms', this.rooms)
+      params.append('requirements', this.requirement)
+      params.append('facility', this.facility)
+      params.append('management', this.management)
+      params.append('link', this.link)
+
       try {
         await this.$axios.$post(`specialists/offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
