@@ -200,7 +200,6 @@ export default {
       currentYear: 0,
       currentMonth: 0,
       currentDay: 0,
-      currentTime: new Date().getTime(),
       today: 0,
       todaySum: 0,
       yearSlice: '',
@@ -215,25 +214,14 @@ export default {
   mounted() {
     this.addItems()
     this.getOffice()
-    // もし、ローカルストレージに保存した値が有効期限を過ぎていたら、すべて削除
-    if (
-      Math.floor(this.currentTime / 1000) >=
-      parseInt(localStorage.getItem('appointments.expiry'))
-    ) {
-      localStorage.removeItem('appointments.meet_date')
-      localStorage.removeItem('appointments.meet_time')
-      localStorage.removeItem('appointments.name')
-      localStorage.removeItem('appointments.age')
-      localStorage.removeItem('appointments.phone_number')
-      localStorage.removeItem('appointments.comment')
-      localStorage.removeItem('appointments.expiry')
-    }
+
     const meetDate = localStorage.getItem('appointments.meet_date')
     const meetTime = localStorage.getItem('appointments.meet_time')
     const name = localStorage.getItem('appointments.name')
     const age = localStorage.getItem('appointments.age')
     const phoneNumber = localStorage.getItem('appointments.phone_number')
     const comment = localStorage.getItem('appointments.comment')
+
     if (
       meetDate != null &&
       meetTime != null &&
@@ -266,16 +254,16 @@ export default {
     async getOffice() {
       try {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
-        this.office = response
+        this.office = response.office
       } catch (error) {
         return error
       }
     },
     sendConfirmPage() {
-      this.currentTime = new Date().getTime()
+      const currentTime = new Date().getTime()
       // 現在のUNIX時間から、有効期限を設定する(UNIX時間は単位が秒なので、秒数を足す)
       // https://keisan.casio.jp/exec/system/1526004418
-      const expiry = Math.floor(this.currentTime / 1000) + 180
+      const expiry = Math.floor(currentTime / 1000) + 180
       localStorage.setItem('appointments.meet_date', this.meet_date)
       localStorage.setItem('appointments.meet_time', this.meet_time)
       localStorage.setItem('appointments.name', this.name)
