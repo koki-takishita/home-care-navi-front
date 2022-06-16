@@ -10,7 +10,7 @@
       hide-details
     ></v-text-field>
     <v-divider class="my-4"></v-divider>
-    <v-card hover outlined class="d-flex" @click="clickEvent()">
+    <v-card outlined class="d-flex" :ripple="false" @click="clickEvent()">
       <p class="mb-0 text-body-2">
         <font color="#6D7570" class="text-caption font-weight-black mr-4"
           >エリア</font
@@ -21,9 +21,9 @@
     <v-btn
       block
       color="error"
-      min-height="48"
+      min-height="40"
       outlined
-      class="mt-4"
+      class="my-4"
       @click="clickBtn"
     >
       <v-icon small>mdi-map-marker</v-icon>
@@ -45,8 +45,13 @@ export default {
 </script>
 <style scoped>
 /* stylelint-disable */
-.d-flex.v-card.v-card--hover.v-sheet.v-sheet--outlined.theme--light {
+.d-flex.v-card.v-sheet.v-sheet--outlined.theme--light {
   border: 0;
 }
+
+.d-flex.v-card.v-sheet.v-sheet--outlined.theme--light:hover {
+  cursor: pointer;
+}
+
 /* stylelint-enable */
 </style>

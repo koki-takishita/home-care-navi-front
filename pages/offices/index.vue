@@ -2,9 +2,7 @@
   <v-container class="base-width my-4 px-0">
     <v-row no-gutters>
       <v-col cols="12" sm="4" md="3">
-        <!--コンポーネントにする エリア選択-->
-        <!--<v-card class="pa-2" outlined tile @click="backTop()">-->
-        <v-card class="pa-2">
+        <v-card class="pa-2 remove-bottom-border-radius" tile outlined>
           <officeSearchWind
             @clickLocation="backTop()"
             @clickBtnLocation="searchOfficeLocation"
@@ -34,7 +32,12 @@
           <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
         </v-container>
         <div class="text-center">
-          <v-pagination v-model="page" :length="count"></v-pagination>
+          <v-pagination
+            v-model="page"
+            :length="count"
+            color="#D9DEDE"
+            class="page-nation"
+          ></v-pagination>
         </div>
       </v-col>
     </v-row>
@@ -185,4 +188,19 @@ export default {
 .base-width {
   max-width: 990px;
 }
+
+.remove-bottom-border-radius {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* stylelint-disable */
+.pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0;
+}
+
+button.v-pagination__item.v-pagination__item--active {
+  box-shadow: none;
+}
+/* stylelint-enable */
 </style>

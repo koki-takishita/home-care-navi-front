@@ -1,14 +1,9 @@
 <template>
-  <v-stepper v-model="e1" tile outlined class="reset-border-style">
+  <v-stepper v-model="e1" class="reset-border-style remove-top-border-radius">
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <v-card
-          class="mb-12 reset-border-style"
-          color="grey lighten-1"
-          tile
-          outlined
-        >
-          <v-list flat>
+        <v-card class="mb-12 reset-border-style" color="#F5F7F7" tile outlined>
+          <v-list flat outlined>
             <v-list-item-group
               v-model="selectedAreaNum"
               active-class="font-weight-black"
@@ -32,15 +27,18 @@
         </v-card>
       </v-stepper-content>
       <v-stepper-content step="2" class="pa-0">
-        <v-card
-          class="mb-12 reset-border-style"
-          color="grey lighten-1"
-          tile
-          outlined
-        >
-          <v-chip pill outlined @click="backAreaList()">{{
-            selectedArea()
-          }}</v-chip>
+        <v-card class="mb-12 reset-border-style" color="#F5F7F7" tile outlined>
+          <div class="px-3">
+            <v-chip
+              class="hover-remove font-weight-black px-0"
+              :ripple="false"
+              pill
+              outlined
+              label
+              @click.native="backAreaList()"
+              >{{ selectedArea() }}</v-chip
+            >
+          </div>
           <v-list flat>
             <v-list-item-group
               v-model="selectedPrefectureNum"
@@ -65,52 +63,73 @@
         </v-card>
       </v-stepper-content>
       <v-stepper-content step="3" class="pa-0">
-        <v-card tile outlined class="reset-border-style" color="grey lighten-1">
-          <v-chip pill outlined @click="backAreaList()">{{
-            selectedArea()
-          }}</v-chip>
-          <v-chip pill outlined @click="backPrefectureList()">{{
-            selectedPrefecture()
-          }}</v-chip>
+        <v-card tile outlined class="reset-border-style" color="#F5F7F7">
+          <div class="px-5">
+            <v-chip
+              class="hover-remove px-0 font-weight-black"
+              :ripple="false"
+              pill
+              outlined
+              label
+              @click.native="backAreaList()"
+              >{{ selectedArea() }}</v-chip
+            >
+            <v-icon block>mdi-chevron-right</v-icon>
+            <v-chip
+              class="hover-remove px-0 font-weight-black"
+              :ripple="false"
+              pill
+              outlined
+              label
+              @click.native="backPrefectureList()"
+              >{{ selectedPrefecture() }}</v-chip
+            >
+          </div>
           <v-list flat class="overflow-auto" max-height="500">
             <v-list-item-group
               v-model="selectedCityNum"
               active-class="font-weight-black"
               multiple
             >
-              <v-list-item
-                v-for="(city, i) in fetchCities"
-                :key="i"
-                dense
-                :ripple="false"
-              >
-                <template #default="{ active }">
-                  <v-list-item-action>
-                    <v-checkbox
-                      class="mt-n1"
-                      dense
-                      hide-details
-                      :input-value="active"
-                      color="red"
-                    >
-                    </v-checkbox>
-                  </v-list-item-action>
-                  <v-list-item-content class="pa-0 ml-n7">
-                    {{ city.city }}
-                  </v-list-item-content>
-                  <v-icon block>mdi-chevron-right</v-icon>
-                </template>
-              </v-list-item>
+              <template v-for="(city, i) in fetchCities">
+                <v-list-item
+                  :key="i"
+                  dense
+                  :ripple="false"
+                  class="set-height-40"
+                >
+                  <template #default="{ active }">
+                    <v-list-item-action>
+                      <v-checkbox
+                        class="mt-n1"
+                        dense
+                        hide-details
+                        :input-value="active"
+                        color="red"
+                      >
+                      </v-checkbox>
+                    </v-list-item-action>
+                    <v-list-item-content class="pa-0 ml-n7">
+                      {{ city.city }}
+                    </v-list-item-content>
+                    <v-icon block>mdi-chevron-right</v-icon>
+                  </template>
+                </v-list-item>
+                <v-divider :key="i" class="mx-5"></v-divider>
+              </template>
             </v-list-item-group>
           </v-list>
-          <v-btn
-            min-height="40"
-            color="error"
-            depressed
-            class="font-weight-black"
-            @click="searchOffice()"
-            >検索する</v-btn
-          >
+          <div class="pa-3">
+            <v-btn
+              min-height="40"
+              color="error"
+              block
+              depressed
+              class="font-weight-black"
+              @click="searchOffice()"
+              >検索する</v-btn
+            >
+          </div>
         </v-card>
       </v-stepper-content>
     </v-stepper-items>
@@ -316,11 +335,42 @@ export default {
 }
 </script>
 <style scoped>
+.set-height-40 {
+  height: 40px;
+}
+
+.hover-remove::before {
+  display: none;
+}
+
+.hover-remove:hover {
+  cursor: pointer;
+}
+
 /* stylelint-disable */
+.mb-12.reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0;
+}
+
+.v-list.v-sheet.v-sheet--outlined.theme--light.v-list--flat {
+  border: 0;
+}
+
 .reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0.grey.lighten-1 {
   border: 0;
 }
+
 .v-stepper.reset-border-style.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0;
+}
+
+.v-stepper.reset-border-style.remove-top-border-radius.v-stepper--is-booted.v-sheet.theme--light {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: none;
+}
+
+span.hover-remove.v-chip.v-chip--label.v-chip--no-color.v-chip--outlined.v-chip--pill.theme--light.v-size--default {
   border: 0;
 }
 /* stylelint-enable */

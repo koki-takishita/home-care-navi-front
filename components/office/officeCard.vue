@@ -239,6 +239,10 @@ export default {
 .reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
   border: 0px;
 }
+
+.cursor-pointer.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0px;
+}
 /* stylelint-enable */
 
 table {
