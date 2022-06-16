@@ -1,5 +1,10 @@
 <template>
-  <v-stepper v-model="e1" class="reset-border-style remove-top-border-radius">
+  <v-stepper
+    v-model="e1"
+    tile
+    outlined
+    class="reset-border-style remove-top-border-radius"
+  >
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
         <v-card class="mb-12 reset-border-style" color="#F5F7F7" tile outlined>
