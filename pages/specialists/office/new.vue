@@ -29,7 +29,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >特徴詳細
             <v-textarea
-              v-model="title_detail"
+              v-model="detail"
               :rules="[formValidates.businessDayDetailCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
@@ -408,7 +408,7 @@
             depressed
             :disabled="!valid"
             color="warning"
-            @click="send"
+            @click="sendOffice, sendOfficeDetail"
           >
             登録する
           </v-btn>
@@ -491,7 +491,7 @@ export default {
       },
       name: '',
       title: '',
-      title_detail: '',
+      detail: '',
       images: [],
       flags: 0,
       business_day_detail: '',
@@ -499,14 +499,15 @@ export default {
       fax_number: '',
       post_code: '',
       address: '',
-      detail: '',
       service_type: '',
+
       uploadImageUrl_1: '',
       image_detail_1: [],
       text_detail_1: '',
       uploadImageUrl_2: '',
       image_detail_2: [],
       text_detail_2: '',
+
       open_date: '',
       activePicker: null,
       date: null,
@@ -560,7 +561,7 @@ export default {
         this.uploadImageUrl_2 = ''
       }
     },
-    async send() {
+    async sendOffice() {
       if (this.selected.includes('日')) {
         this.flags += 1
       }
@@ -597,23 +598,6 @@ export default {
       params.append('fax_number', this.fax_number)
       params.append('post_code', this.post_code)
       params.append('address', this.address)
-
-      params.append('title_detail', this.title_detail)
-      params.append('text_detail_1', this.text_detail_1)
-      params.append('service_type', this.service_type)
-
-      params.append('image_detail_1', this.image_detail_1)
-      params.append('text_detail_1', this.text_detail_1)
-      params.append('image_detail_2', this.image_detail_2)
-      params.append('text_detail_2', this.text_detail_2)
-
-      params.append('open_date', this.open_date)
-      params.append('rooms', this.rooms)
-      params.append('requirements', this.requirement)
-      params.append('facility', this.facility)
-      params.append('management', this.management)
-      params.append('link', this.link)
-
       try {
         await this.$axios.$post(`specialists/offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -623,6 +607,26 @@ export default {
       }
       this.flags = 0
     },
+
+    async sendOfficeDetail() {
+      const params = new FormData()
+      params.append('detail', this.detail)
+      params.append('service_type', this.service_type)
+      params.append('open_date', this.open_date)
+      params.append('rooms', this.rooms)
+      params.append('requirements', this.requirement)
+      params.append('facility', this.facility)
+      params.append('management', this.management)
+      params.append('link', this.link)
+      try {
+        await this.$axios.$post(`specialists/office_details`, params, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+      } catch (error) {
+        return error
+      }
+    },
+
     save(date) {
       this.$refs.menu.save(date)
     },
