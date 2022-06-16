@@ -438,7 +438,7 @@ export default {
           !values.some((value) => value.size >= 10000000) ||
           '画像サイズは10MB以下でアップロードしてください',
         fileDetailSizeCheck: (value) =>
-          value.size >= 10000000 ||
+          value.size <= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
