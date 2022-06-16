@@ -243,6 +243,7 @@
                       accept="image/*"
                       show-size
                       label="特徴画像1をアップロード"
+                      :rules="[formValidates.detailFileSizeCheck]"
                       prepend-icon="mdi-camera"
                       class="image-form"
                       @change="detailImage_1Picked"
@@ -281,6 +282,7 @@
                       accept="image/*"
                       show-size
                       label="特徴画像2をアップロード"
+                      :rules="[formValidates.detailFileSizeCheck]"
                       prepend-icon="mdi-camera"
                       class="image-form"
                       @change="detailImage_2Picked"
@@ -434,6 +436,9 @@ export default {
         fileSizeCheck: (values) =>
           !values ||
           !values.some((value) => value.size >= 10000000) ||
+          '画像サイズは10MB以下でアップロードしてください',
+        detailFileSizeCheck: (value) =>
+          value.size >= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
