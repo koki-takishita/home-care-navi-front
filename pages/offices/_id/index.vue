@@ -70,14 +70,14 @@
               <v-icon>mdi-map-marker</v-icon>
               <div class="my-auto">東京駅 徒歩5分</div>
               <v-icon>mdi-account</v-icon>
-              <div class="my-auto">スタッフ数 {{ office.staffs.length }}人</div>
+              <div class="my-auto">スタッフ数 人</div>
             </div>
           </v-col>
           <v-col class="pt-0" md="12" xs="6">
-            <v-icon large>mdi-phone</v-icon>{{ office.office.phone_number }}
+            <v-icon large>mdi-phone</v-icon>{{ office.phone_number }}
             <div class="flex">
               <div class="fax pr-1">FAX</div>
-              <div class="my-auto">{{ office.office.fax_number }}</div>
+              <div class="my-auto">{{ office.fax_number }}</div>
             </div>
           </v-col>
           <v-col cols="12"
@@ -89,120 +89,18 @@
                 <div class="holiday-sp">営業日</div>
               </v-col>
               <v-col class="pl-0" cols="10">
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <th>日</th>
-                        <th>月</th>
-                        <th>火</th>
-                        <th>水</th>
-                        <th>木</th>
-                        <th>金</th>
-                        <th>土</th>
-                      </tr>
-                      <tr>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('sunday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('monday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('tuesday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('wednesday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('thursday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('friday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                        <td class="py-2">
-                          <v-icon
-                            v-if="
-                              office.office.selected_flags.includes('saturday')
-                            "
-                            class="d-flex"
-                            >mdi-close</v-icon
-                          >
-                          <v-icon v-else class="d-flex" color="orange"
-                            >mdi-circle-outline</v-icon
-                          >
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <div></div>
               </v-col>
             </v-row>
             <div class="mt-4 md-over-no holiday-detail">
-              {{ office.office.business_day_detail }}
+              {{ office.business_day_detail }}
             </div>
           </v-col>
         </v-card>
         <v-card class="mt-6" outlined tile height="491">
-          <v-col class="office-title" cols="12"
-            >{{ office.office.title }}
-          </v-col>
+          <v-col class="office-title" cols="12">{{ office.title }} </v-col>
           <v-col class="title_detail" cols="12"
-            >{{ office.office.title_detail }}
+            >{{ office.title_detail }}
           </v-col>
         </v-card>
         <v-card class="mt-6" outlined tile height="599">
@@ -215,9 +113,7 @@
       <v-col cols="12" sm="12" md="6">
         <v-card class="sm-under-no sticky" outlined tile>
           <v-row class="mx-auto mt-auto max-width">
-            <v-col class="office-name" cols="10"
-              >{{ office.office.name }}
-            </v-col>
+            <v-col class="office-name" cols="10">{{ office.name }} </v-col>
             <v-col class="pl-0" ols="2">
               <v-btn fab depressed>
                 <v-icon large color="white">mdi-star</v-icon>
@@ -225,26 +121,24 @@
             </v-col>
             <v-col cols="12">
               <div class="office-tel">
-                〒{{ office.office.post_code }}
+                〒{{ office.post_code }}
                 <br />
-                {{ office.office.address }}
+                {{ office.address }}
               </div>
               <div class="mt-3 flex access-and-staff">
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="my-auto">東京駅 徒歩5分</div>
                 <v-icon>mdi-account</v-icon>
-                <div class="my-auto">
-                  スタッフ数 {{ office.staffs.length }}人
-                </div>
+                <div class="my-auto">スタッフ数 人</div>
               </div>
             </v-col>
             <v-col class="pt-0" md="12" xs="6">
               <div>
-                <v-icon large>mdi-phone</v-icon>{{ office.office.phone_number }}
+                <v-icon large>mdi-phone</v-icon>{{ office.phone_number }}
               </div>
               <div class="flex">
                 <div class="fax pr-1">FAX</div>
-                <div class="my-auto">{{ office.office.fax_number }}</div>
+                <div class="my-auto">{{ office.fax_number }}</div>
               </div>
             </v-col>
             <v-col cols="12">
@@ -262,103 +156,9 @@
               <div class="holiday-pc">営業日</div>
             </v-col>
             <v-col>
-              <div>
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>日</th>
-                      <th>月</th>
-                      <th>火</th>
-                      <th>水</th>
-                      <th>木</th>
-                      <th>金</th>
-                      <th>土</th>
-                    </tr>
-                    <tr>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="office.office.selected_flags.includes('sunday')"
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="office.office.selected_flags.includes('monday')"
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="
-                            office.office.selected_flags.includes('tuesday')
-                          "
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="
-                            office.office.selected_flags.includes('wednesday')
-                          "
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="
-                            office.office.selected_flags.includes('thursday')
-                          "
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="office.office.selected_flags.includes('friday')"
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                      <td class="py-2">
-                        <v-icon
-                          v-if="
-                            office.office.selected_flags.includes('saturday')
-                          "
-                          class="d-flex"
-                          >mdi-close</v-icon
-                        >
-                        <v-icon v-else class="d-flex" color="orange"
-                          >mdi-circle-outline</v-icon
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <div></div>
               <div class="mt-4 mb-4 holiday-detail">
-                {{ office.office.business_day_detail }}
+                {{ office.business_day_detail }}
               </div>
             </v-col>
           </v-row>
