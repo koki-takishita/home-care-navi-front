@@ -64,6 +64,7 @@
 <script>
 export default {
   layout: 'application_specialists',
+  middleware: 'authentication',
   data() {
     return {
       staffs: [],

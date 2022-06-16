@@ -58,7 +58,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
 
-  middleware: 'auth',
+  middleware: 'authentication',
 
   modules: [
     // https://axios.nuxtjs.org/setup
