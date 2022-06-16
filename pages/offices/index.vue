@@ -3,13 +3,20 @@
     <v-row no-gutters>
       <v-col cols="12" sm="4" md="3">
         <!--コンポーネントにする エリア選択-->
-        <v-card class="pa-2" outlined tile @click="backTop()">test1</v-card>
+        <!--<v-card class="pa-2" outlined tile @click="backTop()">-->
+        <v-card class="pa-2" outlined tile>
+          <officeSearchWind
+            @clickLocation="backTop()"
+            @clickBtnLocation="searchOfficeLocation"
+          />
+        </v-card>
         <officeAreaList
           v-if="!$vuetify.breakpoint.xs"
           :area="area"
           :cities="cities"
           :prefecture="prefecture"
           :selected-list="selectedList"
+          :location="location"
           @child-event="searchOfficeFromArea"
         />
       </v-col>
@@ -77,6 +84,7 @@ export default {
       prefecture: [],
       cities: [],
       selectedList: [],
+      location: false,
       page: 1,
       count: '',
     }
@@ -100,7 +108,41 @@ export default {
       this.resetStore()
       this.$router.push('/top')
     },
-    async searchOfficeFromArea(area, prefecture, cities, selectedList) {
+    searchOfficeLocation() {
+      this.getPositon()
+    },
+    getPositon() {
+      navigator.geolocation.getCurrentPosition(this.success)
+    },
+    success(pos) {
+      const crd = pos.coords
+      this.searchLocation(crd.longitude, crd.latitude)
+    },
+    async searchLocation(x, y) {
+      try {
+        const response = await this.$apiToAddressJson.$get(
+          `json?method=searchByGeoLocation&x=${x}&y=${y}`
+        )
+        const prefecture = response.response.location[0].prefecture
+        const city = response.response.location[0].city
+        this.searchOfficeFromArea(
+          '',
+          encodeURI(prefecture),
+          encodeURI(city),
+          '',
+          true
+        )
+      } catch (error) {
+        return error
+      }
+    },
+    async searchOfficeFromArea(
+      area,
+      prefecture,
+      cities,
+      selectedList,
+      location = false
+    ) {
       try {
         const offices = await this.$axios.$get(
           `offices?prefecture=${prefecture}&cities=${cities}&page=${0}`
@@ -119,6 +161,7 @@ export default {
         this.cities = cities
         this.selectedList = selectedList
         this.count = count
+        this.location = location
 
         this.$router.push({
           path: '/offices',
@@ -127,6 +170,7 @@ export default {
             prefecture,
             cities,
             selectedList,
+            location,
           },
         })
       } catch (error) {

@@ -113,7 +113,7 @@
 import { mapGetters } from 'vuex'
 export default {
   layout: 'application',
-  props: ['area', 'prefecture', 'cities', 'selectedList'],
+  props: ['area', 'prefecture', 'cities', 'selectedList', 'location'],
   data() {
     return {
       areas: [
@@ -136,7 +136,6 @@ export default {
     }
   },
   async fetch() {
-    // console.log(this._props)
     if (this.propsUndefined()) {
       this.e1 = 1
       return
@@ -157,6 +156,16 @@ export default {
       console.log(error)
       return error
     }
+  },
+  watch: {
+    location() {
+      if (this.location === true) {
+        this.e1 = 1
+        this.selectedAreaNum = []
+        this.selectedPrefectureNum = []
+        this.selectedCityNum = []
+      }
+    },
   },
   computed: {
     ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
@@ -179,7 +188,7 @@ export default {
       this.$emit('child-event', area, prefecture, cities, selectedList)
     },
     propsUndefined() {
-      return this.area === 'undefined'
+      return this.area === 'undefined' || this.area === ''
     },
     selectedArea() {
       const area = decodeURI(this._props.area)
