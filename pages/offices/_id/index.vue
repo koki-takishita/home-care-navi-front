@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="12" md="6">
         <v-card outlined tile height="338">
-          <v-img :src="office.images[active]" height="338">
+          <v-img v-if="images !== null" :src="images[active]" height="338">
             <v-row>
               <v-col cols="6">
                 <v-btn
@@ -33,21 +33,22 @@
               </v-col>
             </v-row>
           </v-img>
+          <v-img
+            v-else
+            src="https://home-care-navi-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpeg"
+            height="338"
+          ></v-img>
         </v-card>
         <v-card class="sm-under-no" outlined tile height="85">
-          <div class="thumbnails">
+          <div v-if="images !== null" class="thumbnails">
             <li
-              v-for="index in office.images.length"
+              v-for="index in images.length"
               :key="index"
               :class="{ current: active === index - 1 }"
               class="mx-1"
               @click="current(index)"
             >
-              <v-img
-                :src="office.images[index - 1]"
-                height="50"
-                width="70"
-              ></v-img>
+              <v-img :src="images[index - 1]" height="50" width="70"></v-img>
             </li>
           </div>
         </v-card>
@@ -70,7 +71,7 @@
               <v-icon>mdi-map-marker</v-icon>
               <div class="my-auto">東京駅 徒歩5分</div>
               <v-icon>mdi-account</v-icon>
-              <div class="my-auto">スタッフ数 人</div>
+              <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
             </div>
           </v-col>
           <v-col class="pt-0" md="12" xs="6">
@@ -89,7 +90,93 @@
                 <div class="holiday-sp">営業日</div>
               </v-col>
               <v-col class="pl-0" cols="10">
-                <div></div>
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>日</th>
+                        <th>月</th>
+                        <th>火</th>
+                        <th>水</th>
+                        <th>木</th>
+                        <th>金</th>
+                        <th>土</th>
+                      </tr>
+                      <tr>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('sunday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('monday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('tuesday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('wednesday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('thursday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('friday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                        <td class="py-2">
+                          <v-icon
+                            v-if="office.selected_flags.includes('saturday')"
+                            class="d-flex"
+                            >mdi-close</v-icon
+                          >
+                          <v-icon v-else class="d-flex" color="orange"
+                            >mdi-circle-outline</v-icon
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </v-col>
             </v-row>
             <div class="mt-4 md-over-no holiday-detail">
@@ -129,7 +216,7 @@
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="my-auto">東京駅 徒歩5分</div>
                 <v-icon>mdi-account</v-icon>
-                <div class="my-auto">スタッフ数 人</div>
+                <div class="my-auto">スタッフ数 {{ staffs.length }}人</div>
               </div>
             </v-col>
             <v-col class="pt-0" md="12" xs="6">
@@ -156,7 +243,93 @@
               <div class="holiday-pc">営業日</div>
             </v-col>
             <v-col>
-              <div></div>
+              <div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>日</th>
+                      <th>月</th>
+                      <th>火</th>
+                      <th>水</th>
+                      <th>木</th>
+                      <th>金</th>
+                      <th>土</th>
+                    </tr>
+                    <tr>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('sunday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('monday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('tuesday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('wednesday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('thursday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('friday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                      <td class="py-2">
+                        <v-icon
+                          v-if="office.selected_flags.includes('saturday')"
+                          class="d-flex"
+                          >mdi-close</v-icon
+                        >
+                        <v-icon v-else class="d-flex" color="orange"
+                          >mdi-circle-outline</v-icon
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <div class="mt-4 mb-4 holiday-detail">
                 {{ office.business_day_detail }}
               </div>
@@ -175,10 +348,14 @@ export default {
     return {
       office_id: this.$route.params.id,
       active: 0, // 事業所画像が現在何番目か
+      getAPI: {},
       office: {
         selected_flags: '',
         images: [],
       },
+      images: {},
+      staffs: {},
+      noImageURL: '~/assets/images/no_image.jpeg',
     }
   },
   mounted() {
@@ -188,7 +365,10 @@ export default {
     async getOffice() {
       try {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
-        this.office = response
+        this.getAPI = response
+        this.office = this.getAPI.office
+        this.images = this.getAPI.images
+        this.staffs = this.getAPI.staffs
       } catch (error) {
         return error
       }
