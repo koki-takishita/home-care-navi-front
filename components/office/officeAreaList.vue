@@ -8,7 +8,7 @@
           tile
           outlined
         >
-          <v-list>
+          <v-list flat>
             <v-list-item-group
               v-model="selectedAreaNum"
               active-class="font-weight-black"
@@ -17,6 +17,7 @@
                 v-for="(area, i) in areas"
                 :key="i"
                 dense
+                :ripple="false"
                 @click="movePrefecturesList(area)"
               >
                 <v-list-item-content>
@@ -40,7 +41,7 @@
           <v-chip pill outlined @click="backAreaList()">{{
             selectedArea()
           }}</v-chip>
-          <v-list>
+          <v-list flat>
             <v-list-item-group
               v-model="selectedPrefectureNum"
               active-class="font-weight-black"
@@ -49,6 +50,7 @@
                 v-for="(prefecture, i) in fetchPrefectures"
                 :key="i"
                 dense
+                :ripple="false"
                 @click="moveCitiesList(prefecture)"
               >
                 <v-list-item-content>
@@ -70,13 +72,18 @@
           <v-chip pill outlined @click="backPrefectureList()">{{
             selectedPrefecture()
           }}</v-chip>
-          <v-list class="overflow-auto" max-height="500">
+          <v-list flat class="overflow-auto" max-height="500">
             <v-list-item-group
               v-model="selectedCityNum"
-              active-class=""
+              active-class="font-weight-black"
               multiple
             >
-              <v-list-item v-for="(city, i) in fetchCities" :key="i" dense>
+              <v-list-item
+                v-for="(city, i) in fetchCities"
+                :key="i"
+                dense
+                :ripple="false"
+              >
                 <template #default="{ active }">
                   <v-list-item-action>
                     <v-checkbox
@@ -133,6 +140,8 @@ export default {
       selectedAreaNum: '',
       selectedPrefectureNum: '',
       selectedCityNum: [],
+      stampArea: '',
+      stampPrefecture: '',
     }
   },
   async fetch() {
@@ -145,6 +154,9 @@ export default {
       list.push(Number(this.selectedList[i]))
     }
     this.selectedCityNum = list
+    if (!(this.area === undefined && this.area === '')) {
+      this.FetchPrefectures(decodeURI(this.area))
+    }
     try {
       const prefecture = this.prefecture
       const res = await this.$apiToAddressJson.$get(
@@ -194,6 +206,8 @@ export default {
       const area = decodeURI(this._props.area)
       if (this.selectedAreaNum === '') {
         return area
+      } else if (this.selectedAreaNum === undefined) {
+        return this.areas[this.getIndex(this.areas, this.stampArea)]
       }
       return this.areas[this.selectedAreaNum]
     },
@@ -201,12 +215,17 @@ export default {
       const prefecture = decodeURI(this.prefecture)
       if (this.selectedPrefectureNum === '') {
         return prefecture
+      } else if (this.selectedPrefectureNum === undefined) {
+        return this.fetchPrefectures[
+          this.getIndex(this.fetchPrefectures, this.stampPrefecture)
+        ]
       }
       return this.fetchPrefectures[this.selectedPrefectureNum]
     },
     backAreaList() {
+      const area = this.selectedArea()
+      this.selectedAreaNum = this.getIndex(this.areas, area)
       this.selectedCityNum = []
-      this.selectedAreaNum = []
       this.selectedPrefectureNum = []
       this.e1 = 1
     },
@@ -214,15 +233,28 @@ export default {
       if (this.fetchPrefectures.length === 0) {
         this.FetchPrefectures(decodeURI(this._props.area))
       }
+      const prefecture = this.selectedPrefecture()
+      this.selectedPrefectureNum = this.getIndex(
+        this.fetchPrefectures,
+        prefecture
+      )
       this.selectedCityNum = []
-      this.selectedPrefectureNum = []
       this.e1 = 2
     },
+    getIndex(arry, target) {
+      for (let i = 0; i < arry.length; i++) {
+        if (arry[i] === target) {
+          return i
+        }
+      }
+    },
     movePrefecturesList(area) {
+      this.stampArea = area
       this.FetchPrefectures(area)
       this.e1 = 2
     },
     moveCitiesList(prefecture) {
+      this.stampPrefecture = prefecture
       this.FetchCities(prefecture)
       this.e1 = 3
     },

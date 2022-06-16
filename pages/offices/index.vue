@@ -1,10 +1,10 @@
 <template>
-  <v-container class="grey lighten-5 base-width my-4 px-0">
+  <v-container class="base-width my-4 px-0">
     <v-row no-gutters>
       <v-col cols="12" sm="4" md="3">
         <!--コンポーネントにする エリア選択-->
         <!--<v-card class="pa-2" outlined tile @click="backTop()">-->
-        <v-card class="pa-2" outlined tile>
+        <v-card class="pa-2">
           <officeSearchWind
             @clickLocation="backTop()"
             @clickBtnLocation="searchOfficeLocation"
@@ -21,7 +21,7 @@
         />
       </v-col>
       <v-col cols="12" sm="8" md="9">
-        <v-container class="grey lighten-1 pt-0">
+        <v-container class="pt-0">
           <div>
             <h3>検索結果</h3>
             <p class="font-weight-black">{{ offices[0].count }}件</p>

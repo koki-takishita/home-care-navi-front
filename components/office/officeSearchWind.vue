@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="font-weight-black mt-3">検索条件</p>
     <v-text-field
       append-icon="mdi-magnify"
       outlined
