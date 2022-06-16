@@ -60,6 +60,8 @@
                   v-model="age"
                   class="mt-2 font-weight-regular"
                   :items="items"
+                  item-text="state"
+                  item-value="abbr"
                   outlined
                   dense
                   placeholder="--"
@@ -105,7 +107,7 @@
             >家族情報
             <v-textarea
               v-model="family"
-              :rules="[formValidates.familyCountCheck]"
+              :rules="[formValidates.familyCountCheck, formValidates.required]"
               class="mt-2 font-weight-regular"
               height="80"
               outlined
@@ -119,6 +121,7 @@
               <v-col>
                 <v-select
                   v-model="staff_id"
+                  class="mt-2 font-weight-regular"
                   :items="staffs"
                   item-value="id"
                   item-text="name"
@@ -154,14 +157,12 @@
 </template>
 
 <script>
-const ageRange = [...Array(117).keys()]
 export default {
   layout: 'application_specialists',
   data() {
     return {
       staffs: [],
       officeId: this.$route.params.office_id,
-      items: ageRange,
       formValidates: {
         required: (value) => !!value || '必須項目です',
         fileSizeCheck: (value) =>
@@ -186,13 +187,76 @@ export default {
       office_id: this.$route.params.office_id,
       name: '',
       kana: '',
-      age: '',
       family: '',
       post_code: '',
       address: '',
       staff_id: '',
       image: null,
       valid: false,
+      age: '',
+      items: [
+        { state: '60歳', abbr: '60' },
+        { state: '61歳', abbr: '61' },
+        { state: '62歳', abbr: '62' },
+        { state: '63歳', abbr: '63' },
+        { state: '64歳', abbr: '64' },
+        { state: '65歳', abbr: '65' },
+        { state: '66歳', abbr: '66' },
+        { state: '67歳', abbr: '67' },
+        { state: '68歳', abbr: '68' },
+        { state: '69歳', abbr: '69' },
+        { state: '70歳', abbr: '70' },
+        { state: '71歳', abbr: '71' },
+        { state: '72歳', abbr: '72' },
+        { state: '73歳', abbr: '73' },
+        { state: '74歳', abbr: '74' },
+        { state: '75歳', abbr: '75' },
+        { state: '76歳', abbr: '76' },
+        { state: '77歳', abbr: '77' },
+        { state: '78歳', abbr: '78' },
+        { state: '79歳', abbr: '79' },
+        { state: '80歳', abbr: '80' },
+        { state: '81歳', abbr: '81' },
+        { state: '82歳', abbr: '82' },
+        { state: '83歳', abbr: '83' },
+        { state: '84歳', abbr: '84' },
+        { state: '85歳', abbr: '85' },
+        { state: '86歳', abbr: '86' },
+        { state: '87歳', abbr: '87' },
+        { state: '88歳', abbr: '88' },
+        { state: '89歳', abbr: '89' },
+        { state: '90歳', abbr: '90' },
+        { state: '91歳', abbr: '91' },
+        { state: '92歳', abbr: '92' },
+        { state: '93歳', abbr: '93' },
+        { state: '94歳', abbr: '94' },
+        { state: '95歳', abbr: '95' },
+        { state: '96歳', abbr: '96' },
+        { state: '97歳', abbr: '97' },
+        { state: '98歳', abbr: '98' },
+        { state: '99歳', abbr: '99' },
+        { state: '100歳', abbr: '100' },
+        { state: '101歳', abbr: '101' },
+        { state: '102歳', abbr: '102' },
+        { state: '103歳', abbr: '103' },
+        { state: '104歳', abbr: '104' },
+        { state: '105歳', abbr: '105' },
+        { state: '106歳', abbr: '106' },
+        { state: '107歳', abbr: '107' },
+        { state: '108歳', abbr: '108' },
+        { state: '109歳', abbr: '109' },
+        { state: '110歳', abbr: '110' },
+        { state: '111歳', abbr: '111' },
+        { state: '112歳', abbr: '112' },
+        { state: '113歳', abbr: '113' },
+        { state: '114歳', abbr: '114' },
+        { state: '115歳', abbr: '115' },
+        { state: '116歳', abbr: '116' },
+        { state: '117歳', abbr: '117' },
+        { state: '118歳', abbr: '118' },
+        { state: '119歳', abbr: '119' },
+        { state: '120歳', abbr: '120' },
+      ],
     }
   },
   mounted() {
@@ -206,7 +270,6 @@ export default {
           `specialists/offices/${this.office_id}/staffs`
         )
         this.staffs = response
-        console.log(this.staffs)
       } catch (error) {
         return error
       }
