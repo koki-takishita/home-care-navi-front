@@ -50,7 +50,7 @@
         <div class="mt-2">{{ comment }}</div>
       </v-col>
       <v-col>
-        <v-btn x-large block depressed color="error">
+        <v-btn x-large block depressed color="error" @click="sendSuccessPage">
           この内容で予約する
         </v-btn>
         <p class="mb-0 text-center">
@@ -108,6 +108,28 @@ export default {
       try {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
         this.office = response
+      } catch (error) {
+        return error
+      }
+    },
+    async sendSuccessPage() {
+      try {
+        const response = await this.$axios.$post(
+          `offices/${this.office_id}/appointments`,
+          {
+            office_id: this.office_id,
+            meet_date: this.meet_date,
+            meet_time: this.meet_time,
+            name: this.name,
+            age: this.age,
+            phone_number: this.phone_number,
+            comment: this.comment,
+            called_status: 0,
+          }
+        )
+        this.$router.push('/users/send')
+        this.$router.push(`/offices/${this.office_id}/appointments/success`)
+        return response
       } catch (error) {
         return error
       }
