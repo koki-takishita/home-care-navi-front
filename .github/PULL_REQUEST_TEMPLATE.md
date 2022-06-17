@@ -26,7 +26,7 @@ git fetch && git checkout origin/feature/<ここを変える>
 
 # **必要なかったら消すこと**
 
-### Front 側 git
+### Front 側
 
 - fetch and checkout
 
