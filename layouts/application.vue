@@ -350,6 +350,22 @@ export default {
       drawer: false,
       group: null,
       tile: false,
+      currentTime: new Date().getTime(),
+    }
+  },
+  mounted() {
+    // もし、ローカルストレージに保存した値が有効期限を過ぎていたら、すべて削除
+    if (
+      Math.floor(this.currentTime / 1000) >=
+      parseInt(localStorage.getItem('appointments.expiry'))
+    ) {
+      localStorage.removeItem('appointments.meet_date')
+      localStorage.removeItem('appointments.meet_time')
+      localStorage.removeItem('appointments.name')
+      localStorage.removeItem('appointments.age')
+      localStorage.removeItem('appointments.phone_number')
+      localStorage.removeItem('appointments.comment')
+      localStorage.removeItem('appointments.expiry')
     }
   },
   methods: {
