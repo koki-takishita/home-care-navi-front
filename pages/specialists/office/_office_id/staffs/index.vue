@@ -51,7 +51,7 @@
       large
       color="white"
       class="mt-8 mb-10"
-      @click="goStaffNewPage"
+      to="staffs/new"
     >
       <div class="delete-button">
         <v-icon class="mb-1">mdi-plus</v-icon>
@@ -64,30 +64,47 @@
 <script>
 export default {
   layout: 'application_specialists',
+  middleware: 'authentication',
   data() {
     return {
       staffs: [],
-      officeId: this.$route.params.office_id,
+      office_id: this.$route.params.office_id,
+      office: [],
     }
   },
-  async fetch() {
-    this.staffs = await fetch(
-      // home-care-navi-v2/api/specialists/offices/${this.officeId}/staffs
-      `http://localhost:3000/api/specialists/offices/${this.officeId}/staffs`
-    ).then((res) => res.json())
+  mounted() {
+    this.getOffice()
+    this.getStaffs()
   },
   methods: {
-    goStaffNewPage() {
-      this.$store.commit('catchErrorMsg/setType', '')
-      this.$store.commit('catchErrorMsg/clearMsg')
-      this.$router.push('staffs/new')
+    async getOffice() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office.id}`
+        )
+        if (response.id - this.office_id !== 0) {
+          this.$router.push(`/specialists/office/${response.id}/staffs`)
+        }
+      } catch (error) {
+        return error
+      }
+    },
+    async getStaffs() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/staffs`
+        )
+        this.staffs = response
+      } catch (error) {
+        return error
+      }
     },
     async deleteStaff(id) {
       const isDeleted = '本当に削除してもよろしいですか？'
       if (window.confirm(isDeleted)) {
         try {
           await this.$axios.$delete(
-            `specialists/offices/${this.officeId}/staffs/${id}`
+            `specialists/offices/${this.office_id}/staffs/${id}`
           )
           window.location.reload()
         } catch (error) {

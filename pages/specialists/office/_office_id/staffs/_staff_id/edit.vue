@@ -94,15 +94,7 @@
 <script>
 export default {
   layout: 'application_specialists',
-  async asyncData({ $axios, params }) {
-    let array = []
-    const officeId = `${params.office_id}`
-    const staffId = `${params.staff_id}`
-    await $axios
-      .$get(`specialists/offices/${officeId}/staffs/${staffId}`)
-      .then((res) => (array = res))
-    return { staff: array }
-  },
+  middleware: 'authentication',
   data() {
     return {
       formValidates: {
@@ -124,10 +116,29 @@ export default {
       staff_id: this.$route.params.staff_id,
       image: null,
       valid: false,
-      staff: [],
+      staff: {
+        name: '',
+        kana: '',
+        introduction: '',
+        image_url: '',
+      },
     }
   },
+  mounted() {
+    this.getStaff()
+  },
   methods: {
+    async getStaff() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/staffs/${this.staff_id}`
+        )
+        this.staff = response
+      } catch (error) {
+        return error
+      }
+    },
+
     async send() {
       const officeId = this.office_id
       const staffId = this.staff_id
@@ -147,8 +158,6 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$store.commit('catchErrorMsg/setType', 'success')
-        this.$store.commit('catchErrorMsg/setMsg', ['変更しました'])
         this.$router.push('..')
       } catch (error) {
         return error

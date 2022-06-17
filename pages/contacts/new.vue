@@ -4,13 +4,13 @@
       <h4 class="display-1 text-h6 font-weight-black">お問い合わせ</h4>
     </div>
     <v-card-text>
-      <v-form v-model="form.valid">
+      <v-form v-model="valid">
         <div>
           <label class="font-color-gray font-weight-black text-caption"
             >お名前
             <v-text-field
               id="name"
-              v-model="form.name"
+              v-model="name"
               class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
               placeholder="田中 太郎"
               outlined
@@ -24,7 +24,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >返信用メールアドレス
             <v-text-field
-              v-model="form.email"
+              v-model="email"
               class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
               outlined
               dense
@@ -40,7 +40,7 @@
           <v-row>
             <v-col>
               <v-select
-                v-model="form.types"
+                v-model="types"
                 :items="items"
                 outlined
                 dense
@@ -53,7 +53,7 @@
         <label class="font-color-gray text-caption"
           >お問い合わせ内容
           <v-textarea
-            v-model="form.content"
+            v-model="content"
             outlined
             required="required"
             placeholder="入力してください"
@@ -65,11 +65,12 @@
           <v-btn
             class="error text-h6 block"
             block
-            :disabled="!form.valid"
+            :disabled="!valid"
             max-width="520"
             min-width="343"
             height="60"
-            @click="sendConfirmpage"
+            href="/contacts/confirm"
+            @click="SendConfirmPage"
             >この内容で問い合わせる</v-btn
           >
         </v-card-actions>
@@ -84,13 +85,11 @@ export default {
   data() {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
-      form: {
-        name: '',
-        email: '',
-        types: '',
-        content: '',
-        valid: false,
-      },
+      name: '',
+      email: '',
+      types: '',
+      content: '',
+      valid: false,
       formValidates: {
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
@@ -106,17 +105,25 @@ export default {
       },
     }
   },
+  mounted() {
+    const name = localStorage.getItem('name')
+    const email = localStorage.getItem('email')
+    const types = localStorage.getItem('types')
+    const content = localStorage.getItem('content')
+    if (name != null && email != null && types != null && content != null) {
+      this.name = localStorage.getItem('name')
+      this.email = localStorage.getItem('email')
+      this.types = localStorage.getItem('types')
+      this.content = localStorage.getItem('content')
+    }
+  },
+
   methods: {
-    sendConfirmpage() {
-      this.$router.push({
-        path: '/contacts/confirm',
-        query: {
-          name: this.form.name,
-          email: this.form.email,
-          types: this.form.types,
-          content: this.form.content,
-        },
-      })
+    SendConfirmPage() {
+      localStorage.setItem('name', this.name)
+      localStorage.setItem('email', this.email)
+      localStorage.setItem('types', this.types)
+      localStorage.setItem('content', this.content)
     },
   },
 }

@@ -3,34 +3,12 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
     login(loginInfo)
   })
 
-  inject('specialistLogin', (loginInfo) => {
-    specialistLogin(loginInfo)
-  })
-
   $axios.onRequest((config) => {
-    if (config.url === '/login' || config.url === '/specialists/login') {
+    if (config.url === '/login') {
       setAuthInfoToHeader(config)
     }
   })
 
-  async function specialistLogin(loginInfo) {
-    try {
-      const response = await $axios.$post('/specialists/login', {
-        email: loginInfo.email,
-        password: loginInfo.password,
-        redirecttUrl: loginInfo.redirecttUrl,
-        user_type: 'specialists',
-        valid: true,
-      })
-      $auth.setUser(true)
-      store.commit('catchErrorMsg/setType', 'success')
-      store.commit('catchErrorMsg/setMsg', ['ログインしました'])
-      redirect(loginInfo.redirecttUrl)
-      return response
-    } catch (error) {
-      return error
-    }
-  }
   async function login(loginInfo) {
     try {
       const response = await $auth.loginWith('local', {
@@ -38,7 +16,7 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
       })
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログインしました'])
-      redirect(loginInfo.redirecttUrl)
+      redirect(loginInfo.redirectUrl)
       return response
     } catch (error) {
       return error

@@ -72,6 +72,11 @@ export default {
       this.selectedArea = this.getCurrentArea
     },
   },
+  mounted() {
+    if (this.prefectures.length === 0) {
+      this.prefectures = this.getPrefectures
+    }
+  },
   computed: {
     ...mapGetters('areaData', [
       'getCurrentArea',
