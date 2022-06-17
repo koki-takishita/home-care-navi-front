@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="12" md="6">
         <v-card outlined tile height="338">
-          <v-img :src="office.image_url[active]" height="338">
+          <v-img v-if="images !== null" :src="images[active]" height="338">
             <v-row>
               <v-col cols="6">
                 <v-btn
@@ -33,21 +33,22 @@
               </v-col>
             </v-row>
           </v-img>
+          <v-img
+            v-else
+            src="https://home-care-navi-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpeg"
+            height="338"
+          ></v-img>
         </v-card>
         <v-card class="sm-under-no" outlined tile height="85">
-          <div class="thumbnails">
+          <div v-if="images !== null" class="thumbnails">
             <li
-              v-for="index in office.image_url.length"
+              v-for="index in images.length"
               :key="index"
               :class="{ current: active === index - 1 }"
               class="mx-1"
               @click="current(index)"
             >
-              <v-img
-                :src="office.image_url[index - 1]"
-                height="50"
-                width="70"
-              ></v-img>
+              <v-img :src="images[index - 1]" height="50" width="70"></v-img>
             </li>
           </div>
         </v-card>
@@ -347,32 +348,27 @@ export default {
     return {
       office_id: this.$route.params.id,
       active: 0, // 事業所画像が現在何番目か
+      getAPI: {},
       office: {
         selected_flags: '',
-        image_url: [],
+        images: [],
       },
+      images: {},
       staffs: {},
+      noImageURL: '~/assets/images/no_image.jpeg',
     }
   },
   mounted() {
     this.getOffice()
-    this.getStaffs()
   },
   methods: {
     async getOffice() {
       try {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
-        this.office = response
-      } catch (error) {
-        return error
-      }
-    },
-    async getStaffs() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/staffs`
-        )
-        this.staffs = response
+        this.getAPI = response
+        this.office = this.getAPI.office
+        this.images = this.getAPI.images
+        this.staffs = this.getAPI.staffs
       } catch (error) {
         return error
       }
@@ -386,7 +382,7 @@ export default {
     prev() {
       // activeが0以下なら一番最後の画像へもどる
       if (this.active <= 0) {
-        this.active = this.office.image_url.length - 1
+        this.active = this.office.images.length - 1
       } else {
         this.active--
       }
@@ -395,14 +391,18 @@ export default {
     next() {
       // 配列の数が0~5つで6つになるので、-1とする
       // 5番目のときにnextしたら0番目に戻る
-      if (this.active >= this.office.image_url.length - 1) {
+      if (this.active >= this.office.images.length - 1) {
         this.active = 0
       } else {
         this.active++
       }
     },
     goAppointmentsPage() {
-      this.$router.push(`/offices/${this.office_id}/appointments`)
+      if (!this.$auth.loggedIn) {
+        return alert('ログインをする必要があります')
+      } else {
+        this.$router.push(`/offices/${this.office_id}/appointments`)
+      }
     },
   },
 }
