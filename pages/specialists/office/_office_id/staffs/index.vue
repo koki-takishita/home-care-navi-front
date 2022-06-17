@@ -91,7 +91,6 @@ export default {
     },
     async getStaffs() {
       try {
-        // this.$setId(this.office_id)
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/staffs`
         )
