@@ -195,11 +195,26 @@ export default {
 }
 
 /* stylelint-disable */
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-left.theme--light {
+  color: #f06364;
+}
+
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-right.theme--light {
+  color: #f06364;
+}
+
 .pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
   border: 0;
 }
 
-button.v-pagination__item.v-pagination__item--active {
+::v-deep button.v-pagination__navigation.v-pagination__navigation {
+  box-shadow: none;
+}
+
+::v-deep button.v-pagination__item {
+  box-shadow: none;
+}
+::v-deep button.v-pagination__item.v-pagination__item--active {
   box-shadow: none;
 }
 /* stylelint-enable */
