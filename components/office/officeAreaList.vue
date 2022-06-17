@@ -7,7 +7,7 @@
   >
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <v-card class="mb-12 reset-border-style" color="#F5F7F7" tile outlined>
+        <v-card class="reset-border-style" color="#F5F7F7" tile outlined>
           <v-list flat outlined>
             <v-list-item-group
               v-model="selectedAreaNum"
@@ -32,7 +32,7 @@
         </v-card>
       </v-stepper-content>
       <v-stepper-content step="2" class="pa-0">
-        <v-card class="mb-12 reset-border-style" color="#F5F7F7" tile outlined>
+        <v-card class="reset-border-style" color="#F5F7F7" tile outlined>
           <div class="px-3">
             <v-chip
               class="hover-remove font-weight-black px-0"
@@ -97,30 +97,27 @@
               multiple
             >
               <template v-for="(city, i) in fetchCities">
-                <v-list-item
-                  :key="i"
-                  dense
-                  :ripple="false"
-                  class="set-height-40"
-                >
-                  <template #default="{ active }">
-                    <v-list-item-action>
-                      <v-checkbox
-                        class="mt-n1"
-                        dense
-                        hide-details
-                        :input-value="active"
-                        color="red"
-                      >
-                      </v-checkbox>
-                    </v-list-item-action>
-                    <v-list-item-content class="pa-0 ml-n7">
-                      {{ city.city }}
-                    </v-list-item-content>
-                    <v-icon block>mdi-chevron-right</v-icon>
-                  </template>
-                </v-list-item>
-                <v-divider :key="i" class="mx-5"></v-divider>
+                <div :key="i">
+                  <v-list-item dense :ripple="false" class="set-height-40">
+                    <template #default="{ active }">
+                      <v-list-item-action>
+                        <v-checkbox
+                          class="mt-n1"
+                          dense
+                          hide-details
+                          :input-value="active"
+                          color="red"
+                        >
+                        </v-checkbox>
+                      </v-list-item-action>
+                      <v-list-item-content class="pa-0 ml-n7">
+                        {{ city.city }}
+                      </v-list-item-content>
+                      <v-icon block>mdi-chevron-right</v-icon>
+                    </template>
+                  </v-list-item>
+                  <v-divider class="mx-5 grey lighten-3"></v-divider>
+                </div>
               </template>
             </v-list-item-group>
           </v-list>
@@ -353,7 +350,7 @@ export default {
 }
 
 /* stylelint-disable */
-.mb-12.reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+.reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
   border: 0;
 }
 
