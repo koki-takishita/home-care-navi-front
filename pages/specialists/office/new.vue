@@ -408,7 +408,7 @@
             depressed
             :disabled="!valid"
             color="warning"
-            @click="sendOffice, sendOfficeDetail"
+            @click="sendOffice()"
           >
             登録する
           </v-btn>
@@ -609,6 +609,7 @@ export default {
     },
 
     async sendOfficeDetail() {
+      console.log('発火')
       const params = new FormData()
       params.append('detail', this.detail)
       params.append('service_type', this.service_type)
