@@ -419,6 +419,6 @@ export default {
 }
 
 .color-gray {
-  background-color: #d9dede;
+  background-color: #f5f7f7;
 }
 </style>

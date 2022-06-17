@@ -22,7 +22,7 @@ const windowObjectUndefined = function () {
 }
 
 const setAuthInfoToHeader = function (config) {
-  if (!windowObjectUndefined) {
+  if (!windowObjectUndefined()) {
     const client = window.localStorage.client
     const accessToken = window.localStorage.getItem('access-token')
     const uid = window.localStorage.uid

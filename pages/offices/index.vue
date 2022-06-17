@@ -1,10 +1,8 @@
 <template>
-  <v-container class="grey lighten-5 base-width my-4 px-0">
+  <v-container class="base-width my-4 px-0">
     <v-row no-gutters>
       <v-col cols="12" sm="4" md="3">
-        <!--コンポーネントにする エリア選択-->
-        <!--<v-card class="pa-2" outlined tile @click="backTop()">-->
-        <v-card class="pa-2" outlined tile>
+        <v-card class="pa-2 remove-bottom-border-radius" tile outlined>
           <officeSearchWind
             @clickLocation="backTop()"
             @clickBtnLocation="searchOfficeLocation"
@@ -21,7 +19,7 @@
         />
       </v-col>
       <v-col cols="12" sm="8" md="9">
-        <v-container class="grey lighten-1 pt-0">
+        <v-container class="pt-0">
           <div>
             <h3>検索結果</h3>
             <p class="font-weight-black">{{ offices[0].count }}件</p>
@@ -34,7 +32,12 @@
           <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
         </v-container>
         <div class="text-center">
-          <v-pagination v-model="page" :length="count"></v-pagination>
+          <v-pagination
+            v-model="page"
+            :length="count"
+            color="#D9DEDE"
+            class="page-nation"
+          ></v-pagination>
         </div>
       </v-col>
     </v-row>
@@ -185,4 +188,34 @@ export default {
 .base-width {
   max-width: 990px;
 }
+
+.remove-bottom-border-radius {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* stylelint-disable */
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-left.theme--light {
+  color: #f06364;
+}
+
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-right.theme--light {
+  color: #f06364;
+}
+
+.pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0;
+}
+
+::v-deep button.v-pagination__navigation.v-pagination__navigation {
+  box-shadow: none;
+}
+
+::v-deep button.v-pagination__item {
+  box-shadow: none;
+}
+::v-deep button.v-pagination__item.v-pagination__item--active {
+  box-shadow: none;
+}
+/* stylelint-enable */
 </style>
