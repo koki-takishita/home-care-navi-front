@@ -125,6 +125,16 @@ export default {
       chooseItems: [],
     }
   },
+  computed: {
+    ...mapGetters('areaData', [
+      '',
+      'getCities',
+      'getCurrentArea',
+      'getCurrentPrefecture',
+      'getCount_prefecture',
+      'getCount_city',
+    ]),
+  },
   watch: {
     getCities() {
       this.cities = this.getCities
@@ -136,16 +146,6 @@ export default {
     getCurrentArea() {
       this.chooseArea = this.getCurrentArea
     },
-  },
-  computed: {
-    ...mapGetters('areaData', [
-      '',
-      'getCities',
-      'getCurrentArea',
-      'getCurrentPrefecture',
-      'getCount_prefecture',
-      'getCount_city',
-    ]),
   },
   methods: {
     ...mapActions('areaData', [

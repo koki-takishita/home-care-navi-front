@@ -186,9 +186,12 @@ export default {
       this.fetchCities = res.response.location
       this.e1 = 3
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error
     }
+  },
+  computed: {
+    ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
   },
   watch: {
     location() {
@@ -199,9 +202,6 @@ export default {
         this.selectedCityNum = []
       }
     },
-  },
-  computed: {
-    ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
   },
   methods: {
     searchOffice() {
@@ -318,7 +318,7 @@ export default {
         )
         this.fetchCities = res.response.location
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error
       }
     },
@@ -329,7 +329,7 @@ export default {
         )
         this.fetchPrefectures = res.response.prefecture
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error
       }
     },

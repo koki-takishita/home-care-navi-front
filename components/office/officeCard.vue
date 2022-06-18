@@ -29,7 +29,8 @@
         </v-avatar>
       </v-card-title>
       <div class="d-flex">
-        <v-card
+        <v-img
+          :src="display_img"
           tile
           outlined
           max-height="90"
@@ -37,8 +38,8 @@
           max-width="120"
           min-width="120"
           class="reset-border-style"
-          >写真が入る</v-card
         >
+        </v-img>
         <v-list dense class="pt-0">
           <v-list-item
             v-for="(item, i) in listItems"
@@ -115,7 +116,14 @@
 <script>
 export default {
   layout: 'application',
-  props: ['office'],
+  props: {
+    office: {
+      type: Object,
+      default() {
+        return { message: 'からです。' }
+      },
+    },
+  },
   data() {
     return {
       icon: {
@@ -127,6 +135,11 @@ export default {
     }
   },
   computed: {
+    display_img() {
+      return this.office.image.length > 0
+        ? this.office.image
+        : '_nuxt/assets/images/no-image.png'
+    },
     displayDetail() {
       return this.office.detail.detail === undefined
         ? this.office.detail.message

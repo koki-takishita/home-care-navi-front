@@ -84,7 +84,7 @@ export default {
       }
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
-      console.log(error)
+      // console.log(error)
       return error
     }
   },
@@ -128,7 +128,7 @@ export default {
         })
         this.scrollTop()
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error
       }
     },
@@ -210,7 +210,7 @@ export default {
           },
         })
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error
       }
     },
