@@ -122,7 +122,23 @@ export default {
         state: 'fa-regular fa-star',
         color: '#D9DEDE',
       },
-      listItems: [
+      week: ['日', '月', '火', '水', '木', '金', '土'],
+      binaryNumber: [64, 32, 16, 8, 4, 2, 1],
+    }
+  },
+  computed: {
+    displayDetail() {
+      return this.office.detail.detail === undefined
+        ? this.office.detail.message
+        : this.office.detail.detail
+    },
+    displayComments() {
+      return this.office.thank.comments === undefined
+        ? this.office.detail.message
+        : this.office.thank.comments
+    },
+    listItems() {
+      return [
         {
           name: '住所情報',
           icon: 'mdi-map-marker',
@@ -138,28 +154,13 @@ export default {
           icon: 'mdi-phone',
           title: this.office.phone_number,
         },
-      ],
-      week: ['日', '月', '火', '水', '木', '金', '土'],
-      binaryNumber: [64, 32, 16, 8, 4, 2, 1],
-      holidayArray: [],
-    }
-  },
-  computed: {
-    displayDetail() {
-      return this.office.detail.detail === undefined
-        ? this.office.detail.message
-        : this.office.detail.detail
+      ]
     },
-    displayComments() {
-      return this.office.thank.comments === undefined
-        ? this.office.detail.message
-        : this.office.thank.comments
+    holidayArray() {
+      return this.conversionBinaryToholidayArray(this.office.flags)
     },
   },
-  mounted() {
-    this.listItems[0].text = this.office.name
-    this.conversionBinaryToholidayArray(this.office.flags)
-  },
+  mounted() {},
   methods: {
     moveShow() {
       this.$router.push({ path: `/offices/${this.office.id}` })
@@ -181,14 +182,16 @@ export default {
       }
     },
     conversionBinaryToholidayArray(holiday) {
+      const arry = []
       this.binaryNumber.forEach((n) => {
         if (holiday >= n) {
           holiday = holiday - n
-          this.holidayArray.push(1)
+          arry.push(1)
         } else {
-          this.holidayArray.push(0)
+          arry.push(0)
         }
       })
+      return arry
     },
     toggleSymbol(n) {
       return n === 1 ? 'mdi-close' : 'mdi-circle-outline'

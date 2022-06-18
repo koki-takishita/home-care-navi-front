@@ -52,16 +52,24 @@ export default {
     const prefecture = query.prefecture || ''
     const cities = query.cities || ''
     const selectedList = query.selectedList || 0
+    const page = Number(query.page) || 1
+    let offsetPage
+    if (page > 1) {
+      offsetPage = page - 1
+    } else {
+      offsetPage = 0
+    }
     try {
       const offices = await $axios.$get(
-        `offices?prefecture=${prefecture}&cities=${cities}&page=${0}`
+        `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
       )
       if (offices.length === 0) {
         redirect('/top')
         return alert('選択したエリアにオフィスは存在しません')
       }
       let count = offices[0].count
-      count = (count / 10) | 0
+      count = count / 10 || 0
+      count = Math.ceil(count)
       if (count === 0) {
         count = 1
       }
@@ -72,6 +80,7 @@ export default {
         cities,
         selectedList,
         count,
+        page,
       }
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
@@ -88,17 +97,36 @@ export default {
       cities: [],
       selectedList: [],
       location: false,
-      page: 1,
+      page: '',
       count: '',
     }
   },
   watch: {
     async page() {
+      const area = ''
+      const selectedList = ''
+      const location = false
+      const page = this.page
+      const offsetPage = this.page - 1
+      const prefecture = this.prefecture
+      const cities = this.cities
       try {
         const offices = await this.$axios.$get(
-          `offices?prefecture=${this.prefecture}&cities=${this.cities}&page=${this.page}`
+          `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
         )
         this.offices = offices
+        this.$router.push({
+          path: '/offices',
+          query: {
+            area,
+            prefecture,
+            cities,
+            selectedList,
+            location,
+            page,
+          },
+        })
+        this.scrollTop()
       } catch (error) {
         console.log(error)
         return error
@@ -107,6 +135,9 @@ export default {
   },
   methods: {
     ...mapActions('areaData', ['resetStore']),
+    scrollTop() {
+      this.$vuetify.goTo(0)
+    },
     backTop() {
       this.resetStore()
       this.$router.push('/top')
@@ -154,7 +185,8 @@ export default {
           return alert('選択したエリアにオフィスは存在しません')
         }
         let count = offices[0].count
-        count = (count / 10) | 0
+        count = count / 10 || 0
+        count = Math.ceil(count)
         if (count === 0) {
           count = 1
         }
@@ -165,7 +197,8 @@ export default {
         this.selectedList = selectedList
         this.count = count
         this.location = location
-
+        this.scrollTop()
+        this.page = 1
         this.$router.push({
           path: '/offices',
           query: {
