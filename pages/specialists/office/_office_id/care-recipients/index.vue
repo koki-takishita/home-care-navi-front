@@ -27,10 +27,15 @@
                 {{ care_recipient.kana }}
               </div>
               <div class="mt-2 font-color-gray introduction-limit">
-                家族情報:{{ care_recipient.family }}
+                家族情報:{{ care_recipient.family }} <br />スタッフ名:{{
+                  care_recipient.staff.name
+                }}
               </div>
             </v-col>
           </v-row>
+          <div class="mb-6">
+            <br />スタッフ名:{{ care_recipient.staff.name }}
+          </div>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
               <v-btn
@@ -49,6 +54,14 @@
                 :to="`cares/${care_recipient.id}/edit`"
                 >編集する</v-btn
               >
+              <v-col
+                v-for="(staff, index) in staffs"
+                :key="index"
+                cols="12"
+                md="6"
+              >
+                {{ staff.name }}
+              </v-col>
             </v-col>
           </v-row>
         </v-card>
@@ -77,11 +90,13 @@ export default {
   data() {
     return {
       care_recipients: [],
+      staffs: [],
       office_id: this.$route.params.office_id,
     }
   },
   mounted() {
     this.getCareRecipients()
+    // this.getStaffs()
   },
   methods: {
     async getCareRecipients() {
@@ -95,6 +110,16 @@ export default {
         return error
       }
     },
+    //  async getStaffs() {
+    //   try {
+    //     const response = await this.$axios.$get(
+    //       `specialists/offices/${this.office_id}/staffs`
+    //     )
+    //     this.staffs = response
+    //   } catch (error) {
+    //     return error
+    //   }
+    // },
     async deleteCareRecipients(id) {
       const isDeleted = '本当に削除してもよろしいですか？'
       if (window.confirm(isDeleted)) {
