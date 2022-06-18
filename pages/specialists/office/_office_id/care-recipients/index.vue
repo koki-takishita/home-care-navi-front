@@ -51,7 +51,7 @@
                 block
                 depressed
                 color="warning"
-                :to="`cares/${care_recipient.id}/edit`"
+                :to="`care-recipients/${care_recipient.id}/edit`"
                 >編集する</v-btn
               >
               <v-col
