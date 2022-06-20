@@ -30,7 +30,7 @@
       </v-card-title>
       <div class="d-flex">
         <v-img
-          :src="display_img"
+          :src="displayImg"
           tile
           outlined
           max-height="90"
@@ -135,7 +135,7 @@ export default {
     }
   },
   computed: {
-    display_img() {
+    displayImg() {
       return this.office.image.length > 0
         ? this.office.image
         : '_nuxt/assets/images/no-image.png'

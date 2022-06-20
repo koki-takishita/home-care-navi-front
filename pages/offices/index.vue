@@ -4,8 +4,10 @@
       <v-col cols="12" sm="4" md="3">
         <v-card class="pa-2 remove-bottom-border-radius" tile outlined>
           <officeSearchWind
-            @clickLocation="backTop()"
-            @clickBtnLocation="searchOfficeLocation"
+            v-model="searchIcon.keyword"
+            @clickLocationAreaBtn="backTop()"
+            @clickCurrentLocationBtn="searchOfficeLocation()"
+            @clickSearchBtn="searchOfficeKeyword()"
           />
         </v-card>
         <officeAreaList
@@ -48,6 +50,7 @@ import { mapActions } from 'vuex'
 export default {
   layout: 'application',
   async asyncData({ $axios, query, redirect }) {
+    // ここにkeywordの内容も追記すればリロードも対応できる
     const area = query.area || ''
     const prefecture = query.prefecture || ''
     const cities = query.cities || ''
@@ -99,6 +102,9 @@ export default {
       location: false,
       page: '',
       count: '',
+      searchIcon: {
+        keyword: '',
+      },
     }
   },
   watch: {
@@ -135,6 +141,150 @@ export default {
   },
   methods: {
     ...mapActions('areaData', ['resetStore']),
+    // 検索窓に入力された内容で検索
+    searchOfficeKeyword() {
+      try {
+        // 何も入力されてなかったらalert
+        const keyword = this.keywordExist(this.searchIcon.keyword)
+        /* "サンプル１ サンプル2, さんぷる３  ,さんぷる"
+           => ["サンプル1", "サンプル2", "サンプル3", "さんぷる"] */
+        const keywordsArry = this.removeDelimiter(keyword)
+        // 郵便番号があるかどうか判定
+        if (this.postalCodeExist(keywordsArry)) {
+          /* 郵便番号からハイフンを削除した配列を出力
+          ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "さんぷる3"]
+          => [1135511, 0144155] */
+          const requestPostalCode = this.conversionSevenNumber(keywordsArry)
+          /* keywordsArryから郵便番号のみ削除
+          ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "さんぷる3"]
+          => ['サンプル', 'サンプル3'] */
+          const requestKeywords = this.removePostCode(keywordsArry)
+          this.searchOfficeKeywords(requestKeywords, requestPostalCode)
+        } else {
+          this.searchOfficeKeywords(requestKeywords)
+        }
+      } catch (e) {
+        this.alertMsg(e)
+      }
+    },
+    /* arryから郵便番号のみを削除
+    ['111-1111', '1234567', 'sample', 'aaa']
+    => ['sample', 'aaa'] */
+    removePostCode(arry) {
+      const re =
+        /^[0-9|０-９]{3}[-|−|ー|‐]{1}[0-9|０-９]{4}$|^[0-9|０-９]{3}[0-9|０-９]{4}$/g
+      const keywords = this.takeOutArray(arry, re)
+      return keywords
+    },
+    // arryからre(正規表現)にマッチした要素を削除
+    takeOutArray(arry, re) {
+      const replaced = []
+      arry.forEach((word) => {
+        const repace = word.replace(re, '')
+        replaced.push(repace)
+      })
+      return replaced.filter(Boolean)
+    },
+    /* 郵便番号からハイフンを削除した配列を出力
+       ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "さんぷる3"]
+       => [1135511, 0144155] */
+    conversionSevenNumber(arry) {
+      const conversionArry = []
+      const re = /[-|−|ー|‐]/
+      const postCodes = this.extractPostalCode(arry)
+      postCodes.forEach((code) => {
+        const removeHyphen = code.replace(re, '')
+        let number
+        // codeが全角英数値の場合、半角数値へ変換
+        if (!this.isAlphanumericNumbers(removeHyphen)) {
+          number = this.conversionAlphanumericNumbers(removeHyphen)
+        } else {
+          number = Number(removeHyphen)
+        }
+        conversionArry.push(number)
+      })
+      return conversionArry
+    },
+    /* stringを半角の英数値に変換
+      '１１１２２２２' => '1112222'
+      '123ー４５６７'  => '1234567' */
+    conversionAlphanumericNumbers(string) {
+      const numbers = []
+      const hafe = '1'.charCodeAt() - 1
+      const full = '１'.charCodeAt() - 1
+      for (let i = 0; i < string.length; i++) {
+        const utfCode = this.isNumber(string[i]) ? hafe : full
+        const number = string[i].charCodeAt(0) - utfCode
+        numbers.push(number)
+      }
+      return numbers.join('')
+    },
+    isNumber(obj) {
+      return !!obj.match(/\d/)
+    },
+    /* stringが半角数字ならtrue
+       true:  '111' '1112224'
+       false: '１１１' 'aaa' '１１５５５５１' */
+    isAlphanumericNumbers(string) {
+      const re = /^[0-9]{7}$/
+      return !!string.match(re)
+    },
+    /* 配列からから郵便番号抽出
+       ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "１１１ー１１１１"]
+       => [113-5511, 014-4155, １１１ー１１１１] */
+    extractPostalCode(arry) {
+      const postCode = []
+      const re =
+        /^[0-9|０-９]{3}[-|−|ー|‐]{1}[0-9|０-９]{4}$|^[0-9|０-９]{3}[0-9|０-９]{4}$/g
+      arry.forEach((ele) => {
+        const matchEle = ele.match(re)
+        if (matchEle) postCode.push(matchEle[0])
+      })
+      return postCode
+    },
+    /* arryに郵便番号が存在すればture
+       true:  '000-0000' '0000000'
+       false: '000-000-0000 '00000000' */
+    postalCodeExist(arry) {
+      const postCodeArry = this.extractPostalCode(arry)
+      // return !!postCode_arry.filter(Boolean).length
+      return !!postCodeArry.length
+    },
+    async searchOfficeKeywords(keywords = null, postCode = null) {
+      try {
+        const offices = await this.$axios.$get(
+          `offices?keywords=${keywords}&postCode=${postCode}&page=${0}`
+        )
+        if (this.exist(offices))
+          this.alertMsg('検索結果にマッチするオフィスは存在しません')
+      } catch (error) {
+        // console.log(error)
+        return error
+      }
+    },
+    /* "サンプル１ サンプル2, さんぷる３  ,さんぷる"
+       => ["サンプル1", "サンプル2", "サンプル3", "さんぷる"] */
+    removeDelimiter(keyword) {
+      const re = /[,、]{1}|[,、]{1}\s+|\s+/
+      const split = keyword.split(re)
+      // split内の空白を削除
+      // ["sampple", "sampl1", "", "sam", ""] => ["sample", "sampl", "sam"]
+      const filtered = split.filter(Boolean)
+      return filtered
+    },
+    keywordExist(char) {
+      if (this.exist(char)) {
+        return char
+      } else {
+        throw new Error('検索ワードを入力してください')
+      }
+    },
+    exist(obj) {
+      return obj.length > 0
+    },
+    alertMsg(msg) {
+      return alert(msg)
+    },
     scrollTop() {
       this.$vuetify.goTo(0)
     },
