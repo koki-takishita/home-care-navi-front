@@ -19,22 +19,26 @@
             </v-avatar>
             <v-col cols="8" class="ml-0">
               <h3 class="name-limit">
-                {{ care_recipient.name }}
+                {{ care_recipient.name }}&nbsp;&nbsp;({{ care_recipient.age }})
               </h3>
-              <div
-                class="font-color-gray font-weight-black text-caption name-limit"
-              >
+              <div class="font-color-gray text-caption name-limit">
                 {{ care_recipient.kana }}
               </div>
-              <div class="mt-2 font-color-gray introduction-limit">
-                家族情報:{{ care_recipient.family }} <br />スタッフ名:{{
-                  care_recipient.staff.name
-                }}
+              <div class="font-color-gray text-caption name-limit mt-2">
+                〒{{ care_recipient.post_code }}
+              </div>
+              <div class="font-color-gray text-caption name-limit">
+                {{ care_recipient.address }}
+              </div>
+              <div class="font-color-gray text-caption name-limit mt-2 mb-2">
+                家族情報&nbsp;:&nbsp;{{ care_recipient.family }}
               </div>
             </v-col>
           </v-row>
-          <div class="mb-6">
-            <br />スタッフ名:{{ care_recipient.staff.name }}
+          <div
+            class="font-color-gray font-weight-black text-caption name-limit ml-3 mb-2"
+          >
+            担当スタッフ&nbsp;:&nbsp;{{ care_recipient.staff.name }}
           </div>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
@@ -42,8 +46,9 @@
                 block
                 depressed
                 outlined
+                color="blue-grey lighten-4"
                 @click="deleteCareRecipients(care_recipient.id)"
-                ><div class="delete-button">削除</div></v-btn
+                ><div class="delete-button font-weight-bold">削除</div></v-btn
               >
             </v-col>
             <v-col cols="8" class="pr-6">
@@ -52,6 +57,7 @@
                 depressed
                 color="warning"
                 :to="`care-recipients/${care_recipient.id}/edit`"
+                class="font-weight-bold"
                 >編集する</v-btn
               >
               <v-col
@@ -75,7 +81,7 @@
       class="mt-8 mb-10"
       to="care-recipients/new"
     >
-      <div class="delete-button">
+      <div class="delete-button font-weight-bold">
         <v-icon class="mb-1">mdi-plus</v-icon>
         利用者を追加する
       </div>
