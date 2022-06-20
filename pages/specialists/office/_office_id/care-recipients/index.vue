@@ -3,7 +3,7 @@
     <h3>利用者情報管理</h3>
     <v-row class="mt-4">
       <v-col
-        v-for="(care_recipient, index) in care_recipients"
+        v-for="(care_recipient, index) in reverseItems"
         :key="index"
         cols="12"
         md="6"
@@ -99,6 +99,12 @@ export default {
       staffs: [],
       office_id: this.$route.params.office_id,
     }
+  },
+  computed: {
+    // 配列の要素順番を逆順にする
+    reverseItems() {
+      return this.care_recipients.slice().reverse()
+    },
   },
   mounted() {
     this.getCareRecipients()
