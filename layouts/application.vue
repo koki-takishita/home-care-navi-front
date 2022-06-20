@@ -279,17 +279,17 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="/privacy_policy"
+                    to="/users/privacy_policy"
                     class="text-overline mr-3 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="/terms"
+                    to="/users/terms"
                     class="text-overline mr-3 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="/contacts/new"
+                    to="/users/contacts/new"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -302,17 +302,17 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="/privacy_policy"
+                to="/users/privacy_policy"
                 class="text-overline mr-3 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="/terms"
+                to="/users/terms"
                 class="text-overline mr-3 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="/contacts/new"
+                to="/users/contacts/new"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >
