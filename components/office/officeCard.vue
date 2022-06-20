@@ -138,7 +138,7 @@ export default {
     displayImg() {
       return this.office.image.length > 0
         ? this.office.image
-        : '_nuxt/assets/images/no-image.png'
+        : require('~/assets/images/no-image.png')
     },
     displayDetail() {
       return this.office.detail.detail === undefined
