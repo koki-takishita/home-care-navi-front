@@ -255,7 +255,7 @@ export default {
         const offices = await this.$axios.$get(
           `offices?keywords=${keywords}&postCode=${postCode}&page=${0}`
         )
-        if (this.exist(offices))
+        if (!this.exist(offices))
           this.alertMsg('検索結果にマッチするオフィスは存在しません')
       } catch (error) {
         // console.log(error)
@@ -327,13 +327,14 @@ export default {
       selectedList,
       location = false
     ) {
+      if (!this.exist(cities))
+        return this.alertMsg('市町村を１つ以上選択してください。')
       try {
         const offices = await this.$axios.$get(
           `offices?prefecture=${prefecture}&cities=${cities}&page=${0}`
         )
-        if (offices.length === 0) {
-          return alert('選択したエリアにオフィスは存在しません')
-        }
+        if (!this.exist(offices))
+          this.alertMsg('選択したエリアにオフィスは存在しません')
         let count = offices[0].count
         count = count / 10 || 0
         count = Math.ceil(count)
