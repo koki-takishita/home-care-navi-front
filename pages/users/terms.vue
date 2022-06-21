@@ -26,10 +26,5 @@
 <script>
 export default {
   layout: 'application',
-  methods: {
-    terms() {
-      this.$router.push('/terms')
-    },
-  },
 }
 </script>

@@ -26,10 +26,5 @@
 <script>
 export default {
   layout: 'application',
-  methods: {
-    privacy_policy() {
-      this.$router.push('/privacy_policy')
-    },
-  },
 }
 </script>

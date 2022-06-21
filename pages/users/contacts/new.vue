@@ -85,11 +85,11 @@ export default {
   data() {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
-        name: '',
-        email: '',
-        types: '',
-        content: '',
-        valid: false,
+      name: '',
+      email: '',
+      types: '',
+      content: '',
+      valid: false,
       formValidates: {
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
