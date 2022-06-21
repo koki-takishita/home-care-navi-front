@@ -340,7 +340,7 @@ export default {
   data() {
     return {
       logoutInfo: {
-        redirecttUrl: '/top',
+        redirectUrl: '/top',
         valid: false,
       },
       justify: [],
