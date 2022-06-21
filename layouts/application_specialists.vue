@@ -390,12 +390,12 @@
                 <div>
                   <NuxtLink
                     to="/specialists/privacy_policy"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
                     to="/specialists/terms"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
@@ -413,12 +413,12 @@
             <div class="d-flex justify-center">
               <NuxtLink
                 to="/specialists/privacy_policy"
-                class="text-overline mr-5 link-style text-decoration-none"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
                 to="/specialists/terms"
-                class="text-overline mr-5 link-style text-decoration-none"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
