@@ -1,3 +1,4 @@
+Users/Contact.success.vue
 <template>
   <v-card outlined width="750" class="mx-auto mt-10">
     <v-card-text>
@@ -15,7 +16,7 @@
         </p>
       </div>
       <div class="mx-auto mt-4 text-center top-link mb-16">
-        <a href="../top" style="color: #f06364" class="text-decoration-none">
+        <a href="/" style="color: #f06364" class="text-decoration-none">
           <p>ホームケアナビトップに戻る</p>
         </a>
       </div>
