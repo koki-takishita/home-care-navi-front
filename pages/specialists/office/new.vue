@@ -248,7 +248,7 @@
                   ></v-file-input>
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
-                  >特徴画像1の説明
+                  >特徴画像1の説明（任意）
                   <v-textarea
                     v-model="text_detail_1"
                     :rules="[formValidates.textDetailCountCheck]"
@@ -285,7 +285,7 @@
                   ></v-file-input>
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
-                  >特徴画像2の説明
+                  >特徴画像2の説明（任意）
                   <v-textarea
                     v-model="text_detail_2"
                     :rules="[formValidates.textDetailCountCheck]"
