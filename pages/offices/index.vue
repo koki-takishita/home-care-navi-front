@@ -161,7 +161,7 @@ export default {
           const requestKeywords = this.removePostCode(keywordsArry)
           this.searchOfficeKeywords(requestKeywords, requestPostalCodes)
         } else {
-          this.searchOfficeKeywords(requestKeywords)
+          this.searchOfficeKeywords(keywordsArry)
         }
       } catch (e) {
         this.alertMsg(e)
