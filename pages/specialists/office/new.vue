@@ -27,10 +27,10 @@
               height="44"
           /></label>
           <label class="font-color-gray font-weight-black text-caption"
-            >特徴詳細（任意）
+            >特徴詳細
             <v-textarea
               v-model="title_detail"
-              :rules="[formValidates.textCountCheck]"
+              :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
               height="105"
