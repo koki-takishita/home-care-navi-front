@@ -63,13 +63,13 @@
 
         <v-card-actions class="pa-0">
           <v-btn
-            class="error text-h6 block"
+            class="warning text-h6 block"
             block
             :disabled="!valid"
             max-width="520"
             min-width="343"
             height="60"
-            href="/contacts/confirm"
+            href="/specialists/contacts/confirm"
             @click="SendConfirmPage"
             >この内容で問い合わせる</v-btn
           >
@@ -81,7 +81,7 @@
 
 <script>
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
   data() {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
@@ -106,24 +106,24 @@ export default {
     }
   },
   mounted() {
-    const name = localStorage.getItem('name')
-    const email = localStorage.getItem('email')
-    const types = localStorage.getItem('types')
-    const content = localStorage.getItem('content')
+    const name = sessionStorage.getItem('contact.name')
+    const email = sessionStorage.getItem('contact.email')
+    const types = sessionStorage.getItem('contact.types')
+    const content = sessionStorage.getItem('contact.content')
     if (name != null && email != null && types != null && content != null) {
-      this.name = localStorage.getItem('name')
-      this.email = localStorage.getItem('email')
-      this.types = localStorage.getItem('types')
-      this.content = localStorage.getItem('content')
+      this.name = sessionStorage.getItem('contact.name')
+      this.email = sessionStorage.getItem('contact.email')
+      this.types = sessionStorage.getItem('contact.types')
+      this.content = sessionStorage.getItem('contact.content')
     }
   },
 
   methods: {
     SendConfirmPage() {
-      localStorage.setItem('name', this.name)
-      localStorage.setItem('email', this.email)
-      localStorage.setItem('types', this.types)
-      localStorage.setItem('content', this.content)
+      sessionStorage.setItem('contact.name', this.name)
+      sessionStorage.setItem('contact.email', this.email)
+      sessionStorage.setItem('contact.types', this.types)
+      sessionStorage.setItem('contact.content', this.content)
     },
   },
 }
