@@ -504,6 +504,7 @@ export default {
       address: '',
       detail: '',
       service_type: '',
+
       input_image: null,
       uploadImageUrl_1: '',
       image_detail_1: null,
@@ -511,6 +512,7 @@ export default {
       uploadImageUrl_2: '',
       image_detail_2: null,
       text_detail_2: '',
+
       open_date: '',
       activePicker: null,
       date: null,
@@ -612,6 +614,27 @@ export default {
       }
       this.flags = 0
     },
+
+    async sendOfficeDetail() {
+      console.log('発火')
+      const params = new FormData()
+      params.append('detail', this.detail)
+      params.append('service_type', this.service_type)
+      params.append('open_date', this.open_date)
+      params.append('rooms', this.rooms)
+      params.append('requirements', this.requirement)
+      params.append('facility', this.facility)
+      params.append('management', this.management)
+      params.append('link', this.link)
+      try {
+        await this.$axios.$post(`specialists/office_details`, params, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+      } catch (error) {
+        return error
+      }
+    },
+
     save(date) {
       this.$refs.menu.save(date)
     },
