@@ -36,7 +36,7 @@
           <v-btn
             block
             large
-            class="error text-h6 block"
+            class="warning text-h6 block"
             max-width="520"
             min-width="343"
             height="60"
@@ -47,9 +47,9 @@
         </v-card-actions>
         <div class="mx-auto mt-4 text-center top-link mb-4">
           <a
-            style="color: #f06364"
+            style="color: #f09c3c"
             class="text-decoration-none"
-            href="/users/contacts/new"
+            href="/specialists/contacts/new"
           >
             もどる
           </a>
@@ -61,7 +61,7 @@
 
 <script>
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
   data() {
     return {
       name: '',
@@ -91,7 +91,7 @@ export default {
           types: this.types,
           content: this.content,
         })
-        this.$router.push('/users/contacts/success')
+        this.$router.push('/specialists/contacts/success')
         return response
       } catch (error) {
         return error
