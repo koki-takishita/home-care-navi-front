@@ -154,12 +154,12 @@ export default {
           /* 郵便番号からハイフンを削除した配列を出力
           ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "さんぷる3"]
           => [1135511, 0144155] */
-          const requestPostalCode = this.conversionSevenNumber(keywordsArry)
+          const requestPostalCodes = this.conversionSevenNumber(keywordsArry)
           /* keywordsArryから郵便番号のみ削除
           ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "さんぷる3"]
           => ['サンプル', 'サンプル3'] */
           const requestKeywords = this.removePostCode(keywordsArry)
-          this.searchOfficeKeywords(requestKeywords, requestPostalCode)
+          this.searchOfficeKeywords(requestKeywords, requestPostalCodes)
         } else {
           this.searchOfficeKeywords(requestKeywords)
         }
@@ -250,10 +250,10 @@ export default {
       // return !!postCode_arry.filter(Boolean).length
       return !!postCodeArry.length
     },
-    async searchOfficeKeywords(keywords = null, postCode = null) {
+    async searchOfficeKeywords(keywords = null, postCodes = null) {
       try {
         const offices = await this.$axios.$get(
-          `offices?keywords=${keywords}&postCode=${postCode}&page=${0}`
+          `offices?keywords=${keywords}&postCodes=${postCodes}&page=${0}`
         )
         if (!this.exist(offices))
           this.alertMsg('検索結果にマッチするオフィスは存在しません')
