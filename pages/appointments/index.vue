@@ -2,7 +2,6 @@
   <v-col cols="12" md="8" lg="7" xl="7" class="mx-auto">
     <h3 class="pb-3">予約履歴</h3>
     <v-row>
-      <!-- オフィスを取得 -->
       <v-col
         v-for="(office, index) in getAPI"
         :key="index"
@@ -11,7 +10,6 @@
         class="px-0 pb-0 pt-0"
         @click="moveShow(office.id)"
       >
-        <!-- オフィスに紐づく予約を取得 -->
         <v-col v-for="(appointments, i) in office.appointments" :key="i">
           <v-card class="mx-auto">
             <v-col
@@ -41,7 +39,7 @@
                 </v-row>
                 <v-row class="pt-1">
                   <v-icon small>mdi-phone</v-icon>
-                  <div class="my-auto pl-1">080-1111-2222</div>
+                  <div class="my-auto pl-1">{{ office.phone_number }}</div>
                 </v-row>
               </v-col>
             </v-row>
@@ -60,7 +58,6 @@
               >事業所からの連絡をお待ち下さい</v-col
             >
           </v-card>
-          <p v-if="getAPI.length === 0">予約はありません</p>
         </v-col>
       </v-col>
       <v-col v-show="isShow">予約履歴はありません</v-col>
