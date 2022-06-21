@@ -28,7 +28,14 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://use.fontawesome.com/releases/v6.0.0/css/all.css',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -51,7 +58,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
 
-  middleware: 'auth',
+  middleware: 'authentication',
 
   modules: [
     // https://axios.nuxtjs.org/setup

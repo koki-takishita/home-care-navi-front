@@ -280,12 +280,12 @@
                 <div>
                   <NuxtLink
                     to="/users/privacy_policy"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
                     to="/users/terms"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
@@ -303,12 +303,12 @@
             <div class="d-flex justify-center">
               <NuxtLink
                 to="/users/privacy_policy"
-                class="text-overline mr-5 link-style text-decoration-none"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
                 to="/users/terms"
-                class="text-overline mr-5 link-style text-decoration-none"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
@@ -350,6 +350,22 @@ export default {
       drawer: false,
       group: null,
       tile: false,
+      currentTime: new Date().getTime(),
+    }
+  },
+  mounted() {
+    // もし、ローカルストレージに保存した値が有効期限を過ぎていたら、すべて削除
+    if (
+      Math.floor(this.currentTime / 1000) >=
+      parseInt(localStorage.getItem('appointments.expiry'))
+    ) {
+      localStorage.removeItem('appointments.meet_date')
+      localStorage.removeItem('appointments.meet_time')
+      localStorage.removeItem('appointments.name')
+      localStorage.removeItem('appointments.age')
+      localStorage.removeItem('appointments.phone_number')
+      localStorage.removeItem('appointments.comment')
+      localStorage.removeItem('appointments.expiry')
     }
   },
   methods: {
@@ -403,6 +419,6 @@ export default {
 }
 
 .color-gray {
-  background-color: #d9dede;
+  background-color: #f5f7f7;
 }
 </style>
