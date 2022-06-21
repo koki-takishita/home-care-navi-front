@@ -8,11 +8,16 @@
       >
     </p>
     <v-card class="mx-auto mb-2 p-0" width="750">
-      <v-col cols="12"><h3>利用者登録</h3></v-col>
+      <v-col cols="12"><h3>利用者情報編集</h3></v-col>
       <v-form v-model="valid">
         <v-row>
-          <v-avatar size="100" color="grey lighten-3" class="ml-6 my-4">
-            <v-icon size="70" color="white">mdi-account</v-icon>
+          <v-avatar size="100" color="grey lighten-3" class="ml-6 my-4"
+            ><v-img
+              v-if="care_recipient.image_url !== null"
+              :src="care_recipient.image_url"
+            ></v-img>
+            <!-- <v-icon v-else size="60" color="white">mdi-account</v-icon> -->
+            <v-icon v-else size="60" color="white">mdi-account</v-icon>
           </v-avatar>
           <v-file-input
             v-model="image"
@@ -29,7 +34,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >利用者名
             <v-text-field
-              v-model="name"
+              v-model="care_recipient.name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="田中 太郎"
@@ -40,7 +45,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >利用者名(ふりがな)
             <v-text-field
-              v-model="kana"
+              v-model="care_recipient.kana"
               :rules="[
                 formValidates.required,
                 formValidates.nameCountCheck,
@@ -57,7 +62,7 @@
             <v-row>
               <v-col class="d-flex" cols="12" sm="3">
                 <v-select
-                  v-model="age"
+                  v-model="care_recipient.age"
                   class="mt-2 font-weight-regular"
                   :items="items"
                   item-text="state"
@@ -74,7 +79,7 @@
             <label class="font-color-gray font-weight-black text-caption"
               >利用者住所
               <v-text-field
-                v-model="post_code"
+                v-model="care_recipient.post_code"
                 outlined
                 dense
                 height="44"
@@ -93,7 +98,7 @@
 
           <div class="mt-n2">
             <v-text-field
-              v-model="address"
+              v-model="care_recipient.address"
               outlined
               dense
               height="44"
@@ -106,7 +111,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >家族情報
             <v-textarea
-              v-model="family"
+              v-model="care_recipient.family"
               :rules="[formValidates.familyCountCheck, formValidates.required]"
               class="mt-2 font-weight-regular"
               height="80"
@@ -120,7 +125,7 @@
             <v-row>
               <v-col>
                 <v-select
-                  v-model="staff_id"
+                  v-model="care_recipient.staff_id"
                   class="mt-2 font-weight-regular"
                   :items="staffs"
                   item-value="id"
@@ -185,15 +190,19 @@ export default {
         },
       },
       office_id: this.$route.params.office_id,
-      name: '',
-      kana: '',
-      family: '',
-      post_code: '',
-      address: '',
-      staff_id: '',
+      care_recipient_id: this.$route.params.care_recipient_id,
       image: null,
       valid: false,
-      age: '',
+      care_recipient: {
+        image_url: '',
+        name: '',
+        kana: '',
+        family: '',
+        post_code: '',
+        address: '',
+        staff_id: '',
+        age: '',
+      },
       items: [
         { state: '60歳', abbr: '60' },
         { state: '61歳', abbr: '61' },
@@ -261,8 +270,20 @@ export default {
   },
   mounted() {
     this.getStaffs()
+    this.getCareRecipients()
   },
   methods: {
+    async getCareRecipients() {
+      try {
+        // this.$setId(this.office_id)
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/care_recipients/${this.care_recipient_id}`
+        )
+        this.care_recipient = response
+      } catch (error) {
+        return error
+      }
+    },
     async getStaffs() {
       try {
         const response = await this.$axios.$get(
@@ -274,22 +295,23 @@ export default {
       }
     },
     async send() {
-      const id = this.office_id
+      const officeId = this.office_id
+      const careRecipientId = this.care_recipient_id
       const params = new FormData()
       params.append('office_id', this.office_id)
-      params.append('name', this.name)
-      params.append('kana', this.kana)
-      params.append('age', this.age)
-      params.append('family', this.family)
-      params.append('post_code', this.post_code)
-      params.append('address', this.address)
-      params.append('staff_id', this.staff_id)
+      params.append('name', this.care_recipient.name)
+      params.append('kana', this.care_recipient.kana)
+      params.append('age', this.care_recipient.age)
+      params.append('family', this.care_recipient.family)
+      params.append('post_code', this.care_recipient.post_code)
+      params.append('address', this.care_recipient.address)
+      params.append('staff_id', this.care_recipient.staff_id)
       if (this.image !== null) {
         params.append('image', this.image)
       }
       try {
-        await this.$axios.$post(
-          `specialists/offices/${id}/care_recipients`,
+        await this.$axios.$put(
+          `specialists/offices/${officeId}/care_recipients/${careRecipientId}`,
           params,
           {
             headers: { 'Content-Type': 'multipart/form-data' },
@@ -297,7 +319,7 @@ export default {
         )
         this.$store.commit('catchErrorMsg/setType', 'success')
         this.$store.commit('catchErrorMsg/setMsg', ['登録しました'])
-        this.$router.push('.')
+        this.$router.push('..')
       } catch (error) {
         return error
       }
