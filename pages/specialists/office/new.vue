@@ -27,10 +27,10 @@
               height="44"
           /></label>
           <label class="font-color-gray font-weight-black text-caption"
-            >特徴詳細
+            >特徴詳細（任意）
             <v-textarea
               v-model="title_detail"
-              :rules="[formValidates.required, formValidates.textCountCheck]"
+              :rules="[formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
               height="105"
@@ -213,6 +213,64 @@
               dense
               height="44"
           /></label>
+          <v-sheet class="pa-3">
+            <v-avatar size="320" color="grey lighten-3" tile class="ml-8 mb-4">
+              <v-img v-if="uploadImageUrl_1 !== null" :src="uploadImageUrl_1" />
+            </v-avatar>
+            <v-file-input
+              v-model="image_detail_1"
+              truncate-length="30"
+              accept="image/*"
+              show-size
+              label="特徴画像1をアップロード"
+              :rules="[formValidates.fileDetailSizeCheck]"
+              prepend-icon="mdi-camera"
+              class="image-form"
+              @change="detailImage_1Picked"
+            ></v-file-input>
+          </v-sheet>
+          <label class="font-color-gray font-weight-black text-caption"
+            >特徴画像1の説明
+            <v-textarea
+              v-model="text_detail_1"
+              :rules="[formValidates.textDetailCountCheck]"
+              class="mt-2 font-weight-regular"
+              placeholder="特徴画像1に関する説明テキストを入れてください"
+              height="105"
+              outlined
+              dense
+            >
+            </v-textarea
+          ></label>
+          <v-sheet class="pa-3">
+            <v-avatar size="320" color="grey lighten-3" tile class="ml-8 mb-4">
+              <v-img v-if="uploadImageUrl_2 !== null" :src="uploadImageUrl_2" />
+            </v-avatar>
+            <v-file-input
+              v-model="image_detail_2"
+              truncate-length="30"
+              accept="image/*"
+              show-size
+              label="特徴画像2をアップロード"
+              :rules="[formValidates.fileDetailSizeCheck]"
+              prepend-icon="mdi-camera"
+              class="image-form"
+              @change="detailImage_2Picked"
+            ></v-file-input>
+          </v-sheet>
+          <label class="font-color-gray font-weight-black text-caption"
+            >特徴画像2の説明
+            <v-textarea
+              v-model="text_detail_2"
+              :rules="[formValidates.textDetailCountCheck]"
+              class="mt-2 font-weight-regular"
+              placeholder="特徴画像2に関する説明テキストを入れてください"
+              height="105"
+              outlined
+              dense
+            >
+            </v-textarea
+          ></label>
 
           <v-expansion-panels accordion multiple class="mb-10">
             <v-expansion-panel>
@@ -223,85 +281,6 @@
                 施設概要を登録する（任意）
               </v-expansion-panel-header>
               <v-expansion-panel-content class="mt-6">
-                <v-sheet class="pa-3">
-                  <v-form ref="form">
-                    <v-avatar
-                      size="320"
-                      color="grey lighten-3"
-                      tile
-                      class="ml-8 mb-4"
-                    >
-                      <v-img
-                        v-if="uploadImageUrl_1 !== null"
-                        :src="uploadImageUrl_1"
-                      />
-                    </v-avatar>
-
-                    <v-file-input
-                      v-model="image_detail_1"
-                      truncate-length="30"
-                      accept="image/*"
-                      show-size
-                      label="特徴画像1をアップロード"
-                      :rules="[formValidates.fileDetailSizeCheck]"
-                      prepend-icon="mdi-camera"
-                      class="image-form"
-                      @change="detailImage_1Picked"
-                    ></v-file-input>
-                  </v-form>
-                </v-sheet>
-                <label class="font-color-gray font-weight-black text-caption"
-                  >特徴画像1の説明（任意）
-                  <v-textarea
-                    v-model="text_detail_1"
-                    :rules="[formValidates.textDetailCountCheck]"
-                    class="mt-2 font-weight-regular"
-                    placeholder="特徴画像1に関する説明テキストを入れてください"
-                    height="105"
-                    outlined
-                    dense
-                  >
-                  </v-textarea
-                ></label>
-                <v-sheet class="pa-3">
-                  <v-form ref="form">
-                    <v-avatar
-                      size="320"
-                      color="grey lighten-3"
-                      tile
-                      class="ml-8 mb-4"
-                    >
-                      <v-img
-                        v-if="uploadImageUrl_2 !== null"
-                        :src="uploadImageUrl_2"
-                      />
-                    </v-avatar>
-                    <v-file-input
-                      v-model="image_detail_2"
-                      truncate-length="30"
-                      accept="image/*"
-                      show-size
-                      label="特徴画像2をアップロード"
-                      :rules="[formValidates.fileDetailSizeCheck]"
-                      prepend-icon="mdi-camera"
-                      class="image-form"
-                      @change="detailImage_2Picked"
-                    ></v-file-input>
-                  </v-form>
-                </v-sheet>
-                <label class="font-color-gray font-weight-black text-caption"
-                  >特徴画像2の説明（任意）
-                  <v-textarea
-                    v-model="text_detail_2"
-                    :rules="[formValidates.textDetailCountCheck]"
-                    class="mt-2 font-weight-regular"
-                    placeholder="特徴画像2に関する説明テキストを入れてください"
-                    height="105"
-                    outlined
-                    dense
-                  >
-                  </v-textarea
-                ></label>
                 <v-form>
                   <label class="font-color-gray font-weight-black text-caption"
                     >開設年月（任意）
@@ -440,6 +419,7 @@ export default {
           !values.some((value) => value.size >= 10000000) ||
           '画像サイズは10MB以下でアップロードしてください',
         fileDetailSizeCheck: (value) =>
+          !value ||
           value.size <= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
