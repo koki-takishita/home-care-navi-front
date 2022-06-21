@@ -30,7 +30,7 @@
             >特徴詳細
             <v-textarea
               v-model="title_detail"
-              :rules="[formValidates.businessDayDetailCountCheck]"
+              :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
               height="105"
@@ -254,7 +254,7 @@
                   >特徴画像1の説明（任意）
                   <v-textarea
                     v-model="text_detail_1"
-                    :rules="[formValidates.businessDayDetailCountCheck]"
+                    :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像1に関する説明テキストを入れてください"
                     height="105"
@@ -293,7 +293,7 @@
                   >特徴画像2の説明（任意）
                   <v-textarea
                     v-model="text_detail_2"
-                    :rules="[formValidates.businessDayDetailCountCheck]"
+                    :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像2に関する説明テキストを入れてください"
                     height="105"
@@ -433,6 +433,8 @@ export default {
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
+        textCountCheck: (value) =>
+          value.length <= 200 || '200文字以下で入力してください',
         fileSizeCheck: (values) =>
           !values ||
           !values.some((value) => value.size >= 10000000) ||
@@ -442,8 +444,8 @@ export default {
           '画像サイズは10MB以下でアップロードしてください',
         fileLengthCheck: (value) =>
           value.length <= 5 || '画像は5枚以下にしてください',
-        fileDetailLengthCheck: (value) =>
-          value.length <= 2 || '画像は2枚以下にしてください',
+        textDetailCountCheck: (value) =>
+          value.length <= 30 || '30文字以下で入力してください',
         holidayLengthCheck: (values) => {
           const array = []
           Array.prototype.forEach.call(Object(values), (value) => {
@@ -484,11 +486,14 @@ export default {
         managementCountCheck: (value) =>
           value.length <= 50 || '50文字以下で入力してください',
         linkNameCheck: (value) => {
-          const format = /^https?:\/{2}[\w/:%#$&?()~.=+-]+/g
-          return (
-            format.test(value) ||
-            'WEBサイトのURLを入力して下さい 例) http://example.com'
-          )
+          if (
+            value === '' ||
+            value.match(/^https?:\/{2}[\w/:%#$&?()~.=+-]+/g)
+          ) {
+            return true
+          } else {
+            return 'WEBサイトのURLを入力して下さい 例) http://example.com'
+          }
         },
       },
       name: '',
