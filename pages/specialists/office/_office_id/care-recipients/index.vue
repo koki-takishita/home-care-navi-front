@@ -97,6 +97,7 @@ export default {
     return {
       care_recipients: [],
       staffs: [],
+      office: [],
       office_id: this.$route.params.office_id,
     }
   },
@@ -108,9 +109,24 @@ export default {
   },
   mounted() {
     this.getCareRecipients()
+    this.getOffice()
     // this.getStaffs()
   },
   methods: {
+    async getOffice() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office.id}`
+        )
+        if (response.id - this.office_id !== 0) {
+          this.$router.push(
+            `/specialists/office/${response.id}/care-recipients`
+          )
+        }
+      } catch (error) {
+        return error
+      }
+    },
     async getCareRecipients() {
       try {
         // this.$setId(this.office_id)

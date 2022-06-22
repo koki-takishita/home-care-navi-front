@@ -167,7 +167,7 @@ export default {
   data() {
     return {
       staffs: [],
-      officeId: this.$route.params.office_id,
+      // officeId: this.$route.params.office_id,
       formValidates: {
         required: (value) => !!value || '必須項目です',
         fileSizeCheck: (value) =>
