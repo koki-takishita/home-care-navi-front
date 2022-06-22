@@ -33,7 +33,7 @@
                       >ブックマーク</NuxtLink
                     >
                     <NuxtLink
-                      to="#"
+                      to="/appointments"
                       class="header-style text-overline text-decoration-none mr-5"
                       >予約履歴</NuxtLink
                     >
@@ -207,7 +207,7 @@
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
                 <NuxtLink
-                  to="#"
+                  to="/appointments"
                   class="text-decoration-none text-body-2 navi-style"
                   >予約履歴</NuxtLink
                 >
@@ -340,7 +340,7 @@ export default {
   data() {
     return {
       logoutInfo: {
-        redirecttUrl: '/top',
+        redirectUrl: '/top',
         valid: false,
       },
       justify: [],
