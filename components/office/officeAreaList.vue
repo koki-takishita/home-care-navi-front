@@ -141,7 +141,14 @@
 import { mapGetters } from 'vuex'
 export default {
   layout: 'application',
-  props: ['area', 'prefecture', 'cities', 'selectedList', 'location'],
+  props: [
+    'area',
+    'prefecture',
+    'cities',
+    'selectedList',
+    'location',
+    'searchWind',
+  ],
   data() {
     return {
       areas: [
@@ -195,7 +202,15 @@ export default {
   },
   watch: {
     location() {
-      if (this.location === true) {
+      if (this.location === true || this.searchWind === true) {
+        this.e1 = 1
+        this.selectedAreaNum = []
+        this.selectedPrefectureNum = []
+        this.selectedCityNum = []
+      }
+    },
+    searchWind() {
+      if (this.searchWind === true) {
         this.e1 = 1
         this.selectedAreaNum = []
         this.selectedPrefectureNum = []
@@ -218,7 +233,15 @@ export default {
       const prefecture = encodeURI(this.selectedPrefecture())
       const cities = selectedCities.join()
       const selectedList = this.selectedCityNum
-      this.$emit('child-event', area, prefecture, cities, selectedList)
+      this.$emit(
+        'child-event',
+        area,
+        prefecture,
+        cities,
+        selectedList,
+        false,
+        false
+      )
     },
     propsUndefined() {
       return this.area === 'undefined' || this.area === ''

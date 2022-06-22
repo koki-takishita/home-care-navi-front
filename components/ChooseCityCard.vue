@@ -147,6 +147,11 @@ export default {
       this.chooseArea = this.getCurrentArea
     },
   },
+  mounted() {
+    if (this.cities.length === 0) {
+      this.prefectures = this.getCities
+    }
+  },
   methods: {
     ...mapActions('areaData', [
       'set_one_prefecture',
@@ -159,6 +164,8 @@ export default {
       if (this.chooseItems.length === 0) {
         alert('市町村を１つ以上選択してください。')
         return
+      } else if (this.choosePrefecture.length === 0) {
+        this.choosePrefecture = '東京都'
       }
       const arry = []
       Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
