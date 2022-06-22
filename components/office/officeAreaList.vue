@@ -141,7 +141,14 @@
 import { mapGetters } from 'vuex'
 export default {
   layout: 'application',
-  props: ['area', 'prefecture', 'cities', 'selectedList', 'location'],
+  props: [
+    'area',
+    'prefecture',
+    'cities',
+    'selectedList',
+    'location',
+    'searchWind',
+  ],
   data() {
     return {
       areas: [
@@ -186,22 +193,30 @@ export default {
       this.fetchCities = res.response.location
       this.e1 = 3
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return error
     }
   },
+  computed: {
+    ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
+  },
   watch: {
     location() {
-      if (this.location === true) {
+      if (this.location === true || this.searchWind === true) {
         this.e1 = 1
         this.selectedAreaNum = []
         this.selectedPrefectureNum = []
         this.selectedCityNum = []
       }
     },
-  },
-  computed: {
-    ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
+    searchWind() {
+      if (this.searchWind === true) {
+        this.e1 = 1
+        this.selectedAreaNum = []
+        this.selectedPrefectureNum = []
+        this.selectedCityNum = []
+      }
+    },
   },
   methods: {
     searchOffice() {
@@ -218,7 +233,15 @@ export default {
       const prefecture = encodeURI(this.selectedPrefecture())
       const cities = selectedCities.join()
       const selectedList = this.selectedCityNum
-      this.$emit('child-event', area, prefecture, cities, selectedList)
+      this.$emit(
+        'child-event',
+        area,
+        prefecture,
+        cities,
+        selectedList,
+        false,
+        false
+      )
     },
     propsUndefined() {
       return this.area === 'undefined' || this.area === ''
@@ -318,7 +341,7 @@ export default {
         )
         this.fetchCities = res.response.location
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error
       }
     },
@@ -329,7 +352,7 @@ export default {
         )
         this.fetchPrefectures = res.response.prefecture
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error
       }
     },

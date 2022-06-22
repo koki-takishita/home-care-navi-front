@@ -29,7 +29,8 @@
         </v-avatar>
       </v-card-title>
       <div class="d-flex">
-        <v-card
+        <v-img
+          :src="displayImg"
           tile
           outlined
           max-height="90"
@@ -37,8 +38,8 @@
           max-width="120"
           min-width="120"
           class="reset-border-style"
-          >写真が入る</v-card
         >
+        </v-img>
         <v-list dense class="pt-0">
           <v-list-item
             v-for="(item, i) in listItems"
@@ -115,14 +116,42 @@
 <script>
 export default {
   layout: 'application',
-  props: ['office'],
+  props: {
+    office: {
+      type: Object,
+      default() {
+        return { message: 'からです。' }
+      },
+    },
+  },
   data() {
     return {
       icon: {
         state: 'fa-regular fa-star',
         color: '#D9DEDE',
       },
-      listItems: [
+      week: ['日', '月', '火', '水', '木', '金', '土'],
+      binaryNumber: [64, 32, 16, 8, 4, 2, 1],
+    }
+  },
+  computed: {
+    displayImg() {
+      return this.office.image.length > 0
+        ? this.office.image
+        : require('~/assets/images/no-image.png')
+    },
+    displayDetail() {
+      return this.office.detail.detail === undefined
+        ? this.office.detail.message
+        : this.office.detail.detail
+    },
+    displayComments() {
+      return this.office.thank.comments === undefined
+        ? this.office.detail.message
+        : this.office.thank.comments
+    },
+    listItems() {
+      return [
         {
           name: '住所情報',
           icon: 'mdi-map-marker',
@@ -138,28 +167,13 @@ export default {
           icon: 'mdi-phone',
           title: this.office.phone_number,
         },
-      ],
-      week: ['日', '月', '火', '水', '木', '金', '土'],
-      binaryNumber: [64, 32, 16, 8, 4, 2, 1],
-      holidayArray: [],
-    }
-  },
-  computed: {
-    displayDetail() {
-      return this.office.detail.detail === undefined
-        ? this.office.detail.message
-        : this.office.detail.detail
+      ]
     },
-    displayComments() {
-      return this.office.thank.comments === undefined
-        ? this.office.detail.message
-        : this.office.thank.comments
+    holidayArray() {
+      return this.conversionBinaryToholidayArray(this.office.flags)
     },
   },
-  mounted() {
-    this.listItems[0].text = this.office.name
-    this.conversionBinaryToholidayArray(this.office.flags)
-  },
+  mounted() {},
   methods: {
     moveShow() {
       this.$router.push({ path: `/offices/${this.office.id}` })
@@ -181,14 +195,16 @@ export default {
       }
     },
     conversionBinaryToholidayArray(holiday) {
+      const arry = []
       this.binaryNumber.forEach((n) => {
         if (holiday >= n) {
           holiday = holiday - n
-          this.holidayArray.push(1)
+          arry.push(1)
         } else {
-          this.holidayArray.push(0)
+          arry.push(0)
         }
       })
+      return arry
     },
     toggleSymbol(n) {
       return n === 1 ? 'mdi-close' : 'mdi-circle-outline'

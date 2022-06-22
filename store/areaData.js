@@ -101,7 +101,6 @@ export const mutations = {
     state.cities = []
   },
   increment_area(state) {
-    console.log('muataion countup')
     state.count_area++
   },
   decrement_area(state) {
@@ -194,7 +193,7 @@ export const actions = {
     commit('clearCities')
   },
   increment_area({ commit }) {
-    console.log('action countup')
+    // console.log('action countup')
     commit('increment_area')
   },
   decrement_area({ commit }) {
