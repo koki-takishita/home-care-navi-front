@@ -33,7 +33,7 @@
                       >ブックマーク</NuxtLink
                     >
                     <NuxtLink
-                      to="#"
+                      to="/appointments"
                       class="header-style text-overline text-decoration-none mr-5"
                       >予約履歴</NuxtLink
                     >
@@ -207,7 +207,7 @@
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
                 <NuxtLink
-                  to="#"
+                  to="/appointments"
                   class="text-decoration-none text-body-2 navi-style"
                   >予約履歴</NuxtLink
                 >
@@ -279,17 +279,17 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="/privacy_policy"
+                    to="/users/privacy_policy"
                     class="text-overline mr-3 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="/terms"
+                    to="/users/terms"
                     class="text-overline mr-3 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="/contacts/new"
+                    to="/users/contacts/new"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -302,17 +302,17 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="/privacy_policy"
+                to="/users/privacy_policy"
                 class="text-overline mr-3 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="/terms"
+                to="/users/terms"
                 class="text-overline mr-3 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="/contacts/new"
+                to="/users/contacts/new"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >
@@ -340,7 +340,7 @@ export default {
   data() {
     return {
       logoutInfo: {
-        redirecttUrl: '/top',
+        redirectUrl: '/top',
         valid: false,
       },
       justify: [],

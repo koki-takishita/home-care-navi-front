@@ -82,7 +82,14 @@
             </div>
           </v-col>
           <v-col cols="12"
-            ><v-btn x-large block depressed color="error">WEB予約する</v-btn>
+            ><v-btn
+              x-large
+              block
+              depressed
+              color="error"
+              @click="goAppointmentsPage"
+              >WEB予約する</v-btn
+            >
           </v-col>
           <v-col>
             <v-row class="md-over-no">
@@ -382,7 +389,7 @@ export default {
     prev() {
       // activeが0以下なら一番最後の画像へもどる
       if (this.active <= 0) {
-        this.active = this.office.images.length - 1
+        this.active = this.images.length - 1
       } else {
         this.active--
       }
@@ -391,7 +398,7 @@ export default {
     next() {
       // 配列の数が0~5つで6つになるので、-1とする
       // 5番目のときにnextしたら0番目に戻る
-      if (this.active >= this.office.images.length - 1) {
+      if (this.active >= this.images.length - 1) {
         this.active = 0
       } else {
         this.active++

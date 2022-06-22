@@ -40,7 +40,7 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage(), RemoveItemFromLocalStorage()"
+            @click="SendSuccessPage(), RemoveItemFromSessionStorage()"
           >
             送信する
           </v-btn>
@@ -49,7 +49,7 @@
           <a
             style="color: #f06364"
             class="text-decoration-none"
-            href="/contacts/new"
+            href="/users/contacts/new"
           >
             もどる
           </a>
@@ -71,15 +71,15 @@ export default {
     }
   },
   mounted() {
-    const name = localStorage.getItem('name')
-    const email = localStorage.getItem('email')
-    const types = localStorage.getItem('types')
-    const content = localStorage.getItem('content')
+    const name = sessionStorage.getItem('contact.name')
+    const email = sessionStorage.getItem('contact.email')
+    const types = sessionStorage.getItem('contact.types')
+    const content = sessionStorage.getItem('contact.content')
     if (name != null && email != null && types != null && content != null) {
-      this.name = localStorage.getItem('name')
-      this.email = localStorage.getItem('email')
-      this.types = localStorage.getItem('types')
-      this.content = localStorage.getItem('content')
+      this.name = sessionStorage.getItem('contact.name')
+      this.email = sessionStorage.getItem('contact.email')
+      this.types = sessionStorage.getItem('contact.types')
+      this.content = sessionStorage.getItem('contact.content')
     }
   },
   methods: {
@@ -91,17 +91,17 @@ export default {
           types: this.types,
           content: this.content,
         })
-        this.$router.push('/contacts/success')
+        this.$router.push('/users/contacts/success')
         return response
       } catch (error) {
         return error
       }
     },
-    RemoveItemFromLocalStorage() {
-      localStorage.removeItem('name')
-      localStorage.removeItem('email')
-      localStorage.removeItem('types')
-      localStorage.removeItem('content')
+    RemoveItemFromSessionStorage() {
+      sessionStorage.removeItem('contact.name')
+      sessionStorage.removeItem('contact.email')
+      sessionStorage.removeItem('contact.types')
+      sessionStorage.removeItem('contact.content')
     },
   },
 }
