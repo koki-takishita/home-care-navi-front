@@ -403,7 +403,7 @@
             depressed
             :disabled="!valid"
             color="warning"
-            @click="send"
+            @click="send()"
           >
             登録する
           </v-btn>
@@ -608,31 +608,21 @@ export default {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         localStorage.setItem('office_data', 'true')
+        await this.$axios.$post(`specialists/office_details`, {
+          detail: this.deatail,
+          service_type: this.service_type,
+          open_date: this.open_date,
+          rooms: this.rooms,
+          requirements: this.requirements,
+          facility: this.facility,
+          management: this.management,
+          link: this.link,
+        })
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
         return error
       }
       this.flags = 0
-    },
-
-    async sendOfficeDetail() {
-      console.log('発火')
-      const params = new FormData()
-      params.append('detail', this.detail)
-      params.append('service_type', this.service_type)
-      params.append('open_date', this.open_date)
-      params.append('rooms', this.rooms)
-      params.append('requirements', this.requirement)
-      params.append('facility', this.facility)
-      params.append('management', this.management)
-      params.append('link', this.link)
-      try {
-        await this.$axios.$post(`specialists/office_details`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
-      } catch (error) {
-        return error
-      }
     },
 
     save(date) {
