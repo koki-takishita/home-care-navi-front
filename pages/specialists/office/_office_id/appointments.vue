@@ -57,10 +57,16 @@
               {{ appointment.phone_number }}
             </div>
             <div v-if="appointment.called_status === 'need_call'">
-              <v-btn block class="mt-3 mb-2" color="warning" @click="call"
+              <v-btn
+                block
+                class="mt-3 mb-2"
+                color="warning"
+                @click="call(appointment.id)"
                 >連絡済みにする</v-btn
               >
-              <v-btn block color="error" @click="cancel">キャンセルする</v-btn>
+              <v-btn block color="error" @click="cancel(appointment.id)"
+                >キャンセルする</v-btn
+              >
             </div>
           </v-col>
         </v-card>
@@ -113,9 +119,24 @@ export default {
         immediate: true,
       }
     )
+    this.getOffice()
     this.getAppointmentsStatus()
   },
   methods: {
+    async getOffice() {
+      try {
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}`
+        )
+        if (response.id - this.office_id !== 0) {
+          this.$router.push(
+            `/specialists/office/${response.id}/appointments?page=1`
+          )
+        }
+      } catch (error) {
+        return error
+      }
+    },
     async getAppointmentsStatus() {
       if (this.page > 1) {
         this.offsetPage = this.page - 1
@@ -161,16 +182,36 @@ export default {
           return '#666666'
       }
     },
-    call() {
+    async call(id) {
       const isCalled = '連絡済みにしますか？'
       if (window.confirm(isCalled)) {
-        return true
+        try {
+          await this.$axios.$put(
+            `specialists/offices/${this.office_id}/appointments/${id}`,
+            {
+              called_status: 1,
+            }
+          )
+          window.location.reload()
+        } catch (error) {
+          return error
+        }
       }
     },
-    cancel() {
+    async cancel(id) {
       const isCanceled = '本当にキャンセルしてもよろしいですか？'
       if (window.confirm(isCanceled)) {
-        return true
+        try {
+          await this.$axios.$put(
+            `specialists/offices/${this.office_id}/appointments/${id}`,
+            {
+              called_status: 2,
+            }
+          )
+          window.location.reload()
+        } catch (error) {
+          return error
+        }
       }
     },
   },
