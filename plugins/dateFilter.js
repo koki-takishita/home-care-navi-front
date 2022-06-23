@@ -20,12 +20,11 @@ function formatCreatedAt(getDate) {
 
 function formatMeetDate(getDate) {
   const date = new Date(getDate)
-  const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
   const week = date.getDay()
   const weekStr = ['日', '月', '火', '水', '木', '金', '土'][week]
-  const formattedDate = `${year}年${month}月${day}日(${weekStr})`
+  const formattedDate = `${month}月${day}日(${weekStr})`
   return formattedDate
 }
 
