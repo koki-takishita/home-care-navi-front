@@ -80,10 +80,6 @@
 
 <script>
 export default {
-  beforeRouteUpdate() {
-    console.log('test')
-    console.log(this.page)
-  },
   layout: 'application_specialists',
   middleware: 'authentication',
   data() {
@@ -98,11 +94,6 @@ export default {
   },
   watch: {
     page() {
-      if (this.page > 1) {
-        this.offsetPage = this.page - 1
-      } else {
-        this.offsetPage = 0
-      }
       this.$router.push({
         path: `/specialists/office/${this.office_id}/appointments`,
         query: {
@@ -113,10 +104,24 @@ export default {
     },
   },
   mounted() {
+    this.$watch(
+      'page',
+      function () {
+        this.getAppointmentsStatus()
+      },
+      {
+        immediate: true,
+      }
+    )
     this.getAppointmentsStatus()
   },
   methods: {
     async getAppointmentsStatus() {
+      if (this.page > 1) {
+        this.offsetPage = this.page - 1
+      } else {
+        this.offsetPage = 0
+      }
       try {
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/appointments?page=${this.offsetPage}`
