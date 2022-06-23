@@ -296,8 +296,6 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$store.commit('catchErrorMsg/setType', 'success')
-        this.$store.commit('catchErrorMsg/setMsg', ['登録しました'])
         this.$router.push('.')
       } catch (error) {
         return error
