@@ -145,6 +145,7 @@ export default {
   computed: {
     officeCount() {
       if (this.offices.length > 0) {
+        // console.log(`log::${this.offices[0].name}`)
         return this.offices[0].count
       } else {
         return '読込中'

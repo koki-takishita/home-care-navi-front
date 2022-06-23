@@ -86,7 +86,7 @@
                             <v-list-item>
                               <v-list-item-title>
                                 <NuxtLink
-                                  to="#"
+                                  to="/specialists/office/1/appointments?page=1"
                                   class="header-style text-overline text-decoration-none mr-5"
                                   >予約状況確認</NuxtLink
                                 ></v-list-item-title
@@ -316,7 +316,7 @@
               <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
                 <v-list-item-title>
                   <NuxtLink
-                    to="#"
+                    to="/specialists/office/1/appointments?page=1"
                     class="text-decoration-none text-body-2 navi-style"
                     >予約状況確認</NuxtLink
                   >

@@ -145,7 +145,7 @@
             color="warning"
             @click="send"
           >
-            登録する
+            変更する
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
@@ -166,7 +166,6 @@ export default {
   data() {
     return {
       staffs: [],
-      // officeId: this.$route.params.office_id,
       formValidates: {
         required: (value) => !!value || '必須項目です',
         fileSizeCheck: (value) =>
@@ -274,7 +273,6 @@ export default {
   methods: {
     async getCareRecipients() {
       try {
-        // this.$setId(this.office_id)
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/care_recipients/${this.care_recipient_id}`
         )
@@ -317,8 +315,6 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$store.commit('catchErrorMsg/setType', 'success')
-        this.$store.commit('catchErrorMsg/setMsg', ['登録しました'])
         this.$router.push('..')
       } catch (error) {
         return error
