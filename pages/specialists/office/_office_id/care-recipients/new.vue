@@ -128,6 +128,7 @@
                   outlined
                   dense
                   placeholder="--"
+                  no-data-text="スタッフの登録をしてください"
                   :rules="[formValidates.required]"
                 ></v-select>
               </v-col>
