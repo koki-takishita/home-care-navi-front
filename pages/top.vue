@@ -7,7 +7,7 @@
       </p>
     </div>
     <div :class="toggleClassByBreakpoints">
-      <ChooseAreaCard />
+      <ChooseAreaCard @clickCurrentLocationBtn="searchOfficeLocation()" />
       <ChoosePrefectureCard />
       <ChooseCityCard />
     </div>
@@ -31,6 +31,41 @@ export default {
       } else {
         return this.pcStyle
       }
+    },
+  },
+  methods: {
+    searchOfficeLocation() {
+      this.getPositon()
+    },
+    getPositon() {
+      navigator.geolocation.getCurrentPosition(this.success)
+    },
+    success(pos) {
+      const crd = pos.coords
+      this.searchLocation(crd.longitude, crd.latitude)
+    },
+    async searchLocation(x, y) {
+      try {
+        const response = await this.$apiToAddressJson.$get(
+          `json?method=searchByGeoLocation&x=${x}&y=${y}`
+        )
+        const prefecture = response.response.location[0].prefecture
+        const city = response.response.location[0].city
+        this.searchOfficeFromArea(encodeURI(prefecture), encodeURI(city), true)
+      } catch (error) {
+        // console.log(error)
+        return error
+      }
+    },
+    searchOfficeFromArea(prefecture, city, location) {
+      this.$router.push({
+        path: '/offices',
+        query: {
+          prefecture,
+          cities: city,
+          location,
+        },
+      })
     },
   },
 }
