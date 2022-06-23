@@ -3,7 +3,13 @@
     <div class="d-none d-md-block">
       <div class="w-390">
         <v-card min-height="324" max-width="375" class="pa-4" outlined>
-          <v-btn block color="error" min-height="48" outlined>
+          <v-btn
+            block
+            color="error"
+            min-height="48"
+            outlined
+            @click="clickBtn(btnType.location)"
+          >
             <v-icon small>mdi-map-marker</v-icon>
             <span class="font-weight-black ml-2">現在地から探す</span>
           </v-btn>
@@ -38,7 +44,13 @@
           ></v-text-field>
         </div>
         <v-divider class="pa-0 mt-5 mb-5"></v-divider>
-        <v-btn block color="error" min-height="48" outlined>
+        <v-btn
+          block
+          color="error"
+          min-height="48"
+          outlined
+          @click="clickBtn(btnType.location)"
+        >
           <v-icon small>mdi-map-marker</v-icon>
           <span class="font-weight-black ml-2">現在地から探す</span>
         </v-btn>
@@ -81,6 +93,9 @@ export default {
         '九州沖縄',
       ],
       display: true,
+      btnType: {
+        location: 'CurrentLocationBtn',
+      },
     }
   },
   computed: {
@@ -102,6 +117,9 @@ export default {
       'set_one_city',
       'set_one_prefecture',
     ]),
+    clickBtn(type) {
+      this.$emit(`click${type}`)
+    },
     fetchAreas(chooseArea) {
       this.set_one_city()
       this.set_one_prefecture()
