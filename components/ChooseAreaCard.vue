@@ -90,6 +90,9 @@ export default {
       'getCount_city',
     ]),
   },
+  mounted() {
+    this.fetchAreaToTokyo()
+  },
   methods: {
     ...mapActions('areaData', [
       'setPrefectures',
@@ -124,9 +127,6 @@ export default {
       }
       return true
     },
-  },
-  mounted() {
-    this.fetchAreaToTokyo()
   },
 }
 </script>
