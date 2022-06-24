@@ -193,17 +193,86 @@
         </v-card>
         <v-card class="mt-6" outlined tile height="491">
           <v-col class="office-title" cols="12">{{ office.title }} </v-col>
-          <v-col class="title_detail" cols="12"
-            >{{ office.title_detail }}
-          </v-col>
+          <v-col
+            >ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。</v-col
+          >
+
+          <v-img v-if="images !== null" :src="images[active]"> </v-img>
+          <div class="flex">
+            <v-img
+              src="https://home-care-navi-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpeg"
+              width="180"
+              height="180"
+            ></v-img>
+            <v-img
+              src="https://home-care-navi-bucket.s3.ap-northeast-1.amazonaws.com/no_image.jpeg"
+              width="180"
+              height="180"
+            ></v-img>
+          </div>
+          <div class="flex">
+            <v-col
+              >画像の説明テキストが入ります画像の説明テキストが入ります
+            </v-col>
+            <v-col
+              >画像の説明テキストが入ります画像の説明テキストが入ります
+            </v-col>
+          </div>
         </v-card>
+
         <v-card class="mt-6" outlined tile height="599">
           <v-card-title> スタッフ紹介 </v-card-title>
         </v-card>
         <v-card class="mt-6 mb-10" outlined tile height="513">
           <v-card-title> 施設概要 </v-card-title>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">住所</div>
+            <div class="office-tel">
+              〒{{ office.post_code }}
+              <br />
+              {{ office.address }}
+            </div>
+          </div>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">類型</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
+          <v-divider></v-divider>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">開設年月</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">居室数</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">入居時の要件</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">共用設備</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">経営・事業主体</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
+          <v-divider></v-divider>
+          <div class="flex">
+            <div class="fax pr-1">公式サイト</div>
+            <div class="my-auto">detailデータを入れます</div>
+          </div>
         </v-card>
       </v-col>
+
       <v-col cols="12" sm="12" md="6">
         <v-card class="sm-under-no sticky" outlined tile>
           <v-row class="mx-auto mt-auto max-width">
@@ -361,6 +430,7 @@ export default {
         images: [],
       },
       images: {},
+      office_detail: {},
       staffs: {},
       noImageURL: '~/assets/images/no_image.jpeg',
     }
@@ -375,6 +445,7 @@ export default {
         this.getAPI = response
         this.office = this.getAPI.office
         this.images = this.getAPI.images
+        this.office_details = this.getAPI.office_details
         this.staffs = this.getAPI.staffs
       } catch (error) {
         return error
