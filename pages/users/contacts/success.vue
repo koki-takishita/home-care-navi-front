@@ -15,7 +15,7 @@
         </p>
       </div>
       <div class="mx-auto mt-4 text-center top-link mb-16">
-        <a href="../top" style="color: #f06364" class="text-decoration-none">
+        <a href="/" style="color: #f06364" class="text-decoration-none">
           <p>ホームケアナビトップに戻る</p>
         </a>
       </div>

@@ -1,11 +1,11 @@
 <template>
   <v-card width="750" class="mx-auto my-6">
     <v-card-title>
-      <h4 class="font-weight-bold darkgray--text pb-2">プライバシーポリシー</h4>
+      <h4 class="font-weight-bold darkgray--text pb-2">利用規約</h4>
     </v-card-title>
     <v-card-text>
       <p class="text-body-1 font-weight-bold gray--text mb-2">
-        個人情報保護方針
+        タイトルタイトルタイトルタイトルタイトルタイトル
       </p>
       <v-form>
         <p class="text-subtitle-2 darkgray--text mb-6">
@@ -25,11 +25,6 @@
 </template>
 <script>
 export default {
-  layout: 'application',
-  methods: {
-    privacy_policy() {
-      this.$router.push('/privacy_policy')
-    },
-  },
+  layout: 'application_specialists',
 }
 </script>

@@ -125,6 +125,16 @@ export default {
       chooseItems: [],
     }
   },
+  computed: {
+    ...mapGetters('areaData', [
+      '',
+      'getCities',
+      'getCurrentArea',
+      'getCurrentPrefecture',
+      'getCount_prefecture',
+      'getCount_city',
+    ]),
+  },
   watch: {
     getCities() {
       this.cities = this.getCities
@@ -137,15 +147,10 @@ export default {
       this.chooseArea = this.getCurrentArea
     },
   },
-  computed: {
-    ...mapGetters('areaData', [
-      '',
-      'getCities',
-      'getCurrentArea',
-      'getCurrentPrefecture',
-      'getCount_prefecture',
-      'getCount_city',
-    ]),
+  mounted() {
+    if (this.cities.length === 0) {
+      this.prefectures = this.getCities
+    }
   },
   methods: {
     ...mapActions('areaData', [
@@ -159,6 +164,8 @@ export default {
       if (this.chooseItems.length === 0) {
         alert('市町村を１つ以上選択してください。')
         return
+      } else if (this.choosePrefecture.length === 0) {
+        this.choosePrefecture = '東京都'
       }
       const arry = []
       Array.prototype.forEach.call(Object(this.chooseItems), (value) => {

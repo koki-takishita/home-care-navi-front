@@ -86,7 +86,7 @@
                             <v-list-item>
                               <v-list-item-title>
                                 <NuxtLink
-                                  to="#"
+                                  to="/specialists/office/1/appointments?page=1"
                                   class="header-style text-overline text-decoration-none mr-5"
                                   >予約状況確認</NuxtLink
                                 ></v-list-item-title
@@ -95,7 +95,7 @@
                             <v-list-item>
                               <v-list-item-title>
                                 <NuxtLink
-                                  to="#"
+                                  to="/specialists/office/1/care-recipients"
                                   class="header-style text-overline text-decoration-none mr-5"
                                   >利用者情報管理</NuxtLink
                                 ></v-list-item-title
@@ -316,7 +316,7 @@
               <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
                 <v-list-item-title>
                   <NuxtLink
-                    to="#"
+                    to="/specialists/office/1/appointments?page=1"
                     class="text-decoration-none text-body-2 navi-style"
                     >予約状況確認</NuxtLink
                   >
@@ -329,7 +329,7 @@
               <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
                 <v-list-item-title>
                   <NuxtLink
-                    to="#"
+                    to="/specialists/office/1/care-recipients"
                     class="text-decoration-none text-body-2 navi-style"
                     >利用者情報管理</NuxtLink
                   >
@@ -389,17 +389,17 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="#"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    to="/specialists/privacy_policy"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    to="/specialists/terms"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
+                    to="/specialists/contacts/new"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -412,17 +412,17 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="#"
-                class="text-overline mr-5 link-style text-decoration-none"
+                to="/specialists/privacy_policy"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="#"
-                class="text-overline mr-5 link-style text-decoration-none"
+                to="/specialists/terms"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="#"
+                to="/specialists/contacts/new"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >

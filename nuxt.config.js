@@ -41,7 +41,11 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
-  plugins: ['~/plugins/axios.js', '~/plugins/apiToRequestOfAddress.js'],
+  plugins: [
+    '~/plugins/axios.js',
+    '~/plugins/apiToRequestOfAddress.js',
+    '~plugins/dateFilter.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
