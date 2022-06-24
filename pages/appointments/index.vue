@@ -1,16 +1,18 @@
 <template>
   <v-col cols="12" md="8" lg="7" xl="7" class="mx-auto">
     <h3 class="pb-3">予約履歴</h3>
-    <v-row>
-      <v-col
-        v-for="(office, index) in getAPI"
-        :key="index"
-        cols="12"
-        md="6"
-        class="px-0 pb-0 pt-0"
-        @click="moveShow(office.id)"
-      >
-        <v-col v-for="(appointments, i) in office.appointments" :key="i">
+    <v-col
+      v-for="(office, index) in getAPI"
+      :key="index"
+      @click="moveShow(office.id)"
+    >
+      <v-row>
+        <v-col
+          v-for="(appointments, i) in office.appointments"
+          :key="i"
+          cols="12"
+          md="6"
+        >
           <v-card class="mx-auto">
             <v-col
               ><h3>{{ office.name }}</h3></v-col
@@ -59,12 +61,11 @@
             >
           </v-card>
         </v-col>
-      </v-col>
-      <v-col v-show="isShow">予約履歴はありません</v-col>
-    </v-row>
+      </v-row>
+    </v-col>
+    <v-col v-show="isShow">予約履歴はありません</v-col>
   </v-col>
 </template>
-
 <script>
 export default {
   layout: 'application',
