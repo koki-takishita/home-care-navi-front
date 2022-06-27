@@ -45,6 +45,8 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/apiToRequestOfAddress.js',
     '~plugins/dateFilter.js',
+    '~/plugins/officeSearch/selectedArea.js',
+    '~/plugins/officeSearch/currentLocation.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -385,10 +385,11 @@ export default {
       }
     },
     exist(obj) {
-      return obj.length > 0
-    },
-    alertMsg(msg) {
-      return alert(msg)
+      if (!!obj && obj.length > 0) {
+        return true
+      } else {
+        return false
+      }
     },
     scrollTop() {
       this.$vuetify.goTo(0)
@@ -426,6 +427,7 @@ export default {
         return error
       }
     },
+    // async searchOfficeFromArea(
     async searchOfficeFromArea(
       area,
       prefecture,
@@ -437,43 +439,39 @@ export default {
       if (!this.exist(cities))
         return alert('市町村を１つ以上選択してください。')
       try {
-        const offices = await this.$axios.$get(
-          `offices?prefecture=${prefecture}&cities=${cities}&page=${0}`
-        )
-        if (!this.exist(offices))
-          return alert('選択したエリアにオフィスは存在しません')
-        let count = offices[0].count
-        count = count / 10 || 0
-        count = Math.ceil(count)
-        if (count === 0) {
-          count = 1
-        }
-        this.offices = offices
-        this.area = area
-        this.prefecture = prefecture
-        this.cities = cities
-        this.selectedList = selectedList
-        this.count = count
-        this.location = location
-        this.searchWind = searchWind
-        this.scrollTop()
-        this.page = 1
-        // router.push({ path: '/register', query: { plan: 'private' } })
-        this.$router.push({
-          path: '/offices',
-          query: {
-            area: this.area,
-            prefecture: this.prefecture,
-            cities: this.cities,
-            selectedList: this.selectedList,
-            location: this.location,
-          },
+        const { offices, count } = await this.$searchOffices({
+          prefecture,
+          cities,
         })
+        if (this.exist(offices)) {
+          this.offices = offices
+          this.area = area
+          this.prefecture = prefecture
+          this.cities = cities
+          this.selectedList = selectedList
+          this.count = count
+          this.location = location
+          this.searchWind = searchWind
+          this.scrollTop()
+          this.page = 1
+          // router.push({ path: '/register', query: { plan: 'private' } })
+          this.$router.push({
+            path: '/offices',
+            query: {
+              area: this.area,
+              prefecture: this.prefecture,
+              cities: this.cities,
+              selectedList: this.selectedList,
+              location: this.location,
+            },
+          })
+        }
       } catch (error) {
         // console.log(error)
         return error
       }
     },
+    setParameter() {},
   },
 }
 </script>
