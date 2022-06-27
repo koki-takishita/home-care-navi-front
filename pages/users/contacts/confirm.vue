@@ -34,22 +34,22 @@
         </div>
         <v-card-actions>
           <v-btn
-            to="/contacts/sucsess"
             block
             large
             class="error text-h6 block"
             max-width="520"
             min-width="343"
             height="60"
+            @click="SendSuccessPage(), RemoveItemFromSessionStorage()"
           >
             送信する
           </v-btn>
         </v-card-actions>
         <div class="mx-auto mt-4 text-center top-link mb-4">
           <a
-            href="/contacts/new"
             style="color: #f06364"
             class="text-decoration-none"
+            href="/users/contacts/new"
           >
             もどる
           </a>
@@ -71,14 +71,37 @@ export default {
     }
   },
   mounted() {
-    this.setParameter()
+    const name = sessionStorage.getItem('contact.name')
+    const email = sessionStorage.getItem('contact.email')
+    const types = sessionStorage.getItem('contact.types')
+    const content = sessionStorage.getItem('contact.content')
+    if (name != null && email != null && types != null && content != null) {
+      this.name = sessionStorage.getItem('contact.name')
+      this.email = sessionStorage.getItem('contact.email')
+      this.types = sessionStorage.getItem('contact.types')
+      this.content = sessionStorage.getItem('contact.content')
+    }
   },
   methods: {
-    setParameter() {
-      this.name = this.$route.query.name
-      this.email = this.$route.query.email
-      this.types = this.$route.query.types
-      this.content = this.$route.query.content
+    async SendSuccessPage() {
+      try {
+        const response = await this.$axios.$post(`contacts`, {
+          name: this.name,
+          email: this.email,
+          types: this.types,
+          content: this.content,
+        })
+        this.$router.push('/users/contacts/success')
+        return response
+      } catch (error) {
+        return error
+      }
+    },
+    RemoveItemFromSessionStorage() {
+      sessionStorage.removeItem('contact.name')
+      sessionStorage.removeItem('contact.email')
+      sessionStorage.removeItem('contact.types')
+      sessionStorage.removeItem('contact.content')
     },
   },
 }

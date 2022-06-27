@@ -8,23 +8,25 @@
         class="pa-6 pt-5 pb-3 d-flex flex-column"
       >
         <v-list class="overflow-auto mb-auto" max-height="240">
-          <v-list-item v-for="(city, i) in cities" :key="i" dense>
-            <v-checkbox
-              v-model="chooseItems"
-              class="mt-n1"
-              multiple
-              dense
-              :value="cities[i].city"
-              hide-details
-              color="red"
-              @click="countUp()"
-            >
-            </v-checkbox>
-            <v-list-item-content class="text-button pa-0 ml-n2">
-              {{ city.city }}
-            </v-list-item-content>
-            <v-icon block>mdi-chevron-right</v-icon>
-          </v-list-item>
+          <v-list-item-group v-model="chooseItems" multiple active-class="">
+            <v-list-item v-for="(city, i) in cities" :key="i" dense>
+              <template #default="{ active }">
+                <v-checkbox
+                  :input-value="active"
+                  class="mt-n1"
+                  dense
+                  hide-details
+                  color="red"
+                  @click="countUp()"
+                >
+                </v-checkbox>
+                <v-list-item-content class="text-button pa-0 ml-n2">
+                  {{ city.city }}
+                </v-list-item-content>
+                <v-icon block>mdi-chevron-right</v-icon>
+              </template>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
         <div class="d-flex ml-n3">
           <v-btn
@@ -43,7 +45,7 @@
             color="error"
             depressed
             class="font-weight-black"
-            @click="SearchForOfficesChosenByAddress"
+            @click="SearchForOfficesChosenByAddress()"
             >検索する</v-btn
           >
         </div>
@@ -69,24 +71,25 @@
         class="pa-6 pt-5 pb-3 d-flex flex-column"
       >
         <v-list class="overflow-auto mb-auto pt-0" max-height="240">
-          <p>{{ choosePrefecture }}</p>
-          <v-list-item v-for="(city, i) in cities" :key="i" dense>
-            <v-checkbox
-              v-model="chooseItems"
-              class="mt-n1"
-              multiple
-              dense
-              :value="cities[i].city"
-              hide-details
-              color="red"
-              @click="countUp()"
-            >
-            </v-checkbox>
-            <v-list-item-content class="text-button pa-0 ml-n2">
-              {{ city.city }}
-            </v-list-item-content>
-            <v-icon block>mdi-chevron-right</v-icon>
-          </v-list-item>
+          <v-list-item-group v-model="chooseItems" multiple active-class="">
+            <v-list-item v-for="(city, i) in cities" :key="i" dense>
+              <template #default="{ active }">
+                <v-checkbox
+                  :input-value="active"
+                  class="mt-n1"
+                  dense
+                  hide-details
+                  color="red"
+                  @click="countUp()"
+                >
+                </v-checkbox>
+                <v-list-item-content class="text-button pa-0 ml-n2">
+                  {{ city.city }}
+                </v-list-item-content>
+                <v-icon block>mdi-chevron-right</v-icon>
+              </template>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
         <div class="wrapper">
           <v-btn
@@ -103,7 +106,7 @@
             color="error"
             depressed
             class="font-weight-black"
-            @click="SearchForOfficesChosenByAddress"
+            @click="SearchForOfficesChosenByAddress()"
             >検索する</v-btn
           >
         </div>
@@ -122,6 +125,16 @@ export default {
       chooseItems: [],
     }
   },
+  computed: {
+    ...mapGetters('areaData', [
+      '',
+      'getCities',
+      'getCurrentArea',
+      'getCurrentPrefecture',
+      'getCount_prefecture',
+      'getCount_city',
+    ]),
+  },
   watch: {
     getCities() {
       this.cities = this.getCities
@@ -130,14 +143,14 @@ export default {
     getCurrentPrefecture() {
       this.choosePrefecture = this.getCurrentPrefecture
     },
+    getCurrentArea() {
+      this.chooseArea = this.getCurrentArea
+    },
   },
-  computed: {
-    ...mapGetters('areaData', [
-      'getCities',
-      'getCurrentPrefecture',
-      'getCount_prefecture',
-      'getCount_city',
-    ]),
+  mounted() {
+    if (this.cities.length === 0) {
+      this.prefectures = this.getCities
+    }
   },
   methods: {
     ...mapActions('areaData', [
@@ -147,22 +160,26 @@ export default {
       'increment_prefecture',
       'increment_area',
     ]),
-    async SearchForOfficesChosenByAddress() {
+    SearchForOfficesChosenByAddress() {
       if (this.chooseItems.length === 0) {
         alert('市町村を１つ以上選択してください。')
         return
+      } else if (this.choosePrefecture.length === 0) {
+        this.choosePrefecture = '東京都'
       }
-      try {
-        const prefecture = encodeURI(this.choosePrefecture)
-        const arry = []
-        Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
-          arry.push(encodeURI(value))
-        })
-        const requestUrl = `offices?prefecture=${prefecture}&city=${arry}`
-        await this.$axios.$get(requestUrl)
-      } catch (error) {
-        return error
-      }
+      const arry = []
+      Array.prototype.forEach.call(Object(this.chooseItems), (value) => {
+        arry.push(encodeURI(this.cities[value].city))
+      })
+      this.$router.push({
+        path: '/offices',
+        query: {
+          area: encodeURI(this.chooseArea),
+          prefecture: encodeURI(this.choosePrefecture),
+          cities: arry.join(),
+          selectedList: this.chooseItems,
+        },
+      })
     },
     clearChoosenItems() {
       this.chooseItems = []
@@ -190,8 +207,6 @@ export default {
         this.increment_city()
       } else if (this.chooseItems.length === 0) {
         this.set_one_city()
-        console.log('countup')
-        // this.increment_area()
       }
     },
   },

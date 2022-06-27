@@ -101,7 +101,6 @@ export const mutations = {
     state.cities = []
   },
   increment_area(state) {
-    console.log('muataion countup')
     state.count_area++
   },
   decrement_area(state) {
@@ -125,9 +124,21 @@ export const mutations = {
   set_one_city(state) {
     state.count_city = 1
   },
+  reset_store(state) {
+    state.prefecturesi = []
+    state.currentPrefecture = ''
+    state.currentArea = ''
+    state.cities = ''
+    state.count_area = 0
+    state.count_prefecture = 0
+    state.count_city = 0
+  },
 }
 
 export const actions = {
+  resetStore({ commit }) {
+    commit('reset_store')
+  },
   setCurrentArea({ commit }, chooseArea) {
     commit('setCurrentPrefecture', chooseArea)
   },
@@ -182,7 +193,7 @@ export const actions = {
     commit('clearCities')
   },
   increment_area({ commit }) {
-    console.log('action countup')
+    // console.log('action countup')
     commit('increment_area')
   },
   decrement_area({ commit }) {

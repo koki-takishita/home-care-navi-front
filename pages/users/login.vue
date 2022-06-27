@@ -119,7 +119,7 @@ export default {
       loginInfo: {
         email: '',
         password: '',
-        redirecttUrl: '/top',
+        redirectUrl: '/top',
         user_type: 'customer',
         valid: false,
       },

@@ -64,6 +64,14 @@ export default {
       selectedArea: '',
     }
   },
+  computed: {
+    ...mapGetters('areaData', [
+      'getCurrentArea',
+      'getPrefectures',
+      'getCount_prefecture',
+      'getCount_area',
+    ]),
+  },
   watch: {
     getPrefectures() {
       this.prefectures = this.getPrefectures
@@ -72,13 +80,10 @@ export default {
       this.selectedArea = this.getCurrentArea
     },
   },
-  computed: {
-    ...mapGetters('areaData', [
-      'getCurrentArea',
-      'getPrefectures',
-      'getCount_prefecture',
-      'getCount_area',
-    ]),
+  mounted() {
+    if (this.prefectures.length === 0) {
+      this.prefectures = this.getPrefectures
+    }
   },
   methods: {
     ...mapActions('areaData', [

@@ -29,36 +29,91 @@
               <div class="d-flex justify-end">
                 <div v-if="$auth.loggedIn">
                   <div class="mr-8 d-flex align-center">
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline mr-5 text-decoration-none"
-                      >事業所情報編集</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline mr-5 text-decoration-none"
-                      >スタッフ情報</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline mr-5 text-decoration-none"
-                      >お礼一覧</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline text-decoration-none mr-5"
-                      >予約状況確認</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline text-decoration-none mr-5"
-                      >利用者情報管理</NuxtLink
-                    >
-                    <NuxtLink
-                      to="#"
-                      class="header-style text-overline text-decoration-none mr-5"
-                      >登録情報</NuxtLink
-                    >
+                    <div class="text-center mr-7">
+                      <v-menu offset-y>
+                        <template #activator="{ on, attrs }">
+                          <v-btn
+                            text
+                            color="#808080"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            メニュー
+                            <v-icon>mdi-menu-down</v-icon>
+                          </v-btn>
+                        </template>
+                        <v-list>
+                          <div v-if="office !== true">
+                            <v-list-item>
+                              <v-list-item-title>
+                                <NuxtLink
+                                  to="/specialists/office/new"
+                                  class="header-style text-overline text-decoration-none mr-5"
+                                  >事業所登録</NuxtLink
+                                ></v-list-item-title
+                              >
+                            </v-list-item>
+                          </div>
+                          <div v-else>
+                            <v-list-item>
+                              <v-list-item-title>
+                                <NuxtLink
+                                  to="/specialists/office/1/edit"
+                                  class="header-style text-overline text-decoration-none mr-5"
+                                  >事業所情報編集</NuxtLink
+                                ></v-list-item-title
+                              >
+                            </v-list-item>
+                            <v-list-item>
+                              <v-list-item-title>
+                                <NuxtLink
+                                  to="/specialists/office/1/staffs"
+                                  class="header-style text-overline text-decoration-none mr-5"
+                                  >スタッフ情報</NuxtLink
+                                ></v-list-item-title
+                              >
+                            </v-list-item>
+                            <v-list-item>
+                              <v-list-item-title>
+                                <NuxtLink
+                                  to="#"
+                                  class="header-style text-overline text-decoration-none mr-5"
+                                  >お礼一覧</NuxtLink
+                                ></v-list-item-title
+                              >
+                            </v-list-item>
+                            <v-list-item>
+                              <v-list-item-title>
+                                <NuxtLink
+                                  to="/specialists/office/1/appointments?page=1"
+                                  class="header-style text-overline text-decoration-none mr-5"
+                                  >予約状況確認</NuxtLink
+                                ></v-list-item-title
+                              >
+                            </v-list-item>
+                            <v-list-item>
+                              <v-list-item-title>
+                                <NuxtLink
+                                  to="/specialists/office/1/care-recipients"
+                                  class="header-style text-overline text-decoration-none mr-5"
+                                  >利用者情報管理</NuxtLink
+                                ></v-list-item-title
+                              >
+                            </v-list-item>
+                          </div>
+                          <v-list-item>
+                            <v-list-item-title>
+                              <NuxtLink
+                                to="#"
+                                class="header-style text-overline text-decoration-none mr-5"
+                                >登録情報</NuxtLink
+                              ></v-list-item-title
+                            >
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </div>
                     <div class="red--text line-style">
                       <v-btn
                         :width="120"
@@ -203,71 +258,88 @@
         </v-card>
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >事業所情報編集</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >スタッフ情報</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >お礼一覧</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >予約状況確認</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >利用者情報管理</NuxtLink
-                >
-              </v-list-item-title>
-              <v-list-item-icon class="ma-0 mt-2">
-                <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-            <v-divider color="#D9DEDE"></v-divider>
+            <div v-if="office !== true">
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="/specialists/office/new"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >事業所登録</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+            </div>
+            <div v-else>
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="/specialists/office/1/edit"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >事業所情報編集</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="/specialists/office/1/staffs"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >スタッフ情報</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="#"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >お礼一覧</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="/specialists/office/1/appointments?page=1"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >予約状況確認</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
+                <v-list-item-title>
+                  <NuxtLink
+                    to="/specialists/office/1/care-recipients"
+                    class="text-decoration-none text-body-2 navi-style"
+                    >利用者情報管理</NuxtLink
+                  >
+                </v-list-item-title>
+                <v-list-item-icon class="ma-0 mt-2">
+                  <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+              <v-divider color="#D9DEDE"></v-divider>
+            </div>
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
                 <NuxtLink
@@ -317,17 +389,17 @@
               <div class="d-flex justify-end">
                 <div>
                   <NuxtLink
-                    to="#"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    to="/specialists/privacy_policy"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >プライバシーポリシー</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
-                    class="text-overline mr-5 link-style text-decoration-none"
+                    to="/specialists/terms"
+                    class="text-overline mr-3 link-style text-decoration-none"
                     >利用規約</NuxtLink
                   >
                   <NuxtLink
-                    to="#"
+                    to="/specialists/contacts/new"
                     class="text-overline link-style text-decoration-none"
                     >お問い合わせ</NuxtLink
                   >
@@ -340,17 +412,17 @@
           <div>
             <div class="d-flex justify-center">
               <NuxtLink
-                to="#"
-                class="text-overline mr-5 link-style text-decoration-none"
+                to="/specialists/privacy_policy"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >プライバシーポリシー</NuxtLink
               >
               <NuxtLink
-                to="#"
-                class="text-overline mr-5 link-style text-decoration-none"
+                to="/specialists/terms"
+                class="text-overline mr-3 link-style text-decoration-none"
                 >利用規約</NuxtLink
               >
               <NuxtLink
-                to="#"
+                to="/specialists/contacts/new"
                 class="text-overline link-style text-decoration-none"
                 >お問い合わせ</NuxtLink
               >
@@ -378,7 +450,7 @@ export default {
   data() {
     return {
       logoutInfo: {
-        redirecttUrl: '/specialists/login',
+        redirectUrl: '/specialists/login',
         valid: false,
       },
       justify: [],
@@ -389,6 +461,24 @@ export default {
       drawer: false,
       group: null,
       tile: false,
+      office: '',
+      office_id: '',
+    }
+  },
+  watch: {
+    $route() {
+      if (typeof window.localStorage.office_data !== 'undefined') {
+        this.office = true
+      } else {
+        this.office = false
+      }
+    },
+  },
+  mounted() {
+    if (typeof window.localStorage.office_data !== 'undefined') {
+      this.office = true
+    } else {
+      this.office = false
     }
   },
 
@@ -443,6 +533,6 @@ export default {
 }
 
 .color-gray {
-  background-color: #d9dede;
+  background-color: #f5f7f7;
 }
 </style>

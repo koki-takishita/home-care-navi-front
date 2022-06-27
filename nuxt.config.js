@@ -28,13 +28,24 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://use.fontawesome.com/releases/v6.0.0/css/all.css',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
-  plugins: ['~/plugins/axios.js', '~/plugins/apiToRequestOfAddress.js'],
+  plugins: [
+    '~/plugins/axios.js',
+    '~/plugins/apiToRequestOfAddress.js',
+    '~plugins/dateFilter.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -51,7 +62,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
 
-  middleware: 'auth',
+  middleware: 'authentication',
 
   modules: [
     // https://axios.nuxtjs.org/setup
