@@ -132,6 +132,7 @@ export default {
       },
       week: ['日', '月', '火', '水', '木', '金', '土'],
       binaryNumber: [64, 32, 16, 8, 4, 2, 1],
+      // binaryNumber: [1, 2, 4, 8, 16, 32, 64],
     }
   },
   computed: {
@@ -204,7 +205,7 @@ export default {
           arry.push(0)
         }
       })
-      return arry
+      return arry.reverse()
     },
     toggleSymbol(n) {
       return n === 1 ? 'mdi-close' : 'mdi-circle-outline'
