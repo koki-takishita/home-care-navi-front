@@ -193,9 +193,12 @@
         </v-card>
         <v-card class="mt-6" outlined tile height="491">
           <v-col class="office-title" cols="12">{{ office.title }} </v-col>
-          <v-col
-            >ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。ここに事業所の特徴テキストが入ります。</v-col
-          >
+
+          <v-card-text class="px-0 text-caption min-line-height py-3">
+            <div class="height-64 overflow-hidden">
+              <font color="#6D7570">{{ office_detail.message }}</font>
+            </div>
+          </v-card-text>
 
           <v-img v-if="images !== null" :src="images[active]"> </v-img>
           <div class="flex">
@@ -435,8 +438,16 @@ export default {
       noImageURL: '~/assets/images/no_image.jpeg',
     }
   },
+  computed: {
+    displayDetail() {
+      return this.office.office_detail === undefined
+        ? this.office.office_detail.message
+        : this.office.detail.detail
+    },
+  },
   mounted() {
     this.getOffice()
+    this.getOfficeDetail()
   },
   methods: {
     async getOffice() {
@@ -447,6 +458,18 @@ export default {
         this.images = this.getAPI.images
         this.office_details = this.getAPI.office_details
         this.staffs = this.getAPI.staffs
+      } catch (error) {
+        return error
+      }
+    },
+    async getOfficeDetail() {
+      try {
+        console.log('テスト1')
+        const response = await this.$axios.$get(
+          `specialists/offices/${this.office_id}/office_details`
+        )
+        console.log('テスト2')
+        this.office_details = response
       } catch (error) {
         return error
       }
