@@ -398,23 +398,9 @@ export default {
       this.resetStore()
       this.$router.push('/top')
     },
-    searchOfficeLocation() {
-      this.getPositon()
-    },
-    getPositon() {
-      navigator.geolocation.getCurrentPosition(this.success)
-    },
-    success(pos) {
-      const crd = pos.coords
-      this.searchLocation(crd.longitude, crd.latitude)
-    },
-    async searchLocation(x, y) {
+    async searchOfficeLocation() {
       try {
-        const response = await this.$apiToAddressJson.$get(
-          `json?method=searchByGeoLocation&x=${x}&y=${y}`
-        )
-        const prefecture = response.response.location[0].prefecture
-        const city = response.response.location[0].city
+        const { prefecture, city } = await this.$currentLocation()
         this.searchOfficeFromArea(
           '',
           encodeURI(prefecture),
@@ -423,11 +409,10 @@ export default {
           true
         )
       } catch (error) {
-        // console.log(error)
+        console.error(error.message)
         return error
       }
     },
-    // async searchOfficeFromArea(
     async searchOfficeFromArea(
       area,
       prefecture,
@@ -471,7 +456,6 @@ export default {
         return error
       }
     },
-    setParameter() {},
   },
 }
 </script>
