@@ -31,7 +31,8 @@ export default function ({ $apiToAddressJson }, inject) {
           })
         })
         .catch((error) => {
-          console.error(error.message)
+          // console.error(error.message)
+          return error
         })
     })
   })

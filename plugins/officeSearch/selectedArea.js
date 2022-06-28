@@ -16,8 +16,9 @@ const searchOfficesFromSelectedArea = async function (searchInfo, axios) {
   try {
     const prefecture = searchInfo.prefecture
     const cities = searchInfo.cities
+    const offsetPage = searchInfo.offsetPage
     const offices = await axios.$get(
-      `offices?prefecture=${prefecture}&cities=${cities}&page=${0}`
+      `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
     )
     if (exist(offices)) {
       const count = objCount(offices)

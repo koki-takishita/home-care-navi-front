@@ -62,12 +62,12 @@ export default {
     const postCodes = query.postCodes || ''
     let searchWind
     let offsetPage
+    let offices
     if (page > 1) {
       offsetPage = page - 1
     } else {
       offsetPage = 0
     }
-    let offices
     try {
       if (postCodes === '' && keywords === '') {
         offices = await $axios.$get(
@@ -75,6 +75,7 @@ export default {
         )
         searchWind = false
       }
+
       if (!!postCodes.length > 0 || !!keywords.length > 0) {
         offices = await $axios.$get(
           `offices?keywords=${encodeURI(
@@ -83,15 +84,10 @@ export default {
         )
         searchWind = true
       }
+
       if (offices.length === 0) {
+        alert('選択したエリアにオフィスは存在しません')
         redirect('/top')
-        return alert('選択したエリアにオフィスは存在しません')
-      }
-      let count = offices[0].count
-      count = count / 10 || 0
-      count = Math.ceil(count)
-      if (count === 0) {
-        count = 1
       }
 
       let searchIcon = { keyword: '' }
@@ -104,6 +100,14 @@ export default {
       } else {
         searchIcon = { keyword: '' }
       }
+
+      let count = offices[0].count
+      count = count / 10 || 0
+      count = Math.ceil(count)
+      if (count === 0) {
+        count = 1
+      }
+
       return {
         offices,
         area,
@@ -409,7 +413,7 @@ export default {
           true
         )
       } catch (error) {
-        console.error(error.message)
+        // console.error(error.message)
         return error
       }
     },
@@ -427,6 +431,7 @@ export default {
         const { offices, count } = await this.$searchOffices({
           prefecture,
           cities,
+          offsetPage: 0,
         })
         if (this.exist(offices)) {
           this.offices = offices
