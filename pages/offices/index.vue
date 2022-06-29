@@ -221,12 +221,12 @@ export default {
     },
     async requestApiSelectedArea(prefecture, cities, offsetPage) {
       try {
-        const offices = await this.$searchOffices({
+        const res = await this.$searchOffices({
           prefecture,
           cities,
           offsetPage,
         })
-        this.offices = offices
+        this.offices = res.offices
       } catch (error) {
         // console.log(error)
         return error
