@@ -376,7 +376,7 @@ export default {
   },
   methods: {
     topPage() {
-      window.location.href = 'http://localhost:8000/top'
+      this.$router.push('/top')
     },
   },
 }
