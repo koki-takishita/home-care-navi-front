@@ -1,19 +1,14 @@
+let page
+let url
+let text
+let ele
+let titleText
+const randomNum = require('../randomNum')
+let email
+const password = 'password'
 describe('ユーザーが新規登録してログインできる', () => {
-  let page
-  let url
-  let text
-  let ele
-  let titleText
-  const randomNum = require('../randomNum')
-  let email
-  const password = 'password'
-
   beforeAll(async () => {
     page = await browser.newPage()
-  })
-
-  afterAll(async () => {
-    await page.close()
   })
 
   it('TOP画面から新規登録ボタンを押し、新規登録画面に遷移する', async () => {
@@ -133,7 +128,30 @@ describe('ユーザーが新規登録してログインできる', () => {
     ])
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
+    const logoutBtn = await page.$eval('#header-logout', (item) => {
+      return item.textContent
+    })
     await expect(url).toEqual('http://localhost:9000/top')
     await expect(text).toContain('安心して介護をお願いしたいから')
+    await expect(logoutBtn).toEqual('ログアウト')
+  })
+})
+
+describe('ユーザーがログアウトをする', () => {
+  afterAll(async () => {
+    await page.close()
+  })
+
+  it('ログアウトボタンを押し、ログアウトする', async () => {
+    await page.click('#header-logout')
+
+    url = await page.mainFrame().url()
+    text = await page.evaluate(() => document.body.textContent)
+    const loginBtn = await page.$eval('#header-login', (item) => {
+      return item.textContent
+    })
+    await expect(url).toEqual('http://localhost:9000/top')
+    await expect(text).toContain('安心して介護をお願いしたいから')
+    await expect(loginBtn).toEqual('ログイン')
   })
 })
