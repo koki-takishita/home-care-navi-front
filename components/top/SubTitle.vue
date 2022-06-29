@@ -21,7 +21,7 @@
         </div>
       </v-card>
     </div>
-    <div class="d-block d-md-none mt-3">
+    <div class="d-block d-md-none">
       <v-card outlined tile class="d-flex justify-center" min-height="90">
         <div class="my-auto set-color">
           <p class="ma-0 text-h6 font-weight-black">
@@ -81,6 +81,10 @@ export default {
 <style scoped>
 /* stylelint-disable */
 .mx-auto.v-card.v-sheet.v-sheet--outlined.theme--light {
+  border: solid 4px #f7fefb;
+}
+
+.d-flex.justify-center.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
   border: solid 4px #f7fefb;
 }
 /* stylelint-enable */

@@ -1,6 +1,6 @@
 <template>
   <div class="w-990 mx-auto mt-n2 mb-2">
-    <SubTitle
+    <TopSubTitle
       v-model="searchIcon.keyword"
       @clickKeywordsAndPostCodes="searchOfficeKeywordsAndPostCodes()"
     />
@@ -9,11 +9,17 @@
         エリアから探す
       </p>
     </div>
-    <div :class="toggleClassByBreakpoints">
-      <ChooseAreaCard @clickCurrentLocationBtn="searchOfficeLocation()" />
-      <ChoosePrefectureCard />
-      <ChooseCityCard />
-    </div>
+    <v-row class="d-none d-md-flex">
+      <v-col>
+        <TopAreaCard />
+      </v-col>
+      <v-col>
+        <TopPrefectureCard />
+      </v-col>
+      <v-col>
+        <TopCityCard />
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
@@ -29,16 +35,6 @@ export default {
       },
     }
   },
-  computed: {
-    toggleClassByBreakpoints() {
-      // TODO mountedでやろうと思ったけど、mountedだとページの幅を変えた時が検知しない
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return this.mobileStyle
-      } else {
-        return this.pcStyle
-      }
-    },
-  },
   methods: {
     async searchOfficeKeywordsAndPostCodes() {
       try {
@@ -53,17 +49,6 @@ export default {
       } catch (error) {
         // console.log(error)
         alert(error)
-        return error
-      }
-    },
-    async searchOfficeLocation() {
-      try {
-        const res = await this.$currentLocation()
-        const prefecture = res.prefecture
-        const city = res.city
-        this.searchOfficeFromArea(encodeURI(prefecture), encodeURI(city), true)
-      } catch (error) {
-        // console.log(error)
         return error
       }
     },
