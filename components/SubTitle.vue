@@ -15,6 +15,7 @@
             append-icon="mdi-magnify"
             outlined
             rounded
+            hide-details
             @click:append="clickBtn(btnType.searchIcon)"
           ></v-text-field>
         </div>
@@ -78,6 +79,12 @@ export default {
 }
 </script>
 <style scoped>
+/* stylelint-disable */
+.mx-auto.v-card.v-sheet.v-sheet--outlined.theme--light {
+  border: solid 4px #f7fefb;
+}
+/* stylelint-enable */
+
 .fs-28 {
   font-size: 28px;
 }
