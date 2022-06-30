@@ -9,17 +9,19 @@
         エリアから探す
       </p>
     </div>
-    <v-row class="d-none d-md-flex">
-      <v-col>
-        <TopAreaCard />
-      </v-col>
-      <v-col>
-        <TopPrefectureCard />
-      </v-col>
-      <v-col>
-        <TopCityCard />
-      </v-col>
-    </v-row>
+    <v-card
+      class="d-none d-md-flex justify-space-between"
+      color="grey"
+      flat
+      tile
+    >
+      <TopAreaCard :item="selectedArea" @sendArea="setSelectedArea" />
+      <TopPrefectureCard />
+      <TopCityCard />
+    </v-card>
+    <div class="d-md-none pa-4">
+      <officeAreaList :area="selectedArea" @sendArea="setSelectedArea" />
+    </div>
   </div>
 </template>
 <script>
@@ -33,9 +35,14 @@ export default {
       searchIcon: {
         keyword: '',
       },
+      selectedArea: '',
+      test1: '',
     }
   },
   methods: {
+    setSelectedArea(area) {
+      this.selectedArea = area
+    },
     async searchOfficeKeywordsAndPostCodes() {
       try {
         const res = await this.$conversionKeywords(this.searchIcon.keyword)

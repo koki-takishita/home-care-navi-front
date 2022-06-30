@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card min-width="268">
     <p>市カード</p>
   </v-card>
 </template>

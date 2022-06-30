@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card min-width="283">
     <p>県カード</p>
   </v-card>
 </template>

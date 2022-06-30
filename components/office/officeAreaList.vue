@@ -141,14 +141,30 @@
 import { mapGetters } from 'vuex'
 export default {
   layout: 'application',
-  props: [
-    'area',
-    'prefecture',
-    'cities',
-    'selectedList',
-    'location',
-    'searchWind',
-  ],
+  props: {
+    area: {
+      type: String,
+      required: true,
+    },
+    prefecture: {
+      type: String,
+      required: true,
+    },
+    cities: {
+      type: Array,
+      required: true,
+    },
+    selectedList: {
+      type: Array,
+      required: true,
+    },
+    location: {
+      type: Boolean,
+    },
+    searchWind: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       areas: [
@@ -178,23 +194,38 @@ export default {
       return
     }
     const list = []
-    for (let i = 0; i < this.selectedList.length; i++) {
-      list.push(Number(this.selectedList[i]))
-    }
-    this.selectedCityNum = list
-    if (!(this.area === undefined && this.area === '')) {
+    /* TODO topページに対応させるため、if文で実行しないように
+      areaSelectedだったらケースA
+      prefectureだったらケースB
+      cityだったらケースC */
+    // console.log('fetch発火')
+    if (this.selectedListExist()) {
+      for (let i = 0; i < this.selectedList.length; i++) {
+        list.push(Number(this.selectedList[i]))
+      }
+      this.selectedCityNum = list
+      if (!(this.area === undefined && this.area === '')) {
+        this.FetchPrefectures(decodeURI(this.area))
+      }
+      // TODO this.prefectureがなかった時は2で止まる処理
+      try {
+        const prefecture = this.prefecture
+        const res = await this.$apiToAddressJson.$get(
+          `json?method=getCities&prefecture=${prefecture}`
+        )
+        this.fetchCities = res.response.location
+        this.e1 = 3
+      } catch (error) {
+        // console.log(error)
+        return error
+      }
+    } else if (!this.area === undefined && !this.prefecture === undefined) {
+      // console.log('県')
+    } else {
+      // console.log('エリア')
+      this.dataInit()
       this.FetchPrefectures(decodeURI(this.area))
-    }
-    try {
-      const prefecture = this.prefecture
-      const res = await this.$apiToAddressJson.$get(
-        `json?method=getCities&prefecture=${prefecture}`
-      )
-      this.fetchCities = res.response.location
-      this.e1 = 3
-    } catch (error) {
-      // console.log(error)
-      return error
+      this.e1 = 2
     }
   },
   computed: {
@@ -217,8 +248,27 @@ export default {
         this.selectedCityNum = []
       }
     },
+    // TODO area prefecture cityが変化するたびfetch発火
+    area() {
+      this.$fetch()
+    },
   },
   methods: {
+    selectedListExist() {
+      const selectedList = this.selectedList
+      if (selectedList === undefined) {
+        return false
+      } else {
+        return true
+      }
+    },
+    dataInit() {
+      this.selectedAreaNum = ''
+      this.selectedPrefectureNum = ''
+      this.selectedCityNum = ''
+      this.stampArea = ''
+      this.stampPrefecture = ''
+    },
     searchOffice() {
       const arry = []
       for (let i = 0; i < this.selectedCityNum.length; i++) {
@@ -272,6 +322,7 @@ export default {
       this.selectedCityNum = []
       this.selectedPrefectureNum = []
       this.e1 = 1
+      this.$emit('sendArea', area)
     },
     backPrefectureList() {
       if (this.fetchPrefectures.length === 0) {

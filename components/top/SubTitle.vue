@@ -1,5 +1,5 @@
 <template>
-  <div v-if="displayControll()">
+  <div v-if="areaSelected()">
     <div class="d-none d-md-block">
       <v-card outlined max-width="990" min-height="245" class="mx-auto">
         <div class="text-center set-color font-weight-black mt-12">
@@ -67,12 +67,7 @@ export default {
     clickBtn(type) {
       this.$emit(`click${type}`)
     },
-    displayControll() {
-      if (this.$vuetify.breakpoint.mdAndUp) {
-        return true
-      } else if (this.$vuetify.breakpoint.smAndDown && this.getCount_area > 1) {
-        return false
-      }
+    areaSelected() {
       return true
     },
   },
