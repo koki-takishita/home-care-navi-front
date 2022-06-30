@@ -52,7 +52,10 @@ describe('ケアマネージャーが事業所を登録できる', () => {
   })
 
   it('登録ボタンを押し、登録後、事業所編集画面に遷移する', async () => {
-    await page.click('#send')
+    await Promise.all([
+      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
+      await page.click('#send'),
+    ])
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
     // URLに含まれている事業所IDを取得できないため、部分一致でURLの確認を行う
