@@ -71,7 +71,7 @@
                     >ログイン</v-btn
                   >
                   <v-btn
-                    id="header-sign-up"
+                    id="header-signup"
                     href="/users/new"
                     :width="120"
                     :height="36"
@@ -162,7 +162,7 @@
                   >ログイン</v-btn
                 >
                 <v-btn
-                  id="header-sign-up"
+                  id="header-signup"
                   href="/users/new"
                   :width="120"
                   :height="36"

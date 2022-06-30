@@ -43,6 +43,7 @@
             <label class="font-color-gray font-weight-black text-caption"
               >メールアドレス
               <v-text-field
+                id="email"
                 v-model="form.email"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 outlined
@@ -58,6 +59,7 @@
             <label class="font-color-gray font-weight-black text-caption"
               >パスワード
               <v-text-field
+                id="password"
                 v-model="form.password"
                 outlined
                 dense
@@ -76,6 +78,7 @@
             <label class="font-color-gray font-weight-black text-caption"
               >パスワード確認
               <v-text-field
+                id="password_confirm"
                 v-model="form.password_confirmation"
                 outlined
                 dense
@@ -94,6 +97,7 @@
               class="font-color-gray font-weight-black text-caption set-max-width-520"
               >電話番号
               <v-text-field
+                id="phone_number"
                 v-model="form.phone_number"
                 outlined
                 dense
@@ -106,6 +110,7 @@
 
           <div>
             <v-text-field
+              id="post_code"
               v-model="form.post_code"
               outlined
               dense
@@ -124,6 +129,7 @@
 
           <div class="mt-n2">
             <v-text-field
+              id="address"
               v-model="form.address"
               outlined
               dense
@@ -137,6 +143,7 @@
 
           <v-card-actions class="pa-0">
             <v-btn
+              id="send"
               class="warning pa-0 text-h6 d-none d-sm-block"
               block
               :disabled="!form.valid"
@@ -147,6 +154,7 @@
               >新規登録</v-btn
             >
             <v-btn
+              id="send"
               class="warning pa-0 ma-0 text-h6 d-block d-sm-none"
               block
               :disabled="!form.valid"
@@ -221,6 +229,7 @@ export default {
           post_code: this.form.post_code,
           address: this.form.address,
           confirm_success_url: 'http://localhost:8000/specialists/login',
+          // confirm_success_url: 'http://localhost:9000/specialists/login',
         })
         this.$router.push('/specialists/users/send')
         return response
