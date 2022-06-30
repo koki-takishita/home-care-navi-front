@@ -47,4 +47,20 @@ describe('ケアマネージャーがフッターのリンクにすべてアク�
     await expect(url).toEqual('http://localhost:9000/specialists/contacts/new')
     await expect(titleText).toEqual('お問い合わせ')
   })
+
+  describe('ケアマネージャーがログアウトをする', () => {
+    it('ログアウトボタンを押し、ログアウトする', async () => {
+      await page.click('#header-logout')
+
+      url = await page.mainFrame().url()
+      const loginBtn = await page.$eval('#header-login', (item) => {
+        return item.textContent
+      })
+      ele = await page.$('h6')
+      titleText = await page.evaluate((elm) => elm.textContent, ele)
+      await expect(url).toEqual('http://localhost:9000/specialists/login')
+      await expect(loginBtn).toEqual('ログイン')
+      await expect(titleText).toEqual('ログイン')
+    })
+  })
 })

@@ -1,28 +1,50 @@
 let page
-let url
 let text
+let url
 let ele
 let titleText
 const randomNum = require('../randomNum')
 let email
 const password = 'password'
-describe('ユーザーが新規登録してログインできる', () => {
+describe('ケアマネージャーが新規登録してログインできる', () => {
   beforeAll(async () => {
     page = await browser.newPage()
   })
 
-  it('TOP画面から新規登録ボタンを押し、新規登録画面に遷移する', async () => {
+  afterAll(async () => {
+    await page.close()
+  })
+
+  it('TOP画面からログインボタンを押し、ユーザーのログイン画面に遷移する', async () => {
     await page.goto('http://localhost:9000/')
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
     await expect(url).toEqual('http://localhost:9000/')
     await expect(text).toContain('安心して介護をお願いしたいから')
-    await page.click('a[href="/users/new"]')
+    await page.click('a[href="/users/login"]')
 
     url = await page.mainFrame().url()
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/new')
+    await expect(url).toEqual('http://localhost:9000/users/login')
+    await expect(titleText).toEqual('ログイン')
+  })
+
+  it('ユーザーのログイン画面から、ケアマネージャーのログイン画面に遷移する', async () => {
+    await page.click('a[href="/specialists/login/"]')
+    url = await page.mainFrame().url()
+    ele = await page.$('h6')
+    titleText = await page.evaluate((elm) => elm.textContent, ele)
+    await expect(url).toEqual('http://localhost:9000/specialists/login/')
+    await expect(titleText).toEqual('ログイン')
+  })
+
+  it('ログイン画面から、新規登録画面に遷移する', async () => {
+    await page.click('#header-signup')
+    url = await page.mainFrame().url()
+    ele = await page.$('h6')
+    titleText = await page.evaluate((elm) => elm.textContent, ele)
+    await expect(url).toEqual('http://localhost:9000/specialists/users/new')
     await expect(titleText).toEqual('新規登録')
   })
 
@@ -32,9 +54,9 @@ describe('ユーザーが新規登録してログインできる', () => {
 
     await page.click('#name')
     const name = require('../randomName')
-    await page.keyboard.sendCharacter(name('カスタマー'))
+    await page.keyboard.sendCharacter(name('スペシャリスト'))
     await page.click('#email')
-    email = 'customer' + randomNum(9999999, 1000) + '@example.com'
+    email = 'specialist' + randomNum(9999999, 1000) + '@example.com'
     await page.keyboard.sendCharacter(email)
     await page.click('#password')
     await page.keyboard.sendCharacter(password)
@@ -62,16 +84,8 @@ describe('ユーザーが新規登録してログインできる', () => {
     url = await page.mainFrame().url()
     ele = await page.$('h1')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/send')
+    await expect(url).toEqual('http://localhost:9000/specialists/users/send')
     await expect(titleText).toEqual('仮登録完了')
-  })
-
-  it('仮登録完了画面から、TOP画面に遷移する', async () => {
-    await page.click('a[href="../top"]')
-    url = await page.mainFrame().url()
-    text = await page.evaluate(() => document.body.textContent)
-    await expect(url).toEqual('http://localhost:9000/top')
-    await expect(text).toContain('安心して介護をお願いしたいから')
   })
 
   it('メールキャッチャーにアクセスし、届いたメールからアカウントの有効化をする', async () => {
@@ -93,25 +107,16 @@ describe('ユーザーが新規登録してログインできる', () => {
       return item.textContent
     })
     await expect(bodyText).toContain(email)
-    await expect(bodyText).toContain('カスタマー')
+    await expect(bodyText).toContain('スペシャリスト')
     await expect(bodyText).toContain('アカウントを有効化する')
     await page.click('a[href^="http://localhost:3000/api/users/confirmation?"]')
 
     url = await page.mainFrame().url()
-    text = await page.evaluate(() => document.body.textContent)
-    await expect(url).toEqual(
-      'http://localhost:9000/top?account_confirmation_success=true'
-    )
-    await expect(text).toContain('安心して介護をお願いしたいから')
-  })
-
-  it('TOP画面からログインボタンを押し、ログイン画面に遷移する', async () => {
-    await page.click('a[href="/users/login"]')
-    url = await page.mainFrame().url()
-    text = await page.evaluate(() => document.body.textContent)
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/login')
+    await expect(url).toEqual(
+      'http://localhost:9000/specialists/login?account_confirmation_success=true'
+    )
     await expect(titleText).toEqual('ログイン')
   })
 
@@ -122,37 +127,19 @@ describe('ユーザーが新規登録してログインできる', () => {
     await page.keyboard.sendCharacter(password)
   })
 
-  it('ログインボタンを押し、TOP画面に遷移する', async () => {
+  it('ログインボタンを押し、事業所登録画面に遷移する', async () => {
     await Promise.all([
       page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
       await page.click('#login'),
     ])
     url = await page.mainFrame().url()
-    text = await page.evaluate(() => document.body.textContent)
+    ele = await page.$('h3')
+    titleText = await page.evaluate((elm) => elm.textContent, ele)
     const logoutBtn = await page.$eval('#header-logout', (item) => {
       return item.textContent
     })
-    await expect(url).toEqual('http://localhost:9000/top')
-    await expect(text).toContain('安心して介護をお願いしたいから')
+    await expect(url).toEqual('http://localhost:9000/specialists/office/new')
+    await expect(titleText).toContain('事業所登録')
     await expect(logoutBtn).toEqual('ログアウト')
-  })
-})
-
-describe('ユーザーがログアウトをする', () => {
-  afterAll(async () => {
-    await page.close()
-  })
-
-  it('ログアウトボタンを押し、ログアウトする', async () => {
-    await page.click('#header-logout')
-
-    url = await page.mainFrame().url()
-    text = await page.evaluate(() => document.body.textContent)
-    const loginBtn = await page.$eval('#header-login', (item) => {
-      return item.textContent
-    })
-    await expect(url).toEqual('http://localhost:9000/top')
-    await expect(text).toContain('安心して介護をお願いしたいから')
-    await expect(loginBtn).toEqual('ログイン')
   })
 })

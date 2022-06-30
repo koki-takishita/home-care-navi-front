@@ -45,4 +45,18 @@ describe('ユーザーがフッターのリンクにすべてアクセスでき�
     await expect(url).toEqual('http://localhost:9000/users/contacts/new')
     await expect(titleText).toEqual('お問い合わせ')
   })
+  describe('ユーザーがログアウトをする', () => {
+    it('ログアウトボタンを押し、ログアウトする', async () => {
+      await page.click('#header-logout')
+
+      url = await page.mainFrame().url()
+      text = await page.evaluate(() => document.body.textContent)
+      const loginBtn = await page.$eval('#header-login', (item) => {
+        return item.textContent
+      })
+      await expect(url).toEqual('http://localhost:9000/top')
+      await expect(text).toContain('安心して介護をお願いしたいから')
+      await expect(loginBtn).toEqual('ログイン')
+    })
+  })
 })
