@@ -10,10 +10,12 @@
         </div>
         <div class="mt-6 max-width-720 mx-auto">
           <v-text-field
+            v-model="keyword"
             placeholder="事業所名、市町村など"
             append-icon="mdi-magnify"
             outlined
             rounded
+            @click:append="clickBtn(btnType.searchIcon)"
           ></v-text-field>
         </div>
       </v-card>
@@ -36,10 +38,34 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  props: {
+    value: {
+      type: String,
+      default: 'デフォルトの値です。',
+    },
+  },
+  data() {
+    return {
+      btnType: {
+        searchIcon: 'KeywordsAndPostCodes',
+      },
+    }
+  },
   computed: {
     ...mapGetters('areaData', ['getCount_area']),
+    keyword: {
+      get() {
+        return this.value
+      },
+      set(value) {
+        this.$emit('input', value)
+      },
+    },
   },
   methods: {
+    clickBtn(type) {
+      this.$emit(`click${type}`)
+    },
     displayControll() {
       if (this.$vuetify.breakpoint.mdAndUp) {
         return true

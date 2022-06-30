@@ -33,6 +33,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >メールアドレス
             <v-text-field
+              id="email"
               v-model="loginInfo.email"
               :rules="[formValidates.required, formValidates.email]"
               outlined
@@ -45,6 +46,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >パスワード
             <v-text-field
+              id="password"
               v-model="loginInfo.password"
               :rules="[
                 formValidates.required,
@@ -69,6 +71,7 @@
 
           <v-card-actions class="pa-0">
             <v-btn
+              id="login"
               class="warning pa-0 text-h6 d-none d-sm-block"
               block
               :disabled="!loginInfo.valid"
@@ -80,6 +83,7 @@
             >
 
             <v-btn
+              id="login"
               class="warning pa-0 ma-0 text-h6 d-block d-sm-none"
               block
               :disabled="!loginInfo.valid"
