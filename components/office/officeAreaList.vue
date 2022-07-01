@@ -7,7 +7,14 @@
   >
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <v-card class="reset-border-style" color="#F5F7F7" tile outlined>
+        <TopAreaCard />
+        <v-card
+          v-if="false"
+          class="reset-border-style"
+          color="#F5F7F7"
+          tile
+          outlined
+        >
           <v-list flat outlined>
             <v-list-item-group
               v-model="selectedAreaNum"
@@ -144,19 +151,15 @@ export default {
   props: {
     area: {
       type: String,
-      required: true,
     },
     prefecture: {
       type: String,
-      required: true,
     },
     cities: {
       type: Array,
-      required: true,
     },
     selectedList: {
       type: Array,
-      required: true,
     },
     location: {
       type: Boolean,
@@ -251,6 +254,9 @@ export default {
     // TODO area prefecture cityが変化するたびfetch発火
     area() {
       this.$fetch()
+    },
+    e1() {
+      this.$emit('moveStep', this.e1)
     },
   },
   methods: {
@@ -347,6 +353,7 @@ export default {
       this.stampArea = area
       this.FetchPrefectures(area)
       this.e1 = 2
+      this.$emit('sendArea', area)
     },
     moveCitiesList(prefecture) {
       this.stampPrefecture = prefecture

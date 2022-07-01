@@ -1,5 +1,5 @@
 <template>
-  <div v-if="areaSelected()">
+  <div v-if="displayControl()">
     <div class="d-none d-md-block">
       <v-card outlined max-width="990" min-height="245" class="mx-auto">
         <div class="text-center set-color font-weight-black mt-12">
@@ -44,6 +44,10 @@ export default {
       type: String,
       default: 'デフォルトの値です。',
     },
+    step: {
+      type: Number,
+      default: 1,
+    },
   },
   data() {
     return {
@@ -67,8 +71,14 @@ export default {
     clickBtn(type) {
       this.$emit(`click${type}`)
     },
-    areaSelected() {
-      return true
+    displayControl() {
+      return !(this.isMovile() && this.isStepTwoOver())
+    },
+    isMovile() {
+      return this.$vuetify.breakpoint.smAndDown
+    },
+    isStepTwoOver() {
+      return this.step > 1
     },
   },
 }

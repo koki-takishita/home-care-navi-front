@@ -2,6 +2,7 @@
   <div class="w-990 mx-auto mt-n2 mb-2">
     <TopSubTitle
       v-model="searchIcon.keyword"
+      :step="currentStep"
       @clickKeywordsAndPostCodes="searchOfficeKeywordsAndPostCodes()"
     />
     <div class="mx-auto h-74 d-none d-md-flex align-end">
@@ -15,12 +16,16 @@
       flat
       tile
     >
-      <TopAreaCard :item="selectedArea" @sendArea="setSelectedArea" />
+      <TopAreaCard :item="item" @sendArea="setSelectedArea" />
       <TopPrefectureCard />
       <TopCityCard />
     </v-card>
     <div class="d-md-none pa-4">
-      <officeAreaList :area="selectedArea" @sendArea="setSelectedArea" />
+      <officeAreaList
+        :area="selectedArea"
+        @sendArea="setBackAreaStamp"
+        @moveStep="setCurrentStep"
+      />
     </div>
   </div>
 </template>
@@ -36,10 +41,26 @@ export default {
         keyword: '',
       },
       selectedArea: '',
-      test1: '',
+      backAreaStamp: '',
+      item: '',
+      currentStep: 1,
     }
   },
+  watch: {
+    backAreaStamp() {
+      this.item = this.backAreaStamp
+    },
+    selectedArea() {
+      this.item = this.selectedArea
+    },
+  },
   methods: {
+    setCurrentStep(step) {
+      this.currentStep = step
+    },
+    setBackAreaStamp(area) {
+      this.backAreaStamp = area
+    },
     setSelectedArea(area) {
       this.selectedArea = area
     },
