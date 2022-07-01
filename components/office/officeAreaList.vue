@@ -7,7 +7,7 @@
   >
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <TopMobileAreaCard :item="area" />
+        <TopMobileAreaCard :item="area" @sendArea="test11" />
         <v-card
           v-if="false"
           class="reset-border-style"
@@ -201,7 +201,6 @@ export default {
       areaSelectedだったらケースA
       prefectureだったらケースB
       cityだったらケースC */
-    // console.log('fetch発火')
     if (this.selectedListExist()) {
       for (let i = 0; i < this.selectedList.length; i++) {
         list.push(Number(this.selectedList[i]))
@@ -233,6 +232,11 @@ export default {
   },
   computed: {
     ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
+    areaItem: {
+      get() {
+        return this.area
+      },
+    },
   },
   watch: {
     location() {
@@ -260,6 +264,10 @@ export default {
     },
   },
   methods: {
+    test11(area) {
+      // this.$emit('sendArea', area)
+      this.movePrefecturesList(area)
+    },
     selectedListExist() {
       const selectedList = this.selectedList
       if (selectedList === undefined) {

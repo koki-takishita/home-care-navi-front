@@ -22,7 +22,7 @@
     </v-card>
     <div :class="'d-md-none' + ' ' + paddingControl">
       <officeAreaList
-        :area="selectedArea"
+        :area="item"
         @sendArea="setBackAreaStamp"
         @moveStep="setCurrentStep"
       />
