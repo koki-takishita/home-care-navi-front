@@ -27,7 +27,9 @@ jobs:
           node-version: '16.14.2'
       - name: install command
         run: yarn install
+
       - name: install libXScrnSaver
-      - run: sudo yum -y install libXScrnSaver-1.2.2-6.1.el7.x86_64
+        run: sudo yum -y install libXScrnSaver-1.2.2-6.1.el7.x86_64
+
       - name: RUN test e2e
         run: yarn test:e2e
