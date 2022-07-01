@@ -77,10 +77,7 @@ describe('ケアマネージャーが新規登録してログインできる', (
   })
 
   it('登録ボタンを押し、仮登録完了画面に遷移する', async () => {
-    await Promise.all([
-      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
-      page.click('#send'),
-    ])
+    await Promise.all([page.waitForNavigation(), page.click('#send')])
     url = await page.mainFrame().url()
     ele = await page.$('h1')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
@@ -128,10 +125,7 @@ describe('ケアマネージャーが新規登録してログインできる', (
   })
 
   it('ログインボタンを押し、事業所登録画面に遷移する', async () => {
-    await Promise.all([
-      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
-      await page.click('#login'),
-    ])
+    await Promise.all([page.waitForNavigation(), await page.click('#login')])
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
