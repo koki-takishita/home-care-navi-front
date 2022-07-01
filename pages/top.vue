@@ -21,6 +21,7 @@
       <TopCityCard />
     </v-card>
     <div :class="'d-md-none' + ' ' + paddingControl">
+      <div class="mt-4"></div>
       <officeAreaList
         :area="item"
         @sendArea="setBackAreaStamp"

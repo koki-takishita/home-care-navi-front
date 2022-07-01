@@ -1,5 +1,18 @@
 <template>
-  <v-card max-height="324" rounded flat outlined class="pa-4">
+  <v-card rounded flat tile class="pa-4 pt-5">
+    <div>
+      <v-text-field
+        v-model="keyword"
+        append-icon="mdi-magnify"
+        outlined
+        rounded
+        dense
+        height="44"
+        hide-details
+        @click:append="clickBtn(btnType.search)"
+      ></v-text-field>
+    </div>
+    <v-divider class="my-5"></v-divider>
     <v-btn
       block
       color="error"
