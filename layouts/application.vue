@@ -184,65 +184,58 @@
 
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >閲覧履歴</NuxtLink
-                >
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+              <v-list-item-title
+                class="text-decoration-none text-body-2 navi-style"
+              >
+                閲覧履歴
               </v-list-item-title>
               <v-list-item-icon class="ma-0 mt-2">
                 <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >ブックマーク</NuxtLink
-                >
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+              <v-list-item-title
+                class="text-decoration-none text-body-2 navi-style"
+              >
+                ブックマーク
               </v-list-item-title>
               <v-list-item-icon class="ma-0 mt-2">
                 <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="/appointments"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >予約履歴</NuxtLink
-                >
+            <v-list-item
+              class="pa-0 ma-0 px-6 py-4 min-height-20"
+              to="/appointments"
+            >
+              <v-list-item-title
+                class="text-decoration-none text-body-2 navi-style"
+              >
+                予約履歴
               </v-list-item-title>
               <v-list-item-icon class="ma-0 mt-2">
                 <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >お礼投稿履歴</NuxtLink
-                >
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+              <v-list-item-title
+                class="text-decoration-none text-body-2 navi-style"
+              >
+                お礼投稿履歴
               </v-list-item-title>
               <v-list-item-icon class="ma-0 mt-2">
                 <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >登録情報</NuxtLink
-                >
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+              <v-list-item-title
+                class="text-decoration-none text-body-2 navi-style"
+              >
+                登録情報
               </v-list-item-title>
               <v-list-item-icon class="ma-0 mt-2">
                 <v-icon rage :color="color_g">mdi-chevron-right</v-icon>
