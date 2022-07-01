@@ -8,10 +8,11 @@
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
         <TopMobileAreaCard :item="area" @sendArea="test11" />
+        <!--<v-card v-if="false" class="reset-border-style" color="#F5F7F7" tile outlined>-->
         <v-card
           v-if="false"
           class="reset-border-style"
-          color="#F5F7F7"
+          color="#D9DEDE"
           tile
           outlined
         >
@@ -39,7 +40,8 @@
         </v-card>
       </v-stepper-content>
       <v-stepper-content step="2" class="pa-0">
-        <v-card class="reset-border-style" color="#F5F7F7" tile outlined>
+        <!--<v-card class="reset-border-style" color="#F5F7F7" tile outlined>-->
+        <v-card class="reset-border-style" color="#D9DEDE" tile outlined>
           <div class="px-3">
             <v-chip
               class="hover-remove font-weight-black px-0"
@@ -75,7 +77,8 @@
         </v-card>
       </v-stepper-content>
       <v-stepper-content step="3" class="pa-0">
-        <v-card tile outlined class="reset-border-style" color="#F5F7F7">
+        <!--<v-card tile outlined class="reset-border-style" color="#F5F7F7">-->
+        <v-card tile outlined class="reset-border-style" color="#D9DEDE">
           <div class="px-5">
             <v-chip
               class="hover-remove px-0 font-weight-black"
@@ -97,7 +100,7 @@
               >{{ selectedPrefecture() }}</v-chip
             >
           </div>
-          <v-list flat class="overflow-auto" max-height="500">
+          <v-list flat class="overflow-auto" max-height="350">
             <v-list-item-group
               v-model="selectedCityNum"
               active-class="font-weight-black"
@@ -128,16 +131,31 @@
               </template>
             </v-list-item-group>
           </v-list>
-          <div class="pa-3">
-            <v-btn
-              min-height="40"
-              color="error"
-              block
-              depressed
-              class="font-weight-black"
-              @click="searchOffice()"
-              >検索する</v-btn
-            >
+          <div class="py-2">
+            <v-row>
+              <v-col cols="4">
+                <v-btn
+                  min-height="40"
+                  color="error"
+                  block
+                  depressed
+                  class="font-weight-black"
+                  @click="searchOffice()"
+                  >クリア</v-btn
+                >
+              </v-col>
+              <v-col cols="8">
+                <v-btn
+                  min-height="40"
+                  color="error"
+                  block
+                  depressed
+                  class="font-weight-black"
+                  @click="searchOffice()"
+                  >検索する</v-btn
+                >
+              </v-col>
+            </v-row>
           </div>
         </v-card>
       </v-stepper-content>
