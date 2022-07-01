@@ -7,7 +7,7 @@
   >
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <TopAreaCard />
+        <TopMobileAreaCard :item="area" />
         <v-card
           v-if="false"
           class="reset-border-style"

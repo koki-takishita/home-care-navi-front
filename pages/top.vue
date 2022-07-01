@@ -20,7 +20,7 @@
       <TopPrefectureCard />
       <TopCityCard />
     </v-card>
-    <div class="d-md-none pa-4">
+    <div :class="'d-md-none' + ' ' + paddingControl">
       <officeAreaList
         :area="selectedArea"
         @sendArea="setBackAreaStamp"
@@ -46,6 +46,11 @@ export default {
       currentStep: 1,
     }
   },
+  computed: {
+    paddingControl() {
+      return this.isMovile() && this.isStepOne() ? 'pa-0' : 'pa-4'
+    },
+  },
   watch: {
     backAreaStamp() {
       this.item = this.backAreaStamp
@@ -55,6 +60,12 @@ export default {
     },
   },
   methods: {
+    isMovile() {
+      return this.$vuetify.breakpoint.smAndDown
+    },
+    isStepOne() {
+      return this.currentStep === 1
+    },
     setCurrentStep(step) {
       this.currentStep = step
     },
