@@ -1,8 +1,10 @@
 <template>
   <v-card rounded flat tile class="pa-4 pt-5">
     <div>
-      <v-text-field
+      <!--
         v-model="keyword"
+-->
+      <v-text-field
         append-icon="mdi-magnify"
         outlined
         rounded
