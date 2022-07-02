@@ -52,7 +52,10 @@ describe('ケアマネージャーが事業所を登録できる', () => {
   })
 
   it('登録ボタンを押し、登録後、事業所編集画面に遷移する', async () => {
-    await Promise.all([page.waitForNavigation(), await page.click('#send')])
+    await Promise.all([
+      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
+      await page.click('#send'),
+    ])
     await page.waitForTimeout(1000)
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)

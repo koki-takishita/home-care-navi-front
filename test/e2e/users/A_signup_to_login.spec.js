@@ -59,7 +59,10 @@ describe('ユーザーが新規登録してログインできる', () => {
   })
 
   it('登録ボタンを押し、仮登録完了画面に遷移する', async () => {
-    await Promise.all([page.waitForNavigation(), page.click('#send')])
+    await Promise.all([
+      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
+      page.click('#send'),
+    ])
     url = await page.mainFrame().url()
     ele = await page.$('h1')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
@@ -124,7 +127,10 @@ describe('ユーザーが新規登録してログインできる', () => {
   })
 
   it('ログインボタンを押し、TOP画面に遷移する', async () => {
-    await Promise.all([page.waitForNavigation(), await page.click('#login')])
+    await Promise.all([
+      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
+      await page.click('#login'),
+    ])
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
     const logoutBtn = await page.$eval('#header-logout', (item) => {
