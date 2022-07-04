@@ -10,7 +10,6 @@
         class="px-0 pb-0 pt-0"
         @click="moveShow(office.id)"
       >
-        <!-- {{ office.appointments[0] }} -->
         <v-col>
           <v-card class="mx-auto">
             <v-col
