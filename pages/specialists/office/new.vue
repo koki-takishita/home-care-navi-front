@@ -608,7 +608,7 @@ export default {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         localStorage.setItem('office_data', 'true')
-        await this.$axios.$post(`specialists/offices/${id}/office_details`, {
+        await this.$axios.$post(`specialists/offices`, {
           detail: this.deatail,
           service_type: this.service_type,
           open_date: this.open_date,
