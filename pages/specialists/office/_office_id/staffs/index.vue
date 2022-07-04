@@ -34,6 +34,7 @@
             </v-col>
             <v-col cols="8" class="pr-6">
               <v-btn
+                id="edit"
                 block
                 depressed
                 color="warning"
