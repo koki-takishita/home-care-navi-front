@@ -603,21 +603,20 @@ export default {
       params.append('fax_number', this.fax_number)
       params.append('post_code', this.post_code)
       params.append('address', this.address)
+
+      params.append('detail', this.deatail)
+      params.append('service_type', this.service_type)
+      params.append('open_date', this.open_date)
+      params.append('rooms', this.rooms)
+      params.append('requirements', this.requirements)
+      params.append('facility', this.facility)
+      params.append('management', this.management)
+      params.append('link', this.link)
       try {
         await this.$axios.$post(`specialists/offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         localStorage.setItem('office_data', 'true')
-        await this.$axios.$post(`specialists/offices`, {
-          detail: this.deatail,
-          service_type: this.service_type,
-          open_date: this.open_date,
-          rooms: this.rooms,
-          requirements: this.requirements,
-          facility: this.facility,
-          management: this.management,
-          link: this.link,
-        })
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
         return error
