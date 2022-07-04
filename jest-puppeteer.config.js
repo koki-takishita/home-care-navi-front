@@ -20,7 +20,7 @@ module.exports = {
   },
   server: {
     command: 'yarn testServer',
-    port: 9000,
+    port: 8000,
     launchTimeout: 150000,
   },
 }
