@@ -29,7 +29,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >特徴詳細
             <v-textarea
-              v-model="title_detail"
+              v-model="detail"
               :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
@@ -313,7 +313,7 @@
                       >
                         <template #activator="{ on, attrs }">
                           <v-text-field
-                            v-model="open_date"
+                            v-model="open_data"
                             label="開設年月"
                             prepend-icon="mdi-calendar"
                             readonly
@@ -322,7 +322,7 @@
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="open_date"
+                          v-model="open_data"
                           locale="jp-ja"
                           :day-format="(date) => new Date(date).getDate()"
                           :active-picker.sync="activePicker"
@@ -494,7 +494,7 @@ export default {
       },
       name: '',
       title: '',
-      title_detail: '',
+      detail: '',
       images: [],
       flags: 0,
       business_day_detail: '',
@@ -502,7 +502,6 @@ export default {
       fax_number: '',
       post_code: '',
       address: '',
-      detail: '',
       service_type: '',
 
       input_image: null,
@@ -513,7 +512,7 @@ export default {
       image_detail_2: null,
       text_detail_2: '',
 
-      open_date: '',
+      open_data: '',
       activePicker: null,
       date: null,
       menu: false,
@@ -604,11 +603,11 @@ export default {
       params.append('post_code', this.post_code)
       params.append('address', this.address)
 
-      params.append('detail', this.deatail)
+      params.append('detail', this.detail)
       params.append('service_type', this.service_type)
-      params.append('open_date', this.open_date)
+      params.append('open_data', this.open_data)
       params.append('rooms', this.rooms)
-      params.append('requirements', this.requirements)
+      params.append('requirement', this.requirement)
       params.append('facility', this.facility)
       params.append('management', this.management)
       params.append('link', this.link)
