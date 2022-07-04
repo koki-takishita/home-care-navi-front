@@ -57,9 +57,17 @@
               >{{ office.appointments[0].meet_date | meet_date }}
               {{ office.appointments[0].meet_time }}</v-col
             >
-            <v-col class="text-center pt-4 pb-6 font-color-gray"
-              >事業所からの連絡をお待ち下さい</v-col
-            >
+            <v-col class="text-center pt-4 pb-6 font-color-gray">
+              <div v-if="office.appointments[0].called_status === 'need_call'">
+                事業所からの連絡をお待ち下さい
+              </div>
+              <div
+                v-else-if="office.appointments[0].called_status === 'called'"
+              >
+                連絡済み
+              </div>
+              <div v-else>キャンセル済み</div>
+            </v-col>
           </v-card>
         </v-col>
       </v-col>
