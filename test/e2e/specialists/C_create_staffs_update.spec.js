@@ -125,4 +125,17 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     await expect(text).toContain(kana)
     await expect(text).toContain(introduction)
   })
+
+  it('削除ボタンを押し、スタッフを削除する', async () => {
+    await page.click('#modal')
+    await Promise.all([
+      page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
+      await page.click('#delete'),
+    ])
+    await page.waitForTimeout(1000)
+    text = await page.evaluate(() => document.body.textContent)
+    await expect(text).not.toContain(name)
+    await expect(text).not.toContain(kana)
+    await expect(text).not.toContain(introduction)
+  })
 })
