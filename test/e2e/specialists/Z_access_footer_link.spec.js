@@ -50,8 +50,10 @@ describe('ケアマネージャーがフッターのリンクにすべてアク�
 
   describe('ケアマネージャーがログアウトをする', () => {
     it('ログアウトボタンを押し、ログアウトする', async () => {
-      await page.click('#header-logout')
-
+      await Promise.all([
+        page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
+        await page.click('#header-logout'),
+      ])
       url = await page.mainFrame().url()
       const loginBtn = await page.$eval('#header-login', (item) => {
         return item.textContent
