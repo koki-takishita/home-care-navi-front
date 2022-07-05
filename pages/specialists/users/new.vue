@@ -229,7 +229,6 @@ export default {
           post_code: this.form.post_code,
           address: this.form.address,
           confirm_success_url: 'http://localhost:8000/specialists/login',
-          // confirm_success_url: 'http://localhost:9000/specialists/login',
         })
         this.$router.push('/specialists/users/send')
         return response

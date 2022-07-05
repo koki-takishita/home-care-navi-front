@@ -1,6 +1,6 @@
 module.exports = {
   launch: {
-    headless: false,
+    headless: true,
     slowMo: 250,
     innerWidth: 1280,
     innerHeight: 800,
@@ -20,7 +20,7 @@ module.exports = {
   },
   server: {
     command: 'yarn testServer',
-    port: 9000,
+    port: 8000,
     launchTimeout: 150000,
   },
 }
