@@ -14,17 +14,17 @@ describe('ユーザーがフッターのリンクにすべてアクセスでき�
   })
 
   it('TOP画面に遷移し、フッターからプライバシーポリシー画面に遷移する', async () => {
-    await page.goto('http://localhost:9000/')
+    await page.goto('http://localhost:8000/')
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
-    await expect(url).toEqual('http://localhost:9000/')
+    await expect(url).toEqual('http://localhost:8000/')
     await expect(text).toContain('安心して介護をお願いしたいから')
 
     await page.click('a[href="/users/privacy_policy"]')
     url = await page.mainFrame().url()
     ele = await page.$('h4')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/privacy_policy')
+    await expect(url).toEqual('http://localhost:8000/users/privacy_policy')
     await expect(titleText).toEqual('プライバシーポリシー')
   })
 
@@ -33,7 +33,7 @@ describe('ユーザーがフッターのリンクにすべてアクセスでき�
     url = await page.mainFrame().url()
     ele = await page.$('h4')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/terms')
+    await expect(url).toEqual('http://localhost:8000/users/terms')
     await expect(titleText).toEqual('利用規約')
   })
 
@@ -42,7 +42,7 @@ describe('ユーザーがフッターのリンクにすべてアクセスでき�
     url = await page.mainFrame().url()
     ele = await page.$('h4')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/contacts/new')
+    await expect(url).toEqual('http://localhost:8000/users/contacts/new')
     await expect(titleText).toEqual('お問い合わせ')
   })
   describe('ユーザーがログアウトをする', () => {
@@ -54,7 +54,7 @@ describe('ユーザーがフッターのリンクにすべてアクセスでき�
       const loginBtn = await page.$eval('#header-login', (item) => {
         return item.textContent
       })
-      await expect(url).toEqual('http://localhost:9000/top')
+      await expect(url).toEqual('http://localhost:8000/top')
       await expect(text).toContain('安心して介護をお願いしたいから')
       await expect(loginBtn).toEqual('ログイン')
     })

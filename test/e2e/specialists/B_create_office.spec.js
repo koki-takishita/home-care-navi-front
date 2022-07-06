@@ -14,11 +14,11 @@ describe('ケアマネージャーが事業所を登録できる', () => {
   })
 
   it('事業所登録画面からフォームに値を入力する', async () => {
-    await page.goto('http://localhost:9000/specialists/office/new')
+    await page.goto('http://localhost:8000/specialists/office/new')
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/specialists/office/new')
+    await expect(url).toEqual('http://localhost:8000/specialists/office/new')
     await expect(titleText).toContain('事業所登録')
 
     await expect(await page.$eval('#send', (el) => el.disabled)).toBe(true)
@@ -52,11 +52,15 @@ describe('ケアマネージャーが事業所を登録できる', () => {
   })
 
   it('登録ボタンを押し、登録後、事業所編集画面に遷移する', async () => {
-    await page.click('#send')
+    await Promise.all([
+      page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
+      await page.click('#send'),
+    ])
+    await page.waitForTimeout(1000)
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
     // URLに含まれている事業所IDを取得できないため、部分一致でURLの確認を行う
-    await expect(url).toContain('http://localhost:9000/specialists/office')
+    await expect(url).toContain('http://localhost:8000/specialists/office')
     await expect(url).toContain('edit')
     await expect(text).toContain('事業所編集')
     // 登録した事業所名が取得できているか

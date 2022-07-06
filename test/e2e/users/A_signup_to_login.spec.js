@@ -16,17 +16,17 @@ describe('ユーザーが新規登録してログインできる', () => {
   })
 
   it('TOP画面から新規登録ボタンを押し、新規登録画面に遷移する', async () => {
-    await page.goto('http://localhost:9000/')
+    await page.goto('http://localhost:8000/')
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
-    await expect(url).toEqual('http://localhost:9000/')
+    await expect(url).toEqual('http://localhost:8000/')
     await expect(text).toContain('安心して介護をお願いしたいから')
     await page.click('a[href="/users/new"]')
 
     url = await page.mainFrame().url()
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/new')
+    await expect(url).toEqual('http://localhost:8000/users/new')
     await expect(titleText).toEqual('新規登録')
   })
 
@@ -60,13 +60,13 @@ describe('ユーザーが新規登録してログインできる', () => {
 
   it('登録ボタンを押し、仮登録完了画面に遷移する', async () => {
     await Promise.all([
-      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
+      page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
       page.click('#send'),
     ])
     url = await page.mainFrame().url()
     ele = await page.$('h1')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/send')
+    await expect(url).toEqual('http://localhost:8000/users/send')
     await expect(titleText).toEqual('仮登録完了')
   })
 
@@ -74,7 +74,7 @@ describe('ユーザーが新規登録してログインできる', () => {
     await page.click('a[href="../top"]')
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
-    await expect(url).toEqual('http://localhost:9000/top')
+    await expect(url).toEqual('http://localhost:8000/top')
     await expect(text).toContain('安心して介護をお願いしたいから')
   })
 
@@ -104,7 +104,7 @@ describe('ユーザーが新規登録してログインできる', () => {
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
     await expect(url).toEqual(
-      'http://localhost:9000/top?account_confirmation_success=true'
+      'http://localhost:8000/top?account_confirmation_success=true'
     )
     await expect(text).toContain('安心して介護をお願いしたいから')
   })
@@ -115,7 +115,7 @@ describe('ユーザーが新規登録してログインできる', () => {
     text = await page.evaluate(() => document.body.textContent)
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:9000/users/login')
+    await expect(url).toEqual('http://localhost:8000/users/login')
     await expect(titleText).toEqual('ログイン')
   })
 
@@ -128,7 +128,7 @@ describe('ユーザーが新規登録してログインできる', () => {
 
   it('ログインボタンを押し、TOP画面に遷移する', async () => {
     await Promise.all([
-      page.waitForNavigation({ timeout: 5000, waitUntil: 'load' }),
+      page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
       await page.click('#login'),
     ])
     url = await page.mainFrame().url()
@@ -136,7 +136,7 @@ describe('ユーザーが新規登録してログインできる', () => {
     const logoutBtn = await page.$eval('#header-logout', (item) => {
       return item.textContent
     })
-    await expect(url).toEqual('http://localhost:9000/top')
+    await expect(url).toEqual('http://localhost:8000/top')
     await expect(text).toContain('安心して介護をお願いしたいから')
     await expect(logoutBtn).toEqual('ログアウト')
   })

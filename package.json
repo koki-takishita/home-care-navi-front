@@ -15,7 +15,7 @@
     "prepare": "husky install",
     "test": "jest --config jest.config.js --runInBand ./test/components",
     "test:e2e": "jest --config jest.e2e.config.js --runInBand ./test/e2e",
-    "testServer": "nuxt build && nuxt start --port 9000"
+    "testServer": "nuxt build && nuxt start --port 8000"
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache",
