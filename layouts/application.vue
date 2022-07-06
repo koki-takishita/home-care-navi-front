@@ -49,6 +49,7 @@
                     >
                     <div class="red--text line-style">
                       <v-btn
+                        id="header-logout"
                         :width="120"
                         :height="36"
                         color="error"
@@ -61,6 +62,7 @@
                 </div>
                 <div v-else class="red--text line-style">
                   <v-btn
+                    id="header-login"
                     href="/users/login"
                     :width="120"
                     :height="36"
@@ -69,6 +71,7 @@
                     >ログイン</v-btn
                   >
                   <v-btn
+                    id="header-signup"
                     href="/users/new"
                     :width="120"
                     :height="36"
@@ -136,6 +139,7 @@
                 class="d-flex justify-center ma-0 mt-6"
               >
                 <v-btn
+                  id="header-logout"
                   href="/users/login"
                   :width="120"
                   :height="36"
@@ -148,6 +152,7 @@
               </div>
               <div v-else class="d-flex justify-center ma-0 mt-6">
                 <v-btn
+                  id="header-login"
                   href="/users/login"
                   :width="120"
                   :height="36"
@@ -157,6 +162,7 @@
                   >ログイン</v-btn
                 >
                 <v-btn
+                  id="header-signup"
                   href="/users/new"
                   :width="120"
                   :height="36"

@@ -33,6 +33,7 @@
                       <v-menu offset-y>
                         <template #activator="{ on, attrs }">
                           <v-btn
+                            id="menu"
                             text
                             color="#808080"
                             dark
@@ -116,6 +117,7 @@
                     </div>
                     <div class="red--text line-style">
                       <v-btn
+                        id="header-logout"
                         :width="120"
                         :height="36"
                         color="warning"
@@ -129,6 +131,7 @@
 
                 <div v-else class="red--text line-style">
                   <v-btn
+                    id="header-login"
                     href="/specialists/login"
                     :width="120"
                     :height="36"
@@ -137,6 +140,7 @@
                     >ログイン</v-btn
                   >
                   <v-btn
+                    id="header-signup"
                     href="/specialists/users/new"
                     :width="120"
                     :height="36"
@@ -217,6 +221,7 @@
                 class="d-flex justify-center ma-0 mt-6"
               >
                 <v-btn
+                  id="header-logout"
                   href="/users/login"
                   :width="120"
                   :height="36"
@@ -229,6 +234,7 @@
               </div>
               <div v-else class="d-flex justify-center ma-0 mt-6">
                 <v-btn
+                  id="header-login"
                   href="/specialists/login"
                   :width="120"
                   :height="36"
@@ -238,6 +244,7 @@
                   >ログイン</v-btn
                 >
                 <v-btn
+                  id="header-signup"
                   color="warning"
                   href="/specialists/users/new"
                   :width="120"
