@@ -96,8 +96,6 @@ export default {
   data() {
     return {
       getAPI: [],
-      officeArray: [],
-      appointmentsArray: [],
       isShow: false,
     }
   },
@@ -113,10 +111,6 @@ export default {
           this.isShow = true
         } else {
           this.isShow = false
-        }
-        for (let i = 0; i < this.getAPI.length; i++) {
-          this.officeArray.push(this.getAPI[i])
-          this.appointmentsArray.push(this.getAPI[i].appointments)
         }
       } catch (error) {
         return error
