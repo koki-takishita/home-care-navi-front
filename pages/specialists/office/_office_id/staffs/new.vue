@@ -29,6 +29,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名
             <v-text-field
+              id="name"
               v-model="name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
@@ -40,6 +41,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名(ふりがな)
             <v-text-field
+              id="kana"
               v-model="kana"
               :rules="[
                 formValidates.required,
@@ -55,6 +57,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ紹介文
             <v-textarea
+              id="introduction"
               v-model="introduction"
               :rules="[formValidates.introductionCountCheck]"
               class="mt-2 font-weight-regular"
@@ -65,6 +68,7 @@
             </v-textarea
           ></label>
           <v-btn
+            id="send"
             x-large
             block
             depressed

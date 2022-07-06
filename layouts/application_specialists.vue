@@ -33,6 +33,7 @@
                       <v-menu offset-y>
                         <template #activator="{ on, attrs }">
                           <v-btn
+                            id="menu"
                             text
                             color="#808080"
                             dark

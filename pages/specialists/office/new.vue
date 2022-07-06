@@ -7,6 +7,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >事業所名
             <v-text-field
+              id="name"
               v-model="name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
@@ -18,6 +19,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >特徴タイトル
             <v-text-field
+              id="title"
               v-model="title"
               :rules="[formValidates.required, formValidates.titleCountCheck]"
               class="mt-2 font-weight-regular"
@@ -29,6 +31,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >特徴詳細
             <v-textarea
+              id="title_detail"
               v-model="title_detail"
               :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
@@ -60,6 +63,7 @@
             <v-col cols="1" class="mx-5"
               ><div class="ml-1">日</div>
               <v-checkbox
+                id="日"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="日"
@@ -70,6 +74,7 @@
             <v-col cols="1" class="mx-5"
               >月
               <v-checkbox
+                id="月"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="月"
@@ -80,6 +85,7 @@
             <v-col cols="1" class="mx-5"
               >火
               <v-checkbox
+                id="火"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="火"
@@ -90,6 +96,7 @@
             <v-col cols="1" class="mx-5"
               >水
               <v-checkbox
+                id="水"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="水"
@@ -100,6 +107,7 @@
             <v-col cols="1" class="mx-5"
               >木
               <v-checkbox
+                id="木"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="木"
@@ -110,6 +118,7 @@
             <v-col cols="1" class="mx-5"
               >金
               <v-checkbox
+                id="金"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="金"
@@ -120,6 +129,7 @@
             <v-col cols="1" class="mx-5"
               >土
               <v-checkbox
+                id="土"
                 v-model="selected"
                 :rules="[formValidates.holidayLengthCheck]"
                 value="土"
@@ -134,6 +144,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >営業日に関する説明
             <v-textarea
+              id="business_day_detail"
               v-model="business_day_detail"
               :rules="[
                 formValidates.required,
@@ -150,6 +161,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >電話番号
             <v-text-field
+              id="phone_number"
               v-model="phone_number"
               :rules="[formValidates.required, formValidates.phoneNumber]"
               class="mt-2 font-weight-regular"
@@ -161,6 +173,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >FAX
             <v-text-field
+              id="fax_number"
               v-model="fax_number"
               :rules="[formValidates.faxNumber]"
               class="mt-2 mb-2 font-weight-regular"
@@ -171,6 +184,7 @@
           /></label>
         </v-col>
         <v-text-field
+          id="post_code"
           v-model="post_code"
           :rules="[formValidates.required, formValidates.postCode]"
           outlined
@@ -188,6 +202,7 @@
         <v-col cols="12" class="pt-0">
           <div class="mt-n2">
             <v-text-field
+              id="address"
               v-model="address"
               :rules="[formValidates.required]"
               outlined
@@ -202,6 +217,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >類型
             <v-text-field
+              id="service_type"
               v-model="service_type"
               :rules="[
                 formValidates.required,
@@ -398,6 +414,7 @@
             </v-expansion-panel>
           </v-expansion-panels>
           <v-btn
+            id="send"
             x-large
             block
             depressed
