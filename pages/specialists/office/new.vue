@@ -588,7 +588,8 @@ export default {
         this.flags += 64
       }
       const officeParams = new FormData()
-      const officeDetailParams = new FormData()
+      const detailParams = new FormData()
+
       officeParams.append('name', this.name)
       officeParams.append('title', this.title)
       for (let index = 0; index <= 5; index++) {
@@ -604,23 +605,38 @@ export default {
       officeParams.append('post_code', this.post_code)
       officeParams.append('address', this.address)
 
-      officeDetailParams.append('detail', this.detail)
-      officeDetailParams.append('service_type', this.service_type)
-      officeDetailParams.append('open_date', this.open_date)
-      officeDetailParams.append('rooms', this.rooms)
-      officeDetailParams.append('requirement', this.requirement)
-      officeDetailParams.append('facility', this.facility)
-      officeDetailParams.append('management', this.management)
-      officeDetailParams.append('link', this.link)
+      detailParams.append('detail', this.detail)
+      detailParams.append('service_type', this.service_type)
+      detailParams.append('open_date', this.open_date)
+      detailParams.append('rooms', this.rooms)
+      detailParams.append('requirement', this.requirement)
+      detailParams.append('facility', this.facility)
+      detailParams.append('management', this.management)
+      detailParams.append('link', this.link)
       try {
-        await this.$axios.$post(
-          `specialists/offices`,
-          officeParams,
-          officeDetailParams,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          }
-        )
+        await this.$axios.$post(`specialists/offices`, {
+          office: {
+            name: this.name,
+            title: this.title,
+            flags: this.flags,
+            business_day_detail: this.business_day_detail,
+            phone_number: this.phone_number,
+            fax_number: this.fax_number,
+            post_code: this.post_code,
+            address: this.address,
+          },
+          detail: {
+            detail: this.detail,
+            service_type: this.service_type,
+            open_date: this.open_date,
+            rooms: this.rooms,
+            requirement: this.requirement,
+            facility: this.facility,
+            management: this.management,
+            link: this.link,
+          },
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
         localStorage.setItem('office_date', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
