@@ -33,104 +33,37 @@
         >WEB予約する</v-btn
       >
     </v-col>
-    <v-col>
-      <v-row class="md-over-no">
-        <v-col class="pr-0 my-auto" cols="2">
-          <div class="holiday-sp">営業日</div>
-        </v-col>
-        <v-col class="pl-0" cols="10">
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <th>日</th>
-                  <th>月</th>
-                  <th>火</th>
-                  <th>水</th>
-                  <th>木</th>
-                  <th>金</th>
-                  <th>土</th>
-                </tr>
-                <tr>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('sunday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('monday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('tuesday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('wednesday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('thursday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('friday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                  <td class="py-2">
-                    <v-icon
-                      v-if="getOffice.selected_flags.includes('saturday')"
-                      class="d-flex"
-                      >mdi-close</v-icon
-                    >
-                    <v-icon v-else class="d-flex" color="orange"
-                      >mdi-circle-outline</v-icon
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </v-col>
-      </v-row>
-      <div class="mt-4 md-over-no holiday-detail">
-        {{ getOffice.business_day_detail }}
-      </div>
+    <v-row no-gutters align="center" class="mt-3">
+      <v-col cols="2">
+        <p class="font-weight-black text-caption mb-0 text-center">
+          <font color="#6D7570">営業日</font>
+        </p>
+      </v-col>
+      <v-col cols="10">
+        <v-card min-height="56" tile outlined class="reset-border-style mr-3">
+          <table rules="cols" frame="border">
+            <thead>
+              <tr>
+                <th v-for="(day, i) in week" :key="i">
+                  <font size="1" :color="switchColor(day)">{{ day }}</font>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td v-for="(item, i) in holidayArray" :key="i" align="center">
+                  <v-icon small :color="switchColor(item)">
+                    {{ toggleSymbol(item) }}
+                  </v-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-col class="mt-4 md-over-no holiday-detail">
+      {{ getOffice.business_day_detail }}
     </v-col>
   </v-card>
 </template>
@@ -162,7 +95,18 @@ export default {
       getOfficeId: this.officeId,
       getOffice: this.office,
       getStaff: this.staffs,
+      icon: {
+        state: 'fa-regular fa-star',
+        color: '#D9DEDE',
+      },
+      week: ['日', '月', '火', '水', '木', '金', '土'],
+      binaryNumber: [64, 32, 16, 8, 4, 2, 1],
     }
+  },
+  computed: {
+    holidayArray() {
+      return this.conversionBinaryToHolidayArray(this.getOffice.flags)
+    },
   },
   methods: {
     goAppointmentsPage() {
@@ -170,6 +114,42 @@ export default {
         return alert('ログインをする必要があります')
       } else {
         this.$router.push(`/offices/${this.getOfficeId}/appointments`)
+      }
+    },
+    conversionBinaryToHolidayArray(holiday) {
+      const array = []
+      this.binaryNumber.forEach((n) => {
+        if (holiday >= n) {
+          holiday = holiday - n
+          array.push(1)
+        } else {
+          array.push(0)
+        }
+      })
+      return array.reverse()
+    },
+    toggleSymbol(n) {
+      return n === 1 ? 'mdi-close' : 'mdi-circle-outline'
+    },
+    switchColor(item) {
+      if (typeof item === 'string') {
+        // 曜日の色を切替
+        switch (item) {
+          case '土':
+            return '#2E6EE6'
+          case '日':
+            return '#E23E5D'
+          default:
+            return '#2E3331'
+        }
+      } else {
+        // 1,0で色切替
+        switch (item) {
+          case 0:
+            return '#F09C3C'
+          default:
+            return '#AEB5B2'
+        }
       }
     },
   },
@@ -192,38 +172,29 @@ export default {
   font-weight: bold;
 }
 
-.holiday-sp {
-  text-align: center;
-  font-size: 13px;
-}
-
 .holiday-detail {
   font-size: 11px;
   color: #707f89;
 }
 
+/* stylelint-disable */
+.reset-border-style.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0px;
+}
+/* stylelint-enable */
+
 table {
   width: 100%;
-  border-top: 1px solid #e0e0e0;
-  border-left: 1px solid #e0e0e0;
-  word-break: break-word;
-  border-spacing: 0;
+  height: 100%;
+  border-color: #d9dede;
 }
 
 th {
-  background: #f5f5f5;
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 1px 1px 0 0 #fff inset, -1px -1px 0 0 #fff inset;
-  padding: 4px 12px;
-  white-space: nowrap;
-  font-weight: bold;
+  background-color: #f5f5f5;
 }
 
 td {
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 1px 1px 0 0 #fff inset, -1px -1px 0 0 #fff inset;
+  height: 35px;
 }
 
 @media screen and (min-width: 961px) {
