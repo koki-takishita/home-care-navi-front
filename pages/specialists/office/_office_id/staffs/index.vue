@@ -28,7 +28,12 @@
           </v-row>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
-              <v-btn id="modal" block depressed outlined @click="openModal"
+              <v-btn
+                id="modal"
+                block
+                depressed
+                outlined
+                @click="openModal(staff.id)"
                 ><div class="delete-button">削除</div></v-btn
               >
             </v-col>
@@ -59,7 +64,7 @@
             width="120"
             depressed
             outlined
-            @click="deleteStaff(staff.id)"
+            @click="deleteStaff(currentStaffId)"
             ><div class="delete-button">OK</div></v-btn
           >
         </Modal>
@@ -91,6 +96,7 @@ export default {
       office_id: this.$route.params.office_id,
       office: [],
       modalFlag: false,
+      currentStaffId: 0,
     }
   },
   mounted() {
@@ -110,7 +116,8 @@ export default {
         return error
       }
     },
-    openModal() {
+    openModal(id) {
+      this.currentStaffId = id
       this.modalFlag = true
     },
     closeModal() {
