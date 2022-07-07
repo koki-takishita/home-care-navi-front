@@ -616,16 +616,18 @@ export default {
       try {
         await this.$axios.$post(`specialists/offices`, {
           office: {
+            // officeの属性
             name: this.name,
-            title: this.title,
             flags: this.flags,
             business_day_detail: this.business_day_detail,
+            title: this.title,
             phone_number: this.phone_number,
             fax_number: this.fax_number,
             post_code: this.post_code,
             address: this.address,
           },
-          detail: {
+          office_detail_attribute: {
+            // office_detail_attributeの属性
             detail: this.detail,
             service_type: this.service_type,
             open_date: this.open_date,
@@ -635,9 +637,8 @@ export default {
             management: this.management,
             link: this.link,
           },
-          headers: { 'Content-Type': 'multipart/form-data' },
         })
-        localStorage.setItem('office_date', 'true')
+        localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
         return error
