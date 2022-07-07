@@ -21,6 +21,6 @@ module.exports = {
   server: {
     command: 'yarn testServer',
     port: 8000,
-    launchTimeout: 150000,
+    launchTimeout: 50000,
   },
 }
