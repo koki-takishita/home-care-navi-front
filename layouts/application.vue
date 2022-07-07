@@ -43,7 +43,7 @@
                       >お礼投稿履歴</NuxtLink
                     >
                     <NuxtLink
-                      to="#"
+                      to="/users/profile"
                       class="header-style text-overline text-decoration-none mr-5"
                       >登録情報</NuxtLink
                     >
@@ -239,7 +239,7 @@
             <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
               <v-list-item-title>
                 <NuxtLink
-                  to="#"
+                  to="/users/profile"
                   class="text-decoration-none text-body-2 navi-style"
                   >登録情報</NuxtLink
                 >

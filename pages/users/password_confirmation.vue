@@ -4,10 +4,11 @@
     max-width="750"
     min-height="400"
     max-height="487"
-    class="mx-auto my-2"
+    class="mx-auto my-2 mt-8"
+    flat
   >
-    <div class="px-4 pt-4 d-sm-block">
-      <h6 class="display-1 text-center text-h6 font-weight-black">
+    <div class="px-4 pt-4 d-sm-block mt-2">
+      <h6 class="display-1 text-center text-h6 font-weight-black mt-4">
         パスワード確認
       </h6>
     </div>

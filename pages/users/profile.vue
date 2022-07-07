@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" md="8" lg="7" xl="7" class="mx-auto">
     <v-card flat width="750" class="mx-auto mb-2">
-      <div class="px-4 pt-4 d-none d-sm-block">
+      <div class="px-4 pt-4 d-none d-sm-block mb-6">
         <div class="px-4 pt-4 d-flex justify-center relative">
           <div class="margin-0">
             <h6 class="display-1 text-center text-h6 font-weight-black">
@@ -17,7 +17,7 @@
           </p>
         </div>
       </div>
-      <div class="px-4 pt-4 d-flex justify-space-between d-sm-none">
+      <div class="px-4 pt-4 d-flex justify-space-between d-sm-none mb-6">
         <h6 class="display-1 text-center text-h6 font-weight-black">
           登録情報
         </h6>
@@ -30,24 +30,30 @@
         </p>
       </div>
 
-      <v-card-text>
+      <v-card-text class="ml-2">
         <div class="font-color-gray font-weight-black text-caption mb-2">
           お名前
         </div>
         <div class="mb-6">{{ user.name }}</div>
-        <div class="font-color-gray font-weight-black text-caption">
+        <div class="font-color-gray font-weight-black text-caption mb-2">
           メールアドレス
         </div>
-        {{ user.email }}
-        <div class="font-color-gray font-weight-black text-caption">
+        <div class="mb-6">
+          {{ user.email }}
+        </div>
+        <div class="font-color-gray font-weight-black text-caption mb-2">
           パスワード
         </div>
-        非表示
-        <div class="font-color-gray font-weight-black text-caption">
+        <div class="mb-6">非表示</div>
+        <div class="font-color-gray font-weight-black text-caption mb-2">
           電話番号
         </div>
-        {{ user.phone_number }}
-        <div class="font-color-gray font-weight-black text-caption">住所</div>
+        <div class="mb-6">
+          {{ user.phone_number }}
+        </div>
+        <div class="font-color-gray font-weight-black text-caption mb-2">
+          住所
+        </div>
         <div>〒{{ user.post_code }}</div>
         {{ user.address }}
 
