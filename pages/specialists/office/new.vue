@@ -313,7 +313,7 @@
                       >
                         <template #activator="{ on, attrs }">
                           <v-text-field
-                            v-model="open_data"
+                            v-model="open_date"
                             label="開設年月"
                             prepend-icon="mdi-calendar"
                             readonly
@@ -322,7 +322,7 @@
                           ></v-text-field>
                         </template>
                         <v-date-picker
-                          v-model="open_data"
+                          v-model="open_date"
                           locale="jp-ja"
                           :day-format="(date) => new Date(date).getDate()"
                           :active-picker.sync="activePicker"
@@ -512,7 +512,7 @@ export default {
       image_detail_2: null,
       text_detail_2: '',
 
-      open_data: '',
+      open_date: '',
       activePicker: null,
       date: null,
       menu: false,
@@ -587,35 +587,41 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      const params = new FormData()
-      params.append('name', this.name)
-      params.append('title', this.title)
+      const officeParams = new FormData()
+      const officeDetailParams = new FormData()
+      officeParams.append('name', this.name)
+      officeParams.append('title', this.title)
       for (let index = 0; index <= 5; index++) {
         if (this.images[index] === undefined) {
           continue
         }
-        params.append('images[]', this.images[index])
+        officeParams.append('images[]', this.images[index])
       }
-      params.append('flags', this.flags)
-      params.append('business_day_detail', this.business_day_detail)
-      params.append('phone_number', this.phone_number)
-      params.append('fax_number', this.fax_number)
-      params.append('post_code', this.post_code)
-      params.append('address', this.address)
+      officeParams.append('flags', this.flags)
+      officeParams.append('business_day_detail', this.business_day_detail)
+      officeParams.append('phone_number', this.phone_number)
+      officeParams.append('fax_number', this.fax_number)
+      officeParams.append('post_code', this.post_code)
+      officeParams.append('address', this.address)
 
-      params.append('detail', this.detail)
-      params.append('service_type', this.service_type)
-      params.append('open_data', this.open_data)
-      params.append('rooms', this.rooms)
-      params.append('requirement', this.requirement)
-      params.append('facility', this.facility)
-      params.append('management', this.management)
-      params.append('link', this.link)
+      officeDetailParams.append('detail', this.detail)
+      officeDetailParams.append('service_type', this.service_type)
+      officeDetailParams.append('open_date', this.open_date)
+      officeDetailParams.append('rooms', this.rooms)
+      officeDetailParams.append('requirement', this.requirement)
+      officeDetailParams.append('facility', this.facility)
+      officeDetailParams.append('management', this.management)
+      officeDetailParams.append('link', this.link)
       try {
-        await this.$axios.$post(`specialists/offices`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
-        localStorage.setItem('office_data', 'true')
+        await this.$axios.$post(
+          `specialists/offices`,
+          officeParams,
+          officeDetailParams,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+        )
+        localStorage.setItem('office_date', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
         return error
