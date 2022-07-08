@@ -10,7 +10,7 @@
         class="px-0 pb-0 pt-0"
         @click="moveShow(office.id)"
       >
-        <v-col v-for="(appointments, i) in office.appointments" :key="i">
+        <v-col>
           <v-card class="mx-auto">
             <v-col
               ><h3>{{ office.name }}</h3></v-col
@@ -45,18 +45,42 @@
             </v-row>
             <v-divider class="mx-3"></v-divider>
             <v-col class="mt-2 font-color-gray text-caption"
-              >予約した日時：{{ appointments.created_at | created_at }}</v-col
+              >予約した日時：{{
+                office.appointments[office.appointments.length - 1].created_at
+                  | created_at
+              }}</v-col
             >
             <v-col class="pb-0 font-color-gray font-weight-black text-caption"
               >面談希望日時</v-col
             >
             <v-col class="py-0"
-              >{{ appointments.meet_date | meet_date }}
-              {{ appointments.meet_time }}</v-col
+              >{{
+                office.appointments[office.appointments.length - 1].meet_date
+                  | meet_date
+              }}
+              {{
+                office.appointments[office.appointments.length - 1].meet_time
+              }}</v-col
             >
-            <v-col class="text-center pt-4 pb-6 font-color-gray"
-              >事業所からの連絡をお待ち下さい</v-col
-            >
+            <v-col class="text-center pt-4 pb-6 font-color-gray">
+              <div
+                v-if="
+                  office.appointments[office.appointments.length - 1]
+                    .called_status === 'need_call'
+                "
+              >
+                事業所からの連絡をお待ち下さい
+              </div>
+              <div
+                v-else-if="
+                  office.appointments[office.appointments.length - 1]
+                    .called_status === 'called'
+                "
+              >
+                連絡済み
+              </div>
+              <div v-else>キャンセル済み</div>
+            </v-col>
           </v-card>
         </v-col>
       </v-col>

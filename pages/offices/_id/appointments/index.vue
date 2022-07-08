@@ -156,7 +156,13 @@ export default {
           this.currentMonth = `0${this.today.getMonth() + 1}`.slice(-2)
           this.currentDay = this.today.getDate()
           // todayから年月日を取得したものを組み合わせる(20220101)
-          this.todaySum = this.currentYear + this.currentMonth + this.currentDay
+          if (this.currentDay.toString().length === 1) {
+            this.todaySum =
+              this.currentYear + this.currentMonth + `0${this.currentDay}`
+          } else {
+            this.todaySum =
+              this.currentYear + this.currentMonth + this.currentDay
+          }
           // カレンダーから取得した値を、年月日を個別に取得する(2022-01-01)
           this.yearSlice = `${this.meet_date.slice(0, 4)}`
           this.monthSlice = `${this.meet_date.slice(5, 7)}`

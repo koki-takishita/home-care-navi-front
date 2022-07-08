@@ -47,7 +47,7 @@
                 depressed
                 outlined
                 color="blue-grey lighten-4"
-                @click="deleteCareRecipients(care_recipient.id)"
+                @click="openModal(care_recipient.id)"
                 ><div class="delete-button font-weight-bold">削除</div></v-btn
               >
             </v-col>
@@ -60,17 +60,31 @@
                 class="font-weight-bold"
                 >編集する</v-btn
               >
-              <v-col
-                v-for="(staff, index) in staffs"
-                :key="index"
-                cols="12"
-                md="6"
-              >
+              <v-col v-for="(staff, i) in staffs" :key="i" cols="12" md="6">
                 {{ staff.name }}
               </v-col>
             </v-col>
           </v-row>
         </v-card>
+        <Modal v-if="modalFlag">
+          <v-col class="mb-4">本当に削除してもよろしいですか？</v-col>
+          <v-btn
+            width="120"
+            color="warning"
+            depressed
+            class="ml-2 mr-4"
+            @click="closeModal"
+            >キャンセル</v-btn
+          >
+          <v-btn
+            id="delete"
+            width="120"
+            depressed
+            outlined
+            @click="deleteCareRecipients(currentCareRecipientId)"
+            ><div class="delete-button">OK</div></v-btn
+          >
+        </Modal>
       </v-col>
     </v-row>
     <v-btn
@@ -99,6 +113,8 @@ export default {
       staffs: [],
       office: [],
       office_id: this.$route.params.office_id,
+      currentCareRecipientId: 0,
+      modalFlag: false,
     }
   },
   computed: {
@@ -110,7 +126,6 @@ export default {
   mounted() {
     this.getCareRecipients()
     this.getOffice()
-    // this.getStaffs()
   },
   methods: {
     async getOffice() {
@@ -129,7 +144,6 @@ export default {
     },
     async getCareRecipients() {
       try {
-        // this.$setId(this.office_id)
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/care_recipients`
         )
@@ -138,27 +152,21 @@ export default {
         return error
       }
     },
-    //  async getStaffs() {
-    //   try {
-    //     const response = await this.$axios.$get(
-    //       `specialists/offices/${this.office_id}/staffs`
-    //     )
-    //     this.staffs = response
-    //   } catch (error) {
-    //     return error
-    //   }
-    // },
+    openModal(id) {
+      this.currentCareRecipientId = id
+      this.modalFlag = true
+    },
+    closeModal() {
+      this.modalFlag = false
+    },
     async deleteCareRecipients(id) {
-      const isDeleted = '本当に削除してもよろしいですか？'
-      if (window.confirm(isDeleted)) {
-        try {
-          await this.$axios.$delete(
-            `specialists/offices/${this.office_id}/care_recipients/${id}`
-          )
-          window.location.reload()
-        } catch (error) {
-          return error
-        }
+      try {
+        await this.$axios.$delete(
+          `specialists/offices/${this.office_id}/care_recipients/${id}`
+        )
+        window.location.reload()
+      } catch (error) {
+        return error
       }
     },
   },
@@ -189,5 +197,11 @@ export default {
 
 .delete-button {
   color: #ff9800;
+}
+
+.modal {
+  &__overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 </style>
