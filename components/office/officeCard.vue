@@ -30,7 +30,7 @@
       </v-card-title>
       <div class="d-flex">
         <v-img
-          :src="display_img"
+          :src="displayImg"
           tile
           outlined
           max-height="90"
@@ -132,13 +132,14 @@ export default {
       },
       week: ['日', '月', '火', '水', '木', '金', '土'],
       binaryNumber: [64, 32, 16, 8, 4, 2, 1],
+      // binaryNumber: [1, 2, 4, 8, 16, 32, 64],
     }
   },
   computed: {
-    display_img() {
+    displayImg() {
       return this.office.image.length > 0
         ? this.office.image
-        : '_nuxt/assets/images/no-image.png'
+        : require('~/assets/images/no-image.png')
     },
     displayDetail() {
       return this.office.detail.detail === undefined
@@ -204,7 +205,7 @@ export default {
           arry.push(0)
         }
       })
-      return arry
+      return arry.reverse()
     },
     toggleSymbol(n) {
       return n === 1 ? 'mdi-close' : 'mdi-circle-outline'

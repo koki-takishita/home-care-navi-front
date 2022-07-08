@@ -128,6 +128,7 @@
                   outlined
                   dense
                   placeholder="--"
+                  no-data-text="スタッフの登録をしてください"
                   :rules="[formValidates.required]"
                 ></v-select>
               </v-col>
@@ -295,8 +296,6 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$store.commit('catchErrorMsg/setType', 'success')
-        this.$store.commit('catchErrorMsg/setMsg', ['登録しました'])
         this.$router.push('.')
       } catch (error) {
         return error

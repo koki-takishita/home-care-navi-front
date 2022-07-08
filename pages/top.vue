@@ -1,13 +1,16 @@
 <template>
   <div class="w-990 mx-auto mt-n2 mb-2">
-    <SubTitle />
+    <SubTitle
+      v-model="searchIcon.keyword"
+      @clickKeywordsAndPostCodes="searchOfficeKeywordsAndPostCodes()"
+    />
     <div class="mx-auto h-74 d-none d-md-flex align-end">
       <p class="color-dark-gray font-weight-black text-body-1">
         エリアから探す
       </p>
     </div>
     <div :class="toggleClassByBreakpoints">
-      <ChooseAreaCard />
+      <ChooseAreaCard @clickCurrentLocationBtn="searchOfficeLocation()" />
       <ChoosePrefectureCard />
       <ChooseCityCard />
     </div>
@@ -21,6 +24,9 @@ export default {
       toggleSize: 960,
       mobileStyle: '',
       pcStyle: 'd-flex justify-space-between',
+      searchIcon: {
+        keyword: '',
+      },
     }
   },
   computed: {
@@ -31,6 +37,44 @@ export default {
       } else {
         return this.pcStyle
       }
+    },
+  },
+  methods: {
+    async searchOfficeKeywordsAndPostCodes() {
+      try {
+        const res = await this.$conversionKeywords(this.searchIcon.keyword)
+        this.$router.push({
+          path: '/offices',
+          query: {
+            keywords: res.keywords,
+            postCodes: res.postCodes,
+          },
+        })
+      } catch (error) {
+        // console.log(error)
+        return error
+      }
+    },
+    async searchOfficeLocation() {
+      try {
+        const res = await this.$currentLocation()
+        const prefecture = res.prefecture
+        const city = res.city
+        this.searchOfficeFromArea(encodeURI(prefecture), encodeURI(city), true)
+      } catch (error) {
+        // console.log(error)
+        return error
+      }
+    },
+    searchOfficeFromArea(prefecture, city, location) {
+      this.$router.push({
+        path: '/offices',
+        query: {
+          prefecture,
+          cities: city,
+          location,
+        },
+      })
     },
   },
 }

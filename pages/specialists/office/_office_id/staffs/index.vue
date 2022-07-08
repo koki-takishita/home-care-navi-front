@@ -28,12 +28,18 @@
           </v-row>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
-              <v-btn block depressed outlined @click="deleteStaff(staff.id)"
+              <v-btn
+                id="modal"
+                block
+                depressed
+                outlined
+                @click="openModal(staff.id)"
                 ><div class="delete-button">削除</div></v-btn
               >
             </v-col>
             <v-col cols="8" class="pr-6">
               <v-btn
+                id="edit"
                 block
                 depressed
                 color="warning"
@@ -43,6 +49,25 @@
             </v-col>
           </v-row>
         </v-card>
+        <Modal v-if="modalFlag">
+          <v-col class="mb-4">本当に削除してもよろしいですか？</v-col>
+          <v-btn
+            width="120"
+            color="warning"
+            depressed
+            class="ml-2 mr-4"
+            @click="closeModal"
+            >キャンセル</v-btn
+          >
+          <v-btn
+            id="delete"
+            width="120"
+            depressed
+            outlined
+            @click="deleteStaff(currentStaffId)"
+            ><div class="delete-button">OK</div></v-btn
+          >
+        </Modal>
       </v-col>
     </v-row>
     <v-btn
@@ -70,6 +95,8 @@ export default {
       staffs: [],
       office_id: this.$route.params.office_id,
       office: [],
+      modalFlag: false,
+      currentStaffId: 0,
     }
   },
   mounted() {
@@ -89,6 +116,13 @@ export default {
         return error
       }
     },
+    openModal(id) {
+      this.currentStaffId = id
+      this.modalFlag = true
+    },
+    closeModal() {
+      this.modalFlag = false
+    },
     async getStaffs() {
       try {
         const response = await this.$axios.$get(
@@ -100,16 +134,14 @@ export default {
       }
     },
     async deleteStaff(id) {
-      const isDeleted = '本当に削除してもよろしいですか？'
-      if (window.confirm(isDeleted)) {
-        try {
-          await this.$axios.$delete(
-            `specialists/offices/${this.office_id}/staffs/${id}`
-          )
-          window.location.reload()
-        } catch (error) {
-          return error
-        }
+      this.modalFlag = false
+      try {
+        await this.$axios.$delete(
+          `specialists/offices/${this.office_id}/staffs/${id}`
+        )
+        window.location.reload()
+      } catch (error) {
+        return error
       }
     },
   },

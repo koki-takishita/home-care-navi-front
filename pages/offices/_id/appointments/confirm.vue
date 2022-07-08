@@ -107,7 +107,7 @@ export default {
     async getOffice() {
       try {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
-        this.office = response
+        this.office = response.office
       } catch (error) {
         return error
       }

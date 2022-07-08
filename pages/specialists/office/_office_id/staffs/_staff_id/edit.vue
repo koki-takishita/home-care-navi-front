@@ -8,7 +8,7 @@
       >
     </p>
     <v-card class="mx-auto mb-2 p-0" width="750">
-      <v-col cols="12"><h3>スタッフ登録</h3></v-col>
+      <v-col cols="12"><h3>スタッフ情報編集</h3></v-col>
       <v-form v-model="valid">
         <v-row>
           <v-avatar size="100" color="grey lighten-3" class="ml-6 my-4">
@@ -59,6 +59,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ紹介文
             <v-textarea
+              id="introduction"
               v-model="staff.introduction"
               :rules="[formValidates.introductionCountCheck]"
               class="mt-2 font-weight-regular"
@@ -69,6 +70,7 @@
             </v-textarea
           ></label>
           <v-btn
+            id="send"
             x-large
             block
             depressed
