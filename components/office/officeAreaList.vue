@@ -14,14 +14,14 @@
               active-class="font-weight-black"
             >
               <v-list-item
-                v-for="(area, i) in areas"
+                v-for="(getArea, i) in areas"
                 :key="i"
                 dense
                 :ripple="false"
-                @click="movePrefecturesList(area)"
+                @click="movePrefecturesList(getArea)"
               >
                 <v-list-item-content>
-                  <span class="">{{ area }}</span>
+                  <span>{{ getArea }}</span>
                 </v-list-item-content>
                 <v-list-item-icon>
                   <v-icon block>mdi-chevron-right</v-icon>
@@ -50,14 +50,14 @@
               active-class="font-weight-black"
             >
               <v-list-item
-                v-for="(prefecture, i) in fetchPrefectures"
+                v-for="(getPrefecture, i) in fetchPrefectures"
                 :key="i"
                 dense
                 :ripple="false"
-                @click="moveCitiesList(prefecture)"
+                @click="moveCitiesList(getPrefecture)"
               >
                 <v-list-item-content>
-                  <span class="">{{ prefecture }}</span>
+                  <span>{{ getPrefecture }}</span>
                 </v-list-item-content>
                 <v-list-item-icon>
                   <v-icon block>mdi-chevron-right</v-icon>
@@ -141,14 +141,42 @@
 import { mapGetters } from 'vuex'
 export default {
   layout: 'application',
-  props: [
-    'area',
-    'prefecture',
-    'cities',
-    'selectedList',
-    'location',
-    'searchWind',
-  ],
+  props: {
+    area: {
+      type: String,
+      default() {
+        return undefined
+      },
+    },
+    prefecture: {
+      type: String,
+      default() {
+        return undefined
+      },
+    },
+    cities: {
+      type: String,
+      default() {
+        return undefined
+      },
+    },
+    selectedList: {
+      type: [Array, Number, String],
+      default: 0,
+    },
+    location: {
+      type: Boolean,
+      default() {
+        return false
+      },
+    },
+    searchWind: {
+      type: Boolean,
+      default() {
+        return false
+      },
+    },
+  },
   data() {
     return {
       areas: [
@@ -220,14 +248,14 @@ export default {
   },
   methods: {
     searchOffice() {
-      const arry = []
+      const array = []
       for (let i = 0; i < this.selectedCityNum.length; i++) {
-        arry.push(this.selectedCityNum[i])
+        array.push(this.selectedCityNum[i])
       }
       let selectedCities = []
-      const cityArry = this.fetchCities
-      selectedCities = arry.map(function (num) {
-        return encodeURI(cityArry[num].city)
+      const cityArray = this.fetchCities
+      selectedCities = array.map(function (num) {
+        return encodeURI(cityArray[num].city)
       })
       const area = encodeURI(this.selectedArea())
       const prefecture = encodeURI(this.selectedPrefecture())
@@ -285,9 +313,9 @@ export default {
       this.selectedCityNum = []
       this.e1 = 2
     },
-    getIndex(arry, target) {
-      for (let i = 0; i < arry.length; i++) {
-        if (arry[i] === target) {
+    getIndex(array, target) {
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] === target) {
           return i
         }
       }
