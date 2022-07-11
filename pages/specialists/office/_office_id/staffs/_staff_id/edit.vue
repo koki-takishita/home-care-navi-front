@@ -160,7 +160,7 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$router.push('..')
+        this.$router.push('..?page=1')
       } catch (error) {
         return error
       }

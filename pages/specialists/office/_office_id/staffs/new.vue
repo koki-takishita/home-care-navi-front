@@ -135,7 +135,7 @@ export default {
         await this.$axios.$post(`specialists/offices/${id}/staffs`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
-        this.$router.push('.')
+        this.$router.push('.?page=1')
       } catch (error) {
         return error
       }
