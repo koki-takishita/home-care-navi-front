@@ -162,7 +162,9 @@ export default {
     },
     selectedList: {
       type: [Array, Number, String],
-      default: 0,
+      default() {
+        return 0
+      },
     },
     location: {
       type: Boolean,
