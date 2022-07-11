@@ -99,7 +99,10 @@ describe('ユーザーが新規登録してログインできる', () => {
     await expect(bodyText).toContain(email)
     await expect(bodyText).toContain('カスタマー')
     await expect(bodyText).toContain('アカウントを有効化する')
-    await page.click('a[href^="http://localhost:3000/api/users/confirmation?"]')
+    // await page.click('a[href^="http://localhost:3000/api/users/confirmation?"]')
+    await page.click(
+      'a[href^="http://localhost:3000/api/customer/confirmation"]'
+    )
 
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
