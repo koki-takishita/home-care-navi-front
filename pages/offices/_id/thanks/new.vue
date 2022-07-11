@@ -2,7 +2,13 @@
   <v-stepper v-model="step" class="mb-4 mx-auto" max-width="750" outlined>
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <ThankBackLink class="mt-8 mb-4" :object="office" />
+        <ThankBackLink
+          class="mt-8 mb-4"
+          :object="office"
+          :text="linkText"
+          icon
+          @movePage="backPage"
+        />
         <ThankNew
           :office="office"
           :staffs="staffs"
@@ -12,7 +18,13 @@
         />
       </v-stepper-content>
       <v-stepper-content step="2" class="pa-0">
-        <ThankBackLink class="mt-8 mb-4" :object="office" />
+        <ThankBackLink
+          class="mt-8 mb-4"
+          :object="office"
+          :text="linkText"
+          icon
+          @movePage="backPage"
+        />
         <ThankConfirm
           :office="office"
           :staff="selectedStaff"
@@ -57,7 +69,15 @@ export default {
       comment: '',
     }
   },
+  computed: {
+    linkText() {
+      return `${this.office.name}に戻る`
+    },
+  },
   methods: {
+    backPage() {
+      this.$router.push(`/offices/${this.office.id}`)
+    },
     changeStep(obj) {
       const staff = JSON.stringify(obj.staff) || '{}'
       const comment = obj.comment || ''

@@ -3,10 +3,12 @@
     id="back-link"
     outlined
     class="text-decoration-none"
-    @click.native="backPage"
+    @click.native="movePage"
   >
-    <v-icon size="20" :color="linkColor">mdi-chevron-left</v-icon>
-    <font size="2" :color="linkColor">{{ backText }}</font>
+    <v-icon v-if="iconFlag" size="20" :color="linkColor"
+      >mdi-chevron-left</v-icon
+    >
+    <font size="2" :color="linkColor">{{ linkText }}</font>
   </v-card>
 </template>
 <script>
@@ -16,21 +18,32 @@ export default {
       type: Object,
       required: true,
     },
+    text: {
+      type: String,
+      required: true,
+    },
+    icon: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     id() {
       return this.object.id
     },
-    backText() {
-      return `${this.object.name} にもどる`
+    linkText() {
+      return this.text
     },
     linkColor() {
       return '#F06364'
     },
+    iconFlag() {
+      return this.icon
+    },
   },
   methods: {
-    backPage() {
-      this.$router.push(`/offices/${this.id}`)
+    movePage() {
+      this.$emit('movePage')
     },
   },
 }
