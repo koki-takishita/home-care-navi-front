@@ -109,7 +109,10 @@ describe('ケアマネージャーが新規登録してログインできる', (
     await expect(bodyText).toContain(email)
     await expect(bodyText).toContain('スペシャリスト')
     await expect(bodyText).toContain('アカウントを有効化する')
-    await page.click('a[href^="http://localhost:3000/api/users/confirmation?"]')
+    // await page.click('a[href^="http://localhost:3000/api/users/confirmation?"]')
+    await page.click(
+      'a[href^="http://localhost:3000/api/specialists/users/confirmation?"]'
+    )
 
     url = await page.mainFrame().url()
     ele = await page.$('h6')
