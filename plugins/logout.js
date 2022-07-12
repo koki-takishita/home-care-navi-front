@@ -11,6 +11,7 @@ export default function ({ $auth, redirect, store }, inject) {
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログアウトしました'])
       redirect(logoutInfo.redirectUrl)
+      store.commit('logoutSpecialist')
       return response
     } catch (error) {
       // TODO 失敗時にstoreにtype入れ込む
