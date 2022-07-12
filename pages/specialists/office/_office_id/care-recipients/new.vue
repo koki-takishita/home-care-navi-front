@@ -269,7 +269,7 @@ export default {
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/staffs`
         )
-        this.staffs = response
+        this.staffs = response.staffs
       } catch (error) {
         return error
       }
