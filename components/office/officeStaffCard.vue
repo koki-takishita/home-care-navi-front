@@ -19,10 +19,17 @@ export default {
       type: Object,
       required: true,
     },
+    staffs: {
+      type: Array,
+      default: null,
+    },
   },
   computed: {
     ReadOffice() {
       return this.office
+    },
+    ReadStaffs() {
+      return this.staffs
     },
     linkText() {
       return 'お礼を投稿する'
