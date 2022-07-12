@@ -82,7 +82,7 @@
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to="....?page=1"
+              to="..?page=1"
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
