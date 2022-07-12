@@ -195,6 +195,127 @@
         </v-card>
         <v-card class="mt-6 mb-10" outlined tile height="513">
           <v-card-title> 施設概要 </v-card-title>
+          <v-row justify="center">
+            <v-col cols="12" sm="11">
+              <v-list>
+                <v-divider></v-divider>
+                <v-list-item>
+                  <v-list-item-action>
+                    <label class="font-weight-black">住所</label>
+                  </v-list-item-action>
+
+                  <v-list-item-content>
+                    <div>
+                      〒{{ office.post_code }}
+                      <br />
+                      {{ office.address }}
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item>
+                  <v-list-item-action>
+                    <label class="font-weight-black">類型</label>
+                  </v-list-item-action>
+
+                  <v-list-item-content>
+                    <div>
+                      {{ ofiice_details }}
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item>
+                  <v-list-item-action>
+                    <label class="font-weight-black">開設年月</label>
+                  </v-list-item-action>
+                  <v-list-item-content>
+                    <div>
+                      {{ office.address }}
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item>
+                  <v-list-item-action>
+                    <label class="font-weight-black">居室数</label>
+                  </v-list-item-action>
+
+                  <v-list-item-content>
+                    <div>
+                      {{ office.address }}
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item>
+                  <v-list-item-action>
+                    <label class="font-weight-black">入居時の要件</label>
+                  </v-list-item-action>
+
+                  <v-list-item-content>
+                    <div>
+                      {{ office.address }}
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item>
+                  <v-list-item-action>
+                    <label class="font-weight-black">共用設備</label>
+                  </v-list-item-action>
+
+                  <v-list-item-content>
+                    <div>
+                      {{ office.address }}
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+
+              <v-divider></v-divider>
+
+              <v-list-item>
+                <v-list-item-action>
+                  <label class="font-weight-black"
+                    >経営・
+                    <br />
+                    事業主体</label
+                  >
+                </v-list-item-action>
+
+                <v-list-item-content>
+                  <div>
+                    {{ office.address }}
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-divider></v-divider>
+
+              <v-list-item>
+                <v-list-item-action>
+                  <label class="font-weight-black">公式サイトURL</label>
+                </v-list-item-action>
+
+                <v-list-item-content>
+                  <div>
+                    {{ office.address }}
+                  </div>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
       <v-col cols="12" sm="12" md="6">
@@ -354,6 +475,7 @@ export default {
         images: [],
       },
       images: {},
+      ofiice_details: {},
       staffs: {},
       noImageURL: '~/assets/images/no_image.jpeg',
     }
@@ -367,6 +489,7 @@ export default {
         const response = await this.$axios.$get(`offices/${this.office_id}`)
         this.getAPI = response
         this.office = this.getAPI.office
+        this.office_detail = this.getAPI.office_detail
         this.images = this.getAPI.images
         this.staffs = this.getAPI.staffs
       } catch (error) {
