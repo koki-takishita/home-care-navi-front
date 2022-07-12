@@ -18,7 +18,15 @@
     <div class="px-4 mb-8">
       <label class="font-color-gray text-subtitle-2">
         <font :color="labelColor" class="font-weight-black">お礼の内容</font>
-        <p class="ma-0 mt-2 font-weight-light" v-html="replaceComment"></p>
+        <v-textarea
+          :value="ReadComment"
+          hide-details
+          outlined
+          readonly
+          class="font-weight-light mt-2"
+          auto-grow
+        >
+        </v-textarea>
       </label>
     </div>
     <div class="px-4">
@@ -93,4 +101,10 @@ export default {
 .link-color {
   cursor: pointer;
 }
+
+/* stylelint-disable */
+.v-text-field--outlined >>> fieldset {
+  border: 0;
+}
+/* stylelint-enable */
 </style>
