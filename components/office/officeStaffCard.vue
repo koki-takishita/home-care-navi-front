@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-6" tile height="599">
+  <v-card class="mt-6 overflow-auto" tile max-height="600">
     <v-card id="staff-card" outlined class="d-flex justify-space-between pa-4">
       <v-card-title class="pa-0 font-weight-black">スタッフ紹介</v-card-title>
       <ThankBackLink
@@ -9,6 +9,7 @@
         @movePage="moveThankNewPage"
       />
     </v-card>
+    <StaffIntroductionCard class="pa-4 pt-0" :staffs="ReadStaffs" />
   </v-card>
 </template>
 
