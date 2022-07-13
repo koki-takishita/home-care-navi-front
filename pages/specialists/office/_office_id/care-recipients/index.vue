@@ -3,7 +3,7 @@
     <h3>利用者情報管理</h3>
     <v-row class="mt-4">
       <v-col
-        v-for="(care_recipient, index) in reverseItems"
+        v-for="(care_recipient, index) in care_recipients"
         :key="index"
         cols="12"
         md="6"
@@ -100,6 +100,14 @@
         利用者を追加する
       </div>
     </v-btn>
+    <div class="mt-2 text-center">
+      <v-pagination
+        v-model="page"
+        :length="count"
+        color="#D9DEDE"
+        class="page-nation"
+      ></v-pagination>
+    </div>
   </v-col>
 </template>
 
@@ -113,17 +121,34 @@ export default {
       staffs: [],
       office: [],
       office_id: this.$route.params.office_id,
+      count: 0,
+      page: Number(this.$route.query.page) || 1,
+      offsetPage: 0,
       currentCareRecipientId: 0,
       modalFlag: false,
     }
   },
-  computed: {
-    // 配列の要素順番を逆順にする
-    reverseItems() {
-      return this.care_recipients.slice().reverse()
+  watch: {
+    page() {
+      this.$router.push({
+        path: `/specialists/office/${this.office_id}/care-recipients`,
+        query: {
+          page: this.page,
+        },
+      })
+      this.scrollTop()
     },
   },
   mounted() {
+    this.$watch(
+      'page',
+      function () {
+        this.getCareRecipients()
+      },
+      {
+        immediate: true,
+      }
+    )
     this.getCareRecipients()
     this.getOffice()
   },
@@ -135,7 +160,7 @@ export default {
         )
         if (response.id - this.office_id !== 0) {
           this.$router.push(
-            `/specialists/office/${response.id}/care-recipients`
+            `/specialists/office/${response.id}/care-recipients?page=1`
           )
         }
       } catch (error) {
@@ -143,11 +168,22 @@ export default {
       }
     },
     async getCareRecipients() {
+      if (this.page > 1) {
+        this.offsetPage = this.page - 1
+      } else {
+        this.offsetPage = 0
+      }
       try {
         const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/care_recipients`
+          `specialists/offices/${this.office_id}/care_recipients?page=${this.offsetPage}`
         )
-        this.care_recipients = response
+        this.care_recipients = response.care_recipients
+        this.count = response.data_length
+        this.count = this.count / 10
+        this.count = Math.ceil(this.count)
+        if (this.count === 0) {
+          this.count = 1
+        }
       } catch (error) {
         return error
       }
@@ -158,6 +194,9 @@ export default {
     },
     closeModal() {
       this.modalFlag = false
+    },
+    scrollTop() {
+      this.$vuetify.goTo(0)
     },
     async deleteCareRecipients(id) {
       try {
@@ -204,4 +243,30 @@ export default {
     background: rgba(0, 0, 0, 0.5);
   }
 }
+
+/* stylelint-disable */
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-left.theme--light {
+  color: #ff9800;
+}
+
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-right.theme--light {
+  color: #ff9800;
+}
+
+.pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0;
+}
+
+::v-deep button.v-pagination__navigation.v-pagination__navigation {
+  box-shadow: none;
+}
+
+::v-deep button.v-pagination__item {
+  box-shadow: none;
+}
+
+::v-deep button.v-pagination__item.v-pagination__item--active {
+  box-shadow: none;
+}
+/* stylelint-enable */
 </style>

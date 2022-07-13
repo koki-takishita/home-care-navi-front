@@ -288,11 +288,11 @@ export default {
 
 /* stylelint-disable */
 ::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-left.theme--light {
-  color: #f06364;
+  color: #ff9800;
 }
 
 ::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-right.theme--light {
-  color: #f06364;
+  color: #ff9800;
 }
 
 .pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {

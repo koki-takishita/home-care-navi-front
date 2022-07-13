@@ -62,7 +62,9 @@
                                 事業所情報編集</v-list-item-title
                               >
                             </v-list-item>
-                            <v-list-item to="/specialists/office/1/staffs">
+                            <v-list-item
+                              to="/specialists/office/1/staffs?page=1"
+                            >
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
@@ -86,7 +88,7 @@
                               </v-list-item-title>
                             </v-list-item>
                             <v-list-item
-                              to="/specialists/office/1/care-recipients"
+                              to="/specialists/office/1/care-recipients?page=1"
                             >
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
@@ -290,7 +292,7 @@
               <v-divider color="#D9DEDE"></v-divider>
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
-                to="/specialists/office/1/staffs"
+                to="/specialists/office/1/staffs?page=1"
               >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
@@ -329,7 +331,7 @@
               <v-divider color="#D9DEDE"></v-divider>
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
-                to="/specialists/office/1/care-recipients"
+                to="/specialists/office/1/care-recipients?page=1"
               >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
