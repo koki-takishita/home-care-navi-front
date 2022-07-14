@@ -265,7 +265,7 @@
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像1の説明（任意）
                   <v-text-field
-                    v-model="text_detail_1"
+                    v-model="comment_1"
                     :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像1に関する説明テキストを入れてください"
@@ -302,7 +302,7 @@
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像2の説明（任意）
                   <v-text-field
-                    v-model="text_detail_2"
+                    v-model="comment_2"
                     :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像2に関する説明テキストを入れてください"
@@ -523,10 +523,10 @@ export default {
       input_image: null,
       uploadImageUrl_1: '',
       image_detail_1: null,
-      text_detail_1: '',
+      comment_1: '',
       uploadImageUrl_2: '',
       image_detail_2: null,
-      text_detail_2: '',
+      comment_2: '',
 
       open_date: '',
       activePicker: null,
@@ -605,6 +605,7 @@ export default {
       }
       const officeParams = new FormData()
       const detailParams = new FormData()
+      const imageParams = new FormData()
 
       officeParams.append('name', this.name)
       officeParams.append('title', this.title)
@@ -629,6 +630,12 @@ export default {
       detailParams.append('facility', this.facility)
       detailParams.append('management', this.management)
       detailParams.append('link', this.link)
+
+      if (this.image_detail_1 !== null) {
+        imageParams.append('image', this.image_detail_1)
+      }
+      imageParams.append('comment', this.comment_1)
+      //      imageParams.append('comment', this.comment_2)
       try {
         await this.$axios.$post(`specialists/offices`, {
           office: {
@@ -642,8 +649,8 @@ export default {
             post_code: this.post_code,
             address: this.address,
           },
-          office_detail_attribute: {
-            // office_detail_attributeの属性
+          office_detail: {
+            // office_detailの属性
             detail: this.detail,
             service_type: this.service_type,
             open_date: this.open_date,
@@ -652,6 +659,10 @@ export default {
             facility: this.facility,
             management: this.management,
             link: this.link,
+          },
+          image_comment: {
+            // image_commentの属性
+            comment: this.comment_1,
           },
         })
         localStorage.setItem('office_data', 'true')
