@@ -4,6 +4,7 @@ import cookie from 'cookie'
 
 export default ({ store, req }) => {
   createPersistedState({
+    paths: ['specialist', 'message'],
     storage: {
       getItem: (key) => {
         // See https://nuxtjs.org/guide/plugins/#using-process-flags
