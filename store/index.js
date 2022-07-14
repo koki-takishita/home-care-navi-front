@@ -1,7 +1,6 @@
 // import createPersistedState from 'vuex-persistedstate'
 
 export const state = () => ({
-  message: 'Hello World',
   specialist: '',
 })
 
