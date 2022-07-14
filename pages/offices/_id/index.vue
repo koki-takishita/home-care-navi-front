@@ -9,7 +9,7 @@
           :staffs="office.staffs"
         />
         <office-detail-card :office="office.office" />
-        <office-staff-card />
+        <office-staff-card :office="office.office" />
       </v-col>
       <v-col cols="12" sm="12" md="6">
         <office-data-card-pc
