@@ -6,7 +6,6 @@ export default function ({ store, redirect, route }) {
     route.path !== '/specialists/users/send' &&
     store.state.specialist !== 'true'
   ) {
-    console.log('ミドルウェア')
     return redirect('/specialists/login')
   }
 }
