@@ -1,18 +1,24 @@
 <template>
   <v-card class="md-over-no" tile>
-    <v-row class="mx-auto mt-auto max-width">
-      <v-col class="office-name" cols="10">{{ getOffice.name }}</v-col>
-      <v-col cols="2">
-        <v-btn fab depressed small>
-          <v-icon color="white">mdi-star</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
+    <v-card-title class="py-2 px-3 d-flex flex-nowrap">
+      <h3 class="set-max-layout">{{ office.name }}</h3>
+      <v-avatar
+        color="#F5F7F7"
+        class="ml-auto"
+        @mouseover="hoverActive"
+        @mouseleave="hoverRelease"
+        @click.stop="toggleBookmark"
+      >
+        <v-icon large :color="switchIconColor(icon.color)">{{
+          icon.state
+        }}</v-icon>
+      </v-avatar>
+    </v-card-title>
     <v-col cols="12">
       <div class="office-tel">
-        〒{{ getOffice.post_code }}
+        〒{{ office.post_code }}
         <br />
-        {{ getOffice.address }}
+        {{ office.address }}
       </div>
       <div class="mt-3 d-flex access-and-staff">
         <v-icon>mdi-map-marker</v-icon>
@@ -22,10 +28,10 @@
       </div>
     </v-col>
     <v-col class="pt-0" md="12" xs="6">
-      <v-icon large>mdi-phone</v-icon>{{ getOffice.phone_number }}
+      <v-icon large>mdi-phone</v-icon>{{ office.phone_number }}
       <div class="d-flex">
         <div class="fax pr-1">FAX</div>
-        <div class="my-auto">{{ getOffice.fax_number }}</div>
+        <div class="my-auto">{{ office.fax_number }}</div>
       </div>
     </v-col>
     <v-col cols="12"
@@ -63,7 +69,7 @@
       </v-col>
     </v-row>
     <v-col class="mt-4 md-over-no holiday-detail">
-      {{ getOffice.business_day_detail }}
+      {{ office.business_day_detail }}
     </v-col>
   </v-card>
 </template>
@@ -89,14 +95,17 @@ export default {
         return null
       },
     },
+    bookmark: {
+      type: [Array, Object],
+      default() {
+        return null
+      },
+    },
   },
   data() {
     return {
-      getOfficeId: this.officeId,
-      getOffice: this.office,
-      getStaff: this.staffs,
       icon: {
-        state: 'fa-regular fa-star',
+        state: 'mdi-star',
         color: '#D9DEDE',
       },
       week: ['日', '月', '火', '水', '木', '金', '土'],
@@ -105,15 +114,56 @@ export default {
   },
   computed: {
     holidayArray() {
-      return this.conversionBinaryToHolidayArray(this.getOffice.flags)
+      return this.conversionBinaryToHolidayArray(this.office.flags)
     },
   },
   methods: {
+    hoverActive() {
+      if (this.bookmark === null) {
+        this.icon.color = '#F09C3C'
+      } else {
+        return true
+      }
+    },
+    hoverRelease() {
+      if (this.bookmark === null) {
+        this.icon.color = '#D9DEDE'
+      } else {
+        return true
+      }
+    },
+    toggleBookmark() {
+      if (this.$auth.loggedIn) {
+        if (this.bookmark === null) {
+          // お気に入りしてないなら、登録処理
+          this.$emit('submitBookmark', this.officeId)
+        } else {
+          // お気に入り済みなら、解除処理
+          this.$emit('destroyBookmark', this.officeId, this.bookmark.id)
+        }
+      } else {
+        alert('お気に入り機能はログインしたら利用できます。')
+      }
+    },
+    switchIconColor(item) {
+      if (this.bookmark === null) {
+        return item
+      } else {
+        const array = Object.entries(this.bookmark).map(([key, value]) => ({
+          key,
+          value,
+        }))
+        if (array.length === 0) {
+          return item
+        }
+        return '#F09C3C'
+      }
+    },
     goAppointmentsPage() {
       if (!this.$auth.loggedIn) {
         return alert('ログインをする必要があります')
       } else {
-        this.$router.push(`/offices/${this.getOfficeId}/appointments`)
+        this.$router.push(`/offices/${this.officeId}/appointments`)
       }
     },
     conversionBinaryToHolidayArray(holiday) {
@@ -157,6 +207,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.set-max-layout {
+  max-height: 50px;
+  line-height: normal;
+}
+
 .office-tel {
   font-size: 13px;
   color: #707f89;
