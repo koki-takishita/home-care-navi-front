@@ -66,9 +66,6 @@ export default {
         })
         this.getBookmark()
       } catch (error) {
-        const msg = error.response.data.message
-        this.$store.commit('catchErrorMsg/setType', 'error')
-        this.$store.commit('catchErrorMsg/setMsg', [msg])
         return error
       }
     },
@@ -82,9 +79,6 @@ export default {
         )
         this.getBookmark()
       } catch (error) {
-        const msg = error.response.data.message
-        this.$store.commit('catchErrorMsg/setType', 'error')
-        this.$store.commit('catchErrorMsg/setMsg', [msg])
         return error
       }
     },
