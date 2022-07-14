@@ -9,7 +9,9 @@
         @movePage="moveThankNewPage"
       />
     </v-card>
-    <StaffIntroductionCard class="pa-4 pt-0" :staffs="ReadStaffs" />
+    <template v-for="staff in ReadStaffs">
+      <StaffIntroductionCard :key="staff.id" class="pa-4 pt-0" :staff="staff" />
+    </template>
   </v-card>
 </template>
 

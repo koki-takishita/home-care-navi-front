@@ -45,7 +45,7 @@ export default {
     },
     isOpen: {
       type: Boolean,
-      default: false,
+      default: null,
     },
   },
   computed: {

@@ -1,15 +1,9 @@
 <template>
   <v-card id="staff-introduction" outlined>
-    <v-row
-      v-for="(staff, i) in ReadStaffs"
-      :key="i"
-      no-gutters
-      justify="end"
-      class="mb-4"
-    >
+    <v-row no-gutters justify="end" class="mb-4">
       <v-col cols="3">
         <v-avatar size="80">
-          <img :src="staff.image" />
+          <img :src="ReadStaff.image" />
         </v-avatar>
       </v-col>
       <v-col cols="9">
@@ -20,7 +14,7 @@
                 {{ staff.name }}
               </v-card-title>
               <div class="mt-n2">
-                <font size="1" :color="grayColor">{{ staff.kana }}</font>
+                <font size="1" :color="grayColor">{{ ReadStaff.kana }}</font>
               </div>
             </div>
           </v-col>
@@ -31,23 +25,20 @@
               outlined
               max-width="206"
             >
-              <font size="2" :color="grayColor">{{ staff.introduction }} </font>
+              <font size="2" :color="grayColor"
+                >{{ ReadStaff.introduction }}
+              </font>
             </v-card>
           </v-col>
         </v-row>
       </v-col>
-      <v-col
-        v-for="(comment, staff_i) in staff.thanks"
-        :key="comment.id"
-        cols="12"
-        sm="9"
-      >
+      <v-col v-for="(thank, i) in ReadThanks" :key="thank.id" cols="12" sm="9">
         <StaffThankCard
-          :thank="comment"
-          :index-num="staff_i"
+          :thank="thank"
+          :index-num="i"
           :count="thanksCount(staff)"
           :is-open="isOpen"
-          @thanksListOpen="setOpen"
+          @thanksListOpen="setIsOpen"
         />
       </v-col>
     </v-row>
@@ -56,8 +47,8 @@
 <script>
 export default {
   props: {
-    staffs: {
-      type: Array,
+    staff: {
+      type: Object,
       default: null,
     },
   },
@@ -67,16 +58,19 @@ export default {
     }
   },
   computed: {
-    ReadStaffs() {
-      return this.staffs
+    ReadStaff() {
+      return this.staff
+    },
+    ReadThanks() {
+      return this.ReadStaff.thanks
     },
     grayColor() {
       return '#6D7570'
     },
   },
   methods: {
-    setOpen(boolean) {
-      this.isOpen = !boolean
+    setIsOpen(obj) {
+      this.isOpen = !obj
     },
     thanksCount(obj) {
       return obj.thanks.length
