@@ -1,4 +1,4 @@
-export default function ({ store, redirect, route }) {
+export default async ({ $auth, store, redirect, route }) => {
   if (
     route.path !== '/users/login' &&
     route.path !== '/top' &&
@@ -14,6 +14,8 @@ export default function ({ store, redirect, route }) {
     route.path !== '/' &&
     store.state.customer !== 'true'
   ) {
+    await $auth.logout()
     return redirect('/users/login')
   }
+  store.commit('logoutUser')
 }
