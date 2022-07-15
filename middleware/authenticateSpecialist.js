@@ -1,4 +1,4 @@
-export default async ({ $auth, store, redirect, route }) => {
+export default async function ({ $auth, store, redirect, route }) {
   if (
     route.path !== '/specialists/login' &&
     route.path !== '/specialists/users/new' &&
@@ -8,5 +8,4 @@ export default async ({ $auth, store, redirect, route }) => {
     await $auth.logout()
     return redirect('/specialists/login')
   }
-  store.commit('logoutUser')
 }
