@@ -21,7 +21,6 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
         store.commit('loginSpecialist')
       } else if (loginInfo.user_type === 'customer') {
         store.commit('loginCustomer')
-        console.log('カスタマ')
       }
       return response
     } catch (error) {

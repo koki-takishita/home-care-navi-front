@@ -14,7 +14,6 @@ export default function ({ store, redirect, route }) {
     route.path !== '/' &&
     store.state.customer !== 'true'
   ) {
-    console.log('ミドルウェア カスタマー')
     return redirect('/users/login')
   }
 }
