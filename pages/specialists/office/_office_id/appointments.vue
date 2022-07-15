@@ -61,15 +61,49 @@
                 block
                 class="mt-3 mb-2"
                 color="warning"
-                @click="call(appointment.id)"
+                @click="openCallModal(appointment.id)"
                 >連絡済みにする</v-btn
               >
-              <v-btn block color="error" @click="cancel(appointment.id)"
+              <v-btn
+                block
+                color="error"
+                @click="openCancelModal(appointment.id)"
                 >キャンセルする</v-btn
               >
             </div>
           </v-col>
         </v-card>
+        <Modal v-if="modalFlag">
+          <v-col class="mb-4 text-center">{{ modalMsg }}</v-col>
+          <div class="text-center">
+            <v-btn
+              width="120"
+              color="warning"
+              depressed
+              class="ml-2 mr-4"
+              @click="closeModal"
+              >キャンセル</v-btn
+            >
+            <v-btn
+              v-if="callMethod === 'call'"
+              id="call"
+              width="120"
+              depressed
+              outlined
+              @click="call(currentAppointmentId)"
+              ><div class="delete-button">OK</div></v-btn
+            >
+            <v-btn
+              v-else
+              id="cancel"
+              width="120"
+              depressed
+              outlined
+              @click="cancel(currentAppointmentId)"
+              ><div class="delete-button">OK</div></v-btn
+            >
+          </div>
+        </Modal>
       </v-col>
       <v-col v-show="isShow">予約はありません</v-col>
     </v-row>
@@ -96,6 +130,10 @@ export default {
       count: 0,
       page: Number(this.$route.query.page) || 1,
       offsetPage: 0,
+      callMethod: '',
+      modalFlag: false,
+      modalMsg: '',
+      currentAppointmentId: 0,
     }
   },
   watch: {
@@ -136,6 +174,22 @@ export default {
       } catch (error) {
         return error
       }
+    },
+    openCallModal(id) {
+      this.currentAppointmentId = id
+      this.modalMsg = '連絡済みにしますか？'
+      this.callMethod = 'call'
+      this.modalFlag = true
+    },
+    openCancelModal(id) {
+      this.currentAppointmentId = id
+      this.modalMsg = '本当にキャンセルしてもよろしいですか？'
+      this.callMethod = 'cancel'
+      this.modalFlag = true
+    },
+    closeModal() {
+      this.callMethod = ''
+      this.modalFlag = false
     },
     async getAppointmentsStatus() {
       if (this.page > 1) {
@@ -183,41 +237,37 @@ export default {
       }
     },
     async call(id) {
-      const isCalled = '連絡済みにしますか？'
-      if (window.confirm(isCalled)) {
-        try {
-          await this.$axios.$put(
-            `specialists/offices/${this.office_id}/appointments/${id}`,
-            {
-              called_status: 1,
-            }
-          )
-          window.location.reload()
-        } catch (error) {
-          return error
-        }
+      this.modalFlag = false
+      try {
+        await this.$axios.$put(
+          `specialists/offices/${this.office_id}/appointments/${id}`,
+          {
+            called_status: 1,
+          }
+        )
+        window.location.reload()
+      } catch (error) {
+        return error
       }
     },
     async cancel(id) {
-      const isCanceled = '本当にキャンセルしてもよろしいですか？'
-      if (window.confirm(isCanceled)) {
-        try {
-          await this.$axios.$put(
-            `specialists/offices/${this.office_id}/appointments/${id}`,
-            {
-              called_status: 2,
-            }
-          )
-          window.location.reload()
-        } catch (error) {
-          return error
-        }
+      this.modalFlag = false
+      try {
+        await this.$axios.$put(
+          `specialists/offices/${this.office_id}/appointments/${id}`,
+          {
+            called_status: 2,
+          }
+        )
+        window.location.reload()
+      } catch (error) {
+        return error
       }
     },
   },
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .font-color-gray {
   color: #6d7570;
 }
@@ -226,13 +276,23 @@ export default {
   color: #ff773e;
 }
 
+.delete-button {
+  color: #ff9800;
+}
+
+.modal {
+  &__overlay {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
 /* stylelint-disable */
 ::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-left.theme--light {
-  color: #f06364;
+  color: #ff9800;
 }
 
 ::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-right.theme--light {
-  color: #f06364;
+  color: #ff9800;
 }
 
 .pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {

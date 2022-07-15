@@ -146,7 +146,7 @@
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to="."
+              to=".?page=1"
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -269,7 +269,7 @@ export default {
         const response = await this.$axios.$get(
           `specialists/offices/${this.office_id}/staffs`
         )
-        this.staffs = response
+        this.staffs = response.staffs
       } catch (error) {
         return error
       }

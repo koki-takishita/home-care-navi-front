@@ -28,7 +28,12 @@
           </v-row>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
-              <v-btn id="modal" block depressed outlined @click="openModal"
+              <v-btn
+                id="modal"
+                block
+                depressed
+                outlined
+                @click="openModal(staff.id)"
                 ><div class="delete-button">削除</div></v-btn
               >
             </v-col>
@@ -59,7 +64,7 @@
             width="120"
             depressed
             outlined
-            @click="deleteStaff(staff.id)"
+            @click="deleteStaff(currentStaffId)"
             ><div class="delete-button">OK</div></v-btn
           >
         </Modal>
@@ -78,6 +83,14 @@
         スタッフを追加する
       </div>
     </v-btn>
+    <div class="mt-2 text-center">
+      <v-pagination
+        v-model="page"
+        :length="count"
+        color="#D9DEDE"
+        class="page-nation"
+      ></v-pagination>
+    </div>
   </v-col>
 </template>
 
@@ -90,10 +103,34 @@ export default {
       staffs: [],
       office_id: this.$route.params.office_id,
       office: [],
+      count: 0,
+      page: Number(this.$route.query.page) || 1,
+      offsetPage: 0,
       modalFlag: false,
+      currentStaffId: 0,
     }
   },
+  watch: {
+    page() {
+      this.$router.push({
+        path: `/specialists/office/${this.office_id}/staffs`,
+        query: {
+          page: this.page,
+        },
+      })
+      this.scrollTop()
+    },
+  },
   mounted() {
+    this.$watch(
+      'page',
+      function () {
+        this.getStaffs()
+      },
+      {
+        immediate: true,
+      }
+    )
     this.getOffice()
     this.getStaffs()
   },
@@ -104,27 +141,42 @@ export default {
           `specialists/offices/${this.office.id}`
         )
         if (response.id - this.office_id !== 0) {
-          this.$router.push(`/specialists/office/${response.id}/staffs`)
+          this.$router.push(`/specialists/office/${response.id}/staffs?page=1`)
         }
       } catch (error) {
         return error
       }
     },
-    openModal() {
+    openModal(id) {
+      this.currentStaffId = id
       this.modalFlag = true
     },
     closeModal() {
       this.modalFlag = false
     },
     async getStaffs() {
+      if (this.page > 1) {
+        this.offsetPage = this.page - 1
+      } else {
+        this.offsetPage = 0
+      }
       try {
         const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/staffs`
+          `specialists/offices/${this.office_id}/staffs?page=${this.offsetPage}`
         )
-        this.staffs = response
+        this.staffs = response.staffs
+        this.count = response.data_length
+        this.count = this.count / 10
+        this.count = Math.ceil(this.count)
+        if (this.count === 0) {
+          this.count = 1
+        }
       } catch (error) {
         return error
       }
+    },
+    scrollTop() {
+      this.$vuetify.goTo(0)
     },
     async deleteStaff(id) {
       this.modalFlag = false
@@ -166,4 +218,30 @@ export default {
 .delete-button {
   color: #ff9800;
 }
+
+/* stylelint-disable */
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-left.theme--light {
+  color: #ff9800;
+}
+
+::v-deep .v-pagination i.v-icon.notranslate.mdi.mdi-chevron-right.theme--light {
+  color: #ff9800;
+}
+
+.pa-2.remove-bottom-border-radius.v-card.v-sheet.v-sheet--outlined.theme--light.rounded-0 {
+  border: 0;
+}
+
+::v-deep button.v-pagination__navigation.v-pagination__navigation {
+  box-shadow: none;
+}
+
+::v-deep button.v-pagination__item {
+  box-shadow: none;
+}
+
+::v-deep button.v-pagination__item.v-pagination__item--active {
+  box-shadow: none;
+}
+/* stylelint-enable */
 </style>

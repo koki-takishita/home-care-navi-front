@@ -82,7 +82,7 @@
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to=".."
+              to="..?page=1"
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -160,7 +160,7 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         )
-        this.$router.push('..')
+        this.$router.push('..?page=1')
       } catch (error) {
         return error
       }

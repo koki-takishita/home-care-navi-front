@@ -31,14 +31,16 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
   it('ヘッダーからスタッフ登録画面に遷移する', async () => {
     await page.click('#menu')
     await page.evaluate(() => {
-      document.querySelector('a[href="/specialists/office/1/staffs"]').click()
+      document
+        .querySelector('a[href="/specialists/office/1/staffs?page=1"]')
+        .click()
     })
     await page.waitForTimeout(1000)
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
     await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs')
+    await expect(url).toContain('staffs?page=1')
     await expect(titleText).toContain('スタッフ情報')
   })
 
@@ -75,7 +77,7 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
     await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs')
+    await expect(url).toContain('staffs?page=1')
     await expect(titleText).toContain('スタッフ情報')
   })
 
@@ -115,7 +117,7 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
     await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs')
+    await expect(url).toContain('staffs?page=1')
     await expect(titleText).toContain('スタッフ情報')
   })
 
