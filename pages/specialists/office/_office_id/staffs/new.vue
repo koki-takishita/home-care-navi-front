@@ -29,6 +29,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名
             <v-text-field
+              id="name"
               v-model="name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
@@ -40,6 +41,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名(ふりがな)
             <v-text-field
+              id="kana"
               v-model="kana"
               :rules="[
                 formValidates.required,
@@ -55,6 +57,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ紹介文
             <v-textarea
+              id="introduction"
               v-model="introduction"
               :rules="[formValidates.introductionCountCheck]"
               class="mt-2 font-weight-regular"
@@ -65,6 +68,7 @@
             </v-textarea
           ></label>
           <v-btn
+            id="send"
             x-large
             block
             depressed
@@ -76,7 +80,7 @@
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to="."
+              to=".?page=1"
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -131,7 +135,7 @@ export default {
         await this.$axios.$post(`specialists/offices/${id}/staffs`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
-        this.$router.push('.')
+        this.$router.push('.?page=1')
       } catch (error) {
         return error
       }

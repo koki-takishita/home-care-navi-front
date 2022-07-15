@@ -9,7 +9,7 @@
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
         <NuxtLink
-          to="/specialists/login"
+          to="/specialists/login/"
           class="text-overline text-decoration-none link-color"
           >ケアマネージャーの方はこちら</NuxtLink
         >
@@ -20,7 +20,7 @@
       <h6 class="display-1 text-center text-h6 font-weight-black">ログイン</h6>
       <p class="mb-0 text-right">
         <NuxtLink
-          to="/specialists/login"
+          to="/specialists/login/"
           class="text-overline text-decoration-none link-color"
           >ケアマネージャーの方はこちら</NuxtLink
         >
@@ -33,6 +33,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >メールアドレス
             <v-text-field
+              id="email"
               v-model="loginInfo.email"
               :rules="[formValidates.required, formValidates.email]"
               outlined
@@ -45,6 +46,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >パスワード
             <v-text-field
+              id="password"
               v-model="loginInfo.password"
               :rules="[
                 formValidates.required,
@@ -69,6 +71,7 @@
 
           <v-card-actions class="pa-0">
             <v-btn
+              id="login"
               class="error pa-0 text-h6 d-none d-sm-block"
               block
               :disabled="!loginInfo.valid"
@@ -80,6 +83,7 @@
             >
 
             <v-btn
+              id="login"
               class="error pa-0 ma-0 text-h6 d-block d-sm-none"
               block
               :disabled="!loginInfo.valid"
