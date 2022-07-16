@@ -73,20 +73,16 @@
       </v-card-text>
     </v-card>
 
-    <v-card-text>
-      <v-row justify="center">
-        <v-btn
-          depressed
-          large
-          color="white"
-          class="mt-8 mb-10 text-center mx-auto"
-          to="#"
-          width="750"
-        >
-          <div class="delete-button font-weight-bold link-color">退会する</div>
-        </v-btn>
-      </v-row>
-    </v-card-text>
+    <v-card
+      flat
+      link
+      height="40"
+      width="750"
+      class="pt-2 text-center mx-auto mb-2"
+      to=""
+    >
+      <div class="delete-button font-weight-bold link-color">退会する</div>
+    </v-card>
   </v-col>
 </template>
 <script>
