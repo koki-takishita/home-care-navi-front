@@ -78,7 +78,6 @@ export default {
       return `${this.office.name}に戻る`
     },
     isMovile() {
-      console.log(this.$vuetify.breakpoint.smAndDown)
       return this.$vuetify.breakpoint.smAndDown
     },
   },
