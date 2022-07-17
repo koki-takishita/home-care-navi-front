@@ -2,13 +2,15 @@
   <v-stepper v-model="step" class="mb-4 mx-auto" max-width="750" outlined>
     <v-stepper-items>
       <v-stepper-content step="1" class="pa-0">
-        <ThankBackLink
-          class="mt-8 mb-4"
-          :object="office"
-          :text="linkText"
-          icon
-          @movePage="backPage"
-        />
+        <template v-if="!isMovile">
+          <ThankBackLink
+            class="mt-8 mb-4"
+            :object="office"
+            :text="linkText"
+            icon
+            @movePage="backPage"
+          />
+        </template>
         <ThankNew
           :office="office"
           :staffs="staffs"
@@ -18,13 +20,15 @@
         />
       </v-stepper-content>
       <v-stepper-content step="2" class="pa-0">
-        <ThankBackLink
-          class="mt-8 mb-4"
-          :object="office"
-          :text="linkText"
-          icon
-          @movePage="backPage"
-        />
+        <template v-if="!isMovile">
+          <ThankBackLink
+            class="mt-8 mb-4"
+            :object="office"
+            :text="linkText"
+            icon
+            @movePage="backPage"
+          />
+        </template>
         <ThankConfirm
           :office="office"
           :staff="selectedStaff"
@@ -72,6 +76,10 @@ export default {
   computed: {
     linkText() {
       return `${this.office.name}に戻る`
+    },
+    isMovile() {
+      console.log(this.$vuetify.breakpoint.smAndDown)
+      return this.$vuetify.breakpoint.smAndDown
     },
   },
   methods: {
