@@ -9,7 +9,7 @@
       <v-col cols="9">
         <v-row no-gutters>
           <v-col cols="12" sm="3">
-            <div class="">
+            <div>
               <v-card-title class="pa-0 font-weight-black text-subtitle-1">
                 {{ staff.name }}
               </v-card-title>
@@ -19,12 +19,7 @@
             </div>
           </v-col>
           <v-col cols="12" sm="9">
-            <v-card
-              id="staff-introduction"
-              class="set-line-height"
-              outlined
-              max-width="206"
-            >
+            <v-card id="staff-introduction" class="set-line-height" outlined>
               <font size="2" :color="grayColor"
                 >{{ ReadStaff.introduction }}
               </font>
