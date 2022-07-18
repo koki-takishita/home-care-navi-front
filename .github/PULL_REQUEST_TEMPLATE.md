@@ -45,29 +45,3 @@ git fetch && git checkout origin/<ここを変える>/<ここを変える>
 ## 参考になったサイト
 
 [サイトのタイトル](https://qiita.com/)
-
-## コマンド一覧
-
-- build
-
-```ruby
-docker-compose build
-```
-
-- コンテナリスタート
-
-```ruby
-docker-compose restart
-```
-
-- コンテナ入る
-
-```ruby
-docker-compose exec web bash
-```
-
-- コンソール入る
-
-```ruby
-rails c
-```
