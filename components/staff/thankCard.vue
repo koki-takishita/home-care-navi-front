@@ -91,7 +91,7 @@ export default {
       return msg
     },
     isIndexNumOne() {
-      if (this.ReadIndexNum === 0) {
+      if (this.ReadIndexNum === 0 && this.ReadCount > 1) {
         return true
       } else {
         return false
