@@ -1,8 +1,5 @@
 <template>
   <div :class="setSpaceY">
-    <p v-if="isIndexNumOne" class="ma-0 my-1 text-right" @click="toggleList">
-      {{ toggleMessage }}
-    </p>
     <v-card
       v-if="isIndexNumZero"
       min-height="61"
@@ -26,6 +23,9 @@
         </v-col>
       </v-row>
     </v-card>
+    <p v-if="isIndexNumOne" class="ma-0 text-right my-1" @click="toggleList">
+      {{ toggleMessage }}
+    </p>
   </div>
 </template>
 <script>
@@ -65,11 +65,21 @@ export default {
       return 'rgba(169, 240, 209, 16%)'
     },
     setSpaceY() {
-      if (this.indexNum > 0) {
-        return 'my-1'
-      } else {
-        return ''
+      let margin
+      if (this.ReadIndexNum === 0) {
+        if (this.$vuetify.breakpoint.xs) {
+          margin = 'mt-4'
+        } else {
+          margin = 'mt-n6'
+        }
+      } else if (
+        this.ReadOpen &&
+        this.ReadIndexNum > 0 &&
+        this.ReadCount - 1 !== this.ReadIndexNum
+      ) {
+        margin = 'mb-2'
       }
+      return margin
     },
     toggleMessage() {
       let msg
@@ -81,7 +91,7 @@ export default {
       return msg
     },
     isIndexNumOne() {
-      if (this.ReadIndexNum === 1) {
+      if (this.ReadIndexNum === 0) {
         return true
       } else {
         return false

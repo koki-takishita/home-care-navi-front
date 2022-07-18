@@ -1,6 +1,6 @@
 <template>
   <v-card id="staff-introduction" outlined>
-    <v-row no-gutters justify="end" class="mb-4">
+    <v-row no-gutters justify="end">
       <v-col cols="3">
         <v-avatar size="80">
           <img :src="ReadStaff.image" />
@@ -61,6 +61,16 @@ export default {
     },
     grayColor() {
       return '#6D7570'
+    },
+    /*
+        return "mt-n6"
+    */
+    setMargin() {
+      if (this.$vuetify.breakpoint.smAndUp) {
+        return 'mt-n6'
+      } else {
+        return ''
+      }
     },
   },
   methods: {
