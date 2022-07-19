@@ -23,8 +23,13 @@
         </v-col>
       </v-row>
     </v-card>
-    <p v-if="isIndexNumOne" class="ma-0 text-right my-1" @click="toggleList">
-      {{ toggleMessage }}
+    <p
+      v-if="isIndexNumOne"
+      class="ma-0 text-right my-1 text-caption font-weight-black"
+      @click="toggleList"
+    >
+      <font :color="linkColor">{{ toggleMessage }}</font>
+      <v-icon :color="linkColor" class="mt-n1">{{ toggleIcon }}</v-icon>
     </p>
   </div>
 </template>
@@ -64,6 +69,9 @@ export default {
     lightGreen() {
       return 'rgba(169, 240, 209, 16%)'
     },
+    linkColor() {
+      return '#F06364'
+    },
     setSpaceY() {
       let margin
       if (this.ReadIndexNum === 0) {
@@ -89,6 +97,15 @@ export default {
         msg = `ほかの${this.ReadCount - 1}件のお礼を見る`
       }
       return msg
+    },
+    toggleIcon() {
+      let icon
+      if (this.isOpen) {
+        icon = 'mdi-chevron-up'
+      } else {
+        icon = 'mdi-chevron-down'
+      }
+      return icon
     },
     isIndexNumOne() {
       if (this.ReadIndexNum === 0 && this.ReadCount > 1) {
