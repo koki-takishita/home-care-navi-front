@@ -2,8 +2,8 @@
   <v-card id="staff-introduction" outlined>
     <v-row no-gutters justify="end">
       <v-col cols="3">
-        <v-avatar size="80">
-          <img :src="ReadStaff.image" />
+        <v-avatar size="70">
+          <img :src="imageUrl" />
         </v-avatar>
       </v-col>
       <v-col cols="9">
@@ -58,6 +58,9 @@ export default {
     },
     ReadThanks() {
       return this.ReadStaff.thanks
+    },
+    imageUrl() {
+      return this.ReadStaff.image || require('~/assets/images/account_icon.svg')
     },
     grayColor() {
       return '#6D7570'
