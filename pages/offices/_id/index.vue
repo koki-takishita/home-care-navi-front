@@ -13,6 +13,7 @@
         />
         <office-detail-card :office="office" />
         <office-staff-card :office="office" :staffs="staffs" />
+        <office-outline />
       </v-col>
       <v-col cols="12" sm="12" md="6">
         <office-data-card-pc
@@ -40,7 +41,6 @@ export default {
         staffs: res.staffs,
       }
     } catch (error) {
-      // console.log(error)
       return error
     }
   },
