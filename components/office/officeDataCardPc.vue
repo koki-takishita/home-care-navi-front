@@ -86,7 +86,7 @@
 export default {
   props: {
     officeId: {
-      type: String,
+      type: Number,
       default() {
         return null
       },
