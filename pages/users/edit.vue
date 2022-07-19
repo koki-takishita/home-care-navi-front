@@ -59,11 +59,7 @@
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
                 placeholder="半角英数字8文字以上"
-                :rules="[
-                  formValidates.required,
-                  formValidates.typeCheckString,
-                  formValidates.password,
-                ]"
+                :rules="[formValidates.password]"
             /></label>
           </div>
 
@@ -76,11 +72,7 @@
                 dense
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
-                :rules="[
-                  formValidates.required,
-                  formValidates.typeCheckString,
-                  formValidates.confirmCheck,
-                ]"
+                :rules="[formValidates.confirmCheck]"
             /></label>
           </div>
 
@@ -174,8 +166,8 @@ export default {
     return {
       form: {
         password: '',
-
         password_confirmation: '',
+        test: 'false',
       },
       user: {
         name: '',
@@ -186,6 +178,7 @@ export default {
         valid: false,
       },
       formValidates: {
+        required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'
@@ -196,11 +189,15 @@ export default {
             /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
-        password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+        password: (value) => {
+          if (value === '' || (value.length >= 8 && value.length <= 16)) {
+            return true
+          } else {
+            return '8文字以上16文字未満で入力してください'
+          }
+        },
         confirmCheck: (value) =>
-          value === this.form.password || 'パスワードが一致しません',
+          value.match(this.form.password) || 'パスワードが一致しません',
         phoneNumber: (value) => {
           const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
           return format.test(value) || '正しい電話番号ではありません'
