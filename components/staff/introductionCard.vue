@@ -19,7 +19,11 @@
             </div>
           </v-col>
           <v-col cols="12" sm="8">
-            <v-card id="staff-introduction" class="set-line-height" outlined>
+            <v-card
+              id="staff-introduction"
+              class="set-line-height text-truncate"
+              outlined
+            >
               <font size="2" :color="grayColor"
                 >{{ ReadStaff.introduction }}
               </font>
