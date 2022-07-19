@@ -636,8 +636,12 @@ export default {
       }
       imageParams.append('comment', this.comment_1)
       //      imageParams.append('comment', this.comment_2)
+
       try {
-        await this.$axios.$post(`specialists/offices`, {
+        await this.$axios.$post(
+          `specialists/offices`,
+          officeParams
+          /* {
           office: {
             // officeの属性
             name: this.name,
@@ -662,9 +666,12 @@ export default {
           },
           image_comment: {
             // image_commentの属性
+            image: this.image_detail_1,
             comment: this.comment_1,
           },
-        })
+        }
+        */
+        )
         localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
