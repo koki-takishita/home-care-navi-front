@@ -18,7 +18,7 @@
             </p>
           </v-card-title>
           <v-card-text class="pa-0 text-caption min-line-height">
-            <p class="mb-0">{{ ReadThank.comments }}</p>
+            <p class="mb-0">{{ ReadThankComments }}</p>
           </v-card-text>
         </v-col>
       </v-row>
@@ -37,7 +37,7 @@
 export default {
   props: {
     thank: {
-      type: Object,
+      type: [Object, Number],
       default: null,
     },
     indexNum: {
@@ -65,6 +65,15 @@ export default {
     },
     ReadCount() {
       return this.count
+    },
+    ReadThankComments() {
+      let msg
+      if (typeof this.ReadThank === 'number') {
+        msg = 'お礼はまだ投稿されていません'
+      } else {
+        msg = this.ReadThank.comments
+      }
+      return msg
     },
     lightGreen() {
       return 'rgba(169, 240, 209, 16%)'
