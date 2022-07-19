@@ -59,7 +59,7 @@
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
                 placeholder="半角英数字8文字以上"
-                :rules="[formValidates.password]"
+                :rules="[formValidates.password, formValidates.passwordCheck]"
             /></label>
           </div>
 
@@ -72,7 +72,10 @@
                 dense
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
-                :rules="[formValidates.confirmCheck]"
+                :rules="[
+                  formValidates.confirmCheck,
+                  formValidates.passwordCheck,
+                ]"
             /></label>
           </div>
 
@@ -126,7 +129,7 @@
             <v-btn
               class="error pa-0 text-h6 d-none d-sm-block"
               block
-              :disabled="!user.valid"
+              :disabled="!user.valid || !test"
               max-width="520"
               min-width="343"
               height="60"
@@ -136,7 +139,7 @@
             <v-btn
               class="error pa-0 ma-0 text-h6 d-block d-sm-none"
               block
-              :disabled="!user.valid"
+              :disabled="!user.valid || !test"
               max-width="520"
               min-width="343"
               height="48"
@@ -167,7 +170,7 @@ export default {
       form: {
         password: '',
         password_confirmation: '',
-        test: 'false',
+        // test: 'false',
       },
       user: {
         name: '',
@@ -196,8 +199,15 @@ export default {
             return '8文字以上16文字未満で入力してください'
           }
         },
-        confirmCheck: (value) =>
-          value.match(this.form.password) || 'パスワードが一致しません',
+        // confirmCheck: (value) =>
+        //   value.match(this.form.password) || 'パスワードが一致しません',
+        confirmCheck: (value) => {
+          if (value === '' || value === this.form.password) {
+            return true
+          } else {
+            return 'パスワードが一致しません'
+          }
+        },
         phoneNumber: (value) => {
           const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
           return format.test(value) || '正しい電話番号ではありません'
@@ -210,6 +220,15 @@ export default {
         },
       },
     }
+  },
+  computed: {
+    test() {
+      if (this.form.password === this.form.password_confirmation) {
+        return true
+      } else {
+        return false
+      }
+    },
   },
   mounted() {
     this.getUsers()
