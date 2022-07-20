@@ -129,7 +129,7 @@
             <v-btn
               class="error pa-0 text-h6 d-none d-sm-block"
               block
-              :disabled="!user.valid || !test"
+              :disabled="!user.valid || !passwordCheck"
               max-width="520"
               min-width="343"
               height="60"
@@ -139,7 +139,7 @@
             <v-btn
               class="error pa-0 ma-0 text-h6 d-block d-sm-none"
               block
-              :disabled="!user.valid || !test"
+              :disabled="!user.valid || !passwordCheck"
               max-width="520"
               min-width="343"
               height="48"
@@ -222,7 +222,7 @@ export default {
     }
   },
   computed: {
-    test() {
+    passwordCheck() {
       if (this.form.password === this.form.password_confirmation) {
         return true
       } else {
