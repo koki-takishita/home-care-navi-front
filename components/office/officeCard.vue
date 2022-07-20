@@ -123,10 +123,6 @@ export default {
   },
   data() {
     return {
-      icon: {
-        state: 'fa-regular fa-star',
-        color: '#D9DEDE',
-      },
       week: ['日', '月', '火', '水', '木', '金', '土'],
       binaryNumber: [64, 32, 16, 8, 4, 2, 1],
       // binaryNumber: [1, 2, 4, 8, 16, 32, 64],
@@ -174,22 +170,6 @@ export default {
   methods: {
     moveShow() {
       this.$router.push({ path: `/offices/${this.office.id}` })
-    },
-    hoverActive() {
-      this.icon.color = '#F09C3C'
-    },
-    hoverRelease() {
-      // お気に入り済みなら、なにもしない
-      this.icon.color = '#D9DEDE'
-    },
-    toggleBookmark() {
-      // お気に入り済みなら、解除処理
-      // お気に入りしてないなら、登録処理
-      if (this.$auth.loggedIn) {
-        alert('お気に入り機能はまだ実装されていません。')
-      } else {
-        alert('お気に入り機能はログインしたら利用できます。')
-      }
     },
     conversionBinaryToHolidayArray(holiday) {
       const array = []

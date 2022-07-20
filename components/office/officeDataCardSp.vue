@@ -99,10 +99,6 @@ export default {
   },
   data() {
     return {
-      icon: {
-        state: 'mdi-star',
-        color: '#D9DEDE',
-      },
       week: ['日', '月', '火', '水', '木', '金', '土'],
       binaryNumber: [64, 32, 16, 8, 4, 2, 1],
     }
