@@ -2,17 +2,12 @@
   <v-card class="md-over-no" tile>
     <v-card-title class="py-2 px-3 d-flex flex-nowrap">
       <h3 class="set-max-layout">{{ office.name }}</h3>
-      <v-avatar
-        color="#F5F7F7"
-        class="ml-auto"
-        @mouseover="hoverActive"
-        @mouseleave="hoverRelease"
-        @click.stop="toggleBookmark"
-      >
-        <v-icon large :color="switchIconColor(icon.color)">{{
-          icon.state
-        }}</v-icon>
-      </v-avatar>
+      <office-bookmark-btn
+        :bookmark="bookmark"
+        :office-id="officeId"
+        @grandChild-event-submit-bookmark="childEventSubmitBookmark"
+        @grandChild-event-destroy-bookmark="childEventDestroyBookmark"
+      />
     </v-card-title>
     <v-col cols="12">
       <div class="office-tel">
@@ -118,47 +113,6 @@ export default {
     },
   },
   methods: {
-    hoverActive() {
-      if (this.bookmark === null) {
-        this.icon.color = '#F09C3C'
-      } else {
-        return true
-      }
-    },
-    hoverRelease() {
-      if (this.bookmark === null) {
-        this.icon.color = '#D9DEDE'
-      } else {
-        return true
-      }
-    },
-    toggleBookmark() {
-      if (this.$auth.loggedIn) {
-        if (this.bookmark === null) {
-          // お気に入りしてないなら、登録処理
-          this.$emit('submitBookmark', this.officeId)
-        } else {
-          // お気に入り済みなら、解除処理
-          this.$emit('destroyBookmark', this.officeId, this.bookmark.id)
-        }
-      } else {
-        alert('お気に入り機能はログインしたら利用できます。')
-      }
-    },
-    switchIconColor(item) {
-      if (this.bookmark === null) {
-        return item
-      } else {
-        const array = Object.entries(this.bookmark).map(([key, value]) => ({
-          key,
-          value,
-        }))
-        if (array.length === 0) {
-          return item
-        }
-        return '#F09C3C'
-      }
-    },
     goAppointmentsPage() {
       if (!this.$auth.loggedIn) {
         return alert('ログインをする必要があります')
@@ -201,6 +155,12 @@ export default {
             return '#AEB5B2'
         }
       }
+    },
+    childEventSubmitBookmark(officeId) {
+      this.$emit('submit-bookmark', officeId)
+    },
+    childEventDestroyBookmark(officeId, bookmarkId) {
+      this.$emit('destroy-bookmark', officeId, bookmarkId)
     },
   },
 }
