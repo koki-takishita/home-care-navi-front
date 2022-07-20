@@ -17,6 +17,11 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログインしました'])
       redirect(loginInfo.redirectUrl)
+      if (loginInfo.user_type === 'specialist') {
+        store.commit('loginSpecialist')
+      } else if (loginInfo.user_type === 'customer') {
+        store.commit('loginCustomer')
+      }
       return response
     } catch (error) {
       return error

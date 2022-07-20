@@ -451,6 +451,7 @@
 <script>
 export default {
   layout: 'top',
+  middleware: 'authenticateSpecialist',
   data() {
     return {
       logoutInfo: {

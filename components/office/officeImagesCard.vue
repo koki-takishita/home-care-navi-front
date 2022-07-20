@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card tile height="338">
-      <v-img v-if="getImages !== null" :src="getImages[active]" height="338">
+      <v-img v-if="images !== null" :src="images[active]" height="338">
         <v-row>
           <v-col cols="6">
             <v-btn
@@ -38,15 +38,15 @@
       ></v-img>
     </v-card>
     <v-card class="sm-under-no" tile height="85">
-      <div v-if="getImages !== null" class="thumbnails">
+      <div v-if="images !== null" class="thumbnails">
         <li
-          v-for="index in getImages.length"
+          v-for="index in images.length"
           :key="index"
           :class="{ current: active === index - 1 }"
           class="mx-1 mt-4"
           @click="current(index)"
         >
-          <v-img :src="getImages[index - 1]" height="50" width="70"></v-img>
+          <v-img :src="images[index - 1]" height="50" width="70"></v-img>
         </li>
       </div>
     </v-card>
@@ -65,7 +65,6 @@ export default {
   },
   data() {
     return {
-      getImages: this.images,
       active: 0, // 事業所画像が現在何番目か
     }
   },
