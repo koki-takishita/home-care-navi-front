@@ -604,8 +604,9 @@ export default {
         this.flags += 64
       }
       const officeParams = new FormData()
-      const detailParams = new FormData()
-      const imageParams = new FormData()
+
+      //      const detailParams = new FormData()
+      //       const imageParams = new FormData()
 
       officeParams.append('name', this.name)
       officeParams.append('title', this.title)
@@ -621,7 +622,7 @@ export default {
       officeParams.append('fax_number', this.fax_number)
       officeParams.append('post_code', this.post_code)
       officeParams.append('address', this.address)
-
+      /*
       detailParams.append('detail', this.detail)
       detailParams.append('service_type', this.service_type)
       detailParams.append('open_date', this.open_date)
@@ -636,23 +637,9 @@ export default {
       }
       imageParams.append('comment', this.comment_1)
       //      imageParams.append('comment', this.comment_2)
-
+*/
       try {
-        await this.$axios.$post(
-          `specialists/offices`,
-          officeParams
-          /* {
-          office: {
-            // officeの属性
-            name: this.name,
-            flags: this.flags,
-            business_day_detail: this.business_day_detail,
-            title: this.title,
-            phone_number: this.phone_number,
-            fax_number: this.fax_number,
-            post_code: this.post_code,
-            address: this.address,
-          },
+        await this.$axios.$post(`specialists/offices`, officeParams, {
           office_detail: {
             // office_detailの属性
             detail: this.detail,
@@ -664,14 +651,14 @@ export default {
             management: this.management,
             link: this.link,
           },
+          /*
           image_comment: {
             // image_commentの属性
             image: this.image_detail_1,
             comment: this.comment_1,
           },
-        }
-        */
-        )
+*/
+        })
         localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
