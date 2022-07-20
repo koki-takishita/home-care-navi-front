@@ -174,7 +174,6 @@ export default {
       return this.conversionBinaryToholidayArray(this.office.flags)
     },
   },
-  mounted() {},
   methods: {
     moveShow() {
       this.$router.push({ path: `/offices/${this.office.id}` })
