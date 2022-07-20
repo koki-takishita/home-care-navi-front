@@ -1,18 +1,22 @@
 export default async function ({ $auth, store, redirect, route }) {
+  const permissionPaths = [
+    `/users/login`,
+    '/users/login',
+    '/top',
+    '/offices',
+    '/users/privacy_policy',
+    '/users/terms',
+    '/users/contacts/new',
+    '/users/contacts/confirm',
+    '/users/contacts/success',
+    '/users/new',
+    '/users/send',
+    '/',
+  ]
   if (
-    route.path !== '/users/login' &&
-    route.path !== '/top' &&
-    route.path !== '/offices' &&
     route.name !== 'offices-id' &&
-    route.path !== '/users/privacy_policy' &&
-    route.path !== '/users/terms' &&
-    route.path !== '/users/contacts/new' &&
-    route.path !== '/users/contacts/confirm' &&
-    route.path !== '/users/contacts/success' &&
-    route.path !== '/users/new' &&
-    route.path !== '/users/send' &&
-    route.path !== '/' &&
-    store.state.customer !== 'true'
+    !permissionPaths.includes(route.path) &&
+    store.state.customer !== true
   ) {
     await $auth.logout()
     return redirect('/users/login')
