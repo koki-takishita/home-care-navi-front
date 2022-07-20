@@ -35,7 +35,7 @@ describe('ケアマネージャーが新規登録してログインできる', (
     url = await page.mainFrame().url()
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:8000/specialists/login/')
+    await expect(url).toEqual('http://localhost:8000/specialists/login')
     await expect(titleText).toEqual('ログイン')
   })
 

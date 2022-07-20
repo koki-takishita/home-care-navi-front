@@ -336,6 +336,7 @@
 <script>
 export default {
   layout: 'top',
+  middleware: 'authenticateCustomer',
   data() {
     return {
       logoutInfo: {

@@ -42,6 +42,7 @@ export default {
   css: [],
 
   plugins: [
+    { src: '~/plugins/persistedstate.js' },
     '~/plugins/axios.js',
     '~/plugins/apiToRequestOfAddress.js',
     '~plugins/dateFilter.js',
