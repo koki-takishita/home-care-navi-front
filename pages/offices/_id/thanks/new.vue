@@ -42,7 +42,6 @@
 <script>
 export default {
   layout: 'application',
-  middleware: 'auth',
   async asyncData({ params, $axios, query }) {
     const currentStep = query.step
     const officeId = params.id
