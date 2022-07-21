@@ -47,7 +47,10 @@ describe('ユーザーがフッターのリンクにすべてアクセスでき�
   })
   describe('ユーザーがログアウトをする', () => {
     it('ログアウトボタンを押し、ログアウトする', async () => {
-      await page.click('#header-logout')
+      await Promise.all([
+        page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
+        page.click('#header-logout'),
+      ])
 
       url = await page.mainFrame().url()
       text = await page.evaluate(() => document.body.textContent)

@@ -29,7 +29,7 @@
           </div>
           <v-row v-if="offices.length">
             <v-col v-for="(office, i) in offices" :key="i" cols="12" md="6">
-              <officeCard :office="office" />
+              <officeCard :office="office" @getOffice="getOffice" />
             </v-col>
           </v-row>
           <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
@@ -50,83 +50,6 @@
 import { mapActions } from 'vuex'
 export default {
   layout: 'application',
-  async asyncData({ $axios, query, redirect }) {
-    // console.log(query)
-    // ここにkeywordの内容も追記すればリロードも対応できる
-    const area = query.area || ''
-    const prefecture = query.prefecture || ''
-    const cities = query.cities || ''
-    const selectedList = query.selectedList || 0
-    const page = Number(query.page) || 1
-    const keywords = query.keywords || ''
-    const postCodes = query.postCodes || ''
-    let searchWind
-    let offsetPage
-    let offices
-    if (page > 1) {
-      offsetPage = page - 1
-    } else {
-      offsetPage = 0
-    }
-    try {
-      if (postCodes === '' && keywords === '') {
-        offices = await $axios.$get(
-          `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
-        )
-        searchWind = false
-      }
-
-      if (!!postCodes.length > 0 || !!keywords.length > 0) {
-        offices = await $axios.$get(
-          `offices?keywords=${encodeURI(
-            keywords
-          )}&postCodes=${postCodes}&page=${offsetPage}`
-        )
-        searchWind = true
-      }
-
-      if (offices.length === 0) {
-        alert('選択したエリアにオフィスは存在しません')
-        redirect('/top')
-      }
-
-      let searchIcon = { keyword: '' }
-      if (keywords.length > 0 && postCodes.length > 0) {
-        searchIcon.keyword = `${keywords},${postCodes}`
-      } else if (keywords.length > 0) {
-        searchIcon.keyword = `${keywords}`
-      } else if (postCodes.length > 0) {
-        searchIcon.keyword = `${postCodes}`
-      } else {
-        searchIcon = { keyword: '' }
-      }
-
-      let count = offices[0].count
-      count = count / 10 || 0
-      count = Math.ceil(count)
-      if (count === 0) {
-        count = 1
-      }
-
-      return {
-        offices,
-        area,
-        prefecture,
-        cities,
-        keywords,
-        postCodes,
-        selectedList,
-        count,
-        page,
-        searchWind,
-        searchIcon,
-      }
-    } catch (error) {
-      // リロードして消えるようだったら有効化 console.log(error)
-      // console.log(error)
-      return error
-    }
-  },
   data() {
     return {
       offices: [],
@@ -136,8 +59,8 @@ export default {
       cities: [],
       selectedList: [],
       location: false,
-      page: '',
-      count: '',
+      page: 0,
+      count: 0,
       keywords: '',
       postCodes: '',
       searchWind: '',
@@ -196,8 +119,86 @@ export default {
       }
     },
   },
+  mounted() {
+    this.getOffice()
+  },
   methods: {
     ...mapActions('areaData', ['resetStore']),
+    async getOffice() {
+      // console.log(query)
+      // ここにkeywordの内容も追記すればリロードも対応できる
+      const query = this.$route.query
+      const area = query.area || ''
+      const prefecture = query.prefecture || ''
+      const cities = query.cities || ''
+      const selectedList = query.selectedList || 0
+      const page = Number(query.page) || 1
+      const keywords = query.keywords || ''
+      const postCodes = query.postCodes || ''
+      let searchWind
+      let offsetPage
+      let offices
+      if (page > 1) {
+        offsetPage = page - 1
+      } else {
+        offsetPage = 0
+      }
+      try {
+        if (postCodes === '' && keywords === '') {
+          offices = await this.$axios.$get(
+            `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
+          )
+          searchWind = false
+        }
+        // OK
+        if (!!postCodes.length > 0 || !!keywords.length > 0) {
+          offices = await this.$axios.$get(
+            `offices?keywords=${encodeURI(
+              keywords
+            )}&postCodes=${postCodes}&page=${offsetPage}`
+          )
+          searchWind = true
+        }
+        // OK
+        if (offices.length === 0) {
+          alert('選択したエリアにオフィスは存在しません')
+          redirect('/top')
+        }
+        // OK
+        let searchIcon = { keyword: '' }
+        if (keywords.length > 0 && postCodes.length > 0) {
+          searchIcon.keyword = `${keywords},${postCodes}`
+        } else if (keywords.length > 0) {
+          searchIcon.keyword = `${keywords}`
+        } else if (postCodes.length > 0) {
+          searchIcon.keyword = `${postCodes}`
+        } else {
+          searchIcon = { keyword: '' }
+        }
+
+        let count = offices[0].count
+        count = count / 10 || 0
+        count = Math.ceil(count)
+        if (count === 0) {
+          count = 1
+        }
+        this.offices = offices
+        this.area = area
+        this.prefecture = prefecture
+        this.cities = cities
+        this.keywords = keywords
+        this.postCodes = postCodes
+        this.selectedList = selectedList
+        this.count = count
+        this.page = page
+        this.searchWind = searchWind
+        this.searchIcon = searchIcon
+      } catch (error) {
+        // リロードして消えるようだったら有効化 console.log(error)
+        // console.log(error)
+        return error
+      }
+    },
     areaSearching(query) {
       const prefecture = query.prefecture
       const cities = query.cities
