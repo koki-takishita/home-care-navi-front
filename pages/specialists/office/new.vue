@@ -604,9 +604,8 @@ export default {
         this.flags += 64
       }
       const officeParams = new FormData()
-
-      //      const detailParams = new FormData()
-      //       const imageParams = new FormData()
+      const detailParams = new FormData()
+      const imageParams = new FormData()
 
       officeParams.append('name', this.name)
       officeParams.append('title', this.title)
@@ -622,7 +621,7 @@ export default {
       officeParams.append('fax_number', this.fax_number)
       officeParams.append('post_code', this.post_code)
       officeParams.append('address', this.address)
-      /*
+
       detailParams.append('detail', this.detail)
       detailParams.append('service_type', this.service_type)
       detailParams.append('open_date', this.open_date)
@@ -636,10 +635,20 @@ export default {
         imageParams.append('image', this.image_detail_1)
       }
       imageParams.append('comment', this.comment_1)
-      //      imageParams.append('comment', this.comment_2)
-*/
+      imageParams.append('comment', this.comment_2)
       try {
-        await this.$axios.$post(`specialists/offices`, officeParams, {
+        await this.$axios.$post(`specialists/offices`, {
+          office: {
+            // officeの属性
+            name: this.name,
+            flags: this.flags,
+            business_day_detail: this.business_day_detail,
+            title: this.title,
+            phone_number: this.phone_number,
+            fax_number: this.fax_number,
+            post_code: this.post_code,
+            address: this.address,
+          },
           office_detail: {
             // office_detailの属性
             detail: this.detail,
@@ -651,13 +660,11 @@ export default {
             management: this.management,
             link: this.link,
           },
-          /*
           image_comment: {
             // image_commentの属性
             image: this.image_detail_1,
             comment: this.comment_1,
           },
-*/
         })
         localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
@@ -667,6 +674,47 @@ export default {
       this.flags = 0
     },
 
+    /*          const officeParams = new FormData()
+      for (let index = 0; index <= 5; index++) {
+        if (this.images[index] === undefined) {
+          continue
+        }
+        officeParams.append('officeImages[]', this.images[index])
+      }
+      const officeData = {
+        name: this.name,
+        title: this.title,
+        flags: this.flags,
+        business_day_detail: this.business_day_detail,
+        phone_number: this.phone_number,
+        fax_number: this.fax_number,
+        post_code: this.post_code,
+        address: this.address,
+      }
+      const jsonData = JSON.stringify(officeData)
+      officeParams.append("office", jsonData)
+      try {
+        await this.$axios.$post(`specialists/offices`, officeParams, {
+            office_detail: {
+            // office_detailの属性
+            detail: this.detail,
+            service_type: this.service_type,
+            open_date: this.open_date,
+            rooms: this.rooms,
+            requirement: this.requirement,
+            facility: this.facility,
+            management: this.management,
+            link: this.link,
+          },
+        })
+        localStorage.setItem('office_data', 'true')
+        this.$router.push('/specialists/office/1/edit')
+      } catch (error) {
+        return error
+      }
+      this.flags = 0
+    },
+*/
     save(date) {
       this.$refs.menu.save(date)
     },
