@@ -1,15 +1,15 @@
 <template>
   <v-card id="staff-introduction" outlined>
-    <v-row no-gutters justify="end" class="mb-4">
+    <v-row no-gutters justify="end">
       <v-col cols="3">
-        <v-avatar size="80">
-          <img :src="ReadStaff.image" />
+        <v-avatar size="70">
+          <img :src="imageUrl" />
         </v-avatar>
       </v-col>
       <v-col cols="9">
         <v-row no-gutters>
-          <v-col cols="12" sm="3">
-            <div class="">
+          <v-col cols="12" sm="4">
+            <div>
               <v-card-title class="pa-0 font-weight-black text-subtitle-1">
                 {{ staff.name }}
               </v-card-title>
@@ -18,12 +18,11 @@
               </div>
             </div>
           </v-col>
-          <v-col cols="12" sm="9">
+          <v-col cols="12" sm="8">
             <v-card
               id="staff-introduction"
-              class="set-line-height"
+              class="set-line-height text-truncate"
               outlined
-              max-width="206"
             >
               <font size="2" :color="grayColor"
                 >{{ ReadStaff.introduction }}
@@ -64,8 +63,18 @@ export default {
     ReadThanks() {
       return this.ReadStaff.thanks
     },
+    imageUrl() {
+      return this.ReadStaff.image || require('~/assets/images/account_icon.svg')
+    },
     grayColor() {
       return '#6D7570'
+    },
+    setMargin() {
+      if (this.$vuetify.breakpoint.smAndUp) {
+        return 'mt-n6'
+      } else {
+        return ''
+      }
     },
   },
   methods: {
