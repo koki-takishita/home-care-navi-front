@@ -33,7 +33,6 @@ export default {
   layout: 'application',
   asyncData({ query }) {
     const page = Number(query.page) || 1
-    console.log(page)
     return { page }
   },
   data() {
