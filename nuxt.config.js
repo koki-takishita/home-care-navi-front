@@ -79,7 +79,7 @@ export default {
   },
   auth: {
     redirect: {
-      login: false,
+      login: '/top',
       logout: false,
       callback: false,
       home: false,
