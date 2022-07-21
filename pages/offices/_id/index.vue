@@ -8,8 +8,8 @@
           :office="office"
           :staffs="staffs"
           :bookmark="bookmark"
-          @submitBookmark="submitBookmark"
-          @destroyBookmark="destroyBookmark"
+          @submit-bookmark="submitBookmark"
+          @destroy-bookmark="destroyBookmark"
         />
         <office-detail-card :office="office" />
         <office-staff-card :office="office" :staffs="staffs" />
@@ -21,8 +21,8 @@
           :office="office"
           :staffs="staffs"
           :bookmark="bookmark"
-          @submitBookmark="submitBookmark"
-          @destroyBookmark="destroyBookmark"
+          @submit-bookmark="submitBookmark"
+          @destroy-bookmark="destroyBookmark"
         />
       </v-col>
     </v-row>
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       office_id: this.$route.params.id,
-      bookmark: [],
+      bookmark: {},
     }
   },
   mounted() {
@@ -60,7 +60,7 @@ export default {
           `offices/${this.office_id}/bookmarks`
         )
         this.getAPI = response
-        this.bookmark = this.getAPI.bookmark.find((item) => item)
+        this.bookmark = this.getAPI.bookmark
       } catch (error) {
         return error
       }
