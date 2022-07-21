@@ -42,6 +42,7 @@ export default {
   css: [],
 
   plugins: [
+    { src: '~/plugins/persistedstate.js' },
     '~/plugins/axios.js',
     '~/plugins/apiToRequestOfAddress.js',
     '~plugins/dateFilter.js',
@@ -78,7 +79,7 @@ export default {
   },
   auth: {
     redirect: {
-      login: false,
+      login: '/top',
       logout: false,
       callback: false,
       home: false,
