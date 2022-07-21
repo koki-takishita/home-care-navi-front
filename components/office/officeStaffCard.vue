@@ -36,7 +36,7 @@ export default {
       this.$router.push(`/offices/${this.ReadOffice.id}/thanks/new`)
     },
     shouldLoginAlert() {
-      alert('お礼をするにはログインしてください')
+      alert('ログインをする必要があります')
     },
   },
 }
