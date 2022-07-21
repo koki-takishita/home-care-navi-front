@@ -488,7 +488,11 @@ export default {
 
   methods: {
     topPage() {
-      this.$router.push('/specialists/login')
+      if(this.$auth.loggedIn){
+        //TODO 予約状況へ遷移
+      }else{
+        this.$router.push('/specialists/login')
+      }
     },
   },
 }
