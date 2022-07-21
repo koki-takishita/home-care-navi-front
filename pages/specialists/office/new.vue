@@ -9,7 +9,6 @@
             <v-text-field
               id="name"
               v-model="name"
-              :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="ケアパークむかい風"
               outlined
@@ -21,7 +20,6 @@
             <v-text-field
               id="title"
               v-model="title"
-              :rules="[formValidates.required, formValidates.titleCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="事業所紹介タイトル"
               outlined
@@ -32,7 +30,6 @@
             >特徴詳細
             <v-textarea
               v-model="detail"
-              :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
               height="105"
@@ -44,10 +41,6 @@
           <v-file-input
             v-model="images"
             multiple
-            :rules="[
-              formValidates.fileLengthCheck,
-              formValidates.fileSizeCheck,
-            ]"
             truncate-length="30"
             accept="image/*"
             prepend-icon="mdi-camera"
@@ -61,79 +54,37 @@
           <v-row class="mt-2 mb-2 mx-auto">
             <v-col cols="1" class="mx-5"
               ><div class="ml-1">日</div>
-              <v-checkbox
-                id="日"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="日"
-                class="mr-3"
-              >
+              <v-checkbox id="日" v-model="selected" value="日" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >月
-              <v-checkbox
-                id="月"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="月"
-                class="mr-3"
-              >
+              <v-checkbox id="月" v-model="selected" value="月" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >火
-              <v-checkbox
-                id="火"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="火"
-                class="mr-3"
-              >
+              <v-checkbox id="火" v-model="selected" value="火" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >水
-              <v-checkbox
-                id="水"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="水"
-                class="mr-3"
-              >
+              <v-checkbox id="水" v-model="selected" value="水" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >木
-              <v-checkbox
-                id="木"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="木"
-                class="mr-3"
-              >
+              <v-checkbox id="木" v-model="selected" value="木" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >金
-              <v-checkbox
-                id="金"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="金"
-                class="mr-3"
-              >
+              <v-checkbox id="金" v-model="selected" value="金" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >土
-              <v-checkbox
-                id="土"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="土"
-                class="mr-3"
-              >
+              <v-checkbox id="土" v-model="selected" value="土" class="mr-3">
               </v-checkbox>
             </v-col>
           </v-row>
@@ -145,10 +96,6 @@
             <v-textarea
               id="business_day_detail"
               v-model="business_day_detail"
-              :rules="[
-                formValidates.required,
-                formValidates.businessDayDetailCountCheck,
-              ]"
               class="mt-2 font-weight-regular"
               placeholder="例｝ 第ニと第三土曜日は営業しています"
               height="105"
@@ -162,7 +109,6 @@
             <v-text-field
               id="phone_number"
               v-model="phone_number"
-              :rules="[formValidates.required, formValidates.phoneNumber]"
               class="mt-2 font-weight-regular"
               placeholder="080-1234-5678"
               outlined
@@ -174,7 +120,6 @@
             <v-text-field
               id="fax_number"
               v-model="fax_number"
-              :rules="[formValidates.faxNumber]"
               class="mt-2 mb-2 font-weight-regular"
               placeholder="090-8765-4321"
               outlined
@@ -185,7 +130,6 @@
         <v-text-field
           id="post_code"
           v-model="post_code"
-          :rules="[formValidates.required, formValidates.postCode]"
           outlined
           dense
           height="44"
@@ -203,7 +147,6 @@
             <v-text-field
               id="address"
               v-model="address"
-              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
@@ -218,10 +161,6 @@
             <v-text-field
               id="service_type"
               v-model="service_type"
-              :rules="[
-                formValidates.required,
-                formValidates.serviceTypeCountCheck,
-              ]"
               class="mt-2 font-weight-regular"
               placeholder="例）介護付きホーム"
               outlined
@@ -256,7 +195,6 @@
                     accept="image/*"
                     show-size
                     label="特徴画像1をアップロード"
-                    :rules="[formValidates.fileDetailSizeCheck]"
                     prepend-icon="mdi-camera"
                     class="image-form"
                     @change="detailImage_1Picked"
@@ -266,7 +204,6 @@
                   >特徴画像1の説明（任意）
                   <v-text-field
                     v-model="comment_1"
-                    :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像1に関する説明テキストを入れてください"
                     height="44"
@@ -293,7 +230,6 @@
                     accept="image/*"
                     show-size
                     label="特徴画像2をアップロード"
-                    :rules="[formValidates.fileDetailSizeCheck]"
                     prepend-icon="mdi-camera"
                     class="image-form"
                     @change="detailImage_2Picked"
@@ -303,7 +239,6 @@
                   >特徴画像2の説明（任意）
                   <v-text-field
                     v-model="comment_2"
-                    :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像2に関する説明テキストを入れてください"
                     height="44"
@@ -373,7 +308,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.requirementCountCheck]"
                   /></label>
                   <label class="font-color-gray font-weight-black text-caption"
                     >共用設備（任意）
@@ -384,7 +318,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.facilityCountCheck]"
                   /></label>
                   <label class="font-color-gray font-weight-black text-caption"
                     >経営・事業主体（任意）
@@ -395,7 +328,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.managementCountCheck]"
                   /></label>
                   <label class="font-color-gray font-weight-black text-caption"
                     >公式サイトURL（任意）
@@ -406,7 +338,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.linkNameCheck]"
                   /></label>
                 </v-form>
               </v-expansion-panel-content>
@@ -604,83 +535,13 @@ export default {
         this.flags += 64
       }
       const officeParams = new FormData()
-      const detailParams = new FormData()
-      const imageParams = new FormData()
-
-      officeParams.append('name', this.name)
-      officeParams.append('title', this.title)
-      for (let index = 0; index <= 5; index++) {
-        if (this.images[index] === undefined) {
-          continue
-        }
-        officeParams.append('images[]', this.images[index])
-      }
-      officeParams.append('flags', this.flags)
-      officeParams.append('business_day_detail', this.business_day_detail)
-      officeParams.append('phone_number', this.phone_number)
-      officeParams.append('fax_number', this.fax_number)
-      officeParams.append('post_code', this.post_code)
-      officeParams.append('address', this.address)
-
-      detailParams.append('detail', this.detail)
-      detailParams.append('service_type', this.service_type)
-      detailParams.append('open_date', this.open_date)
-      detailParams.append('rooms', this.rooms)
-      detailParams.append('requirement', this.requirement)
-      detailParams.append('facility', this.facility)
-      detailParams.append('management', this.management)
-      detailParams.append('link', this.link)
-
-      if (this.image_detail_1 !== null) {
-        imageParams.append('image', this.image_detail_1)
-      }
-      imageParams.append('comment', this.comment_1)
-      imageParams.append('comment', this.comment_2)
-      try {
-        await this.$axios.$post(`specialists/offices`, {
-          office: {
-            // officeの属性
-            name: this.name,
-            flags: this.flags,
-            business_day_detail: this.business_day_detail,
-            title: this.title,
-            phone_number: this.phone_number,
-            fax_number: this.fax_number,
-            post_code: this.post_code,
-            address: this.address,
-          },
-          office_detail: {
-            // office_detailの属性
-            detail: this.detail,
-            service_type: this.service_type,
-            open_date: this.open_date,
-            rooms: this.rooms,
-            requirement: this.requirement,
-            facility: this.facility,
-            management: this.management,
-            link: this.link,
-          },
-          image_comment: {
-            // image_commentの属性
-            image: this.image_detail_1,
-            comment: this.comment_1,
-          },
-        })
-        localStorage.setItem('office_data', 'true')
-        this.$router.push('/specialists/office/1/edit')
-      } catch (error) {
-        return error
-      }
-      this.flags = 0
-    },
-
-    /*          const officeParams = new FormData()
       for (let index = 0; index <= 5; index++) {
         if (this.images[index] === undefined) {
           continue
         }
         officeParams.append('officeImages[]', this.images[index])
       }
+      // TODO const detailData
       const officeData = {
         name: this.name,
         title: this.title,
@@ -691,22 +552,35 @@ export default {
         post_code: this.post_code,
         address: this.address,
       }
-      const jsonData = JSON.stringify(officeData)
-      officeParams.append("office", jsonData)
+      const officeJson = JSON.stringify(officeData)
+      // TODO append('detail', jsonDetailDate)
+      const officeDetail = {
+        detail: this.detail,
+        service_type: this.service_type,
+        open_date: this.open_date,
+        rooms: this.rooms,
+        requirement: this.requirement,
+        facility: this.facility,
+        management: this.management,
+        link: this.link,
+      }
+      const detailJson = JSON.stringify(officeDetail)
+      const detailImageComments = {
+        comment_1: this.comment_1,
+        comment_2: this.comment_2,
+      }
+      const imageCommentsJson = JSON.stringify(detailImageComments)
+      officeParams.append('office', officeJson)
+      officeParams.append('detail', detailJson)
+      officeParams.append('imageCommnets', imageCommentsJson)
+      if (this.image_detail_1 !== null) {
+        officeParams.append('detailImage1', this.image_detail_1)
+      }
+      if (this.image_detail_2 !== null) {
+        officeParams.append('detailImage2', this.image_detail_2)
+      }
       try {
-        await this.$axios.$post(`specialists/offices`, officeParams, {
-            office_detail: {
-            // office_detailの属性
-            detail: this.detail,
-            service_type: this.service_type,
-            open_date: this.open_date,
-            rooms: this.rooms,
-            requirement: this.requirement,
-            facility: this.facility,
-            management: this.management,
-            link: this.link,
-          },
-        })
+        await this.$axios.$post(`specialists/offices`, officeParams)
         localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
@@ -714,7 +588,6 @@ export default {
       }
       this.flags = 0
     },
-*/
     save(date) {
       this.$refs.menu.save(date)
     },
