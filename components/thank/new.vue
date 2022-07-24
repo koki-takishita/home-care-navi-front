@@ -80,7 +80,7 @@ export default {
         required: (value) => !!value || '必須項目です',
         objRequired: (value) => !!value.id || '必須項目です',
         strLength: (value) =>
-          value.length < 120 || '150文字以内で入力してください',
+          value.length < 120 || '120文字以内で入力してください',
       },
       valid: false,
     }
