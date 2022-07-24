@@ -4,7 +4,8 @@ import cookie from 'cookie'
 
 export default ({ store, req }) => {
   createPersistedState({
-    paths: ['specialist', 'customer'],
+    // 永続化したいstoreのkeyを指定する
+    paths: ['specialist', 'customer', 'client', 'accessToken', 'uid', 'expiry'],
     storage: {
       getItem: (key) => {
         // See https://nuxtjs.org/guide/plugins/#using-process-flags

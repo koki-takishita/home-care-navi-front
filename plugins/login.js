@@ -5,7 +5,7 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
 
   $axios.onRequest((config) => {
     if (config.url === '/login') {
-      setAuthInfoToHeader(config)
+      setAuthInfoToHeader(config, store)
     }
   })
 
@@ -29,9 +29,9 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
   }
 }
 
-function setAuthInfoToHeader(config) {
-  config.headers.client = window.localStorage.client
-  config.headers['access-token'] = window.localStorage.getItem('access-token')
-  config.headers.uid = window.localStorage.uid
-  config.headers.expiry = window.localStorage.expiry
+function setAuthInfoToHeader(config, store) {
+  config.headers.client = store.state.client
+  config.headers['access-token'] = store.state.accessToken
+  config.headers.uid = store.state.uid
+  config.headers.expiry = store.state.expiry
 }

@@ -143,19 +143,19 @@ export default {
   layout: 'application',
   props: {
     area: {
-      type: [String, Array],
+      type: String,
       default() {
         return undefined
       },
     },
     prefecture: {
-      type: [String, Array],
+      type: String,
       default() {
         return undefined
       },
     },
     cities: {
-      type: [String, Array],
+      type: String,
       default() {
         return undefined
       },
@@ -202,6 +202,31 @@ export default {
       stampPrefecture: '',
     }
   },
+  async fetch() {
+    if (this.propsUndefined()) {
+      this.e1 = 1
+      return
+    }
+    const list = []
+    for (let i = 0; i < this.selectedList.length; i++) {
+      list.push(Number(this.selectedList[i]))
+    }
+    this.selectedCityNum = list
+    if (!(this.area === undefined && this.area === '')) {
+      this.FetchPrefectures(decodeURI(this.area))
+    }
+    try {
+      const prefecture = this.prefecture
+      const res = await this.$apiToAddressJson.$get(
+        `json?method=getCities&prefecture=${prefecture}`
+      )
+      this.fetchCities = res.response.location
+      this.e1 = 3
+    } catch (error) {
+      // console.log(error)
+      return error
+    }
+  },
   computed: {
     ...mapGetters('areaData', ['getCurrentArea', 'getCurrentPrefecture']),
   },
@@ -223,35 +248,7 @@ export default {
       }
     },
   },
-  mounted() {
-    setTimeout(this.getOffice, 1000)
-  },
   methods: {
-    async getOffice() {
-      if (this.propsUndefined()) {
-        this.e1 = 1
-        return
-      }
-      const list = []
-      for (let i = 0; i < this.selectedList.length; i++) {
-        list.push(Number(this.selectedList[i]))
-      }
-      this.selectedCityNum = list
-      if (!(this.area === undefined && this.area === '')) {
-        this.FetchPrefectures(decodeURI(this.area))
-      }
-      try {
-        const prefecture = this.prefecture
-        const res = await this.$apiToAddressJson.$get(
-          `json?method=getCities&prefecture=${prefecture}`
-        )
-        this.fetchCities = res.response.location
-        this.e1 = 3
-      } catch (error) {
-        // console.log(error)
-        return error
-      }
-    },
     searchOffice() {
       const array = []
       for (let i = 0; i < this.selectedCityNum.length; i++) {

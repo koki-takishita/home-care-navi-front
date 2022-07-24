@@ -212,7 +212,7 @@ export default {
         await this.$axios.$post(`offices/${officeId}/bookmarks`, {
           office_id: officeId,
         })
-        this.$emit('getOffice')
+        this.$nuxt.refresh()
       } catch (error) {
         return error
       }
@@ -225,7 +225,7 @@ export default {
             office_id: officeId,
           }
         )
-        this.$emit('getOffice')
+        this.$nuxt.refresh()
       } catch (error) {
         return error
       }
