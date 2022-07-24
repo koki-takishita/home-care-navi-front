@@ -30,7 +30,7 @@
           <font :color="labelColor">お礼の内容</font>
           <v-textarea
             v-model="Comment"
-            :rules="[formValidates.required]"
+            :rules="[formValidates.required, formValidates.strLength]"
             class="font-weight-light mt-2"
             height="140"
             placeholder="入力してください"
@@ -79,6 +79,8 @@ export default {
       formValidates: {
         required: (value) => !!value || '必須項目です',
         objRequired: (value) => !!value.id || '必須項目です',
+        strLength: (value) =>
+          value.length < 120 || '150文字以内で入力してください',
       },
       valid: false,
     }
