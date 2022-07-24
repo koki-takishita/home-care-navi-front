@@ -488,7 +488,14 @@ export default {
 
   methods: {
     topPage() {
+      this.$auth.loggedIn ? this.goAppointmentsPage() : this.goLoginPage()
+    },
+    goLoginPage() {
       this.$router.push('/specialists/login')
+    },
+    goAppointmentsPage() {
+      // TODO ルーティングを specialists/office/appointmentsに変える
+      this.$router.push(`/specialists/office/${1}/appointments`)
     },
   },
 }
