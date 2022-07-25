@@ -190,7 +190,7 @@
                     />
                   </v-avatar>
                   <v-file-input
-                    v-model="image_detail_1"
+                    v-model="detail_images"
                     truncate-length="30"
                     accept="image/*"
                     show-size
@@ -225,7 +225,7 @@
                     />
                   </v-avatar>
                   <v-file-input
-                    v-model="image_detail_2"
+                    v-model="detail_images"
                     truncate-length="30"
                     accept="image/*"
                     show-size
@@ -441,7 +441,7 @@ export default {
       },
       name: '',
       title: '',
-      title_detail: '',
+      detail: '',
       images: [],
       flags: 0,
       business_day_detail: '',
@@ -449,15 +449,13 @@ export default {
       fax_number: '',
       post_code: '',
       address: '',
-      detail: '',
       service_type: '',
       input_image: null,
       uploadImageUrl_1: '',
-      image_detail_1: null,
-      text_detail_1: '',
+      detail_images: [],
+      comment_1: '',
       uploadImageUrl_2: '',
-      image_detail_2: null,
-      text_detail_2: '',
+      comment_2: '',
       open_date: '',
       activePicker: null,
       date: null,
@@ -566,7 +564,7 @@ export default {
           },
           image_comment: {
             // image_commentの属性
-            image: this.image_detail_1,
+            images: this.detail_images,
             comment: this.comment_1,
           },
         })
