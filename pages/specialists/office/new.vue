@@ -603,24 +603,42 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      const params = new FormData()
-      params.append('name', this.name)
-      params.append('title', this.title)
+      const officeParams = new FormData()
       for (let index = 0; index <= 5; index++) {
         if (this.images[index] === undefined) {
           continue
         }
-        params.append('images[]', this.images[index])
+        officeParams.append('officeImages[]', this.images[index])
       }
-      params.append('flags', this.flags)
-      params.append('business_day_detail', this.business_day_detail)
-      params.append('phone_number', this.phone_number)
-      params.append('fax_number', this.fax_number)
-      params.append('post_code', this.post_code)
-      params.append('address', this.address)
       try {
-        await this.$axios.$post(`specialists/offices`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+        await this.$axios.$post(`specialists/offices`, {
+          office: {
+            // officeの属性
+            name: this.name,
+            flags: this.flags,
+            business_day_detail: this.business_day_detail,
+            title: this.title,
+            phone_number: this.phone_number,
+            fax_number: this.fax_number,
+            post_code: this.post_code,
+            address: this.address,
+          },
+          office_detail: {
+            // office_detailの属性
+            detail: this.detail,
+            service_type: this.service_type,
+            open_date: this.open_date,
+            rooms: this.rooms,
+            requirement: this.requirement,
+            facility: this.facility,
+            management: this.management,
+            link: this.link,
+          },
+          image_comment: {
+            // image_commentの属性
+            image: this.image_detail_1,
+            comment: this.comment_1,
+          },
         })
         localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
