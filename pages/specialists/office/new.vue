@@ -538,36 +538,46 @@ export default {
         }
         officeParams.append('officeImages[]', this.images[index])
       }
+      // TODO const detailData
+      const officeData = {
+        name: this.name,
+        title: this.title,
+        flags: this.flags,
+        business_day_detail: this.business_day_detail,
+        phone_number: this.phone_number,
+        fax_number: this.fax_number,
+        post_code: this.post_code,
+        address: this.address,
+      }
+      const officeJson = JSON.stringify(officeData)
+      // TODO append('detail', jsonDetailDate)
+      const officeDetail = {
+        detail: this.detail,
+        service_type: this.service_type,
+        open_date: this.open_date,
+        rooms: this.rooms,
+        requirement: this.requirement,
+        facility: this.facility,
+        management: this.management,
+        link: this.link,
+      }
+      const detailJson = JSON.stringify(officeDetail)
+      const detailImageComments = {
+        comment_1: this.comment_1,
+        comment_2: this.comment_2,
+      }
+      const imageCommentsJson = JSON.stringify(detailImageComments)
+      officeParams.append('office', officeJson)
+      officeParams.append('detail', detailJson)
+      officeParams.append('imageCommnets', imageCommentsJson)
+      if (this.image_detail_1 !== null) {
+        officeParams.append('detailImage1', this.image_detail_1)
+      }
+      if (this.image_detail_2 !== null) {
+        officeParams.append('detailImage2', this.image_detail_2)
+      }
       try {
-        await this.$axios.$post(`specialists/offices`, {
-          office: {
-            // officeの属性
-            name: this.name,
-            flags: this.flags,
-            business_day_detail: this.business_day_detail,
-            title: this.title,
-            phone_number: this.phone_number,
-            fax_number: this.fax_number,
-            post_code: this.post_code,
-            address: this.address,
-          },
-          office_detail: {
-            // office_detailの属性
-            detail: this.detail,
-            service_type: this.service_type,
-            open_date: this.open_date,
-            rooms: this.rooms,
-            requirement: this.requirement,
-            facility: this.facility,
-            management: this.management,
-            link: this.link,
-          },
-          image_comment: {
-            // image_commentの属性
-            images: this.detail_images,
-            comment: this.comment_1,
-          },
-        })
+        await this.$axios.$post(`specialists/offices`, officeParams)
         localStorage.setItem('office_data', 'true')
         this.$router.push('/specialists/office/1/edit')
       } catch (error) {
