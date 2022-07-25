@@ -9,7 +9,6 @@
             <v-text-field
               id="name"
               v-model="name"
-              :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="ケアパークむかい風"
               outlined
@@ -21,7 +20,6 @@
             <v-text-field
               id="title"
               v-model="title"
-              :rules="[formValidates.required, formValidates.titleCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="事業所紹介タイトル"
               outlined
@@ -31,9 +29,7 @@
           <label class="font-color-gray font-weight-black text-caption"
             >特徴詳細
             <v-textarea
-              id="title_detail"
-              v-model="title_detail"
-              :rules="[formValidates.required, formValidates.textCountCheck]"
+              v-model="detail"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
               height="105"
@@ -45,10 +41,6 @@
           <v-file-input
             v-model="images"
             multiple
-            :rules="[
-              formValidates.fileLengthCheck,
-              formValidates.fileSizeCheck,
-            ]"
             truncate-length="30"
             accept="image/*"
             prepend-icon="mdi-camera"
@@ -62,79 +54,37 @@
           <v-row class="mt-2 mb-2 mx-auto">
             <v-col cols="1" class="mx-5"
               ><div class="ml-1">日</div>
-              <v-checkbox
-                id="日"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="日"
-                class="mr-3"
-              >
+              <v-checkbox id="日" v-model="selected" value="日" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >月
-              <v-checkbox
-                id="月"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="月"
-                class="mr-3"
-              >
+              <v-checkbox id="月" v-model="selected" value="月" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >火
-              <v-checkbox
-                id="火"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="火"
-                class="mr-3"
-              >
+              <v-checkbox id="火" v-model="selected" value="火" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >水
-              <v-checkbox
-                id="水"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="水"
-                class="mr-3"
-              >
+              <v-checkbox id="水" v-model="selected" value="水" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >木
-              <v-checkbox
-                id="木"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="木"
-                class="mr-3"
-              >
+              <v-checkbox id="木" v-model="selected" value="木" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >金
-              <v-checkbox
-                id="金"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="金"
-                class="mr-3"
-              >
+              <v-checkbox id="金" v-model="selected" value="金" class="mr-3">
               </v-checkbox>
             </v-col>
             <v-col cols="1" class="mx-5"
               >土
-              <v-checkbox
-                id="土"
-                v-model="selected"
-                :rules="[formValidates.holidayLengthCheck]"
-                value="土"
-                class="mr-3"
-              >
+              <v-checkbox id="土" v-model="selected" value="土" class="mr-3">
               </v-checkbox>
             </v-col>
           </v-row>
@@ -146,10 +96,6 @@
             <v-textarea
               id="business_day_detail"
               v-model="business_day_detail"
-              :rules="[
-                formValidates.required,
-                formValidates.businessDayDetailCountCheck,
-              ]"
               class="mt-2 font-weight-regular"
               placeholder="例｝ 第ニと第三土曜日は営業しています"
               height="105"
@@ -163,7 +109,6 @@
             <v-text-field
               id="phone_number"
               v-model="phone_number"
-              :rules="[formValidates.required, formValidates.phoneNumber]"
               class="mt-2 font-weight-regular"
               placeholder="080-1234-5678"
               outlined
@@ -175,7 +120,6 @@
             <v-text-field
               id="fax_number"
               v-model="fax_number"
-              :rules="[formValidates.faxNumber]"
               class="mt-2 mb-2 font-weight-regular"
               placeholder="090-8765-4321"
               outlined
@@ -186,7 +130,6 @@
         <v-text-field
           id="post_code"
           v-model="post_code"
-          :rules="[formValidates.required, formValidates.postCode]"
           outlined
           dense
           height="44"
@@ -204,7 +147,6 @@
             <v-text-field
               id="address"
               v-model="address"
-              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
@@ -219,10 +161,6 @@
             <v-text-field
               id="service_type"
               v-model="service_type"
-              :rules="[
-                formValidates.required,
-                formValidates.serviceTypeCountCheck,
-              ]"
               class="mt-2 font-weight-regular"
               placeholder="例）介護付きホーム"
               outlined
@@ -257,7 +195,6 @@
                     accept="image/*"
                     show-size
                     label="特徴画像1をアップロード"
-                    :rules="[formValidates.fileDetailSizeCheck]"
                     prepend-icon="mdi-camera"
                     class="image-form"
                     @change="detailImage_1Picked"
@@ -265,16 +202,15 @@
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像1の説明（任意）
-                  <v-textarea
-                    v-model="text_detail_1"
-                    :rules="[formValidates.textDetailCountCheck]"
+                  <v-text-field
+                    v-model="comment_1"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像1に関する説明テキストを入れてください"
-                    height="105"
+                    height="44"
                     outlined
                     dense
                   >
-                  </v-textarea
+                  </v-text-field
                 ></label>
                 <v-sheet class="pa-3">
                   <v-avatar
@@ -294,7 +230,6 @@
                     accept="image/*"
                     show-size
                     label="特徴画像2をアップロード"
-                    :rules="[formValidates.fileDetailSizeCheck]"
                     prepend-icon="mdi-camera"
                     class="image-form"
                     @change="detailImage_2Picked"
@@ -302,16 +237,15 @@
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像2の説明（任意）
-                  <v-textarea
-                    v-model="text_detail_2"
-                    :rules="[formValidates.textDetailCountCheck]"
+                  <v-text-field
+                    v-model="comment_2"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像2に関する説明テキストを入れてください"
-                    height="105"
+                    height="44"
                     outlined
                     dense
                   >
-                  </v-textarea
+                  </v-text-field
                 ></label>
                 <v-form>
                   <label class="font-color-gray font-weight-black text-caption"
@@ -374,7 +308,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.requirementCountCheck]"
                   /></label>
                   <label class="font-color-gray font-weight-black text-caption"
                     >共用設備（任意）
@@ -385,7 +318,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.facilityCountCheck]"
                   /></label>
                   <label class="font-color-gray font-weight-black text-caption"
                     >経営・事業主体（任意）
@@ -396,7 +328,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.managementCountCheck]"
                   /></label>
                   <label class="font-color-gray font-weight-black text-caption"
                     >公式サイトURL（任意）
@@ -407,7 +338,6 @@
                       outlined
                       dense
                       height="44"
-                      :rules="[formValidates.linkNameCheck]"
                   /></label>
                 </v-form>
               </v-expansion-panel-content>
@@ -420,7 +350,7 @@
             depressed
             :disabled="!valid"
             color="warning"
-            @click="send"
+            @click="send()"
           >
             登録する
           </v-btn>
