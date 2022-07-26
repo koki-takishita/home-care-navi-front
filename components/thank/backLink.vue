@@ -8,7 +8,7 @@
     <v-icon v-if="iconFlag" size="20" :color="linkColor"
       >mdi-chevron-left</v-icon
     >
-    <font size="2" :color="linkColor">{{ linkText }}</font>
+    <font :size="textSize" :color="linkColor">{{ linkText }}</font>
   </v-card>
 </template>
 <script>
@@ -16,7 +16,7 @@ export default {
   props: {
     object: {
       type: Object,
-      required: true,
+      default: null,
     },
     text: {
       type: String,
@@ -25,6 +25,10 @@ export default {
     icon: {
       type: Boolean,
       default: false,
+    },
+    size: {
+      type: Number,
+      default: 2,
     },
   },
   computed: {
@@ -39,6 +43,9 @@ export default {
     },
     iconFlag() {
       return this.icon
+    },
+    textSize() {
+      return this.size
     },
   },
   methods: {
