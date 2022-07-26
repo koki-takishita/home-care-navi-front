@@ -1,51 +1,68 @@
 <template>
   <v-col cols="12" md="8" lg="7" xl="7" class="mx-auto">
-    <h3>スタッフ情報</h3>
+    <h3>利用者情報管理</h3>
     <v-row class="mt-4">
-      <v-col v-for="(staff, index) in staffs" :key="index" cols="12" md="6">
+      <v-col
+        v-for="(care_recipient, index) in care_recipients"
+        :key="index"
+        cols="12"
+        md="6"
+      >
         <v-card class="mx-auto mb-4">
           <v-row>
             <v-avatar size="80" color="grey lighten-3" class="ml-5 mt-3 mr-0">
               <v-img
-                v-if="staff.image_url !== null"
-                :src="staff.image_url"
+                v-if="care_recipient.image_url !== null"
+                :src="care_recipient.image_url"
               ></v-img>
               <v-icon v-else size="60" color="white">mdi-account</v-icon>
             </v-avatar>
             <v-col cols="8" class="ml-0">
               <h3 class="name-limit">
-                {{ staff.name }}
+                {{ care_recipient.name }}&nbsp;&nbsp;({{ care_recipient.age }})
               </h3>
-              <div
-                class="font-color-gray font-weight-black text-caption name-limit"
-              >
-                {{ staff.kana }}
+              <div class="font-color-gray text-caption name-limit">
+                {{ care_recipient.kana }}
               </div>
-              <div class="mt-2 font-color-gray introduction-limit">
-                {{ staff.introduction }}
+              <div class="font-color-gray text-caption name-limit mt-2">
+                〒{{ care_recipient.post_code }}
+              </div>
+              <div class="font-color-gray text-caption name-limit">
+                {{ care_recipient.address }}
+              </div>
+              <div class="font-color-gray text-caption name-limit mt-2 mb-2">
+                家族情報&nbsp;:&nbsp;{{ care_recipient.family }}
               </div>
             </v-col>
           </v-row>
+          <div
+            class="font-color-gray font-weight-black text-caption name-limit ml-3 mb-2"
+          >
+            担当スタッフ&nbsp;:&nbsp;{{ care_recipient.staff.name }}
+          </div>
           <v-row>
             <v-col cols="4" class="pl-6 pr-0">
               <v-btn
-                id="modal"
                 block
                 depressed
                 outlined
-                @click="openModal(staff.id)"
-                ><div class="delete-button">削除</div></v-btn
+                color="blue-grey lighten-4"
+                @click="openModal(care_recipient.id)"
+                ><div class="delete-button font-weight-bold">削除</div></v-btn
               >
             </v-col>
             <v-col cols="8" class="pr-6">
               <v-btn
-                id="edit"
                 block
                 depressed
                 color="warning"
-                :to="`staffs/${staff.id}/edit`"
+                :to="`care-recipients/${care_recipient.id}/edit`"
+                class="font-weight-bold"
                 >編集する</v-btn
               >
+              <v-col v-for="(staff, i) in staffs" :key="i" cols="12" md="6">
+                {{ staff.name }}
+              </v-col>
             </v-col>
           </v-row>
         </v-card>
@@ -64,7 +81,7 @@
             width="120"
             depressed
             outlined
-            @click="deleteStaff(currentStaffId)"
+            @click="deleteCareRecipients(currentCareRecipientId)"
             ><div class="delete-button">OK</div></v-btn
           >
         </Modal>
@@ -76,11 +93,11 @@
       large
       color="white"
       class="mt-8 mb-10"
-      to="staffs/new"
+      to="care-recipients/new"
     >
-      <div class="delete-button">
+      <div class="delete-button font-weight-bold">
         <v-icon class="mb-1">mdi-plus</v-icon>
-        スタッフを追加する
+        利用者を追加する
       </div>
     </v-btn>
     <div class="mt-2 text-center">
@@ -98,22 +115,32 @@
 export default {
   layout: 'application_specialists',
   middleware: 'authentication',
+  async asyncData({ $axios, query }) {
+    try {
+      const res = await $axios.$get(
+        `specialists/offices/care_recipients?page=${query.page - 1}`
+      )
+      return {
+        care_recipients: res.care_recipients,
+        data_length: res.data_length,
+      }
+    } catch (error) {
+      return error
+    }
+  },
   data() {
     return {
-      staffs: [],
-      office_id: this.$route.params.office_id,
-      office: [],
       count: 0,
       page: Number(this.$route.query.page) || 1,
       offsetPage: 0,
+      currentCareRecipientId: 0,
       modalFlag: false,
-      currentStaffId: 0,
     }
   },
   watch: {
     page() {
       this.$router.push({
-        path: `/specialists/office/${this.office_id}/staffs`,
+        path: `/specialists/office/care-recipients`,
         query: {
           page: this.page,
         },
@@ -122,39 +149,23 @@ export default {
     },
   },
   mounted() {
-    this.$watch(
-      'page',
-      function () {
-        this.getStaffs()
-      },
-      {
-        immediate: true,
-      }
-    )
-    this.getOffice()
-    this.getStaffs()
+    this.calcCountAndOffsetPage()
   },
   methods: {
-    async getOffice() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office.id}`
-        )
-        if (response.id - this.office_id !== 0) {
-          this.$router.push(`/specialists/office/${response.id}/staffs?page=1`)
-        }
-      } catch (error) {
-        return error
+    calcCountAndOffsetPage() {
+      if (this.page > 1) {
+        this.offsetPage = this.page - 1
+      } else {
+        this.offsetPage = 0
+      }
+      this.count = this.data_length
+      this.count = this.count / 10
+      this.count = Math.ceil(this.count)
+      if (this.count === 0) {
+        this.count = 1
       }
     },
-    openModal(id) {
-      this.currentStaffId = id
-      this.modalFlag = true
-    },
-    closeModal() {
-      this.modalFlag = false
-    },
-    async getStaffs() {
+    async getCareRecipients() {
       if (this.page > 1) {
         this.offsetPage = this.page - 1
       } else {
@@ -162,9 +173,9 @@ export default {
       }
       try {
         const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/staffs?page=${this.offsetPage}`
+          `specialists/offices/care_recipients?page=${this.offsetPage}`
         )
-        this.staffs = response.staffs
+        this.care_recipients = response.care_recipients
         this.count = response.data_length
         this.count = this.count / 10
         this.count = Math.ceil(this.count)
@@ -175,15 +186,21 @@ export default {
         return error
       }
     },
+    openModal(id) {
+      this.currentCareRecipientId = id
+      this.modalFlag = true
+    },
+    closeModal() {
+      this.modalFlag = false
+    },
     scrollTop() {
+      this.getCareRecipients()
       this.$vuetify.goTo(0)
     },
-    async deleteStaff(id) {
+    async deleteCareRecipients(id) {
       this.modalFlag = false
       try {
-        await this.$axios.$delete(
-          `specialists/offices/${this.office_id}/staffs/${id}`
-        )
+        await this.$axios.$delete(`specialists/offices/care_recipients/${id}`)
         window.location.reload()
       } catch (error) {
         return error
@@ -217,6 +234,12 @@ export default {
 
 .delete-button {
   color: #ff9800;
+}
+
+.modal {
+  &__overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* stylelint-disable */
