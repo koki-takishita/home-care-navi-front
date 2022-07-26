@@ -111,6 +111,7 @@ export default {
         const response = await this.$axios.$put(`users`, {
           current_password: this.form.current_password,
         })
+        localStorage.setItem('current_password', this.form.current_password)
         this.$router.push('/users/edit')
         return response
       } catch (error) {

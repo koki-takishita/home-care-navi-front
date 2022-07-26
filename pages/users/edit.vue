@@ -236,6 +236,9 @@ export default {
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
     async edit() {
+      if (this.form.password_confirmation === '') {
+        this.form.password = localStorage.getItem('current_password')
+      }
       try {
         const response = await this.$axios.$put(`users`, {
           name: this.user.name,
@@ -250,6 +253,7 @@ export default {
         this.$router.push('/users/profile')
         return response
       } catch (error) {
+        this.form.password = ''
         return error
       }
     },
