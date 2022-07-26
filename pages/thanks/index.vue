@@ -6,7 +6,7 @@
       >
       <v-row v-if="thanksExist">
         <v-col v-for="thank in thanks" :key="thank.id" cols="12" md="6"
-          ><ThankCard :thank="thank" />
+          ><ThankCard :thank="thank" @clickDeleteBtn="refresh" />
         </v-col>
         <v-col cols="12">
           <v-pagination
@@ -31,9 +31,28 @@
 <script>
 export default {
   layout: 'application',
-  asyncData({ query }) {
+  async asyncData({ query, $axios }) {
     const page = Number(query.page) || 1
-    return { page }
+    const offsetPage = page - 1
+    try {
+      const res = await $axios.$get(`thanks?page=${offsetPage}`)
+      const thanks = res.thank
+      let count = res.count
+      count = count / 10 || 0
+      count = Math.ceil(count)
+      if (count === 0) {
+        count = 1
+      }
+
+      return {
+        page,
+        count,
+        thanks,
+      }
+    } catch (error) {
+      // console.log(error)
+      return error
+    }
   },
   data() {
     return {
@@ -63,10 +82,6 @@ export default {
       })
     },
   },
-  // TODO asyncDataに置き換え
-  mounted() {
-    this.fetchThanks(this.page)
-  },
   methods: {
     async fetchThanks(page = 1) {
       try {
@@ -84,6 +99,10 @@ export default {
         // console.log(error)
         return error
       }
+    },
+    refresh() {
+      this.$nuxt.refresh()
+      this.scrollTop()
     },
     moveTop() {
       this.$router.push('/')
