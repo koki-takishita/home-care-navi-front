@@ -9,30 +9,18 @@
 export default {
   layout: 'application_specialists',
   middleware: 'authentication',
-  data() {
-    return {
-      office_id: this.$route.params.office_id,
-      office: [],
+  async asyncData({ $axios }) {
+    try {
+      const res = await $axios.$get(`/specialists/offices`)
+      return {
+        office: res,
+      }
+    } catch (error) {
+      return error
     }
   },
-  mounted() {
-    this.getOffice()
-  },
-  methods: {
-    async getOffice() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office.id}`
-        )
-        if (response.id - this.office_id !== 0) {
-          this.$router.push(`/specialists/office/${response.id}/edit`)
-        } else {
-          this.office = response
-        }
-      } catch (error) {
-        return error
-      }
-    },
+  data() {
+    return {}
   },
 }
 </script>
