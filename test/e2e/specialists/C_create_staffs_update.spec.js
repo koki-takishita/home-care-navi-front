@@ -17,13 +17,12 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
   })
 
   it('事業所編集画面に遷移する', async () => {
-    await page.goto('http://localhost:8000/specialists/office/1/edit')
+    await page.goto('http://localhost:8000/specialists/office/edit')
     await page.waitForTimeout(1000)
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     text = await page.evaluate(() => document.body.textContent)
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('edit')
+    await expect(url).toEqual('http://localhost:8000/specialists/office/edit')
     await expect(text).toContain('事業所編集')
     await expect(text).toContain('ケアパーク')
   })
@@ -32,15 +31,16 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     await page.click('#menu')
     await page.evaluate(() => {
       document
-        .querySelector('a[href="/specialists/office/1/staffs?page=1"]')
+        .querySelector('a[href="/specialists/office/staffs?page=1"]')
         .click()
     })
     await page.waitForTimeout(1000)
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs?page=1')
+    await expect(url).toEqual(
+      'http://localhost:8000/specialists/office/staffs?page=1'
+    )
     await expect(titleText).toContain('スタッフ情報')
   })
 
@@ -49,8 +49,9 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs/new')
+    await expect(url).toEqual(
+      'http://localhost:8000/specialists/office/staffs/new'
+    )
     await expect(titleText).toContain('スタッフ登録')
   })
 
@@ -76,8 +77,9 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs?page=1')
+    await expect(url).toEqual(
+      'http://localhost:8000/specialists/office/staffs?page=1'
+    )
     await expect(titleText).toContain('スタッフ情報')
   })
 
@@ -94,9 +96,9 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     text = await page.evaluate(() => document.body.textContent)
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs')
-    await expect(url).toContain('edit')
+    await expect(url).toEqual(
+      'http://localhost:8000/specialists/office/staffs/edit'
+    )
     await expect(titleText).toContain('スタッフ情報編集')
   })
 
@@ -116,8 +118,9 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     url = await page.mainFrame().url()
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('staffs?page=1')
+    await expect(url).toEqual(
+      'http://localhost:8000/specialists/office/staffs?page=1'
+    )
     await expect(titleText).toContain('スタッフ情報')
   })
 
