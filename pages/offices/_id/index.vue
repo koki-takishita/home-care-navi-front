@@ -39,38 +39,19 @@ export default {
         office: res.office,
         officeImages: res.officeImages,
         staffs: res.staffs,
+        bookmark: res.bookmark,
       }
     } catch (error) {
       return error
     }
   },
-  data() {
-    return {
-      office_id: this.$route.params.id,
-      bookmark: {},
-    }
-  },
-  mounted() {
-    this.getBookmark()
-  },
   methods: {
-    async getBookmark() {
-      try {
-        const response = await this.$axios.$get(
-          `offices/${this.office_id}/bookmarks`
-        )
-        this.getAPI = response
-        this.bookmark = this.getAPI.bookmark
-      } catch (error) {
-        return error
-      }
-    },
     async submitBookmark(officeId) {
       try {
         await this.$axios.$post(`offices/${officeId}/bookmarks`, {
           office_id: officeId,
         })
-        this.getBookmark()
+        this.$nuxt.refresh()
       } catch (error) {
         return error
       }
@@ -83,7 +64,7 @@ export default {
             office_id: officeId,
           }
         )
-        this.getBookmark()
+        this.$nuxt.refresh()
       } catch (error) {
         return error
       }
