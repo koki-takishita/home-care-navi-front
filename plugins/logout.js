@@ -1,12 +1,11 @@
 export default function ({ $auth, redirect, store }, inject) {
   inject('logout', (logoutInfo) => {
     logout(logoutInfo)
-    // console.log(logoutInfo)
   })
   async function logout(logoutInfo) {
     try {
       const response = await $auth.logout(logoutInfo)
-      authDataDeleteToLocalStorage()
+      authDataDeleteToStore()
       // TODO 成功時にstoreにtype入れ込む
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログアウトしました'])
@@ -19,11 +18,7 @@ export default function ({ $auth, redirect, store }, inject) {
     }
   }
 
-  function authDataDeleteToLocalStorage() {
-    localStorage.removeItem('access-token')
-    localStorage.removeItem('expiry')
-    localStorage.removeItem('client')
-    localStorage.removeItem('uid')
-    localStorage.removeItem('office_data')
+  function authDataDeleteToStore() {
+    store.commit('clearAuthData')
   }
 }

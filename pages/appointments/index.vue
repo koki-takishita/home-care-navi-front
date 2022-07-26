@@ -18,8 +18,8 @@
             <v-row>
               <v-avatar tile width="120" height="90" class="ml-6 mt-4 mb-8">
                 <v-img
-                  v-if="office.image_url !== null"
-                  :src="office.image_url[0]"
+                  v-if="office.image.length !== 0"
+                  :src="office.image"
                 ></v-img>
                 <v-img
                   v-else
@@ -34,7 +34,7 @@
                 <v-row class="pt-1">
                   <v-icon small>mdi-account</v-icon>
                   <div class="my-auto pl-1">
-                    スタッフ数 {{ office.staffs.length }}人
+                    スタッフ数 {{ office.staffCount }}人
                   </div>
                 </v-row>
                 <v-row class="pt-1">
@@ -46,37 +46,21 @@
             <v-divider class="mx-3"></v-divider>
             <v-col class="mt-2 font-color-gray text-caption"
               >予約した日時：{{
-                office.appointments[office.appointments.length - 1].created_at
-                  | created_at
+                office.appointment.created_at | created_at
               }}</v-col
             >
             <v-col class="pb-0 font-color-gray font-weight-black text-caption"
               >面談希望日時</v-col
             >
             <v-col class="py-0"
-              >{{
-                office.appointments[office.appointments.length - 1].meet_date
-                  | meet_date
-              }}
-              {{
-                office.appointments[office.appointments.length - 1].meet_time
-              }}</v-col
+              >{{ office.appointment.meet_date | meet_date }}
+              {{ office.appointment.meet_time }}</v-col
             >
             <v-col class="text-center pt-4 pb-6 font-color-gray">
-              <div
-                v-if="
-                  office.appointments[office.appointments.length - 1]
-                    .called_status === 'need_call'
-                "
-              >
+              <div v-if="office.appointment.called_status === 'need_call'">
                 事業所からの連絡をお待ち下さい
               </div>
-              <div
-                v-else-if="
-                  office.appointments[office.appointments.length - 1]
-                    .called_status === 'called'
-                "
-              >
+              <div v-else-if="office.appointment.called_status === 'called'">
                 連絡済み
               </div>
               <div v-else>キャンセル済み</div>
@@ -84,7 +68,7 @@
           </v-card>
         </v-col>
       </v-col>
-      <v-col v-show="isShow">予約履歴はありません</v-col>
+      <v-col v-if="getAPI.length === 0">予約履歴はありません</v-col>
     </v-row>
   </v-col>
 </template>
@@ -93,29 +77,17 @@
 export default {
   layout: 'application',
   middleware: 'authentication',
-  data() {
-    return {
-      getAPI: [],
-      isShow: false,
+  async asyncData({ $axios }) {
+    try {
+      const res = await $axios.$get(`appointments`)
+      return {
+        getAPI: res,
+      }
+    } catch (error) {
+      return error
     }
   },
-  mounted() {
-    this.getAppointments()
-  },
   methods: {
-    async getAppointments() {
-      try {
-        const response = await this.$axios.$get(`appointments`)
-        this.getAPI = response
-        if (this.getAPI.length === 0) {
-          this.isShow = true
-        } else {
-          this.isShow = false
-        }
-      } catch (error) {
-        return error
-      }
-    },
     moveShow(id) {
       this.$router.push({ path: `/offices/${id}` })
     },

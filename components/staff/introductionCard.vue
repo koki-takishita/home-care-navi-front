@@ -61,6 +61,7 @@ export default {
       return this.staff
     },
     ReadThanks() {
+      if (typeof this.ReadStaff.thanks === 'number') return [0]
       return this.ReadStaff.thanks
     },
     imageUrl() {
