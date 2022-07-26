@@ -96,9 +96,10 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     text = await page.evaluate(() => document.body.textContent)
     ele = await page.$('h3')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual(
-      'http://localhost:8000/specialists/office/staffs/edit'
+    await expect(url).toContain(
+      'http://localhost:8000/specialists/office/staffs'
     )
+    await expect(url).toContain('edit')
     await expect(titleText).toContain('スタッフ情報編集')
   })
 
