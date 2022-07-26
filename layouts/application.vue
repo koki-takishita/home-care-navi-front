@@ -9,7 +9,6 @@
               <div class="red--text">
                 <p class="ma-0">
                   <img
-                    class=""
                     src="~/assets/images/header-icon.svg"
                     width="157.44"
                     height="28"
@@ -370,7 +369,7 @@ export default {
   },
   methods: {
     topPage() {
-      window.location.href = 'http://localhost:8000/top'
+      this.$router.push('/top')
     },
   },
 }
