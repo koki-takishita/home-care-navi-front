@@ -32,6 +32,7 @@ describe('ケアマネージャーが新規登録してログインできる', (
 
   it('ユーザーのログイン画面から、ケアマネージャーのログイン画面に遷移する', async () => {
     await page.click('a[href="/specialists/login/"]')
+    await page.waitForTimeout(1000)
     url = await page.mainFrame().url()
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
