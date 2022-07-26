@@ -251,7 +251,7 @@
                     />
                   </v-avatar>
                   <v-file-input
-                    v-model="detail_images"
+                    v-model="detail_image_1"
                     truncate-length="30"
                     accept="image/*"
                     show-size
@@ -288,7 +288,7 @@
                     />
                   </v-avatar>
                   <v-file-input
-                    v-model="detail_images"
+                    v-model="detail_image_2"
                     truncate-length="30"
                     accept="image/*"
                     show-size
@@ -519,12 +519,15 @@ export default {
       post_code: '',
       address: '',
       service_type: '',
+
       input_image: null,
       uploadImageUrl_1: '',
-      detail_images: [],
+      detail_image_1: null,
       comment_1: '',
       uploadImageUrl_2: '',
+      detail_image_2: null,
       comment_2: '',
+
       open_date: '',
       activePicker: null,
       date: null,
@@ -629,21 +632,18 @@ export default {
         facility: this.facility,
         management: this.management,
         link: this.link,
-      }
-      const detailJson = JSON.stringify(officeDetail)
-      const detailImageComments = {
         comment_1: this.comment_1,
         comment_2: this.comment_2,
       }
-      const imageCommentsJson = JSON.stringify(detailImageComments)
+      const detailJson = JSON.stringify(officeDetail)
+
       officeParams.append('office', officeJson)
       officeParams.append('detail', detailJson)
-      officeParams.append('imageCommnets', imageCommentsJson)
-      if (this.detail_images !== null) {
-        officeParams.append('detailImage1', this.detail_images)
+      if (this.detail_image_1 !== null) {
+        officeParams.append('detailImage', this.detail_image_1)
       }
-      if (this.detail_images !== null) {
-        officeParams.append('detailImage2', this.detail_images)
+      if (this.detail_image_2 !== null) {
+        officeParams.append('detailImage', this.detail_image_2)
       }
       try {
         await this.$axios.$post(`specialists/offices`, officeParams)
