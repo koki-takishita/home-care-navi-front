@@ -451,6 +451,7 @@
 <script>
 export default {
   layout: 'top',
+  middleware: 'authenticateSpecialist',
   data() {
     return {
       logoutInfo: {
@@ -488,7 +489,14 @@ export default {
 
   methods: {
     topPage() {
-      window.location.href = 'http://localhost:8000/specialists/login'
+      this.$auth.loggedIn ? this.goAppointmentsPage() : this.goLoginPage()
+    },
+    goLoginPage() {
+      this.$router.push('/specialists/login')
+    },
+    goAppointmentsPage() {
+      // TODO ルーティングを specialists/office/appointmentsに変える
+      this.$router.push(`/specialists/office/${1}/appointments`)
     },
   },
 }
