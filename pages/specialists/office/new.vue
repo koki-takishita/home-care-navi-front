@@ -603,6 +603,7 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
+
       const officeParams = new FormData()
       for (let index = 0; index <= 5; index++) {
         if (this.images[index] === undefined) {
@@ -610,6 +611,7 @@ export default {
         }
         officeParams.append('officeImages[]', this.images[index])
       }
+
       // TODO const detailData
       const officeData = {
         name: this.name,
@@ -623,6 +625,16 @@ export default {
       }
       const officeJson = JSON.stringify(officeData)
       // TODO append('detail', jsonDetailDate)
+
+      if (this.detail_image_1 !== null) {
+        officeParams.append('detailImage', this.detail_image_1)
+      }
+
+      /*      if (this.detail_image_2 !== null) {
+        officeParams.append('detailImage', this.detail_image_2)
+      }
+*/
+
       const officeDetail = {
         detail: this.detail,
         service_type: this.service_type,
@@ -639,12 +651,7 @@ export default {
 
       officeParams.append('office', officeJson)
       officeParams.append('detail', detailJson)
-      if (this.detail_image_1 !== null) {
-        officeParams.append('detailImage', this.detail_image_1)
-      }
-      if (this.detail_image_2 !== null) {
-        officeParams.append('detailImage', this.detail_image_2)
-      }
+
       try {
         await this.$axios.$post(`specialists/offices`, officeParams)
         localStorage.setItem('office_data', 'true')
