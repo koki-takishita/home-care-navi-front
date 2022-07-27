@@ -91,6 +91,12 @@ export default {
         rules.push(rule)
       }
 
+      if (this.comment.length > 0) {
+        const rule = (value) =>
+          value.length < 120 || '120文字以内で入力してください'
+        rules.push(rule)
+      }
+
       if (!this.notMatch) {
         const rule = () => this.notMatch || '更新してください'
         rules.push(rule)
