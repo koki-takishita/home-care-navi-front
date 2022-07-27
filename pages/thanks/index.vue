@@ -63,6 +63,7 @@ export default {
       })
     },
   },
+  // TODO asyncDataに置き換え
   mounted() {
     this.fetchThanks(this.page)
   },
