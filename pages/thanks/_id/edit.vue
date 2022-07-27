@@ -6,7 +6,7 @@
         <font :color="labelColor" size="2">事業所名</font>
       </p>
       <v-card-text class="text-subtitle-1 pt-2"
-        ><font color="Black">オフィスの名前が入る</font></v-card-text
+        ><font color="Black">{{ officeName }}</font></v-card-text
       >
       <v-form ref="form" v-model="valid">
         <div class="px-4">
@@ -14,7 +14,7 @@
             <font :color="labelColor">お礼をするスタッフ</font>
           </label>
           <v-card-text class="text-subtitle-1 pa-0 pt-2 mb-4"
-            ><font color="Black">スタッフの名前が入る</font></v-card-text
+            ><font color="Black">{{ staffName }}</font></v-card-text
           >
         </div>
         <div class="px-4">
@@ -44,28 +44,34 @@
           ><font size="4">更新する</font>
         </v-btn>
       </div>
+      <ThankBackLink
+        class="text-center mt-1"
+        text="もどる"
+        @movePage="goThankPage"
+      />
     </v-card>
   </v-container>
 </template>
 <script>
 export default {
   layout: 'application',
-  asyncData({ params }) {
+  async asyncData({ params, $axios }) {
     const id = params.id
-    /* TODO async data移行用 いきなりバリテーションがかからないver
-		const thank = {
-			comments: 'hogehoge'
-		}
-		const copyComment = thank.comments
-    return { id, thank, copyComment }
-		*/
-    return { id }
+    try {
+      const res = await $axios.$get(`thanks/${id}`)
+      const thank = res
+      const copyComment = res.comments
+      const officeName = res.office.name
+      const staffName = res.staff.name
+      return { thank, copyComment, officeName, staffName }
+    } catch (error) {
+      // console.log(error)
+      return error
+    }
   },
   data() {
     return {
       valid: false,
-      thank: {},
-      copyComment: '',
     }
   },
   computed: {
@@ -96,22 +102,7 @@ export default {
   watch: {
     comment: 'validateField',
   },
-  mounted() {
-    this.fetchThank()
-  },
   methods: {
-    async fetchThank() {
-      try {
-        const res = await this.$axios.$get(`thanks/${this.id}`)
-        this.thank = res
-        this.copyComment = res.comments
-      } catch (error) {
-        // console.log(error)
-        // TODO async dataでalert出すように設定
-        this.$router.push('/thanks')
-        return error
-      }
-    },
     async updateThank() {
       try {
         const id = this.thank.id
@@ -129,6 +120,9 @@ export default {
     },
     validateField() {
       this.$refs.form.validate()
+    },
+    goThankPage() {
+      this.$router.push('/thanks')
     },
   },
 }
