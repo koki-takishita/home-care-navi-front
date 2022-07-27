@@ -60,9 +60,6 @@
                 class="font-weight-bold"
                 >編集する</v-btn
               >
-              <v-col v-for="(staff, i) in staffs" :key="i" cols="12" md="6">
-                {{ staff.name }}
-              </v-col>
             </v-col>
           </v-row>
         </v-card>
@@ -117,12 +114,21 @@ export default {
   middleware: 'authentication',
   async asyncData({ $axios, query }) {
     try {
+      const page = Number(query.page) || 1
+      const offsetPage = page - 1
       const res = await $axios.$get(
-        `specialists/offices/care_recipients?page=${query.page - 1}`
+        `specialists/offices/care_recipients?page=${offsetPage}`
       )
+      let count = res.data_length
+      count = count / 10 || 0
+      count = Math.ceil(count)
+      if (count === 0) {
+        count = 1
+      }
       return {
+        page,
+        count,
         care_recipients: res.care_recipients,
-        data_length: res.data_length,
       }
     } catch (error) {
       return error
@@ -130,58 +136,37 @@ export default {
   },
   data() {
     return {
-      count: 0,
-      page: Number(this.$route.query.page) || 1,
-      offsetPage: 0,
       currentCareRecipientId: 0,
       modalFlag: false,
     }
   },
   watch: {
     page() {
+      this.getCareRecipients(this.page)
+      this.scrollTop()
       this.$router.push({
         path: `/specialists/office/care-recipients`,
         query: {
           page: this.page,
         },
       })
-      this.scrollTop()
     },
-  },
-  mounted() {
-    this.calcCountAndOffsetPage()
   },
   methods: {
-    calcCountAndOffsetPage() {
-      if (this.page > 1) {
-        this.offsetPage = this.page - 1
-      } else {
-        this.offsetPage = 0
-      }
-      this.count = this.data_length
-      this.count = this.count / 10
-      this.count = Math.ceil(this.count)
-      if (this.count === 0) {
-        this.count = 1
-      }
-    },
-    async getCareRecipients() {
-      if (this.page > 1) {
-        this.offsetPage = this.page - 1
-      } else {
-        this.offsetPage = 0
-      }
+    async getCareRecipients(page = 1) {
       try {
-        const response = await this.$axios.$get(
-          `specialists/offices/care_recipients?page=${this.offsetPage}`
+        const offsetPage = page - 1
+        const res = await this.$axios.$get(
+          `specialists/offices/care_recipients?page=${offsetPage}`
         )
-        this.care_recipients = response.care_recipients
-        this.count = response.data_length
-        this.count = this.count / 10
-        this.count = Math.ceil(this.count)
-        if (this.count === 0) {
-          this.count = 1
+        this.care_recipients = res.care_recipients
+        let count = res.data_length
+        count = count / 10
+        count = Math.ceil(count)
+        if (count === 0) {
+          count = 1
         }
+        this.count = count
       } catch (error) {
         return error
       }
@@ -194,17 +179,23 @@ export default {
       this.modalFlag = false
     },
     scrollTop() {
-      this.getCareRecipients()
       this.$vuetify.goTo(0)
     },
     async deleteCareRecipients(id) {
       this.modalFlag = false
       try {
         await this.$axios.$delete(`specialists/offices/care_recipients/${id}`)
-        window.location.reload()
+        this.refresh()
       } catch (error) {
         return error
       }
+    },
+    refresh() {
+      if (this.care_recipients.length <= 2) {
+        this.$router.push({ query: { page: this.page - 1 } })
+      }
+      this.$nuxt.refresh()
+      this.scrollTop()
     },
   },
 }
