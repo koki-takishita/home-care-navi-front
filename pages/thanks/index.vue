@@ -101,6 +101,11 @@ export default {
       }
     },
     refresh() {
+      // ページ上のすべてのお礼を削除したら、ページネーションを1つまえにずらす
+      // https://i.gyazo.com/08c761f92acc27d049db5263e04e88d7.mp4
+      if (this.thanks.length <= 2) {
+        this.$router.push({ query: { page: this.page - 1 } })
+      }
       this.$nuxt.refresh()
       this.scrollTop()
     },
