@@ -40,7 +40,7 @@
             </v-btn>
           </template>
           <v-card class="pa-3 pt-10">
-            <p class="text-center mb-8">本当に退会しますか？</p>
+            <p class="text-center mb-8">本当に削除しますか？</p>
             <v-row dense>
               <v-col cols="5" @click="dialog = false">
                 <v-btn block outlined :color="lightGray"
