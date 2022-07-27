@@ -496,7 +496,7 @@ export default {
     },
     goAppointmentsPage() {
       // TODO ルーティングを specialists/office/appointmentsに変える
-      this.$router.push(`/specialists/office/${1}/appointments`)
+      this.$router.push(`/specialists/office/appointments`)
     },
   },
 }
