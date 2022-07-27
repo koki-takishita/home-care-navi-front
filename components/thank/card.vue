@@ -32,7 +32,7 @@
         >
       </v-col>
       <v-col cols="8">
-        <v-btn block depressed height="40" class="error"
+        <v-btn block depressed height="40" class="error" @click="goEditPage"
           ><font class="font-weight-black">お礼を編集する</font>
         </v-btn>
       </v-col>
@@ -76,6 +76,12 @@ export default {
     },
     lightGray() {
       return '#D9DEDE'
+    },
+  },
+  methods: {
+    goEditPage() {
+      const id = this.ReadThank.id
+      this.$router.push(`thanks/${id}/edit`)
     },
   },
 }
