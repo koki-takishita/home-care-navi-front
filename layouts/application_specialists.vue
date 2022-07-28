@@ -55,16 +55,14 @@
                             </v-list-item>
                           </div>
                           <div v-else>
-                            <v-list-item to="/specialists/office/1/edit">
+                            <v-list-item to="/specialists/office/edit">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
                                 事業所情報編集</v-list-item-title
                               >
                             </v-list-item>
-                            <v-list-item
-                              to="/specialists/office/1/staffs?page=1"
-                            >
+                            <v-list-item to="/specialists/office/staffs?page=1">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
@@ -79,7 +77,7 @@
                               >
                             </v-list-item>
                             <v-list-item
-                              to="/specialists/office/1/appointments?page=1"
+                              to="/specialists/office/appointments?page=1"
                             >
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
@@ -88,7 +86,7 @@
                               </v-list-item-title>
                             </v-list-item>
                             <v-list-item
-                              to="/specialists/office/1/care-recipients?page=1"
+                              to="/specialists/office/care-recipients?page=1"
                             >
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
@@ -278,7 +276,7 @@
             <div v-else>
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
-                to="/specialists/office/1/edit"
+                to="/specialists/office/edit"
               >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
@@ -292,7 +290,7 @@
               <v-divider color="#D9DEDE"></v-divider>
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
-                to="/specialists/office/1/staffs?page=1"
+                to="/specialists/office/staffs?page=1"
               >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
@@ -317,7 +315,7 @@
               <v-divider color="#D9DEDE"></v-divider>
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
-                to="/specialists/office/1/appointments?page=1"
+                to="/specialists/office/appointments?page=1"
               >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
@@ -331,7 +329,7 @@
               <v-divider color="#D9DEDE"></v-divider>
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
-                to="/specialists/office/1/care-recipients?page=1"
+                to="/specialists/office/care-recipients?page=1"
               >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
