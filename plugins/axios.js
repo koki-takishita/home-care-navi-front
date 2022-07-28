@@ -17,23 +17,16 @@ const authError422and401 = function (store, error) {
   }
 }
 
-const windowObjectUndefined = function () {
-  return typeof window === 'undefined'
-}
-
-const setAuthInfoToHeader = function (config) {
-  if (!windowObjectUndefined()) {
-    const client = window.localStorage.client
-    const accessToken = window.localStorage.getItem('access-token')
-    const uid = window.localStorage.uid
-    const expiry = window.localStorage.expiry
-    if (client && accessToken && uid && expiry) {
-      config.headers.client = window.localStorage.client
-      config.headers['access-token'] =
-        window.localStorage.getItem('access-token')
-      config.headers.uid = window.localStorage.uid
-      config.headers.expiry = window.localStorage.expiry
-    }
+const setAuthInfoToHeader = function (config, store) {
+  const client = store.state.client
+  const accessToken = store.state.accessToken
+  const uid = store.state.uid
+  const expiry = store.state.expiry
+  if (client && accessToken && uid && expiry) {
+    config.headers.client = client
+    config.headers['access-token'] = accessToken
+    config.headers.uid = uid
+    config.headers.expiry = expiry
   }
 }
 
@@ -55,7 +48,7 @@ const error500 = function (store) {
   store.commit('catchErrorMsg/setMsg', msg)
 }
 
-const setAuthInfoToLocalStorage = function (response) {
+const setAuthInfoToStore = function (response, store) {
   // TODO メソッドの名前が適切でないかも、ログイン処理が成功したらみたいなのがほしい
   const headers = response.headers
   if (headers.office_data) {
@@ -67,11 +60,11 @@ const setAuthInfoToLocalStorage = function (response) {
     headers.expiry &&
     headers['access-token']
   ) {
-    // TODO ログイン処理が成功したら、localstorageに保存されるというのを表現する
-    localStorage.setItem('access-token', headers['access-token'])
-    localStorage.setItem('client', headers.client)
-    localStorage.setItem('uid', headers.uid)
-    localStorage.setItem('expiry', headers.expiry)
+    // TODO ログイン処理が成功したら、vuexに保存されるというのを表現する
+    store.commit('setAccessToken', headers['access-token'])
+    store.commit('setClient', headers.client)
+    store.commit('setUid', headers.uid)
+    store.commit('setExpiry', headers.expiry)
   }
 }
 
@@ -84,10 +77,10 @@ export default function ({ $axios, store }) {
 
   $axios.onResponse((response) => {
     store.commit('catchErrorMsg/clearMsg')
-    setAuthInfoToLocalStorage(response)
+    setAuthInfoToStore(response, store)
   })
 
   $axios.onRequest((config) => {
-    setAuthInfoToHeader(config)
+    setAuthInfoToHeader(config, store)
   })
 }

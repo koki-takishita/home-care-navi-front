@@ -5,7 +5,7 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
 
   $axios.onRequest((config) => {
     if (config.url === '/login') {
-      setAuthInfoToHeader(config)
+      setAuthInfoToHeader(config, store)
     }
   })
 
@@ -17,6 +17,11 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
       store.commit('catchErrorMsg/setType', 'success')
       store.commit('catchErrorMsg/setMsg', ['ログインしました'])
       redirect(loginInfo.redirectUrl)
+      if (loginInfo.user_type === 'specialist') {
+        store.commit('loginSpecialist')
+      } else if (loginInfo.user_type === 'customer') {
+        store.commit('loginCustomer')
+      }
       return response
     } catch (error) {
       return error
@@ -24,9 +29,9 @@ export default function ({ $auth, redirect, store, $axios }, inject) {
   }
 }
 
-function setAuthInfoToHeader(config) {
-  config.headers.client = window.localStorage.client
-  config.headers['access-token'] = window.localStorage.getItem('access-token')
-  config.headers.uid = window.localStorage.uid
-  config.headers.expiry = window.localStorage.expiry
+function setAuthInfoToHeader(config, store) {
+  config.headers.client = store.state.client
+  config.headers['access-token'] = store.state.accessToken
+  config.headers.uid = store.state.uid
+  config.headers.expiry = store.state.expiry
 }

@@ -9,7 +9,6 @@
               <div class="red--text">
                 <p class="ma-0">
                   <img
-                    class=""
                     src="~/assets/images/header-icon.svg"
                     width="157.44"
                     height="28"
@@ -28,7 +27,7 @@
                       >閲覧履歴</NuxtLink
                     >
                     <NuxtLink
-                      to="#"
+                      to="/bookmarks"
                       class="header-style text-overline mr-5 text-decoration-none"
                       >ブックマーク</NuxtLink
                     >
@@ -38,7 +37,7 @@
                       >予約履歴</NuxtLink
                     >
                     <NuxtLink
-                      to="#"
+                      to="/thanks"
                       class="header-style text-overline text-decoration-none mr-5"
                       >お礼投稿履歴</NuxtLink
                     >
@@ -195,7 +194,10 @@
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+            <v-list-item
+              class="pa-0 ma-0 px-6 py-4 min-height-20"
+              to="/bookmarks"
+            >
               <v-list-item-title
                 class="text-decoration-none text-body-2 navi-style"
               >
@@ -220,7 +222,7 @@
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="/thanks">
               <v-list-item-title
                 class="text-decoration-none text-body-2 navi-style"
               >
@@ -336,6 +338,7 @@
 <script>
 export default {
   layout: 'top',
+  middleware: 'authenticateCustomer',
   data() {
     return {
       logoutInfo: {
@@ -369,7 +372,7 @@ export default {
   },
   methods: {
     topPage() {
-      window.location.href = 'http://localhost:8000/top'
+      this.$router.push('/top')
     },
   },
 }
