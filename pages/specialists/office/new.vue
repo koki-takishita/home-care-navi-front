@@ -623,7 +623,7 @@ export default {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         localStorage.setItem('office_data', 'true')
-        this.$router.push('/specialists/office/1/edit')
+        this.$router.push('/specialists/office/edit')
       } catch (error) {
         return error
       }

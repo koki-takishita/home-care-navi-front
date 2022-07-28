@@ -1,7 +1,7 @@
 <template>
   <v-avatar
     color="#F5F7F7"
-    class="ml-auto"
+    class="ml-auto cursor-pointer"
     @mouseover="hoverActive"
     @mouseleave="hoverRelease"
     @click.stop="toggleBookmark"
@@ -91,3 +91,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
+</style>
