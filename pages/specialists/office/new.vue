@@ -627,11 +627,14 @@ export default {
       // TODO append('detail', jsonDetailDate)
 
       if (this.detail_image_1 !== null) {
-        officeParams.append('detailImage', this.detail_image_1)
+        officeParams.append('detailImages[]', this.detail_image_1)
+      }
+      if (this.detail_image_2 !== null) {
+        officeParams.append('detailImages[]', this.detail_image_2)
       }
 
-      /*      if (this.detail_image_2 !== null) {
-        officeParams.append('detailImage', this.detail_image_2)
+      /*      if (this.detail_image_1 !== null) {
+        officeParams.append('detailImage', this.detail_image_1)
       }
 */
 
