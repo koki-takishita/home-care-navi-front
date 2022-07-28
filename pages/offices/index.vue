@@ -75,7 +75,6 @@ export default {
         )
         searchWind = false
       }
-
       if (!!postCodes.length > 0 || !!keywords.length > 0) {
         offices = await $axios.$get(
           `offices?keywords=${encodeURI(
@@ -84,12 +83,10 @@ export default {
         )
         searchWind = true
       }
-
       if (offices.length === 0) {
         alert('選択したエリアにオフィスは存在しません')
         redirect('/top')
       }
-
       let searchIcon = { keyword: '' }
       if (keywords.length > 0 && postCodes.length > 0) {
         searchIcon.keyword = `${keywords},${postCodes}`
@@ -100,14 +97,12 @@ export default {
       } else {
         searchIcon = { keyword: '' }
       }
-
       let count = offices[0].count
       count = count / 10 || 0
       count = Math.ceil(count)
       if (count === 0) {
         count = 1
       }
-
       return {
         offices,
         area,
@@ -136,8 +131,8 @@ export default {
       cities: [],
       selectedList: [],
       location: false,
-      page: '',
-      count: '',
+      page: 0,
+      count: 0,
       keywords: '',
       postCodes: '',
       searchWind: '',
