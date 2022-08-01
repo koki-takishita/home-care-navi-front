@@ -3,7 +3,7 @@
     outlined
     tile
     min-height="418"
-    min-width="355"
+    :min-width="toggleClassByRoute"
     class="cursor-pointer"
     @click.native="moveShow()"
   >
@@ -125,10 +125,13 @@ export default {
     return {
       week: ['日', '月', '火', '水', '木', '金', '土'],
       binaryNumber: [64, 32, 16, 8, 4, 2, 1],
-      // binaryNumber: [1, 2, 4, 8, 16, 32, 64],
     }
   },
   computed: {
+    toggleClassByRoute() {
+      // localhost:8000以降のパスを取得する
+      return this.$route.path.includes('/bookmarks') ? '' : 355
+    },
     displayImg() {
       return this.office.image.length > 0
         ? this.office.image
@@ -212,7 +215,7 @@ export default {
         await this.$axios.$post(`offices/${officeId}/bookmarks`, {
           office_id: officeId,
         })
-        this.$nuxt.refresh()
+        this.switchCallMethodByRoute()
       } catch (error) {
         return error
       }
@@ -225,9 +228,16 @@ export default {
             office_id: officeId,
           }
         )
-        this.$nuxt.refresh()
+        this.switchCallMethodByRoute()
       } catch (error) {
         return error
+      }
+    },
+    switchCallMethodByRoute() {
+      if (this.$route.path.includes('/bookmarks')) {
+        this.$emit('child-event-refresh')
+      } else {
+        this.$nuxt.refresh()
       }
     },
   },

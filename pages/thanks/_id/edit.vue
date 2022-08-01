@@ -88,20 +88,10 @@ export default {
     },
     rules() {
       const rules = []
-      if (!this.comment) {
-        const rule = (value) => !!value || '必須項目です'
-        rules.push(rule)
-      }
-      if (this.comment.length > 0) {
-        const rule = (value) =>
-          value.length < 120 || '120文字以内で入力してください'
-        rules.push(rule)
-      }
-      if (!this.notMatch) {
-        const rule = () => this.notMatch || '更新してください'
-        rules.push(rule)
-      }
-
+      const requiredRule = (value) => !!value || '必須項目です'
+      rules.push(requiredRule)
+      const updateRule = () => this.notMatch || '更新してください'
+      rules.push(updateRule)
       return rules
     },
   },
