@@ -91,7 +91,7 @@ export default {
     changeStep(obj) {
       const staff = JSON.stringify(obj.staff) || '{}'
       const comment = obj.comment || ''
-      const age = obj.age || ''
+      const age = Number(obj.age) || 0
       const name = obj.name || ''
       const step = obj.step
       this.step = step

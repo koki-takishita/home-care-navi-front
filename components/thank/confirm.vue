@@ -137,6 +137,8 @@ export default {
       obj.step = 1
       obj.staff = this.ReadSelectedStaff
       obj.comment = this.ReadComment
+      obj.age = this.ReadAge
+      obj.name = this.ReadName
       this.$emit('moveConfirmPage', obj)
     },
   },
