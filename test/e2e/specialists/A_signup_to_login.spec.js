@@ -31,11 +31,14 @@ describe('ケアマネージャーが新規登録してログインできる', (
   })
 
   it('ユーザーのログイン画面から、ケアマネージャーのログイン画面に遷移する', async () => {
-    await page.click('a[href="/specialists/login/"]')
+    await Promise.all([
+      page.waitForNavigation({ timeout: 6000, waitUntil: 'load' }),
+      await page.click('a[href="/specialists/login/"]'),
+    ])
     url = await page.mainFrame().url()
     ele = await page.$('h6')
     titleText = await page.evaluate((elm) => elm.textContent, ele)
-    await expect(url).toEqual('http://localhost:8000/specialists/login/')
+    await expect(url).toEqual('http://localhost:8000/specialists/login')
     await expect(titleText).toEqual('ログイン')
   })
 

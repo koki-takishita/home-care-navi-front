@@ -1,8 +1,5 @@
 <template>
   <div :class="setSpaceY">
-    <p v-if="isIndexNumOne" class="ma-0 my-1 text-right" @click="toggleList">
-      {{ toggleMessage }}
-    </p>
     <v-card
       v-if="isIndexNumZero"
       min-height="61"
@@ -21,18 +18,26 @@
             </p>
           </v-card-title>
           <v-card-text class="pa-0 text-caption min-line-height">
-            <p class="mb-0">{{ ReadThank.comments }}</p>
+            <p class="mb-0">{{ ReadThankComments }}</p>
           </v-card-text>
         </v-col>
       </v-row>
     </v-card>
+    <p
+      v-if="isIndexNumOne"
+      class="ma-0 text-right my-1 text-caption font-weight-black"
+      @click="toggleList"
+    >
+      <font :color="linkColor">{{ toggleMessage }}</font>
+      <v-icon :color="linkColor" class="mt-n1">{{ toggleIcon }}</v-icon>
+    </p>
   </div>
 </template>
 <script>
 export default {
   props: {
     thank: {
-      type: Object,
+      type: [Object, Number],
       default: null,
     },
     indexNum: {
@@ -61,15 +66,37 @@ export default {
     ReadCount() {
       return this.count
     },
+    ReadThankComments() {
+      let msg
+      if (typeof this.ReadThank === 'number') {
+        msg = 'お礼はまだ投稿されていません'
+      } else {
+        msg = this.ReadThank.comments
+      }
+      return msg
+    },
     lightGreen() {
       return 'rgba(169, 240, 209, 16%)'
     },
+    linkColor() {
+      return '#F06364'
+    },
     setSpaceY() {
-      if (this.indexNum > 0) {
-        return 'my-1'
-      } else {
-        return ''
+      let margin
+      if (this.ReadIndexNum === 0) {
+        if (this.$vuetify.breakpoint.xs) {
+          margin = 'mt-4'
+        } else {
+          margin = 'mt-n6'
+        }
+      } else if (
+        this.ReadOpen &&
+        this.ReadIndexNum > 0 &&
+        this.ReadCount - 1 !== this.ReadIndexNum
+      ) {
+        margin = 'mb-2'
       }
+      return margin
     },
     toggleMessage() {
       let msg
@@ -80,8 +107,17 @@ export default {
       }
       return msg
     },
+    toggleIcon() {
+      let icon
+      if (this.isOpen) {
+        icon = 'mdi-chevron-up'
+      } else {
+        icon = 'mdi-chevron-down'
+      }
+      return icon
+    },
     isIndexNumOne() {
-      if (this.ReadIndexNum === 1) {
+      if (this.ReadIndexNum === 0 && this.ReadCount > 1) {
         return true
       } else {
         return false

@@ -98,55 +98,48 @@
 export default {
   layout: 'application_specialists',
   middleware: 'authentication',
+  async asyncData({ $axios, query }) {
+    try {
+      const page = Number(query.page) || 1
+      const offsetPage = page - 1
+      const res = await $axios.$get(
+        `specialists/offices/staffs?page=${offsetPage}`
+      )
+      const staffs = res.staffs
+      let count = res.data_length
+      count = count / 10 || 0
+      count = Math.ceil(count)
+      if (count === 0) {
+        count = 1
+      }
+      return {
+        page,
+        count,
+        staffs,
+      }
+    } catch (error) {
+      return error
+    }
+  },
   data() {
     return {
-      staffs: [],
-      office_id: this.$route.params.office_id,
-      office: [],
-      count: 0,
-      page: Number(this.$route.query.page) || 1,
-      offsetPage: 0,
       modalFlag: false,
       currentStaffId: 0,
     }
   },
   watch: {
     page() {
+      this.getStaffs(this.page)
+      this.scrollTop()
       this.$router.push({
-        path: `/specialists/office/${this.office_id}/staffs`,
+        path: `/specialists/office/staffs`,
         query: {
           page: this.page,
         },
       })
-      this.scrollTop()
     },
-  },
-  mounted() {
-    this.$watch(
-      'page',
-      function () {
-        this.getStaffs()
-      },
-      {
-        immediate: true,
-      }
-    )
-    this.getOffice()
-    this.getStaffs()
   },
   methods: {
-    async getOffice() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office.id}`
-        )
-        if (response.id - this.office_id !== 0) {
-          this.$router.push(`/specialists/office/${response.id}/staffs?page=1`)
-        }
-      } catch (error) {
-        return error
-      }
-    },
     openModal(id) {
       this.currentStaffId = id
       this.modalFlag = true
@@ -154,40 +147,42 @@ export default {
     closeModal() {
       this.modalFlag = false
     },
-    async getStaffs() {
-      if (this.page > 1) {
-        this.offsetPage = this.page - 1
-      } else {
-        this.offsetPage = 0
-      }
+    scrollTop() {
+      this.$vuetify.goTo(0)
+    },
+    async getStaffs(page = 1) {
       try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/staffs?page=${this.offsetPage}`
+        const offsetPage = page - 1
+        const res = await this.$axios.$get(
+          `specialists/offices/staffs?page=${offsetPage}`
         )
-        this.staffs = response.staffs
-        this.count = response.data_length
-        this.count = this.count / 10
-        this.count = Math.ceil(this.count)
-        if (this.count === 0) {
-          this.count = 1
+        this.staffs = res.staffs
+        let count = res.data_length
+        count = count / 10
+        count = Math.ceil(count)
+        if (count === 0) {
+          count = 1
         }
+        this.count = count
       } catch (error) {
         return error
       }
-    },
-    scrollTop() {
-      this.$vuetify.goTo(0)
     },
     async deleteStaff(id) {
       this.modalFlag = false
       try {
-        await this.$axios.$delete(
-          `specialists/offices/${this.office_id}/staffs/${id}`
-        )
-        window.location.reload()
+        await this.$axios.$delete(`specialists/offices/staffs/${id}`)
+        this.refresh()
       } catch (error) {
         return error
       }
+    },
+    refresh() {
+      if (this.staffs.length <= 2) {
+        this.$router.push({ query: { page: this.page - 1 } })
+      }
+      this.$nuxt.refresh()
+      this.scrollTop()
     },
   },
 }
