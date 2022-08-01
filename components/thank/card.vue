@@ -21,8 +21,8 @@
           <font :color="gray">{{ updateDate | created_at }}</font>
         </p>
       </div>
-      <div class="thank-comment mb-4">
-        <p class="mb-0">{{ ReadThank.comments }}</p>
+      <div class="thank-comment">
+        <textarea v-model="ReadThank.comments" disabled> </textarea>
       </div>
     </div>
     <v-row dense>
@@ -132,11 +132,21 @@ export default {
 }
 </script>
 <style scoped>
-.thank-comment {
-  height: 80px;
-}
-
 .thank-card {
   border: 0;
+}
+
+.thank-comment {
+  height: 100px;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-resizer {
+  display: none;
 }
 </style>
