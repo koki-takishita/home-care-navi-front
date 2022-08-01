@@ -658,7 +658,7 @@ export default {
       try {
         await this.$axios.$post(`specialists/offices`, officeParams)
         localStorage.setItem('office_data', 'true')
-        this.$router.push('/specialists/office/1/edit')
+        this.$router.push('/specialists/office/edit')
       } catch (error) {
         return error
       }

@@ -60,8 +60,7 @@ describe('ケアマネージャーが事業所を登録できる', () => {
     url = await page.mainFrame().url()
     text = await page.evaluate(() => document.body.textContent)
     // URLに含まれている事業所IDを取得できないため、部分一致でURLの確認を行う
-    await expect(url).toContain('http://localhost:8000/specialists/office')
-    await expect(url).toContain('edit')
+    await expect(url).toEqual('http://localhost:8000/specialists/office/edit')
     await expect(text).toContain('事業所編集')
     // 登録した事業所名が取得できているか
     await expect(text).toContain('ケアパーク')
