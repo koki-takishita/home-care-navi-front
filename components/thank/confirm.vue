@@ -8,6 +8,37 @@
       ><font color="Black">{{ ReadOffice.name }}</font></v-card-text
     >
     <div class="px-4">
+      <v-row>
+        <v-col>
+          <label class="font-color-gray font-weight-black text-subtitle-2">
+            <font :color="labelColor">利用者名</font>
+            <v-text-field
+              :value="ReadName"
+              hide-details
+              class="font-weight-light mt-2"
+              outlined
+              readonly
+            >
+            </v-text-field>
+          </label>
+        </v-col>
+        <v-col>
+          <label class="font-color-gray font-weight-black text-subtitle-2">
+            <font :color="labelColor">年齢</font>
+            <v-text-field
+              :value="ReadAge"
+              hide-details
+              type="number"
+              class="font-weight-light mt-2"
+              outlined
+              readonly
+            >
+            </v-text-field>
+          </label>
+        </v-col>
+      </v-row>
+    </div>
+    <div class="px-4">
       <label class="font-color-gray font-weight-black text-subtitle-2">
         <font :color="labelColor">お礼をするスタッフ</font>
         <p class="font-weight-light mt-2">
@@ -60,6 +91,14 @@ export default {
       type: String,
       default: null,
     },
+    age: {
+      type: Number,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
   },
   computed: {
     ReadOffice() {
@@ -70,6 +109,12 @@ export default {
     },
     ReadComment() {
       return this.comment
+    },
+    ReadAge() {
+      return this.age
+    },
+    ReadName() {
+      return this.name
     },
     replaceComment() {
       const str = String(this.ReadComment)
