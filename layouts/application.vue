@@ -357,6 +357,17 @@ export default {
       currentTime: new Date().getTime(),
     }
   },
+  watch: {
+    // ページがユーザー編集画面以外でパスワードがローカルストレージに残っていたら消す
+    $route($route) {
+      if (
+        typeof window.localStorage.current_password !== 'undefined' &&
+        $route.path !== '/users/edit'
+      ) {
+        localStorage.removeItem('current_password')
+      }
+    },
+  },
   mounted() {
     // もし、ローカルストレージに保存した値が有効期限を過ぎていたら、すべて削除
     if (

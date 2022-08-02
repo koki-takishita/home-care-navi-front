@@ -164,6 +164,18 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
+  // beforeRouteLeave(to, from, next) {
+  //   if (
+  //     window.confirm(
+  //       '入力内容が保存されない可能性があります。ページを離れますか？'
+  //     )
+  //   ) {
+  //     next()
+  //   } else {
+  //     this.form.password = ''
+  //     next(false)
+  //   }
+  // },
   layout: 'application',
   data() {
     return {
