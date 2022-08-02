@@ -240,7 +240,7 @@ export default {
         this.form.password = localStorage.getItem('current_password')
       }
       try {
-        const response = await this.$axios.$put(`users`, {
+        const response = await this.$axios.$put(`customer`, {
           name: this.user.name,
           email: this.user.email,
           password: this.form.password,
@@ -248,7 +248,7 @@ export default {
           phone_number: this.user.phone_number,
           post_code: this.user.post_code,
           address: this.user.address,
-          confirm_success_url: 'http://localhost:8000/top',
+          redirect_url: 'http://localhost:8000/top',
         })
         this.$router.push('/users/profile')
         return response

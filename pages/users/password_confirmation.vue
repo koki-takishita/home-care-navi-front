@@ -108,7 +108,7 @@ export default {
   methods: {
     async edit() {
       try {
-        const response = await this.$axios.$put(`users`, {
+        const response = await this.$axios.$post(`users`, {
           current_password: this.form.current_password,
         })
         localStorage.setItem('current_password', this.form.current_password)
