@@ -36,6 +36,6 @@ export default {
 </script>
 <style scoped>
 .base-width {
-  max-width: 990px;
+  max-width: 750px;
 }
 </style>
