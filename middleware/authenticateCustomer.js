@@ -12,6 +12,7 @@ export default async function ({ $auth, store, redirect, route }) {
     '/users/new',
     '/users/send',
     '/reset-passwords',
+    '/reset-passwords/edit',
     '/',
   ]
   if (
