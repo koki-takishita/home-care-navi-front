@@ -64,9 +64,6 @@ export default {
     ReadThank() {
       return this.thank
     },
-    ReadStaff() {
-      return this.ReadThank.staff
-    },
     updateDate() {
       return this.ReadThank.created_at
     },
