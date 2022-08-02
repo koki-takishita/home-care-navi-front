@@ -99,18 +99,6 @@ export default {
     comment: 'validateField',
   },
   methods: {
-    async fetchThank() {
-      try {
-        const res = await this.$axios.$get(`thanks/${this.id}`)
-        this.thank = res
-        this.copyComment = res.comments
-      } catch (error) {
-        // console.log(error)
-        // TODO async dataでalert出すように設定
-        this.$router.push('/thanks')
-        return error
-      }
-    },
     async updateThank() {
       try {
         const id = this.thank.id
