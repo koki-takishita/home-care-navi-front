@@ -3,7 +3,7 @@
     outlined
     tile
     min-height="418"
-    min-width="355"
+    :min-width="toggleClassByRoute"
     class="cursor-pointer"
     @click.native="moveShow()"
   >
@@ -18,15 +18,12 @@
       </v-chip>
       <v-card-title class="py-2 px-0 d-flex flex-nowrap">
         <h5 class="set-max-layout">{{ office.name }}</h5>
-        <v-avatar
-          color="#F5F7F7"
-          class="ml-auto"
-          @mouseover="hoverActive()"
-          @mouseleave="hoverRelease()"
-          @click.stop="toggleBookmark()"
-        >
-          <v-icon :color="icon.color">{{ icon.state }}</v-icon>
-        </v-avatar>
+        <office-bookmark-btn
+          :bookmark="office.bookmark"
+          :office-id="office.id"
+          @grandChild-event-submit-bookmark="submitBookmark"
+          @grandChild-event-destroy-bookmark="destroyBookmark"
+        />
       </v-card-title>
       <div class="d-flex">
         <v-img
@@ -126,16 +123,15 @@ export default {
   },
   data() {
     return {
-      icon: {
-        state: 'fa-regular fa-star',
-        color: '#D9DEDE',
-      },
       week: ['日', '月', '火', '水', '木', '金', '土'],
       binaryNumber: [64, 32, 16, 8, 4, 2, 1],
-      // binaryNumber: [1, 2, 4, 8, 16, 32, 64],
     }
   },
   computed: {
+    toggleClassByRoute() {
+      // localhost:8000以降のパスを取得する
+      return this.$route.path.includes('/bookmarks') ? '' : 355
+    },
     displayImg() {
       return this.office.image.length > 0
         ? this.office.image
@@ -171,40 +167,24 @@ export default {
       ]
     },
     holidayArray() {
-      return this.conversionBinaryToholidayArray(this.office.flags)
+      return this.conversionBinaryToHolidayArray(this.office.flags)
     },
   },
   methods: {
     moveShow() {
       this.$router.push({ path: `/offices/${this.office.id}` })
     },
-    hoverActive() {
-      this.icon.color = '#F09C3C'
-    },
-    hoverRelease() {
-      // お気に入り済みなら、なにもしない
-      this.icon.color = '#D9DEDE'
-    },
-    toggleBookmark() {
-      // お気に入り済みなら、解除処理
-      // お気に入りしてないなら、登録処理
-      if (this.$auth.loggedIn) {
-        alert('お気に入り機能はまだ実装されていません。')
-      } else {
-        alert('お気に入り機能はログインしたら利用できます。')
-      }
-    },
-    conversionBinaryToholidayArray(holiday) {
-      const arry = []
+    conversionBinaryToHolidayArray(holiday) {
+      const array = []
       this.binaryNumber.forEach((n) => {
         if (holiday >= n) {
           holiday = holiday - n
-          arry.push(1)
+          array.push(1)
         } else {
-          arry.push(0)
+          array.push(0)
         }
       })
-      return arry.reverse()
+      return array.reverse()
     },
     toggleSymbol(n) {
       return n === 1 ? 'mdi-close' : 'mdi-circle-outline'
@@ -228,6 +208,36 @@ export default {
           default:
             return '#AEB5B2'
         }
+      }
+    },
+    async submitBookmark(officeId) {
+      try {
+        await this.$axios.$post(`offices/${officeId}/bookmarks`, {
+          office_id: officeId,
+        })
+        this.switchCallMethodByRoute()
+      } catch (error) {
+        return error
+      }
+    },
+    async destroyBookmark(officeId, bookmarkId) {
+      try {
+        await this.$axios.$delete(
+          `offices/${officeId}/bookmarks/${bookmarkId}`,
+          {
+            office_id: officeId,
+          }
+        )
+        this.switchCallMethodByRoute()
+      } catch (error) {
+        return error
+      }
+    },
+    switchCallMethodByRoute() {
+      if (this.$route.path.includes('/bookmarks')) {
+        this.$emit('child-event-refresh')
+      } else {
+        this.$nuxt.refresh()
       }
     },
   },

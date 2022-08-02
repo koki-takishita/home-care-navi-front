@@ -2,21 +2,17 @@
   <div>
     <p class="mb-0 text-left link-width mx-auto">
       <NuxtLink
-        to=".."
+        to="."
         class="text-overline text-decoration-none link-color sm-under-no"
         >＜ スタッフ情報一覧にもどる</NuxtLink
       >
     </p>
     <v-card class="mx-auto mb-2 p-0" width="750">
-      <v-col cols="12"><h3>スタッフ情報編集</h3></v-col>
+      <v-col cols="12"><h3>スタッフ登録</h3></v-col>
       <v-form v-model="valid">
         <v-row>
           <v-avatar size="100" color="grey lighten-3" class="ml-6 my-4">
-            <v-img
-              v-if="staff.image_url !== null"
-              :src="staff.image_url"
-            ></v-img>
-            <v-icon v-else size="60" color="white">mdi-account</v-icon>
+            <v-icon size="70" color="white">mdi-account</v-icon>
           </v-avatar>
           <v-file-input
             v-model="image"
@@ -33,7 +29,8 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名
             <v-text-field
-              v-model="staff.name"
+              id="name"
+              v-model="name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="田中 太郎"
@@ -44,7 +41,8 @@
           <label class="font-color-gray font-weight-black text-caption"
             >スタッフ名(ふりがな)
             <v-text-field
-              v-model="staff.kana"
+              id="kana"
+              v-model="kana"
               :rules="[
                 formValidates.required,
                 formValidates.nameCountCheck,
@@ -60,7 +58,7 @@
             >スタッフ紹介文
             <v-textarea
               id="introduction"
-              v-model="staff.introduction"
+              v-model="introduction"
               :rules="[formValidates.introductionCountCheck]"
               class="mt-2 font-weight-regular"
               height="80"
@@ -78,11 +76,11 @@
             color="warning"
             @click="send"
           >
-            変更する
+            登録する
           </v-btn>
           <p class="mb-0 text-center">
             <NuxtLink
-              to="..?page=1"
+              to=".?page=1"
               class="text-overline text-decoration-none link-color"
               >もどる</NuxtLink
             >
@@ -114,53 +112,27 @@ export default {
         introductionCountCheck: (value) =>
           value.length <= 81 || '80文字以下で入力してください',
       },
-      office_id: this.$route.params.office_id,
-      staff_id: this.$route.params.staff_id,
+      name: '',
+      kana: '',
+      introduction: '',
       image: null,
       valid: false,
-      staff: {
-        name: '',
-        kana: '',
-        introduction: '',
-        image_url: '',
-      },
     }
   },
-  mounted() {
-    this.getStaff()
-  },
   methods: {
-    async getStaff() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/staffs/${this.staff_id}`
-        )
-        this.staff = response
-      } catch (error) {
-        return error
-      }
-    },
-
     async send() {
-      const officeId = this.office_id
-      const staffId = this.staff_id
       const params = new FormData()
-      params.append('office_id', this.staff.office_id)
-      params.append('name', this.staff.name)
-      params.append('kana', this.staff.kana)
-      params.append('introduction', this.staff.introduction)
+      params.append('name', this.name)
+      params.append('kana', this.kana)
+      params.append('introduction', this.introduction)
       if (this.image !== null) {
         params.append('image', this.image)
       }
       try {
-        await this.$axios.$put(
-          `specialists/offices/${officeId}/staffs/${staffId}`,
-          params,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          }
-        )
-        this.$router.push('..?page=1')
+        await this.$axios.$post(`specialists/offices/staffs`, params, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        this.$router.push('.?page=1')
       } catch (error) {
         return error
       }

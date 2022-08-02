@@ -40,7 +40,13 @@ export default {
   },
   methods: {
     moveThankNewPage() {
+      this.$auth.loggedIn ? this.thankPagePath() : this.shouldLoginAlert()
+    },
+    thankPagePath() {
       this.$router.push(`/offices/${this.ReadOffice.id}/thanks/new`)
+    },
+    shouldLoginAlert() {
+      alert('ログインをする必要があります')
     },
   },
 }
