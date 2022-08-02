@@ -88,54 +88,23 @@
 <script>
 export default {
   layout: 'application',
+  async asyncData({ $axios }) {
+    try {
+      const res = await $axios.$get(`users`)
+      return {
+        user: res,
+      }
+    } catch (error) {
+      return error
+    }
+  },
   data() {
     return {
       logoutInfo: {
         redirectUrl: '/top',
         valid: false,
       },
-      user: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        phone_number: '',
-        post_code: '',
-        address: '',
-        valid: false,
-      },
     }
-  },
-  created() {
-    this.getUsers()
-  },
-  methods: {
-    async sign_up() {
-      try {
-        const response = await this.$axios.$post(`users`, {
-          name: this.user.name,
-          email: this.user.email,
-          password: this.user.password,
-          password_confirmation: this.user.password_confirmation,
-          phone_number: this.user.phone_number,
-          post_code: this.user.post_code,
-          address: this.user.address,
-          confirm_success_url: 'http://localhost:8000/top',
-        })
-        this.$router.push('/users/send')
-        return response
-      } catch (error) {
-        return error
-      }
-    },
-    async getUsers() {
-      try {
-        const response = await this.$axios.$get(`users`)
-        this.user = response
-      } catch (error) {
-        return error
-      }
-    },
   },
 }
 </script>

@@ -360,13 +360,20 @@ export default {
     }
   },
   watch: {
-    // ページがユーザー編集画面以外でパスワードがローカルストレージに残っていたら消す
     $route($route) {
+      // ページがユーザー編集画面以外でパスワードがローカルストレージに残っていたら消す
       if (
         typeof window.localStorage.current_password !== 'undefined' &&
         $route.path !== '/users/edit'
       ) {
         localStorage.removeItem('current_password')
+      }
+      // ページがユーザー編集画面以外で現在のメールアドレスがローカルストレージに残っていたら消す
+      if (
+        typeof window.localStorage.current_email !== 'undefined' &&
+        $route.path !== '/users/edit'
+      ) {
+        localStorage.removeItem('current_email')
       }
     },
   },

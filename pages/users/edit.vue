@@ -164,18 +164,6 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-  // beforeRouteLeave(to, from, next) {
-  //   if (
-  //     window.confirm(
-  //       '入力内容が保存されない可能性があります。ページを離れますか？'
-  //     )
-  //   ) {
-  //     next()
-  //   } else {
-  //     this.form.password = ''
-  //     next(false)
-  //   }
-  // },
   layout: 'application',
   data() {
     return {
@@ -262,7 +250,11 @@ export default {
           address: this.user.address,
           redirect_url: 'http://localhost:8000/top',
         })
-        this.$router.push('/users/profile')
+        if (window.localStorage.current_email === this.user.email) {
+          this.$router.push('/users/profile')
+        } else {
+          this.$router.push('/top')
+        }
         return response
       } catch (error) {
         this.form.password = ''
@@ -273,6 +265,7 @@ export default {
       try {
         const response = await this.$axios.$get(`users`)
         this.user = response
+        localStorage.setItem('current_email', this.user.email)
       } catch (error) {
         return error
       }
