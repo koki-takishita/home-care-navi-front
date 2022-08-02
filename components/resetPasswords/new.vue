@@ -1,7 +1,10 @@
 <template>
-  <v-form ref="form" v-model="valid">
+  <v-form ref="form" v-model="valid" class="rest-password-card mx-auto">
+    <p class="text-center text-h6 font-weight-black mb-10">
+      パスワードのリセット
+    </p>
     <label class="font-color-gray font-weight-black text-caption"
-      >メールアドレス
+      ><font :color="gray">メールアドレス</font>
       <v-text-field
         id="email"
         v-model="Email"
@@ -13,9 +16,18 @@
         height="44"
         :rules="[formValidates.required, formValidates.email]"
     /></label>
-    <v-btn block :color="BtnColor" :disabled="!valid" @click="clickResetBtn"
-      >パスワードをリセットする
-    </v-btn>
+    <v-btn
+      block
+      :color="BtnColor"
+      :disabled="!valid"
+      height="60"
+      class="font-weight-black text-h6"
+      @click="clickResetBtn"
+      depressed
+    >
+      パスワードをリセットする</v-btn
+    >
+    <ThankBackLink :text="backText" class="text-center" @movePage="goTop" />
   </v-form>
 </template>
 <script>
@@ -56,11 +68,35 @@ export default {
     BtnColor() {
       return this.btnColor
     },
+    backText() {
+      return 'リセットせずにもどる'
+    },
+    gray() {
+      return '#6D7570'
+    },
   },
   methods: {
     clickResetBtn() {
       this.$emit('clickResetBtn')
     },
+    goTop() {
+      this.$router.push('/')
+    },
   },
 }
 </script>
+<style scoped>
+/* stylelint-disable */
+.v-text-field--outlined >>> fieldset {
+  border-color: #d9dede;
+}
+
+::v-deep input::placeholder {
+  color: #d9dede !important;
+}
+/* stylelint-enable */
+
+.rest-password-card {
+  max-width: 520px;
+}
+</style>
