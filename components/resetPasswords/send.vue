@@ -2,7 +2,7 @@
   <div class="send-card mx-auto">
     <p :class="titleClass">パスワードのリセット完了</p>
     <v-card-text class="text-center pt-0">
-      入力いただいたメールアドレスに<br />新しいパスワードを送付いたしました。
+      確認メールを送付しました。<br />リンクをクリックして新しいパスワードを設定してください。
     </v-card-text>
     <ThankBackLink class="text-center" :text="linkText" @movePage="goTop" />
   </div>

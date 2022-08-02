@@ -23,7 +23,7 @@
       depressed
       @click="clickResetBtn"
     >
-      パスワードをリセットする</v-btn
+      次にすすむ</v-btn
     >
     <ThankBackLink :text="backText" class="text-center" @movePage="goTop" />
   </v-form>

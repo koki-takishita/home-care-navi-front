@@ -1,6 +1,7 @@
 <template>
   <v-card class="pt-8 pb-16 reset-password-card" outlined>
     <v-form ref="form" v-model="valid" class="reset-password-form mx-auto">
+      <p :class="titleClass">パスワード再設定</p>
       <label class="font-color-gray font-weight-black text-caption"
         ><font color="gray">パスワード</font>
         <v-text-field
@@ -105,6 +106,16 @@ export default {
     },
     gray() {
       return '#6D7570'
+    },
+    titleClass() {
+      if (this.isMobile) {
+        return 'text-left text-h6 font-weight-black mb-10'
+      } else {
+        return 'text-center text-h6 font-weight-black mb-10'
+      }
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     },
   },
   methods: {
