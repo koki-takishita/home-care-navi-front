@@ -26,18 +26,6 @@
           <v-col>
             <label class="font-color-gray font-weight-black text-subtitle-2">
               <font :color="labelColor">年齢</font>
-              <!--
-              <v-text-field
-                v-model="Age"
-                :rules="[formValidates.required]"
-                type="number"
-                class="font-weight-light mt-2"
-                placeholder="80"
-                outlined
-              >
-
-              </v-text-field>
-              -->
               <v-select
                 v-model="Age"
                 :items="ageList"
