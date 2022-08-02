@@ -1,8 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" class="rest-password-card mx-auto">
-    <p class="text-center text-h6 font-weight-black mb-10">
-      パスワードのリセット
-    </p>
+    <p :class="titleClass">パスワードのリセット</p>
     <label class="font-color-gray font-weight-black text-caption"
       ><font :color="gray">メールアドレス</font>
       <v-text-field
@@ -22,8 +20,8 @@
       :disabled="!valid"
       height="60"
       class="font-weight-black text-h6"
-      @click="clickResetBtn"
       depressed
+      @click="clickResetBtn"
     >
       パスワードをリセットする</v-btn
     >
@@ -73,6 +71,17 @@ export default {
     },
     gray() {
       return '#6D7570'
+    },
+    // breakpointで中央揃え、左揃えに切り替える
+    titleClass() {
+      if (this.isMobile) {
+        return 'text-left text-h6 font-weight-black mb-10'
+      } else {
+        return 'text-center text-h6 font-weight-black mb-10'
+      }
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.smAndDown
     },
   },
   methods: {
