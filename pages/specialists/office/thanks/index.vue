@@ -59,7 +59,40 @@ export default {
       return '予約状況に戻る'
     },
   },
+  watch: {
+    page() {
+      this.getThanks(this.page)
+      this.scrollTop()
+      this.$router.push({
+        path: `/specialists/office/thanks`,
+        query: {
+          page: this.page,
+        },
+      })
+    },
+  },
   methods: {
+    async getThanks(page = 1) {
+      try {
+        const offsetPage = page - 1
+        const res = await this.$axios.$get(
+          `specialists/offices/thanks?page=${offsetPage}`
+        )
+        this.thanks = res.thanks
+        let count = res.thank_total
+        count = count / 10 || 0
+        count = Math.ceil(count)
+        if (count === 0) {
+          count = 1
+        }
+        this.count = count
+      } catch (error) {
+        return error
+      }
+    },
+    scrollTop() {
+      this.$vuetify.goTo(0)
+    },
     moveTop() {
       this.$router.push('/specialists/office/appointments')
     },
@@ -108,7 +141,7 @@ export default {
 }
 
 ::v-deep i.v-icon.notranslate.mdi {
-  color: #f06364;
+  color: #ff9800;
 }
 /* stylelint-enable */
 </style>
