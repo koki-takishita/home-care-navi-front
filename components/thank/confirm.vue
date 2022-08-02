@@ -28,7 +28,6 @@
             <v-text-field
               :value="ReadAge"
               hide-details
-              type="number"
               class="font-weight-light mt-2"
               outlined
               readonly
@@ -92,7 +91,7 @@ export default {
       default: null,
     },
     age: {
-      type: Number,
+      type: String,
       default: null,
     },
     name: {

@@ -52,7 +52,7 @@ export default {
     const selectedStaff = JSON.parse(query.staff || '{}')
     const comment = query.comment || ''
     const name = query.name || ''
-    const age = Number(query.age) || 0
+    const age = query.age
     try {
       const res = await $axios.$get(`offices/${officeId}`)
       return {
@@ -91,7 +91,7 @@ export default {
     changeStep(obj) {
       const staff = JSON.stringify(obj.staff) || '{}'
       const comment = obj.comment || ''
-      const age = Number(obj.age) || 0
+      const age = obj.age || ''
       const name = obj.name || ''
       const step = obj.step
       this.step = step
@@ -113,7 +113,7 @@ export default {
         thankParameter.office_id = this.office.id
         thankParameter.comments = this.comment
         thankParameter.name = this.name
-        thankParameter.age = this.age
+        thankParameter.age = this.extractNumberForAge(this.age)
         await this.$axios.$post(`offices/${this.office.id}/thanks`, {
           thank: thankParameter,
         })
@@ -130,6 +130,10 @@ export default {
         this.$store.commit('catchErrorMsg/setMsg', [msg])
         return error
       }
+    },
+    extractNumberForAge(string) {
+      const ageNumber = string.match(/[0-9]{2}/)
+      return Number(ageNumber[0])
     },
   },
 }

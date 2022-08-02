@@ -26,6 +26,7 @@
           <v-col>
             <label class="font-color-gray font-weight-black text-subtitle-2">
               <font :color="labelColor">年齢</font>
+              <!--
               <v-text-field
                 v-model="Age"
                 :rules="[formValidates.required]"
@@ -34,7 +35,18 @@
                 placeholder="80"
                 outlined
               >
+
               </v-text-field>
+              -->
+              <v-select
+                v-model="Age"
+                :items="ageList"
+                :rules="[formValidates.required]"
+                type="number"
+                class="font-weight-light mt-2"
+                placeholder="60歳"
+                outlined
+              ></v-select>
             </label>
           </v-col>
         </v-row>
@@ -105,7 +117,7 @@ export default {
       default: null,
     },
     age: {
-      type: Number,
+      type: String,
       default: null,
     },
     name: {
@@ -127,6 +139,13 @@ export default {
     }
   },
   computed: {
+    ageList() {
+      const array = new Array(61)
+      for (let i = 0; i < 61; ++i) {
+        array[i] = `${60 + i}歳`
+      }
+      return array
+    },
     ReadOffice() {
       return this.office
     },
@@ -162,7 +181,7 @@ export default {
         return this.age
       },
       set(Age) {
-        const age = Number(Age) || 0
+        const age = Age
         this.$emit('update:age', age)
       },
     },
