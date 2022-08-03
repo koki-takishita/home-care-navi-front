@@ -3,6 +3,7 @@ export default async function ({ $auth, store, redirect, route }) {
     route.path !== '/specialists/login' &&
     route.path !== '/specialists/users/new' &&
     route.path !== '/specialists/users/send' &&
+    route.path !== '/reset-passwords' &&
     store.state.specialist !== true
   ) {
     await $auth.logout()
