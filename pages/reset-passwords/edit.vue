@@ -63,12 +63,21 @@ export default {
           password_confirmation: this.passwordConfirmation,
         })
         // TODO layoutによって切り替え
-        this.$router.push('/users/login')
+        this.togglePage()
       } catch (error) {
         // console.log(error)
         this.$router.push('/reset-passwords')
         return error
       }
+    },
+    togglePage() {
+      this.type === 'specialist' ? this.moveSpecialist() : this.moveCustomer()
+    },
+    moveSpecialist() {
+      this.$router.push('/specialists/login')
+    },
+    moveCustomer() {
+      this.$router.push('/users/login')
     },
   },
 }
