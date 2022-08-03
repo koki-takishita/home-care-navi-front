@@ -49,7 +49,7 @@
         :text="textLink"
         class="text-center"
         :color="TextColor"
-        @movePage="goTop"
+        @movePage="goPage"
       />
     </v-form>
   </v-card>
@@ -72,6 +72,10 @@ export default {
     textColor: {
       type: String,
       default: '#F06364',
+    },
+    type: {
+      type: String,
+      default: 'customer',
     },
   },
   data() {
@@ -120,6 +124,9 @@ export default {
     gray() {
       return '#6D7570'
     },
+    Type() {
+      return this.type
+    },
     titleClass() {
       if (this.isMobile) {
         return 'text-left text-h6 font-weight-black mb-10'
@@ -135,8 +142,14 @@ export default {
     clickResetBtn() {
       this.$emit('clickResetBtn')
     },
+    goPage() {
+      this.Type === 'specialist' ? this.goAppointment() : this.goTop()
+    },
     goTop() {
       this.$router.push('/')
+    },
+    goAppointment() {
+      this.$router.push('/specialists/login')
     },
   },
 }

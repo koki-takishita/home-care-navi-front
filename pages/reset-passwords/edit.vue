@@ -5,6 +5,7 @@
       :password-confirmation.sync="passwordConfirmation"
       :btn-color="btnColor"
       :text-color="textColor"
+      :type="type"
       @clickResetBtn="resetPassword"
     />
   </v-container>
