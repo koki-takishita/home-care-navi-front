@@ -41,10 +41,16 @@
         :disabled="!valid"
         height="60"
         class="text-h6 font-weight-black"
+        depressed
         @click="clickResetBtn"
         >パスワードをリセットする
       </v-btn>
-      <ThankBackLink :text="textLink" class="text-center" @movePage="goTop" />
+      <ThankBackLink
+        :text="textLink"
+        class="text-center"
+        :color="TextColor"
+        @movePage="goTop"
+      />
     </v-form>
   </v-card>
 </template>
@@ -62,6 +68,10 @@ export default {
     btnColor: {
       type: String,
       default: 'error',
+    },
+    textColor: {
+      type: String,
+      default: '#F06364',
     },
   },
   data() {
@@ -100,6 +110,9 @@ export default {
     },
     BtnColor() {
       return this.btnColor
+    },
+    TextColor() {
+      return this.textColor
     },
     textLink() {
       return 'リセットせずにもどる'

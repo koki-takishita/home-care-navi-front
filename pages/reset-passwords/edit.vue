@@ -3,18 +3,56 @@
     <resetPasswordsEdit
       :password.sync="password"
       :password-confirmation.sync="passwordConfirmation"
+      :btn-color="btnColor"
+      :text-color="textColor"
       @clickResetBtn="resetPassword"
     />
   </v-container>
 </template>
 <script>
 export default {
-  layout: 'application',
+  // queryであるtypeの値によってlayoutを切り替える
+  // type = customer -> application
+  // type = specialist -> application/specialists
+  layout(context) {
+    const type = context.query.type
+    let layout
+    switch (type) {
+      case 'customer':
+        layout = 'application'
+        break
+      case 'specialist':
+        layout = 'application_specialists'
+        break
+      default:
+        layout = 'application'
+        break
+    }
+    return layout
+  },
+  asyncData({ query }) {
+    const type = query.type || ''
+    return { type }
+  },
   data() {
     return {
       password: '',
       passwordConfirmation: '',
     }
+  },
+  computed: {
+    btnColor() {
+      return this.type === 'specialist' ? 'warning' : 'error'
+    },
+    textColor() {
+      return this.type === 'specialist' ? this.yellow : this.red
+    },
+    yellow() {
+      return '#F09C3C'
+    },
+    red() {
+      return '#F06364'
+    },
   },
   methods: {
     async resetPassword() {

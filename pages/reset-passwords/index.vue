@@ -6,11 +6,13 @@
           <resetPasswordsNew
             v-model="email"
             :btn-color="btnColor"
+            :text-color="textColor"
+            :type="type"
             @clickResetBtn="applyForPasswordReset"
           />
         </v-stepper-content>
         <v-stepper-content step="2" class="pb-16 pt-8">
-          <resetPasswordsSend />
+          <resetPasswordsSend :text-color="textColor" :type="type" />
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -37,6 +39,18 @@ export default {
     }
     return layout
   },
+  asyncData({ $config, query }) {
+    const envRedirectUrl = $config.passwordResetRedirectUrl
+    const type = query.type || ''
+
+    // queryであるtypeの値によってredirectQueryを切り替える
+    // type = customer -> customer
+    // type = '' -> customer
+    // type = specialist -> specialist
+    const redirectQuery = type === 'specialist' ? 'specialist' : 'customer'
+    const redirectUrl = `${envRedirectUrl}?type=${redirectQuery}`
+    return { redirectUrl, type }
+  },
   data() {
     return {
       e1: 1,
@@ -45,18 +59,26 @@ export default {
   },
   computed: {
     btnColor() {
+      return this.type === 'specialist' ? 'warning' : 'error'
+    },
+    textColor() {
+      return this.type === 'specialist' ? this.yellow : this.red
+    },
+    yellow() {
       return '#F09C3C'
+    },
+    red() {
+      return '#F06364'
     },
   },
   methods: {
     async applyForPasswordReset() {
       // TODO 環境によって切り替える 環境変数で行う
       // https://github.com/nuxt-community/dotenv-module
-      const redirectUrl = 'http://localhost:8000/reset-passwords/edit'
       try {
         await this.$axios.$post(`customer/password`, {
           email: this.email,
-          redirect_url: redirectUrl,
+          redirect_url: this.redirectUrl,
         })
         this.e1 = 2
       } catch (error) {

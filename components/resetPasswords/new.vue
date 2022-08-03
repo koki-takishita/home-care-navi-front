@@ -25,7 +25,12 @@
     >
       次にすすむ</v-btn
     >
-    <ThankBackLink :text="backText" class="text-center" @movePage="goTop" />
+    <ThankBackLink
+      :text="backText"
+      class="text-center"
+      :color="TextColor"
+      @movePage="goPage"
+    />
   </v-form>
 </template>
 <script>
@@ -38,6 +43,14 @@ export default {
     btnColor: {
       type: String,
       default: 'error',
+    },
+    textColor: {
+      type: String,
+      default: '#F06364',
+    },
+    type: {
+      type: String,
+      default: 'customer',
     },
   },
   data() {
@@ -66,6 +79,12 @@ export default {
     BtnColor() {
       return this.btnColor
     },
+    TextColor() {
+      return this.textColor
+    },
+    Type() {
+      return this.type
+    },
     backText() {
       return 'リセットせずにもどる'
     },
@@ -88,8 +107,14 @@ export default {
     clickResetBtn() {
       this.$emit('clickResetBtn')
     },
+    goPage() {
+      this.Type === 'specialist' ? this.goAppointment() : this.goTop()
+    },
     goTop() {
       this.$router.push('/')
+    },
+    goAppointment() {
+      this.$router.push('specialists/login')
     },
   },
 }
