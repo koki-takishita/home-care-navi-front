@@ -105,10 +105,11 @@
           </div>
         </Modal>
       </v-col>
-      <v-col v-show="isShow">予約はありません</v-col>
+      <v-col v-if="noAppointments">予約はありません</v-col>
     </v-row>
     <div class="mt-2 text-center">
       <v-pagination
+        v-if="appointmentsExist"
         v-model="page"
         :length="count"
         color="#D9DEDE"
@@ -122,59 +123,58 @@
 export default {
   layout: 'application_specialists',
   middleware: 'authentication',
+  async asyncData({ $axios, query }) {
+    try {
+      const page = Number(query.page) || 1
+      const offsetPage = page - 1
+      const res = await $axios.$get(
+        `/specialists/offices/appointments?page=${offsetPage}`
+      )
+      const appointments = res.appointments
+      let count = res.data_length
+      count = count / 10 || 0
+      count = Math.ceil(count)
+      if (count === 0) {
+        count = 1
+      }
+      return {
+        page,
+        count,
+        appointments,
+      }
+    } catch (error) {
+      return error
+    }
+  },
   data() {
     return {
-      office_id: this.$route.params.office_id,
-      appointments: [],
-      isShow: false,
-      count: 0,
-      page: Number(this.$route.query.page) || 1,
-      offsetPage: 0,
       callMethod: '',
       modalFlag: false,
       modalMsg: '',
       currentAppointmentId: 0,
     }
   },
+  computed: {
+    appointmentsExist() {
+      return this.appointments.length > 0
+    },
+    noAppointments() {
+      return this.appointments.length === 0
+    },
+  },
   watch: {
     page() {
+      this.getAppointmentsStatus(this.page)
+      this.scrollTop()
       this.$router.push({
-        path: `/specialists/office/${this.office_id}/appointments`,
+        path: `/specialists/office/appointments`,
         query: {
           page: this.page,
         },
       })
-      this.scrollTop()
     },
-  },
-  mounted() {
-    this.$watch(
-      'page',
-      function () {
-        this.getAppointmentsStatus()
-      },
-      {
-        immediate: true,
-      }
-    )
-    this.getOffice()
-    this.getAppointmentsStatus()
   },
   methods: {
-    async getOffice() {
-      try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}`
-        )
-        if (response.id - this.office_id !== 0) {
-          this.$router.push(
-            `/specialists/office/${response.id}/appointments?page=1`
-          )
-        }
-      } catch (error) {
-        return error
-      }
-    },
     openCallModal(id) {
       this.currentAppointmentId = id
       this.modalMsg = '連絡済みにしますか？'
@@ -191,28 +191,20 @@ export default {
       this.callMethod = ''
       this.modalFlag = false
     },
-    async getAppointmentsStatus() {
-      if (this.page > 1) {
-        this.offsetPage = this.page - 1
-      } else {
-        this.offsetPage = 0
-      }
+    async getAppointmentsStatus(page = 1) {
       try {
-        const response = await this.$axios.$get(
-          `specialists/offices/${this.office_id}/appointments?page=${this.offsetPage}`
+        const offsetPage = page - 1
+        const res = await this.$axios.$get(
+          `specialists/offices/appointments?page=${offsetPage}`
         )
-        this.appointments = response.appointments
-        this.count = response.data_length
-        this.count = this.count / 10
-        this.count = Math.ceil(this.count)
-        if (this.count === 0) {
-          this.count = 1
+        this.appointments = res.appointments
+        let count = res.data_length
+        count = count / 10 || 0
+        count = Math.ceil(count)
+        if (count === 0) {
+          count = 1
         }
-        if (this.appointments.length === 0) {
-          this.isShow = true
-        } else {
-          this.isShow = false
-        }
+        this.count = count
       } catch (error) {
         return error
       }
@@ -239,13 +231,11 @@ export default {
     async call(id) {
       this.modalFlag = false
       try {
-        await this.$axios.$put(
-          `specialists/offices/${this.office_id}/appointments/${id}`,
-          {
-            called_status: 1,
-          }
-        )
-        window.location.reload()
+        await this.$axios.$put(`specialists/offices/appointments/${id}`, {
+          called_status: 1,
+        })
+        this.$nuxt.refresh()
+        this.scrollTop()
       } catch (error) {
         return error
       }
@@ -253,13 +243,11 @@ export default {
     async cancel(id) {
       this.modalFlag = false
       try {
-        await this.$axios.$put(
-          `specialists/offices/${this.office_id}/appointments/${id}`,
-          {
-            called_status: 2,
-          }
-        )
-        window.location.reload()
+        await this.$axios.$put(`specialists/offices/appointments/${id}`, {
+          called_status: 2,
+        })
+        this.$nuxt.refresh()
+        this.scrollTop()
       } catch (error) {
         return error
       }

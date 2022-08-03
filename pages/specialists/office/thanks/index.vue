@@ -2,11 +2,11 @@
   <v-container class="base-width">
     <v-card outlined class="cards-wrapper">
       <v-card-title class="text-h6 font-weight-black pl-0"
-        >お礼投稿履歴</v-card-title
-      >
+        >お礼一覧
+      </v-card-title>
       <v-row v-if="thanksExist">
-        <v-col v-for="thank in thanks" :key="thank.id" cols="12" md="6"
-          ><ThankCard :thank="thank" @clickDeleteBtn="refresh" />
+        <v-col v-for="thank in thanks" :key="thank.id" cols="12" md="6">
+          <ThankCardForOffice :thank="thank" @refresh="refresh" />
         </v-col>
         <v-col cols="12">
           <v-pagination
@@ -30,36 +30,25 @@
 </template>
 <script>
 export default {
-  layout: 'application',
-  async asyncData({ query, $axios }) {
+  layout: 'application_specialists',
+  async asyncData({ $axios, query }) {
     const page = Number(query.page) || 1
     const offsetPage = page - 1
     try {
-      const res = await $axios.$get(`thanks?page=${offsetPage}`)
-      const thanks = res.thank
-      let count = res.count
+      const res = await $axios.$get(
+        `specialists/offices/thanks?page=${offsetPage}`
+      )
+      const thanks = res.thanks
+      let count = res.thank_total
       count = count / 10 || 0
       count = Math.ceil(count)
       if (count === 0) {
         count = 1
       }
-
-      return {
-        page,
-        count,
-        thanks,
-      }
+      return { page, thanks, count }
     } catch (error) {
       // console.log(error)
       return error
-    }
-  },
-  data() {
-    return {
-      thanks: [],
-      page: 1,
-      count: '',
-      loading: true,
     }
   },
   computed: {
@@ -67,15 +56,15 @@ export default {
       return this.thanks.length > 0
     },
     backText() {
-      return 'ホームケアナビトップに戻る'
+      return '予約状況に戻る'
     },
   },
   watch: {
     page() {
-      this.fetchThanks(this.page)
+      this.getThanks(this.page)
       this.scrollTop()
       this.$router.push({
-        path: '/thanks',
+        path: `/specialists/office/thanks`,
         query: {
           page: this.page,
         },
@@ -83,12 +72,14 @@ export default {
     },
   },
   methods: {
-    async fetchThanks(page = 1) {
+    async getThanks(page = 1) {
       try {
         const offsetPage = page - 1
-        const res = await this.$axios.$get(`thanks?page=${offsetPage}`)
-        this.thanks = res.thank
-        let count = res.count
+        const res = await this.$axios.$get(
+          `specialists/offices/thanks?page=${offsetPage}`
+        )
+        this.thanks = res.thanks
+        let count = res.thank_total
         count = count / 10 || 0
         count = Math.ceil(count)
         if (count === 0) {
@@ -96,24 +87,20 @@ export default {
         }
         this.count = count
       } catch (error) {
-        // console.log(error)
         return error
       }
     },
+    scrollTop() {
+      this.$vuetify.goTo(0)
+    },
+    moveTop() {
+      this.$router.push('/specialists/office/appointments')
+    },
     refresh() {
-      // ページ上のすべてのお礼を削除したら、ページネーションを1つまえにずらす
-      // https://i.gyazo.com/08c761f92acc27d049db5263e04e88d7.mp4
       if (this.thanks.length <= 2) {
         this.$router.push({ query: { page: this.page - 1 } })
       }
       this.$nuxt.refresh()
-      this.scrollTop()
-    },
-    moveTop() {
-      this.$router.push('/')
-    },
-    scrollTop() {
-      this.$vuetify.goTo(0)
     },
   },
 }
@@ -154,7 +141,7 @@ export default {
 }
 
 ::v-deep i.v-icon.notranslate.mdi {
-  color: #f06364;
+  color: #ff9800;
 }
 /* stylelint-enable */
 </style>
