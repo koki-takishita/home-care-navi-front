@@ -73,10 +73,11 @@ export default {
   },
   methods: {
     async applyForPasswordReset() {
+      const type = this.type === 'specialist' ? 'specialists/users' : 'customer'
       // TODO 環境によって切り替える 環境変数で行う
       // https://github.com/nuxt-community/dotenv-module
       try {
-        await this.$axios.$post(`customer/password`, {
+        await this.$axios.$post(`${type}/password`, {
           email: this.email,
           redirect_url: this.redirectUrl,
         })
