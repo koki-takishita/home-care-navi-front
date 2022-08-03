@@ -248,12 +248,13 @@ export default {
           phone_number: this.user.phone_number,
           post_code: this.user.post_code,
           address: this.user.address,
-          redirect_url: 'http://localhost:8000/top',
+          // 本番環境では変更しなければなりません
+          redirect_url: 'http://localhost:8000/users/login',
         })
         if (window.localStorage.current_email === this.user.email) {
           this.$router.push('/users/profile')
         } else {
-          this.$router.push('/top')
+          this.$router.push('/users/edit_user_send')
         }
         return response
       } catch (error) {
