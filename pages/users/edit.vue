@@ -31,7 +31,7 @@
               outlined
               dense
               height="44"
-              :rules="[formValidates.required]"
+              :rules="[formValidates.required, formValidates.nameCountCheck]"
           /></label>
 
           <div class="mt-n-2">
@@ -45,7 +45,11 @@
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
-                :rules="[formValidates.required, formValidates.email]"
+                :rules="[
+                  formValidates.required,
+                  formValidates.email,
+                  formValidates.emailCountCheck,
+                ]"
             /></label>
           </div>
 
@@ -181,11 +185,15 @@ export default {
         valid: false,
       },
       formValidates: {
+        nameCountCheck: (value) =>
+          value.length <= 30 || '30文字以下で入力してください',
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
+        emailCountCheck: (value) =>
+          value.length <= 255 || '255文字以下で入力してください',
         email: (value) => {
           const format =
             // eslint-disable-next-line no-control-regex
@@ -209,7 +217,7 @@ export default {
           }
         },
         phoneNumber: (value) => {
-          const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
+          const format = /^\d{2,4}-\d{2,4}-\d{4,5}$/g
           return format.test(value) || '正しい電話番号ではありません'
         },
         postCode: (value) => {
