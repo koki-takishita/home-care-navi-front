@@ -22,7 +22,7 @@
                 <div v-if="$auth.loggedIn">
                   <div class="mr-8 d-flex align-center">
                     <NuxtLink
-                      to="#"
+                      to="/histories"
                       class="header-style text-overline mr-5 text-decoration-none"
                       >閲覧履歴</NuxtLink
                     >
@@ -183,7 +183,10 @@
 
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+            <v-list-item
+              class="pa-0 ma-0 px-6 py-4 min-height-20"
+              to="/histories"
+            >
               <v-list-item-title
                 class="text-decoration-none text-body-2 navi-style"
               >
