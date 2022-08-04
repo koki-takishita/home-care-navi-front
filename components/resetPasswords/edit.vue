@@ -87,8 +87,8 @@ export default {
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
         password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+          (value.length >= 8 && value.length <= 32) ||
+          '8文字以上32文字未満で入力してください',
         confirmCheck: (value) =>
           value === this.Password || 'パスワードが一致しません',
       },
@@ -143,10 +143,10 @@ export default {
       this.$emit('clickResetBtn')
     },
     goPage() {
-      this.Type === 'specialist' ? this.goAppointment() : this.goTop()
+      this.Type === 'specialist' ? this.goAppointment() : this.goLogin()
     },
-    goTop() {
-      this.$router.push('/')
+    goLogin() {
+      this.$router.push('/users/login')
     },
     goAppointment() {
       this.$router.push('/specialists/login')
