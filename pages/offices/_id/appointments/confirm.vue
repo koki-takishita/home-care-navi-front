@@ -127,8 +127,14 @@ export default {
             called_status: 0,
           }
         )
-        this.$router.push('/users/send')
         this.$router.push(`/offices/${this.office_id}/appointments/success`)
+        localStorage.removeItem('appointments.meet_date')
+        localStorage.removeItem('appointments.meet_time')
+        localStorage.removeItem('appointments.name')
+        localStorage.removeItem('appointments.age')
+        localStorage.removeItem('appointments.phone_number')
+        localStorage.removeItem('appointments.comment')
+        localStorage.removeItem('appointments.expiry')
         return response
       } catch (error) {
         return error

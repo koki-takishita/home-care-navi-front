@@ -130,7 +130,10 @@ export default {
   computed: {
     toggleClassByRoute() {
       // localhost:8000以降のパスを取得する
-      return this.$route.path.includes('/bookmarks') ? '' : 355
+      return this.$route.path.includes('/bookmarks') ||
+        this.$route.path.includes('/histories')
+        ? ''
+        : 355
     },
     displayImg() {
       return this.office.image.length > 0
