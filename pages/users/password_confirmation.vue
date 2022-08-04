@@ -96,8 +96,8 @@ export default {
       formValidates: {
         required: (value) => !!value || '必須項目です',
         password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+          (value.length >= 8 && value.length <= 32) ||
+          'パスワードは8文字以上32文字以下で入力してください',
         typeCheckString: (value) => {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'

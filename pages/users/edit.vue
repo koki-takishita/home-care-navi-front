@@ -201,7 +201,7 @@ export default {
           if (value === '' || (value.length >= 8 && value.length <= 32)) {
             return true
           } else {
-            return '8文字以上32文字未満で入力してください'
+            return 'パスワードは8文字以上32文字以下で入力してください'
           }
         },
         // confirmCheck: (value) =>
