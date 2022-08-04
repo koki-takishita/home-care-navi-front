@@ -54,7 +54,7 @@ export default {
       this.Type === 'specialist' ? this.goAppointment() : this.goTop()
     },
     goTop() {
-      this.$router.push('/users/login')
+      this.$router.push('/')
     },
     goAppointment() {
       this.$router.push('/specialists/login')
