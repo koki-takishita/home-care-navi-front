@@ -430,6 +430,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 const maxRoom = 101
 const totalRooms = [...Array(maxRoom).keys()]
 
@@ -553,6 +554,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions('catchErrorMsg', ['clearMsg']),
     detailImage_1Picked(file) {
       if (file !== undefined && file !== null) {
         if (file.name.lastIndexOf('.') <= 0) {
@@ -612,7 +614,6 @@ export default {
         officeParams.append('officeImages[]', this.images[index])
       }
 
-      // TODO const detailData
       const officeData = {
         name: this.name,
         title: this.title,
@@ -624,7 +625,6 @@ export default {
         address: this.address,
       }
       const officeJson = JSON.stringify(officeData)
-      // TODO append('detail', jsonDetailDate)
 
       if (this.detail_image_1 !== null) {
         officeParams.append('detailImages[]', this.detail_image_1)
@@ -632,11 +632,6 @@ export default {
       if (this.detail_image_2 !== null) {
         officeParams.append('detailImages[]', this.detail_image_2)
       }
-
-      /*      if (this.detail_image_1 !== null) {
-        officeParams.append('detailImage', this.detail_image_1)
-      }
-*/
 
       const officeDetail = {
         detail: this.detail,
@@ -684,6 +679,7 @@ input[type='checkbox'] {
   color: red;
   text-align: center;
 }
+
 /* stylelint-disable */
 .post-form >>> fieldset {
   width: 107px;
