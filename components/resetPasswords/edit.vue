@@ -88,7 +88,7 @@ export default {
         },
         password: (value) =>
           (value.length >= 8 && value.length <= 32) ||
-          '8文字以上32文字未満で入力してください',
+          '8文字以上32文字以下で入力してください',
         confirmCheck: (value) =>
           value === this.Password || 'パスワードが一致しません',
       },
