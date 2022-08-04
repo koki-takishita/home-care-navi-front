@@ -1,6 +1,6 @@
 <template>
   <div class="send-card mx-auto">
-    <p :class="titleClass">パスワードのリセット完了</p>
+    <p :class="titleClass">メールの送信完了</p>
     <v-card-text class="text-center pt-0">
       <font
         >確認メールを送付しました。<br />リンクをクリックして新しいパスワードを設定してください。</font
