@@ -63,7 +63,7 @@
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
                 placeholder="半角英数字8文字以上"
-                :rules="[formValidates.password, formValidates.passwordCheck]"
+                :rules="[formValidates.password]"
             /></label>
           </div>
 
@@ -76,10 +76,7 @@
                 dense
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
-                :rules="[
-                  formValidates.confirmCheck,
-                  formValidates.passwordCheck,
-                ]"
+                :rules="[formValidates.confirmCheck]"
             /></label>
           </div>
 
@@ -152,13 +149,13 @@
             >
           </v-card-actions>
           <div class="mx-auto mt-4 text-center top-link mb-4">
-            <a
+            <nuxt-link
               style="color: #f06364"
               class="text-decoration-none"
-              href="/users/profile"
+              to="/users/profile"
             >
               変更せずに戻る
-            </a>
+            </nuxt-link>
           </div>
         </v-form>
       </div>
@@ -201,10 +198,10 @@ export default {
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
         password: (value) => {
-          if (value === '' || (value.length >= 8 && value.length <= 16)) {
+          if (value === '' || (value.length >= 8 && value.length <= 32)) {
             return true
           } else {
-            return '8文字以上16文字未満で入力してください'
+            return '8文字以上32文字未満で入力してください'
           }
         },
         // confirmCheck: (value) =>

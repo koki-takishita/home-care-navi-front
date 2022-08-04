@@ -11,9 +11,9 @@
         </p>
       </div>
       <div class="mx-auto mt-4 text-center top-link mb-16">
-        <a href="../top" style="color: #f06364">
+        <nuxt-link to="../top" style="color: #f06364">
           <p>ホームケアナビトップに戻る</p>
-        </a>
+        </nuxt-link>
       </div>
     </v-card-text>
   </v-card>

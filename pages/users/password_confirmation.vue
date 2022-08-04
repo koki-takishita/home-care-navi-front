@@ -35,7 +35,7 @@
 
           <p class="ma-0 text-right mt-n3 mb-7">
             <NuxtLink
-              to="#"
+              to="/reset-passwords?type=customer"
               class="text-overline text-decoration-none font-color-gray"
               >パスワードを忘れた</NuxtLink
             >
