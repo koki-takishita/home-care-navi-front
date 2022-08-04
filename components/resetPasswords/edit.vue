@@ -41,10 +41,16 @@
         :disabled="!valid"
         height="60"
         class="text-h6 font-weight-black"
+        depressed
         @click="clickResetBtn"
         >パスワードをリセットする
       </v-btn>
-      <ThankBackLink :text="textLink" class="text-center" @movePage="goTop" />
+      <ThankBackLink
+        :text="textLink"
+        class="text-center"
+        :color="TextColor"
+        @movePage="goPage"
+      />
     </v-form>
   </v-card>
 </template>
@@ -63,6 +69,14 @@ export default {
       type: String,
       default: 'error',
     },
+    textColor: {
+      type: String,
+      default: '#F06364',
+    },
+    type: {
+      type: String,
+      default: 'customer',
+    },
   },
   data() {
     return {
@@ -73,8 +87,8 @@ export default {
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
         password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+          (value.length >= 8 && value.length <= 32) ||
+          '8文字以上32文字以下で入力してください',
         confirmCheck: (value) =>
           value === this.Password || 'パスワードが一致しません',
       },
@@ -101,11 +115,17 @@ export default {
     BtnColor() {
       return this.btnColor
     },
+    TextColor() {
+      return this.textColor
+    },
     textLink() {
       return 'リセットせずにもどる'
     },
     gray() {
       return '#6D7570'
+    },
+    Type() {
+      return this.type
     },
     titleClass() {
       if (this.isMobile) {
@@ -122,8 +142,14 @@ export default {
     clickResetBtn() {
       this.$emit('clickResetBtn')
     },
-    goTop() {
-      this.$router.push('/')
+    goPage() {
+      this.Type === 'specialist' ? this.goAppointment() : this.goLogin()
+    },
+    goLogin() {
+      this.$router.push('/users/login')
+    },
+    goAppointment() {
+      this.$router.push('/specialists/login')
     },
   },
 }
