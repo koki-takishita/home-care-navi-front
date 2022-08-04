@@ -117,13 +117,13 @@ export default {
           value.size <= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         nameCountCheck: (value) =>
-          value.length <= 31 || '30文字以下で入力してください',
+          value.length <= 30 || '30文字以下で入力してください',
         kanaCheck: (value) => {
           const format = /^[ぁ-んー　 ]*$/ // eslint-disable-line
           return format.test(value) || 'ひらがなで入力してください'
         },
         introductionCountCheck: (value) =>
-          value.length <= 81 || '80文字以下で入力してください',
+          value.length <= 80 || '80文字以下で入力してください',
       },
       staff_id: this.$route.params.staff_id,
       image: null,
