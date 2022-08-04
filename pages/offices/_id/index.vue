@@ -40,10 +40,16 @@ export default {
         officeImages: res.officeImages,
         staffs: res.staffs,
         bookmark: res.bookmark,
+        history: res.history,
       }
     } catch (error) {
       return error
     }
+  },
+  mounted() {
+    this.history === null
+      ? this.submitHistory(this.office.id)
+      : this.updateHistory(this.office.id, this.history.id)
   },
   methods: {
     async submitBookmark(officeId) {
@@ -65,6 +71,24 @@ export default {
           }
         )
         this.$nuxt.refresh()
+      } catch (error) {
+        return error
+      }
+    },
+    async submitHistory(officeId) {
+      try {
+        await this.$axios.$post(`offices/${officeId}/histories`, {
+          office_id: officeId,
+        })
+      } catch (error) {
+        return error
+      }
+    },
+    async updateHistory(officeId, historyId) {
+      try {
+        await this.$axios.$put(`offices/${officeId}/histories/${historyId}`, {
+          office_id: officeId,
+        })
       } catch (error) {
         return error
       }

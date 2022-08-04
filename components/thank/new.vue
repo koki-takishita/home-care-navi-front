@@ -9,6 +9,37 @@
     >
     <v-form ref="form" v-model="valid">
       <div class="px-4">
+        <v-row>
+          <v-col>
+            <label class="font-color-gray font-weight-black text-subtitle-2">
+              <font :color="labelColor">利用者名</font>
+              <v-text-field
+                v-model="Name"
+                :rules="[formValidates.required, formValidates.nameLength]"
+                class="font-weight-light mt-2"
+                placeholder="田中 太郎"
+                outlined
+              >
+              </v-text-field>
+            </label>
+          </v-col>
+          <v-col>
+            <label class="font-color-gray font-weight-black text-subtitle-2">
+              <font :color="labelColor">年齢</font>
+              <v-select
+                v-model="Age"
+                :items="ageList"
+                :rules="[formValidates.required]"
+                type="number"
+                class="font-weight-light mt-2"
+                placeholder="60歳"
+                outlined
+              ></v-select>
+            </label>
+          </v-col>
+        </v-row>
+      </div>
+      <div class="px-4">
         <label class="font-color-gray font-weight-black text-subtitle-2">
           <font :color="labelColor">お礼をするスタッフ</font>
           <v-select
@@ -73,6 +104,14 @@ export default {
       type: String,
       default: null,
     },
+    age: {
+      type: String,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
@@ -81,11 +120,20 @@ export default {
         objRequired: (value) => !!value.id || '必須項目です',
         strLength: (value) =>
           value.length < 120 || '120文字以内で入力してください',
+        nameLength: (value) =>
+          value.length < 31 || '30文字以内で入力してください',
       },
       valid: false,
     }
   },
   computed: {
+    ageList() {
+      const array = new Array(61)
+      for (let i = 0; i < 61; ++i) {
+        array[i] = `${60 + i}歳`
+      }
+      return array
+    },
     ReadOffice() {
       return this.office
     },
@@ -108,6 +156,23 @@ export default {
         this.$emit('update:comment', Comment)
       },
     },
+    Name: {
+      get() {
+        return this.name
+      },
+      set(Name) {
+        this.$emit('update:name', Name)
+      },
+    },
+    Age: {
+      get() {
+        return this.age
+      },
+      set(Age) {
+        const age = Age
+        this.$emit('update:age', age)
+      },
+    },
     labelColor() {
       return '#6D7570'
     },
@@ -118,6 +183,8 @@ export default {
       obj.step = 2
       obj.staff = this.SelectedStaff
       obj.comment = this.Comment
+      obj.age = this.Age
+      obj.name = this.Name
       this.$emit('moveConfirmPage', obj)
     },
   },
