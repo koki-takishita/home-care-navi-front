@@ -254,7 +254,7 @@ export default {
           post_code: this.user.post_code,
           address: this.user.address,
           // 本番環境では変更しなければなりません
-          redirect_url: 'http://localhost:8000/users/login',
+          redirect_url: 'https://home-care-navi-v2.herokuapp.com/users/login',
         })
         if (window.localStorage.current_email === this.user.email) {
           this.$router.push('/users/profile')
