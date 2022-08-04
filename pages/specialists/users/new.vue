@@ -229,7 +229,7 @@ export default {
           post_code: this.form.post_code,
           address: this.form.address,
           confirm_success_url:
-            'https://home-care-navi-api-v2.herokuapp.com/specialists/login',
+            'http://localhost:8000/specialists/login',
         })
         this.$router.push('/specialists/users/send')
         return response
