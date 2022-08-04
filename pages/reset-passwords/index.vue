@@ -1,14 +1,14 @@
 <template>
-  <v-container class="base-width">
-    <v-stepper v-model="e1">
+  <v-container class="base-width pa-0">
+    <v-stepper v-model="e1" outlined class="reset-password-card">
       <v-stepper-items>
-        <v-stepper-content step="1">
+        <v-stepper-content step="1" class="pb-16 pt-8">
           <resetPasswordsNew
             v-model="email"
             @clickResetBtn="applyForPasswordReset"
           />
         </v-stepper-content>
-        <v-stepper-content step="2">
+        <v-stepper-content step="2" class="pb-16 pt-8">
           <resetPasswordsSend />
         </v-stepper-content>
       </v-stepper-items>
@@ -51,6 +51,10 @@ export default {
 </script>
 <style scoped>
 .base-width {
-  max-width: 990px;
+  max-width: 750px;
+}
+
+.reset-password-card {
+  border: 0;
 }
 </style>
