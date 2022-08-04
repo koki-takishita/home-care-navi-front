@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       e1: 1,
-      email: null,
+      email: '',
     }
   },
   computed: {
