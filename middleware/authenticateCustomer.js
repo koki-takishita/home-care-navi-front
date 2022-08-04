@@ -11,6 +11,8 @@ export default async function ({ $auth, store, redirect, route }) {
     '/users/contacts/success',
     '/users/new',
     '/users/send',
+    '/reset-passwords',
+    '/reset-passwords/edit',
     '/',
   ]
   if (
