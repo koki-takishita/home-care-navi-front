@@ -108,10 +108,10 @@ export default {
       this.$emit('clickResetBtn')
     },
     goPage() {
-      this.Type === 'specialist' ? this.goAppointment() : this.goTop()
+      this.Type === 'specialist' ? this.goAppointment() : this.goLogin()
     },
-    goTop() {
-      this.$router.push('/')
+    goLogin() {
+      this.$router.push('/users/login')
     },
     goAppointment() {
       this.$router.push('specialists/login')
