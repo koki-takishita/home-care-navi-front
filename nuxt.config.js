@@ -117,4 +117,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  publicRuntimeConfig: {
+    passwordResetRedirectUrl: process.env.PASSWORD_RESET_REDIRECT_URL,
+  },
 }

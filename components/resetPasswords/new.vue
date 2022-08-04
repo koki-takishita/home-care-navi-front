@@ -12,7 +12,7 @@
         placeholder="例) homecarenavi@mail.com"
         type="email"
         height="44"
-        :rules="[formValidates.required, formValidates.email]"
+        :rules="[formValidates.required, formValidates.email, formValidates.emailLength]"
     /></label>
     <v-btn
       block
@@ -25,7 +25,12 @@
     >
       次にすすむ</v-btn
     >
-    <ThankBackLink :text="backText" class="text-center" @movePage="goTop" />
+    <ThankBackLink
+      :text="backText"
+      class="text-center"
+      :color="TextColor"
+      @movePage="goPage"
+    />
   </v-form>
 </template>
 <script>
@@ -33,11 +38,19 @@ export default {
   props: {
     value: {
       type: String,
-      default: null,
+      default: '',
     },
     btnColor: {
       type: String,
       default: 'error',
+    },
+    textColor: {
+      type: String,
+      default: '#F06364',
+    },
+    type: {
+      type: String,
+      default: 'customer',
     },
   },
   data() {
@@ -50,6 +63,7 @@ export default {
             /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
+        emailLength: (value) => value.length <= 255 || 'メールアドレスは255文字以下で入力してください',
       },
       valid: false,
     }
@@ -65,6 +79,12 @@ export default {
     },
     BtnColor() {
       return this.btnColor
+    },
+    TextColor() {
+      return this.textColor
+    },
+    Type() {
+      return this.type
     },
     backText() {
       return 'リセットせずにもどる'
@@ -88,8 +108,14 @@ export default {
     clickResetBtn() {
       this.$emit('clickResetBtn')
     },
-    goTop() {
-      this.$router.push('/')
+    goPage() {
+      this.Type === 'specialist' ? this.goAppointment() : this.goLogin()
+    },
+    goLogin() {
+      this.$router.push('/users/login')
+    },
+    goAppointment() {
+      this.$router.push('specialists/login')
     },
   },
 }

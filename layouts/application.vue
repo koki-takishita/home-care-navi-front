@@ -42,7 +42,7 @@
                       >お礼投稿履歴</NuxtLink
                     >
                     <NuxtLink
-                      to="#"
+                      to="/users/profile"
                       class="header-style text-overline text-decoration-none mr-5"
                       >登録情報</NuxtLink
                     >
@@ -236,7 +236,11 @@
               </v-list-item-icon>
             </v-list-item>
             <v-divider color="#D9DEDE"></v-divider>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+
+            <v-list-item
+              class="pa-0 ma-0 px-6 py-4 min-height-20"
+              to="/users/profile"
+            >
               <v-list-item-title
                 class="text-decoration-none text-body-2 navi-style"
               >
@@ -357,6 +361,24 @@ export default {
       tile: false,
       currentTime: new Date().getTime(),
     }
+  },
+  watch: {
+    $route($route) {
+      // ページがユーザー編集画面以外でパスワードがローカルストレージに残っていたら消す
+      if (
+        typeof window.localStorage.current_password !== 'undefined' &&
+        $route.path !== '/users/edit'
+      ) {
+        localStorage.removeItem('current_password')
+      }
+      // ページがユーザー編集画面以外で現在のメールアドレスがローカルストレージに残っていたら消す
+      if (
+        typeof window.localStorage.current_email !== 'undefined' &&
+        $route.path !== '/users/edit'
+      ) {
+        localStorage.removeItem('current_email')
+      }
+    },
   },
   mounted() {
     // もし、ローカルストレージに保存した値が有効期限を過ぎていたら、すべて削除

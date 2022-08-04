@@ -61,13 +61,14 @@
               type="password"
           /></label>
 
-          <p class="ma-0 text-right mt-n3 mb-7">
-            <NuxtLink
-              to="/reset-passwords"
-              class="text-overline text-decoration-none font-color-gray"
-              >パスワードを忘れた</NuxtLink
+          <div class="ma-0 text-right mt-n3 mb-6">
+            <p
+              class="text-overline text-decoration-none font-color-gray d-inline-block mb-0 set-z-index"
+              @click="goResetPassword"
             >
-          </p>
+              パスワードを忘れた
+            </p>
+          </div>
 
           <v-card-actions class="pa-0">
             <v-btn
@@ -145,6 +146,19 @@ export default {
       },
     }
   },
+  methods: {
+    goResetPassword() {
+      this.$router.push({
+        path: '/reset-passwords',
+        query: { type: 'customer' },
+      })
+    },
+  },
+  created() {
+    if (this.$auth.loggedIn) {
+      this.$logout()
+    }
+  },
 }
 </script>
 <style scoped>
@@ -164,5 +178,10 @@ export default {
 }
 .font-color-gray {
   color: #6d7570;
+}
+
+.set-z-index {
+  z-index: 9;
+  cursor: pointer;
 }
 </style>
