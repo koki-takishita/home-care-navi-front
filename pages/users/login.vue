@@ -145,6 +145,11 @@ export default {
       },
     }
   },
+  created() {
+    if (this.$auth.loggedIn) {
+      this.$logout()
+    }
+  },
 }
 </script>
 <style scoped>
