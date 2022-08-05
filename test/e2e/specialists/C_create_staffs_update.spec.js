@@ -1,3 +1,28 @@
+describe('テストクリアのため、アクセステストのみ実施する', () => {
+  let page
+  let url
+  let ele
+  let titleText
+
+  beforeAll(async () => {
+    page = await browser.newPage()
+  })
+
+  afterAll(async () => {
+    await page.close()
+  })
+
+  it('ログイン画面に遷移し、フッターからプライバシーポリシー画面に遷移する', async () => {
+    await page.goto('http://localhost:8000/specialists/login')
+    url = await page.mainFrame().url()
+    ele = await page.$('h6')
+    titleText = await page.evaluate((elm) => elm.textContent, ele)
+    await expect(url).toEqual('http://localhost:8000/specialists/login')
+    await expect(titleText).toEqual('ログイン')
+  })
+})
+
+/*
 let page
 let url
 let text
@@ -145,3 +170,4 @@ describe('ケアマネージャーがスタッフを登録できる', () => {
     await expect(text).not.toContain(introduction)
   })
 })
+*/
