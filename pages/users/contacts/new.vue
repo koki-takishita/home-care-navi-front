@@ -103,7 +103,7 @@ export default {
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
         emailCountCheck: (value) =>
-          value.length <= 255 || '256文字以下で入力してください',
+          value.length <= 255 || '255文字以下で入力してください',
         email: (value) => {
           const format =
             // eslint-disable-next-line no-control-regex
