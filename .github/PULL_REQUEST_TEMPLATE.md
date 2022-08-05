@@ -39,10 +39,17 @@ git fetch && git checkout origin/<ここを変える>/<ここを変える>
 
 ## 参考になったサイト
 
-[サイトのタイトル](https://qiita.com/)
+- [サイトのタイトル](なければ　「なし」　と記入)
 
 ## 確認項目
-
+- [ ] ここまでで各項目に漏れなく記入しているか・不要な箇所はないか
+```javascript
+NG
+API・Front両方ブランチを指定していない（developの場合は省略可）
+APIのプルリクとセットで確認する場合は、APIプルリクのURLを添付する
+```
+- [ ] プルリクのタイトルがコミット名そのままになっていないか
+- [ ] レビュワーを正しく設定しているか
 - [ ] ファイル名・変数名・メソッド名は適切か
 - [【Vue】単一ファイルコンポーネントの命名規則まとめ【ファイル名から記法まで】](https://qiita.com/ngron/items/ab2a17ae483c95a2f15e)
 - [コーディングの命名規則一覧](https://murashun.jp/article/programming/naming-conventions.html)
