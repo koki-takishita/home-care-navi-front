@@ -42,6 +42,8 @@ git fetch && git checkout origin/<ここを変える>/<ここを変える>
 [サイトのタイトル](https://qiita.com/)
 
 ## 確認項目 
-- [ ] ファイル名・変数名・メソッド名は適切か・直感でわかりやすいものになっているか
+- [ ] ファイル名・変数名・メソッド名は適切か
 - [Vue】単一ファイルコンポーネントの命名規則まとめ【ファイル名から記法まで】](https://qiita.com/ngron/items/ab2a17ae483c95a2f15e)  
 - [コーディングの命名規則一覧](https://murashun.jp/article/programming/naming-conventions.html)
+- [ ] ファイル名・変数名・メソッド名は直感でわかりやすいものになっているか
+- [変数名の付け方をまとめてみた](https://zenn.dev/naoki_oshiumi/articles/aad7e1b3719fad)
