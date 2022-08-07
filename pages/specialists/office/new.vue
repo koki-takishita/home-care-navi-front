@@ -31,7 +31,8 @@
           <label class="font-color-gray font-weight-black text-caption"
             >特徴詳細
             <v-textarea
-              v-model="detail"
+              id="title_detail"
+              v-model="title_detail"
               :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
@@ -541,7 +542,7 @@ export default {
       },
       name: '',
       title: '',
-      detail: '',
+      title_detail: '',
       images: [],
       flags: 0,
       business_day_detail: '',
@@ -664,7 +665,7 @@ export default {
       }
 
       const officeDetail = {
-        detail: this.detail,
+        detail: this.title_detail,
         service_type: this.service_type,
         open_date: this.open_date,
         rooms: this.rooms,
