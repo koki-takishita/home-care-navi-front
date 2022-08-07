@@ -30,6 +30,10 @@ export default {
       type: Number,
       default: 2,
     },
+    color: {
+      type: String,
+      default: '#F06364',
+    },
   },
   computed: {
     id() {
@@ -39,7 +43,7 @@ export default {
       return this.text
     },
     linkColor() {
-      return '#F06364'
+      return this.color
     },
     iconFlag() {
       return this.icon
