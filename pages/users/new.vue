@@ -1,5 +1,5 @@
 <template>
-  <v-card width="750" class="mx-auto mb-2">
+  <v-card outlined width="750" class="mx-auto mb-2 sign-card">
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
         <NuxtLink
@@ -30,12 +30,12 @@
               <v-text-field
                 id="name"
                 v-model="form.name"
+                :rules="[formValidates.required]"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                 placeholder="田中 太郎"
                 outlined
                 dense
                 height="44"
-                :rules="[formValidates.required]"
             /></label>
           </div>
 
@@ -47,11 +47,11 @@
                 v-model="form.email"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 outlined
+                :rules="[formValidates.required, formValidates.email]"
                 dense
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
-                :rules="[formValidates.required, formValidates.email]"
             /></label>
           </div>
 
@@ -63,14 +63,14 @@
                 v-model="form.password"
                 outlined
                 dense
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
-                type="password"
-                placeholder="半角英数字8文字以上"
                 :rules="[
                   formValidates.required,
                   formValidates.typeCheckString,
                   formValidates.password,
                 ]"
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                type="password"
+                placeholder="半角英数字8文字以上"
             /></label>
           </div>
 
@@ -99,6 +99,7 @@
               <v-text-field
                 id="phone_number"
                 v-model="form.phone_number"
+                :error-messages="errors"
                 outlined
                 dense
                 placeholder="080-1234-5678"
@@ -112,11 +113,11 @@
             <v-text-field
               id="post_code"
               v-model="form.post_code"
+              :rules="[formValidates.required, formValidates.postCode]"
               outlined
               dense
               height="44"
               class="post-form"
-              :rules="[formValidates.required, formValidates.postCode]"
               placeholder="123-4567"
             >
               <template #prepend>
@@ -131,11 +132,11 @@
             <v-text-field
               id="address"
               v-model="form.address"
+              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
               class="address-form set-max-width-520"
-              :rules="[formValidates.required]"
               placeholder="東京都世田谷区祖父谷4-3-15"
             >
             </v-text-field>
@@ -150,9 +151,11 @@
               max-width="520"
               min-width="343"
               height="60"
+              depressed
               @click="sign_up()"
               >新規登録</v-btn
             >
+
             <v-btn
               id="send"
               class="error pa-0 ma-0 text-h6 d-block d-sm-none"
@@ -161,6 +164,7 @@
               max-width="520"
               min-width="343"
               height="48"
+              depressed
               @click="sign_up()"
               >新規登録</v-btn
             >
@@ -186,6 +190,7 @@ export default {
         address: '',
         valid: false,
       },
+      errors: [],
       formValidates: {
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
@@ -216,8 +221,39 @@ export default {
       },
     }
   },
+  watch: {
+    async 'form.phone_number'() {
+      const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
+      if (format.test(this.form.phone_number)) {
+        let msg
+        const res = await this.checkPhoneNumber()
+        switch (typeof res) {
+          case 'string':
+            msg = res
+            break
+          case 'object':
+            msg = res.response.data.message
+            this.errors.push(msg)
+            break
+        }
+      } else {
+        this.errors.pop()
+      }
+    },
+  },
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
+    async checkPhoneNumber() {
+      const params = {
+        phone_number: this.form.phone_number,
+      }
+      try {
+        const res = await this.$axios.$get('check-phone-number', { params })
+        return res.message
+      } catch (error) {
+        return error
+      }
+    },
     async sign_up() {
       try {
         const response = await this.$axios.$post(`customer`, {
@@ -240,6 +276,10 @@ export default {
 }
 </script>
 <style scoped>
+.sign-card {
+  border: 0;
+}
+
 .link-color {
   color: #f06364;
 }
