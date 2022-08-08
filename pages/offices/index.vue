@@ -124,7 +124,7 @@ export default {
   },
   data() {
     return {
-      offices: [],
+      offices: {},
       getObj: {},
       area: [],
       prefecture: [],
