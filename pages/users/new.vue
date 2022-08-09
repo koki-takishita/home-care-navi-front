@@ -239,7 +239,7 @@ export default {
     // 被りがあったら、'登録済みの電話番号です。'を表示 エラーメッセージはapiのレスポンスを使用している
     async 'form.phone_number'() {
       // form.phone_numberの値が変化したらだたちにfalseにする
-      // apiとの通信で、結果がNGでも一瞬だけtureになってしまうため
+      // apiとの通信で、結果がNGでも一瞬だけtrueになってしまうため
       this.form.phoneNumberCheck = false
       const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
       if (format.test(this.form.phone_number)) {
