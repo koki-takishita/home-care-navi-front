@@ -30,12 +30,12 @@
               <v-text-field
                 id="name"
                 v-model="form.name"
-                :rules="[formValidates.required]"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                 placeholder="田中 太郎"
                 outlined
                 dense
                 height="44"
+                :rules="[formValidates.required]"
             /></label>
           </div>
 
