@@ -39,6 +39,7 @@
                 outlined
                 dense
                 height="44"
+                :rules="[formValidates.required]"
             /></label>
           </div>
 
@@ -59,6 +60,7 @@
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
+                :rules="[formValidates.required, formValidates.email]"
             /></label>
           </div>
 
@@ -70,14 +72,14 @@
                 v-model="form.password"
                 outlined
                 dense
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                type="password"
+                placeholder="半角英数字8文字以上"
                 :rules="[
                   formValidates.required,
                   formValidates.typeCheckString,
                   formValidates.password,
                 ]"
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
-                type="password"
-                placeholder="半角英数字8文字以上"
             /></label>
           </div>
 
@@ -120,11 +122,11 @@
             <v-text-field
               id="post_code"
               v-model="form.post_code"
-              :rules="[formValidates.required, formValidates.postCode]"
               outlined
               dense
               height="44"
               class="post-form"
+              :rules="[formValidates.required, formValidates.postCode]"
               placeholder="123-4567"
             >
               <template #prepend>
@@ -139,11 +141,11 @@
             <v-text-field
               id="address"
               v-model="form.address"
-              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
               class="address-form set-max-width-520"
+              :rules="[formValidates.required]"
               placeholder="東京都世田谷区祖父谷4-3-15"
             >
             </v-text-field>
@@ -246,15 +248,15 @@ export default {
     // 被りがあったら、'登録済みの電話番号です。'を表示 エラーメッセージはapiのレスポンスを使用している
     async 'form.phone_number'() {
       // form.phone_numberの値が変化したらだたちにfalseにする
-      // apiとの通信で、結果がNGでも一瞬だけtureになってしまうため
+      // apiとの通信で、結果がNGでも一瞬だけtrueになってしまうため
       this.form.phoneNumberCheck = false
       const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
       if (format.test(this.form.phone_number)) {
         let msg
 
         // apiへリクエスト
-        // 成功 case 'string'
-        // 失敗 case 'object'
+        // 200 case 'string'
+        // 403 case 'object'
         const res = await this.checkPhoneNumber()
         switch (typeof res) {
           case 'string':
