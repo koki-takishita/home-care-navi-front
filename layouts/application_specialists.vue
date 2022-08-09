@@ -27,7 +27,7 @@
             </v-col>
             <v-col md="8" class="ml-auto">
               <div class="d-flex justify-end">
-                <div v-if="$store.state.office">
+                <div v-if="$auth.loggedIn">
                   <div class="mr-8 d-flex align-center">
                     <div class="text-center mr-7">
                       <v-menu offset-y>
@@ -45,16 +45,7 @@
                           </v-btn>
                         </template>
                         <v-list>
-                          <div v-if="$store.state.customer">
-                            <v-list-item to="/specialists/office/new">
-                              <v-list-item-title
-                                class="header-style text-overline text-decoration-none mr-5"
-                              >
-                                事業所登録</v-list-item-title
-                              >
-                            </v-list-item>
-                          </div>
-                          <div v-else>
+                          <div v-if="$store.state.office">
                             <v-list-item to="/specialists/office/edit">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
@@ -92,6 +83,15 @@
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
                                 利用者情報管理</v-list-item-title
+                              >
+                            </v-list-item>
+                          </div>
+                          <div v-else>
+                            <v-list-item to="/specialists/office/new">
+                              <v-list-item-title
+                                class="header-style text-overline text-decoration-none mr-5"
+                              >
+                                事業所登録</v-list-item-title
                               >
                             </v-list-item>
                           </div>
