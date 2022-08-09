@@ -99,9 +99,9 @@
               <v-text-field
                 id="phone_number"
                 v-model="form.phone_number"
-                :error-messages="errors"
                 outlined
                 dense
+                :error-messages="errors"
                 placeholder="080-1234-5678"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="tel"
@@ -147,7 +147,7 @@
               id="send"
               class="error pa-0 text-h6 d-none d-sm-block"
               block
-              :disabled="!form.valid"
+              :disabled="isValid"
               max-width="520"
               min-width="343"
               height="60"
@@ -160,7 +160,7 @@
               id="send"
               class="error pa-0 ma-0 text-h6 d-block d-sm-none"
               block
-              :disabled="!form.valid"
+              :disabled="isValid"
               max-width="520"
               min-width="343"
               height="48"
@@ -189,6 +189,7 @@ export default {
         post_code: '',
         address: '',
         valid: false,
+        phoneNumberCheck: false,
       },
       errors: [],
       formValidates: {
@@ -221,15 +222,37 @@ export default {
       },
     }
   },
+  computed: {
+    // 新規登録ボタン押せる状態   false
+    // 新規登録ボタン押せない状態 true
+    isValid() {
+      // formのバリテーションルールをすべて突破している && 電話番号に被りがない
+      const flag = this.form.valid && this.form.phoneNumberCheck
+
+      // flag = false 新規登録ボタン押せる状態
+      // flag = true  新規登録ボタン押せない状態
+      return !flag
+    },
+  },
   watch: {
+    // form.phene_numberの値がusersテーブルとofficesテーブルの被りがないかチェック
+    // 被りがあったら、'登録済みの電話番号です。'を表示 エラーメッセージはapiのレスポンスを使用している
     async 'form.phone_number'() {
+      // form.phone_numberの値が変化したらだたちにfalseにする
+      // apiとの通信で、結果がNGでも一瞬だけtureになってしまうため
+      this.form.phoneNumberCheck = false
       const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
       if (format.test(this.form.phone_number)) {
         let msg
+
+        // apiへリクエスト
+        // 成功 case 'string'
+        // 失敗 case 'object'
         const res = await this.checkPhoneNumber()
         switch (typeof res) {
           case 'string':
             msg = res
+            this.form.phoneNumberCheck = true
             break
           case 'object':
             msg = res.response.data.message
