@@ -47,11 +47,11 @@
                 v-model="form.email"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 outlined
-                :rules="[formValidates.required, formValidates.email]"
                 dense
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
+                :rules="[formValidates.required, formValidates.email]"
             /></label>
           </div>
 
