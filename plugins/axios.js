@@ -71,6 +71,7 @@ const setAuthInfoToStore = function (response, store) {
   const headers = response.headers
   if (headers.office_data) {
     setOfficeDate(headers.office_data)
+    store.commit('setOfficeDate')
   }
 
   if (isAuthInfo(headers)) {

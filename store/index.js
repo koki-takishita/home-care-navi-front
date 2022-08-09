@@ -5,6 +5,7 @@ export const state = () => ({
   accessToken: '',
   uid: '',
   expiry: '',
+  office: '',
 })
 
 // stateの初期値としたい任意のデータを定義する
@@ -29,6 +30,10 @@ export const mutations = {
 
   loginCustomer(state) {
     state.customer = true
+  },
+
+  setOfficeDate(state) {
+    state.office = true
   },
 
   setClient(state, client) {
