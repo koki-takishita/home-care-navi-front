@@ -436,7 +436,7 @@ const totalRooms = [...Array(maxRoom).keys()]
 
 export default {
   layout: 'application_specialists',
-  middleware: 'authentication',
+  middleware: ['authentication', 'existenceOffice'],
   data() {
     return {
       formValidates: {
