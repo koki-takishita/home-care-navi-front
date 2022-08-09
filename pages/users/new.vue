@@ -246,8 +246,8 @@ export default {
         let msg
 
         // apiへリクエスト
-        // 成功 case 'string'
-        // 失敗 case 'object'
+        // 200 case 'string'
+        // 403 case 'object'
         const res = await this.checkPhoneNumber()
         switch (typeof res) {
           case 'string':
