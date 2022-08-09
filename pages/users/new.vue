@@ -63,14 +63,14 @@
                 v-model="form.password"
                 outlined
                 dense
+                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
+                type="password"
+                placeholder="半角英数字8文字以上"
                 :rules="[
                   formValidates.required,
                   formValidates.typeCheckString,
                   formValidates.password,
                 ]"
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
-                type="password"
-                placeholder="半角英数字8文字以上"
             /></label>
           </div>
 
