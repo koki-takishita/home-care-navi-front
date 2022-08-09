@@ -132,11 +132,11 @@
             <v-text-field
               id="address"
               v-model="form.address"
-              :rules="[formValidates.required]"
               outlined
               dense
               height="44"
               class="address-form set-max-width-520"
+              :rules="[formValidates.required]"
               placeholder="東京都世田谷区祖父谷4-3-15"
             >
             </v-text-field>
