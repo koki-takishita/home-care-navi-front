@@ -79,7 +79,7 @@
       height="40"
       width="750"
       class="pt-2 text-center mx-auto mb-2"
-      to=""
+      to="/users/exit"
     >
       <div class="delete-button font-weight-bold link-color">退会する</div>
     </v-card>
