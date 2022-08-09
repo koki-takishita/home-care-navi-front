@@ -69,7 +69,7 @@
                                 スタッフ情報</v-list-item-title
                               >
                             </v-list-item>
-                            <v-list-item to="#">
+                            <v-list-item to="/specialists/office/thanks">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
@@ -302,7 +302,10 @@
                 </v-list-item-icon>
               </v-list-item>
               <v-divider color="#D9DEDE"></v-divider>
-              <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20" to="#">
+              <v-list-item
+                class="pa-0 ma-0 px-6 py-4 min-height-20"
+                to="/specialists/office/thanks"
+              >
                 <v-list-item-title
                   class="text-decoration-none text-body-2 navi-style"
                 >
@@ -494,7 +497,7 @@ export default {
     },
     goAppointmentsPage() {
       // TODO ルーティングを specialists/office/appointmentsに変える
-      this.$router.push(`/specialists/office/${1}/appointments`)
+      this.$router.push(`/specialists/office/appointments`)
     },
   },
 }
