@@ -27,7 +27,7 @@
             </v-col>
             <v-col md="8" class="ml-auto">
               <div class="d-flex justify-end">
-                <div v-if="$auth.loggedIn">
+                <div v-if="$store.state.office">
                   <div class="mr-8 d-flex align-center">
                     <div class="text-center mr-7">
                       <v-menu offset-y>
@@ -45,7 +45,7 @@
                           </v-btn>
                         </template>
                         <v-list>
-                          <div v-if="office !== true">
+                          <div v-if="$store.state.customer">
                             <v-list-item to="/specialists/office/new">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
