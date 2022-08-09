@@ -228,8 +228,7 @@ export default {
           phone_number: this.form.phone_number,
           post_code: this.form.post_code,
           address: this.form.address,
-          confirm_success_url:
-            'http://localhost:8000/specialists/login',
+          confirm_success_url: `${this.$config.frontTopUrl}/specialists/login`,
         })
         this.$router.push('/specialists/users/send')
         return response

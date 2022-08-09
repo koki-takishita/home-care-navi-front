@@ -146,6 +146,11 @@ export default {
       },
     }
   },
+  created() {
+    if (this.$auth.loggedIn) {
+      this.$logout()
+    }
+  },
   methods: {
     goResetPassword() {
       this.$router.push({
@@ -153,11 +158,6 @@ export default {
         query: { type: 'customer' },
       })
     },
-  },
-  created() {
-    if (this.$auth.loggedIn) {
-      this.$logout()
-    }
   },
 }
 </script>

@@ -120,5 +120,9 @@ export default {
 
   publicRuntimeConfig: {
     passwordResetRedirectUrl: process.env.PASSWORD_RESET_REDIRECT_URL,
+    frontTopUrl: process.env.FRONT_TOP_URL,
+    axios: {
+      baseURL: process.env.END_POINT_BASE_URL,
+    },
   },
 }
