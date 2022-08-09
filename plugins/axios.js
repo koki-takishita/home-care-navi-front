@@ -48,27 +48,37 @@ const error500 = function (store) {
   store.commit('catchErrorMsg/setMsg', msg)
 }
 
-const setAuthInfoToStore = function (response, store) {
-  // TODO メソッドの名前が適切でないかも、ログイン処理が成功したらみたいなのがほしい
-  const headers = response.headers
-  if (headers.office_data) {
-    localStorage.setItem('office_data', headers.office_data)
-  }
-  if (
-    headers.client &&
-    headers.uid &&
-    headers.expiry &&
-    headers['access-token']
-  ) {
-    // TODO ログイン処理が成功したら、vuexに保存されるというのを表現する
-    store.commit('setAccessToken', headers['access-token'])
-    store.commit('setClient', headers.client)
-    store.commit('setUid', headers.uid)
-    store.commit('setExpiry', headers.expiry)
+const setOfficeDate = function (officeData) {
+  localStorage.setItem('office_data', officeData)
+}
+
+const setAuthToStore = function (headers, store) {
+  store.commit('setAccessToken', headers['access-token'])
+  store.commit('setClient', headers.client)
+  store.commit('setUid', headers.uid)
+  store.commit('setExpiry', headers.expiry)
+}
+
+const isAuthInfo = function (obj) {
+  if (obj.client && obj.uid && obj.expiry && obj['access-token']) {
+    return true
+  } else {
+    return false
   }
 }
 
-export default function ({ $axios, store }) {
+const setAuthInfoToStore = function (response, store) {
+  const headers = response.headers
+  if (headers.office_data) {
+    setOfficeDate(headers.office_data)
+  }
+
+  if (isAuthInfo(headers)) {
+    setAuthToStore(headers, store)
+  }
+}
+
+export default function ({ $axios, store, query }) {
   // TODO onResponseError onRequestErrorで分けたい
   $axios.onResponseError((error) => {
     networkError(store, error)
@@ -81,6 +91,11 @@ export default function ({ $axios, store }) {
   })
 
   $axios.onRequest((config) => {
+    // TODO urlに認証情報が存在するか？
+    const authInfo = query
+    if (isAuthInfo(authInfo)) {
+      setAuthToStore(authInfo, store)
+    }
     setAuthInfoToHeader(config, store)
   })
 }

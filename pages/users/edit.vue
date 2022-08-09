@@ -1,94 +1,82 @@
 <template>
-  <v-card width="750" class="mx-auto mb-2 mt-2">
-    <div class="px-4 pt-4 d-none d-sm-block">
-      <p class="mb-0 text-right">
-        <NuxtLink
-          to="/specialists/login"
-          class="text-overline text-decoration-none link-color"
-          >ログインはこちら</NuxtLink
-        >
-      </p>
-      <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
+  <v-card flat width="750" class="mx-auto mb-2 mt-4">
+    <div class="px-4 pt-4 d-none d-sm-block mt-6">
+      <h6 class="display-1 text-center text-h6 font-weight-black mt-4">
+        登録情報変更
+      </h6>
     </div>
     <div class="px-4 pt-4 d-flex justify-space-between d-sm-none">
-      <h6 class="display-1 text-center text-h6 font-weight-black">新規登録</h6>
+      <h6 class="display-1 text-center text-h6 font-weight-black">
+        登録情報変更
+      </h6>
       <p class="mb-0 text-right">
         <NuxtLink
-          to="/specialists/login"
+          to="/users/login"
           class="text-overline text-decoration-none link-color"
           >ログインはこちら</NuxtLink
         >
       </p>
     </div>
 
-    <v-card-text>
+    <v-card-text class="mt-6">
       <div class="form-wrapper mx-auto">
-        <v-form v-model="form.valid">
-          <div class="set-width-343">
-            <label class="font-color-gray font-weight-black text-caption"
-              >お名前
-              <v-text-field
-                id="name"
-                v-model="form.name"
-                class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
-                placeholder="田中 太郎"
-                outlined
-                dense
-                height="44"
-                :rules="[formValidates.required]"
-            /></label>
-          </div>
+        <v-form v-model="user.valid">
+          <label class="font-color-gray font-weight-black text-caption"
+            >お名前
+            <v-text-field
+              id="name"
+              v-model="user.name"
+              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
+              placeholder="田中 太郎"
+              outlined
+              dense
+              height="44"
+              :rules="[formValidates.required, formValidates.nameCountCheck]"
+          /></label>
 
           <div class="mt-n-2">
             <label class="font-color-gray font-weight-black text-caption"
               >メールアドレス
               <v-text-field
-                id="email"
-                v-model="form.email"
+                v-model="user.email"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 outlined
                 dense
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
-                :rules="[formValidates.required, formValidates.email]"
+                :rules="[
+                  formValidates.required,
+                  formValidates.email,
+                  formValidates.emailCountCheck,
+                ]"
             /></label>
           </div>
 
           <div class="mt-n-2 password-field">
             <label class="font-color-gray font-weight-black text-caption"
-              >パスワード
+              >新しいパスワード
               <v-text-field
-                id="password"
                 v-model="form.password"
                 outlined
                 dense
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
                 placeholder="半角英数字8文字以上"
-                :rules="[
-                  formValidates.required,
-                  formValidates.typeCheckString,
-                  formValidates.password,
-                ]"
+                :rules="[formValidates.password]"
             /></label>
           </div>
 
           <div class="mt-n-2 password-confirmation-field">
             <label class="font-color-gray font-weight-black text-caption"
-              >パスワード確認
+              >新しいパスワード確認
               <v-text-field
-                id="password_confirm"
                 v-model="form.password_confirmation"
                 outlined
                 dense
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="password"
-                :rules="[
-                  formValidates.required,
-                  formValidates.typeCheckString,
-                  formValidates.confirmCheck,
-                ]"
+                :rules="[formValidates.confirmCheck]"
             /></label>
           </div>
 
@@ -97,8 +85,7 @@
               class="font-color-gray font-weight-black text-caption set-max-width-520"
               >電話番号
               <v-text-field
-                id="phone_number"
-                v-model="form.phone_number"
+                v-model="user.phone_number"
                 outlined
                 dense
                 placeholder="080-1234-5678"
@@ -110,8 +97,7 @@
 
           <div>
             <v-text-field
-              id="post_code"
-              v-model="form.post_code"
+              v-model="user.post_code"
               outlined
               dense
               height="44"
@@ -129,8 +115,7 @@
 
           <div class="mt-n2">
             <v-text-field
-              id="address"
-              v-model="form.address"
+              v-model="user.address"
               outlined
               dense
               height="44"
@@ -143,28 +128,35 @@
 
           <v-card-actions class="pa-0">
             <v-btn
-              id="send"
-              class="warning pa-0 text-h6 d-none d-sm-block"
+              class="error pa-0 text-h6 d-none d-sm-block"
               block
-              :disabled="!form.valid"
+              :disabled="!user.valid || !passwordCheck"
               max-width="520"
               min-width="343"
               height="60"
-              @click="sign_up()"
-              >新規登録</v-btn
+              @click="edit"
+              >変更する</v-btn
             >
             <v-btn
-              id="send"
-              class="warning pa-0 ma-0 text-h6 d-block d-sm-none"
+              class="error pa-0 ma-0 text-h6 d-block d-sm-none"
               block
-              :disabled="!form.valid"
+              :disabled="!user.valid || !passwordCheck"
               max-width="520"
               min-width="343"
               height="48"
-              @click="sign_up()"
-              >新規登録</v-btn
+              @click="edit"
+              >変更する</v-btn
             >
           </v-card-actions>
+          <div class="mx-auto mt-4 text-center top-link mb-4">
+            <nuxt-link
+              style="color: #f06364"
+              class="text-decoration-none"
+              to="/users/profile"
+            >
+              変更せずに戻る
+            </nuxt-link>
+          </div>
         </v-form>
       </div>
     </v-card-text>
@@ -173,38 +165,56 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-  layout: 'application_specialists',
+  layout: 'application',
   data() {
     return {
       form: {
-        name: '',
-        email: '',
         password: '',
         password_confirmation: '',
+        // test: 'false',
+      },
+      user: {
+        name: '',
+        email: '',
         phone_number: '',
         post_code: '',
         address: '',
         valid: false,
       },
       formValidates: {
+        nameCountCheck: (value) =>
+          value.length <= 30 || '30文字以下で入力してください',
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'
         },
+        emailCountCheck: (value) =>
+          value.length <= 255 || '255文字以下で入力してください',
         email: (value) => {
           const format =
             // eslint-disable-next-line no-control-regex
             /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
-        password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
-        confirmCheck: (value) =>
-          value === this.form.password || 'パスワードが一致しません',
+        password: (value) => {
+          if (value === '' || (value.length >= 8 && value.length <= 32)) {
+            return true
+          } else {
+            return 'パスワードは8文字以上32文字以下で入力してください'
+          }
+        },
+        // confirmCheck: (value) =>
+        //   value.match(this.form.password) || 'パスワードが一致しません',
+        confirmCheck: (value) => {
+          if (value === '' || value === this.form.password) {
+            return true
+          } else {
+            return 'パスワードが一致しません'
+          }
+        },
         phoneNumber: (value) => {
-          const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
+          const format = /^\d{2,4}-\d{2,4}-\d{4,5}$/g
           return format.test(value) || '正しい電話番号ではありません'
         },
         postCode: (value) => {
@@ -216,22 +226,52 @@ export default {
       },
     }
   },
+  computed: {
+    passwordCheck() {
+      if (this.form.password === this.form.password_confirmation) {
+        return true
+      } else {
+        return false
+      }
+    },
+  },
+  mounted() {
+    this.getUsers()
+  },
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
-    async sign_up() {
+    async edit() {
+      if (this.form.password_confirmation === '') {
+        this.form.password = localStorage.getItem('current_password')
+      }
       try {
-        const response = await this.$axios.$post(`specialists/users`, {
-          name: this.form.name,
-          email: this.form.email,
+        const response = await this.$axios.$put(`customer`, {
+          name: this.user.name,
+          email: this.user.email,
           password: this.form.password,
           password_confirmation: this.form.password_confirmation,
-          phone_number: this.form.phone_number,
-          post_code: this.form.post_code,
-          address: this.form.address,
-          confirm_success_url: `${this.$config.frontTopUrl}/specialists/login`,
+          phone_number: this.user.phone_number,
+          post_code: this.user.post_code,
+          address: this.user.address,
+          // 本番環境では変更しなければなりません
+          redirect_url: 'http://localhost:8000/users/login',
         })
-        this.$router.push('/specialists/users/send')
+        if (window.localStorage.current_email === this.user.email) {
+          this.$router.push('/users/profile')
+        } else {
+          this.$router.push('/users/edit_user_send')
+        }
         return response
+      } catch (error) {
+        this.form.password = ''
+        return error
+      }
+    },
+    async getUsers() {
+      try {
+        const response = await this.$axios.$get(`users`)
+        this.user = response
+        localStorage.setItem('current_email', this.user.email)
       } catch (error) {
         return error
       }
@@ -241,7 +281,7 @@ export default {
 </script>
 <style scoped>
 .link-color {
-  color: #f09c3c;
+  color: #f06364;
 }
 
 .form-wrapper {
