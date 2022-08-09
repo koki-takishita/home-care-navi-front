@@ -30,7 +30,10 @@
               <v-text-field
                 id="name"
                 v-model="form.name"
-                :rules="[formValidates.required]"
+                :rules="[
+                  formValidates.required,
+                  maxLength(form.name, '名前', 255),
+                ]"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                 placeholder="田中 太郎"
                 outlined
@@ -47,7 +50,11 @@
                 v-model="form.email"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 outlined
-                :rules="[formValidates.required, formValidates.email]"
+                :rules="[
+                  formValidates.required,
+                  maxLength(form.email, 'メールアドレス', 255),
+                  formValidates.email,
+                ]"
                 dense
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
@@ -205,8 +212,8 @@ export default {
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
         password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+          (value.length >= 8 && value.length <= 32) ||
+          '8文字以上32文字以下で入力してください',
         confirmCheck: (value) =>
           value === this.form.password || 'パスワードが一致しません',
         phoneNumber: (value) => {
@@ -266,6 +273,12 @@ export default {
   },
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
+    // default: itemは255文字で以下で入力してください
+    maxLength(value, strItem = 'item', max = 255) {
+      return (
+        value.length <= max || `${strItem}は${max}文字以下で入力してください`
+      )
+    },
     async checkPhoneNumber() {
       const params = {
         phone_number: this.form.phone_number,
