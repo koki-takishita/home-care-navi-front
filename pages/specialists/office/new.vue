@@ -622,7 +622,7 @@ export default {
         await this.$axios.$post(`specialists/offices`, params, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
-        localStorage.setItem('office_data', 'true')
+        this.$store.commit('setOfficeDate')
         this.$router.push('/specialists/office/edit')
       } catch (error) {
         return error
