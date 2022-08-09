@@ -36,6 +36,10 @@ export const mutations = {
     state.office = true
   },
 
+  removeOfficeDate(state) {
+    state.office = false
+  },
+
   setClient(state, client) {
     state.client = client
   },
