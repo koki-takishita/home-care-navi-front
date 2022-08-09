@@ -32,7 +32,7 @@
                 v-model="form.name"
                 :rules="[
                   formValidates.required,
-                  maxLength(form.name, '名前', 255),
+                  maxLength(form.name, '名前', 30),
                 ]"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                 placeholder="田中 太郎"
