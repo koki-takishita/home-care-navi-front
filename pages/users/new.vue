@@ -113,11 +113,11 @@
             <v-text-field
               id="post_code"
               v-model="form.post_code"
-              :rules="[formValidates.required, formValidates.postCode]"
               outlined
               dense
               height="44"
               class="post-form"
+              :rules="[formValidates.required, formValidates.postCode]"
               placeholder="123-4567"
             >
               <template #prepend>
