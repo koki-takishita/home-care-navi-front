@@ -135,32 +135,6 @@ export default {
         return error
       }
     },
-    //   if (this.form.password_confirmation === '') {
-    //     this.form.password = localStorage.getItem('current_password')
-    //   }
-    //   try {
-    //     const response = await this.$axios.$put(`customer`, {
-    //       name: this.user.name,
-    //       email: this.user.email,
-    //       password: this.form.password,
-    //       password_confirmation: this.form.password_confirmation,
-    //       phone_number: this.user.phone_number,
-    //       post_code: this.user.post_code,
-    //       address: this.user.address,
-    //       // 本番環境では変更しなければなりません
-    //       redirect_url: 'http://localhost:8000/users/login',
-    //     })
-    //     if (window.localStorage.current_email === this.user.email) {
-    //       this.$router.push('/users/profile')
-    //     } else {
-    //       this.$router.push('/users/edit_user_send')
-    //     }
-    //     return response
-    //   } catch (error) {
-    //     this.form.password = ''
-    //     return error
-    //   }
-    // },
   },
 }
 </script>
