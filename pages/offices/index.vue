@@ -50,7 +50,7 @@
 import { mapActions } from 'vuex'
 export default {
   layout: 'application',
-  async asyncData({ $axios, query, redirect }) {
+  async asyncData({ $axios, query }) {
     // console.log(query)
     // ここにkeywordの内容も追記すればリロードも対応できる
     const area = query.area || ''
@@ -82,10 +82,6 @@ export default {
           )}&postCodes=${postCodes}&page=${offsetPage}`
         )
         searchWind = true
-      }
-      if (offices.length === 0) {
-        alert('選択したエリアにオフィスは存在しません')
-        redirect('/top')
       }
       let searchIcon = { keyword: '' }
       if (keywords.length > 0 && postCodes.length > 0) {
@@ -119,6 +115,9 @@ export default {
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
       // console.log(error)
+      if (error.message) {
+        alert(error.message)
+      }
       return error
     }
   },
@@ -234,7 +233,7 @@ export default {
         const keywords = res.keywords
         const postCodes = res.postCodes
         if (!this.exist(offices))
-          return alert('検索結果にマッチするオフィスは存在しません')
+          return alert('検索ワードに一致するオフィスは、見つかりませんでした')
         this.offices = offices
         this.keywords = keywords
         this.postCodes = postCodes
@@ -255,7 +254,11 @@ export default {
           },
         })
       } catch (error) {
-        alert(error)
+        // console.log(error)
+        // console.dir(error)
+        if (error.message) {
+          alert(error.message)
+        }
         return error
       }
     },
