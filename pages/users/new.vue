@@ -39,7 +39,6 @@
                 outlined
                 dense
                 height="44"
-                :rules="[formValidates.required]"
             /></label>
           </div>
 
@@ -60,7 +59,6 @@
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
-                :rules="[formValidates.required, formValidates.email]"
             /></label>
           </div>
 
