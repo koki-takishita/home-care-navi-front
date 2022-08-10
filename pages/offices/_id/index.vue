@@ -31,7 +31,8 @@
 <script>
 export default {
   layout: 'application',
-  async asyncData({ $axios, params }) {
+  async asyncData({ $axios, params, store }) {
+    const flag = store.getters.getCustomerFlag
     const id = params.id
     try {
       const res = await $axios.$get(`offices/${id}`)
@@ -41,15 +42,18 @@ export default {
         staffs: res.staffs,
         bookmark: res.bookmark,
         history: res.history,
+        customerFlag: flag,
       }
     } catch (error) {
       return error
     }
   },
   mounted() {
-    this.history === null
-      ? this.submitHistory(this.office.id)
-      : this.updateHistory(this.office.id, this.history.id)
+    if (this.customerFlag === true) {
+      this.history === null
+        ? this.submitHistory(this.office.id)
+        : this.updateHistory(this.office.id, this.history.id)
+    }
   },
   methods: {
     async submitBookmark(officeId) {
