@@ -42,14 +42,14 @@ export default {
         staffs: res.staffs,
         bookmark: res.bookmark,
         history: res.history,
-        customerFlag: flag,
+        isLoggedInCustomer: flag,
       }
     } catch (error) {
       return error
     }
   },
   mounted() {
-    if (this.customerFlag === true) {
+    if (this.isLoggedInCustomer === true) {
       this.history === null
         ? this.submitHistory(this.office.id)
         : this.updateHistory(this.office.id, this.history.id)
