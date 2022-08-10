@@ -255,6 +255,8 @@ export default {
           },
         })
       } catch (error) {
+        // console.log(error)
+        // console.dir(error)
         alert(error)
         return error
       }

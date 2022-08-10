@@ -51,7 +51,10 @@ export default {
           },
         })
       } catch (error) {
-        // console.log(error)
+        // console.dir(error)
+        if (error.message) {
+          alert(error.message)
+        }
         return error
       }
     },
