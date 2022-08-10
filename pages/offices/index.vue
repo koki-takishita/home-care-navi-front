@@ -234,7 +234,7 @@ export default {
         const keywords = res.keywords
         const postCodes = res.postCodes
         if (!this.exist(offices))
-          return alert('検索結果にマッチするオフィスは存在しません')
+          return alert('検索ワードに一致するオフィスは、見つかりませんでした')
         this.offices = offices
         this.keywords = keywords
         this.postCodes = postCodes
