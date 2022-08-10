@@ -105,7 +105,6 @@
   </v-card>
 </template>
 <script>
-import { mapActions } from 'vuex'
 export default {
   layout: 'application',
   data() {
@@ -125,11 +124,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions('catchErrorMsg', ['clearMsg']),
     async deleteUser() {
       try {
         await this.$axios.$delete(`users`)
-        this.$logout()
+        this.$auth.logout()
         this.$router.push(`/top`)
       } catch (error) {
         return error
