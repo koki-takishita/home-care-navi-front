@@ -48,7 +48,7 @@ export default {
     '~plugins/dateFilter.js',
     '~/plugins/officeSearch/selectedArea.js',
     '~/plugins/officeSearch/currentLocation.js',
-    '~/plugins/officeSearch/keyword.js',
+    '~/plugins/officeSearch/conversionKeywords.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

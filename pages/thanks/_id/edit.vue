@@ -92,6 +92,9 @@ export default {
       rules.push(requiredRule)
       const updateRule = () => this.notMatch || '更新してください'
       rules.push(updateRule)
+      const maxLength = () =>
+        this.comment.length <= 120 || 'お礼は120文字以下で入力してください'
+      rules.push(maxLength)
       return rules
     },
   },
