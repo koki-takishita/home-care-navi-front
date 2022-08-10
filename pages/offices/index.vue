@@ -256,7 +256,9 @@ export default {
       } catch (error) {
         // console.log(error)
         // console.dir(error)
-        alert(error)
+        if (error.message) {
+          alert(error.message)
+        }
         return error
       }
     },
