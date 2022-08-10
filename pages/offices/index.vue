@@ -83,10 +83,6 @@ export default {
         )
         searchWind = true
       }
-      if (offices.length === 0) {
-        alert('選択したエリアにオフィスは存在しません')
-        redirect('/top')
-      }
       let searchIcon = { keyword: '' }
       if (keywords.length > 0 && postCodes.length > 0) {
         searchIcon.keyword = `${keywords},${postCodes}`
@@ -119,6 +115,9 @@ export default {
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
       // console.log(error)
+      if (error.message) {
+        alert(error.message)
+      }
       return error
     }
   },
