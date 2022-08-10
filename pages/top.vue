@@ -43,6 +43,12 @@ export default {
     async searchOfficeKeywordsAndPostCodes() {
       try {
         const res = await this.$conversionKeywords(this.searchIcon.keyword)
+        // officeのレスポンスが空だったら、アラートメッセージ表示
+        if (res.offices.length === 0) {
+          throw new Error(
+            '検索ワードに一致するオフィスは、見つかりませんでした'
+          )
+        }
         this.$router.push({
           path: '/offices',
           query: {
