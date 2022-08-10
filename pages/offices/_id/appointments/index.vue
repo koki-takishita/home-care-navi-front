@@ -180,7 +180,7 @@ export default {
           }
         },
         nameCountCheck: (value) =>
-          value.length <= 31 || '30文字以下で入力してください',
+          value.length <= 30 || '30文字以下で入力してください',
         phoneNumber: (value) => {
           const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
           return format.test(value) || '正しい電話番号ではありません'
