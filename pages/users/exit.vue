@@ -127,7 +127,7 @@ export default {
     async deleteUser() {
       try {
         await this.$axios.$delete(`users`)
-        this.$auth.logout()
+        this.$auth.reset()
         this.$router.push(`/top`)
       } catch (error) {
         return error
