@@ -95,13 +95,11 @@
                               >
                             </v-list-item>
                           </div>
-                          <v-list-item>
-                            <v-list-item-title>
-                              <NuxtLink
-                                to="#"
-                                class="header-style text-overline text-decoration-none mr-5"
-                                >登録情報</NuxtLink
-                              ></v-list-item-title
+                          <v-list-item to="/specialists/profile">
+                            <v-list-item-title
+                              class="header-style text-overline text-decoration-none mr-5"
+                            >
+                              登録情報</v-list-item-title
                             >
                           </v-list-item>
                         </v-list>
@@ -345,13 +343,14 @@
               </v-list-item>
               <v-divider color="#D9DEDE"></v-divider>
             </div>
-            <v-list-item class="pa-0 ma-0 px-6 py-4 min-height-20">
-              <v-list-item-title>
-                <NuxtLink
-                  to="#"
-                  class="text-decoration-none text-body-2 navi-style"
-                  >登録情報</NuxtLink
-                >
+            <v-list-item
+              class="pa-0 ma-0 px-6 py-4 min-height-20"
+              to="/specialists/profile"
+            >
+              <v-list-item-title
+                class="text-decoration-none text-body-2 navi-style"
+              >
+                登録情報
               </v-list-item-title>
               <v-list-item-icon class="ma-0 mt-2">
                 <v-icon rage :color="color_g">mdi-chevron-right</v-icon>

@@ -148,7 +148,7 @@ export default {
   },
   created() {
     if (this.$auth.loggedIn) {
-      this.$logout()
+      this.$auth.reset()
     }
   },
   methods: {

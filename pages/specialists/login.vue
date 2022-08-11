@@ -146,6 +146,11 @@ export default {
       },
     }
   },
+  created() {
+    if (this.$auth.loggedIn) {
+      this.$auth.reset()
+    }
+  },
   methods: {
     goResetPassword() {
       this.$router.push({
