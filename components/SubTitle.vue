@@ -1,9 +1,9 @@
 <template>
   <div v-if="displayControll()">
     <div class="d-none d-md-block">
-      <v-card outlined max-width="990" min-height="245" class="mx-auto">
-        <div class="text-center set-color font-weight-black mt-12">
-          <p class="fs-28 mb-2">安心して介護をお願いしたいから。</p>
+      <v-card outlined max-width="990" min-height="245" class="subtitle-card">
+        <div class="text-center set-color font-weight-black">
+          <p class="fs-28 mb-2 pt-12">安心して介護をお願いしたいから。</p>
           <p class="text-caption mb-0">
             ホームケアナビは、ケアマネージャーの検索ができるサービスです。
           </p>
@@ -21,7 +21,12 @@
       </v-card>
     </div>
     <div class="d-block d-md-none mt-3">
-      <v-card outlined tile class="d-flex justify-center" min-height="90">
+      <v-card
+        outlined
+        tile
+        class="d-flex justify-center subtitle-card"
+        min-height="90"
+      >
         <div class="my-auto set-color">
           <p class="ma-0 text-h6 font-weight-black">
             安心して介護をお願いしたいから。
@@ -100,5 +105,8 @@ export default {
 
 .font-size-set {
   font-size: 0.5em;
+}
+.subtitle-card {
+  border: 4pt solid #f7fefb;
 }
 </style>
