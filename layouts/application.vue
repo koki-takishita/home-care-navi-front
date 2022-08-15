@@ -259,7 +259,7 @@
     <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
     <v-main class="color-gray">
       <!-- アプリケーションに適切なgutterを提供 -->
-      <v-container fluid class="pa-0">
+      <v-container fluid class="pa-0 pt-10">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
         <ErrorMsg class="flash-msg-component" />
