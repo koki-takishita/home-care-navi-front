@@ -3,6 +3,7 @@ const networkError = function (store, error) {
     store.commit('catchErrorMsg/clearMsg')
     const msg = ['送信ができませんでした。しばらく経ってから再度お願いします。']
     store.commit('catchErrorMsg/setMsg', msg)
+    store.commit('catchErrorMsg/setType', 'error')
   }
 }
 
@@ -34,18 +35,21 @@ const error422 = function (store, error) {
   const msg = error.response.data.errors.full_messages
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
+  store.commit('catchErrorMsg/setType', 'error')
 }
 
 const error401 = function (store, error) {
   const msg = error.response.data.errors
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
+  store.commit('catchErrorMsg/setType', 'error')
 }
 
 const error500 = function (store) {
   const msg = ['サーバー側のエラーです。しばらく経ってから再度お願いします。']
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
+  store.commit('catchErrorMsg/setType', 'error')
 }
 
 const setOfficeDate = function (officeData) {

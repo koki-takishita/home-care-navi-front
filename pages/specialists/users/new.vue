@@ -1,5 +1,5 @@
 <template>
-  <v-card width="750" class="mx-auto mb-2 mt-2">
+  <v-card flat width="750" class="mx-auto mb-2 mt-2">
     <div class="px-4 pt-4 d-none d-sm-block">
       <p class="mb-0 text-right">
         <NuxtLink
@@ -101,6 +101,7 @@
                 v-model="form.phone_number"
                 outlined
                 dense
+                :error-messages="errors"
                 placeholder="080-1234-5678"
                 class="overwrite-fieldset-border-top-width mt-2 font-weight-regular set-max-width-520"
                 type="tel"
@@ -146,7 +147,7 @@
               id="send"
               class="warning pa-0 text-h6 d-none d-sm-block"
               block
-              :disabled="!form.valid"
+              :disabled="isValid"
               max-width="520"
               min-width="343"
               height="60"
@@ -157,7 +158,7 @@
               id="send"
               class="warning pa-0 ma-0 text-h6 d-block d-sm-none"
               block
-              :disabled="!form.valid"
+              :disabled="isValid"
               max-width="520"
               min-width="343"
               height="48"
@@ -185,7 +186,9 @@ export default {
         post_code: '',
         address: '',
         valid: false,
+        phoneNumberCheck: false,
       },
+      errors: [],
       formValidates: {
         required: (value) => !!value || '必須項目です',
         typeCheckString: (value) => {
@@ -216,8 +219,61 @@ export default {
       },
     }
   },
+  computed: {
+    // 新規登録ボタン押せる状態   false
+    // 新規登録ボタン押せない状態 true
+    isValid() {
+      // formのバリテーションルールをすべて突破している && 電話番号に被りがない
+      const flag = this.form.valid && this.form.phoneNumberCheck
+
+      // flag = false 新規登録ボタン押せる状態
+      // flag = true  新規登録ボタン押せない状態
+      return !flag
+    },
+  },
+  watch: {
+    // form.phene_numberの値がusersテーブルとofficesテーブルの被りがないかチェック
+    // 被りがあったら、'登録済みの電話番号です。'を表示 エラーメッセージはapiのレスポンスを使用している
+    async 'form.phone_number'() {
+      // form.phone_numberの値が変化したらだたちにfalseにする
+      // apiとの通信で、結果がNGでも一瞬だけtrueになってしまうため
+      this.form.phoneNumberCheck = false
+      const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
+      if (format.test(this.form.phone_number)) {
+        let msg
+
+        // apiへリクエスト
+        // 200 case 'string'
+        // 403 case 'object'
+        const res = await this.checkPhoneNumber()
+        switch (typeof res) {
+          case 'string':
+            msg = res
+            this.form.phoneNumberCheck = true
+            break
+          case 'object':
+            msg = res.response.data.message
+            this.errors.push(msg)
+            break
+        }
+      } else {
+        this.errors.pop()
+      }
+    },
+  },
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
+    async checkPhoneNumber() {
+      const params = {
+        phone_number: this.form.phone_number,
+      }
+      try {
+        const res = await this.$axios.$get('check-phone-number', { params })
+        return res.message
+      } catch (error) {
+        return error
+      }
+    },
     async sign_up() {
       try {
         const response = await this.$axios.$post(`specialists/users`, {
