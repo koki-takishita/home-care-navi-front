@@ -1,5 +1,5 @@
 <template>
-  <div class="w-990 mx-auto mt-n2 mb-2">
+  <div class="w-990 mx-auto mb-2">
     <SubTitle
       v-model="searchIcon.keyword"
       @clickKeywordsAndPostCodes="searchOfficeKeywordsAndPostCodes()"
