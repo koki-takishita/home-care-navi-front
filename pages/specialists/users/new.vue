@@ -35,7 +35,7 @@
                 outlined
                 dense
                 height="44"
-                :rules="[formValidates.required]"
+                :rules="[formValidates.required, formValidates.nameMaxlength]"
             /></label>
           </div>
 
@@ -51,7 +51,11 @@
                 placeholder="例) homecarenavi@mail.com"
                 type="email"
                 height="44"
-                :rules="[formValidates.required, formValidates.email]"
+                :rules="[
+                  formValidates.required,
+                  formValidates.email,
+                  formValidates.emailMaxlength,
+                ]"
             /></label>
           </div>
 
@@ -202,8 +206,13 @@ export default {
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
         password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+          (value.length >= 8 && value.length <= 32) ||
+          '8文字以上32文字以下で入力してください',
+        emailMaxlength: (value) =>
+          value.length <= 255 ||
+          'メールアドレスは255文字以下で入力してください',
+        nameMaxlength: (value) =>
+          value.length <= 30 || '名前は30文字以下で入力してください',
         confirmCheck: (value) =>
           value === this.form.password || 'パスワードが一致しません',
         phoneNumber: (value) => {
