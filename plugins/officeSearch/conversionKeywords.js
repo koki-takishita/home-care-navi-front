@@ -1,5 +1,14 @@
+// 空白でなければtrue 空白だとfalse
+// '   ' => false
+// ' '   => false
+// 'a  ' => true
+const notBlank = function (obj) {
+  const re = /^\s+$/g
+  return !obj.match(re)
+}
+
 const exist = function (obj) {
-  if (!!obj && obj.length > 0) {
+  if (!!obj && obj.length > 0 && notBlank(obj)) {
     return true
   } else {
     return false
@@ -7,11 +16,7 @@ const exist = function (obj) {
 }
 
 const keywordExist = function (char) {
-  if (exist(char)) {
-    return char
-  } else {
-    throw new Error('検索ワードを入力してください')
-  }
+  return exist(char) ? char : false
 }
 /* 配列からから郵便番号抽出
    ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "１１１ー１１１１"]
@@ -133,6 +138,9 @@ export default function ({ $axios }, inject) {
   inject('conversionKeywords', async (keywords) => {
     // 何も入力されてなかったらalert
     const keyword = keywordExist(keywords)
+    if (keyword === false) {
+      throw new Error('検索ワードを入力してください')
+    }
 
     /* "サンプル１ サンプル2, さんぷる３  ,さんぷる"
        => ["サンプル1", "サンプル2", "サンプル3", "さんぷる"] */
