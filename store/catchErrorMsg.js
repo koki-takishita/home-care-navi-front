@@ -1,6 +1,6 @@
 export const state = () => ({
   msg: [],
-  type: [],
+  type: '',
 })
 export const getters = {
   getMsg: (state) => state.msg,
