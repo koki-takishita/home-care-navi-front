@@ -1,9 +1,9 @@
 <template>
   <div class="my-2">
     <v-alert
-      v-for="(msg, i) in msgs"
+      v-for="(msg, i) in getMsg"
       :key="i"
-      :type="type"
+      :type="getType"
       max-width="750"
       min-width="350"
       dismissible
@@ -27,10 +27,10 @@ export default {
   },
   watch: {
     getMsg() {
-      this.msgs = this.getMsg
+      return this.getMsg
     },
     getType() {
-      this.type = this.getType
+      return this.getType
     },
   },
 }
