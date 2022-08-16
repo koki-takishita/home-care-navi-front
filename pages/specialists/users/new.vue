@@ -195,10 +195,11 @@ export default {
       errors: [],
       formValidates: {
         required: (value) => !!value || '必須項目です',
-        typeCheckString: (value) => {
-          const format = /^[a-zA-Z0-9]+$/g
-          return format.test(value) || '入力できるのは半角英数字のみです'
-        },
+        nameMaxlength: (value) =>
+          value.length <= 30 || '名前は30文字以下で入力してください',
+        emailMaxlength: (value) =>
+          value.length <= 255 ||
+          'メールアドレスは255文字以下で入力してください',
         email: (value) => {
           const format =
             // eslint-disable-next-line no-control-regex
@@ -208,16 +209,15 @@ export default {
         password: (value) =>
           (value.length >= 8 && value.length <= 32) ||
           '8文字以上32文字以下で入力してください',
-        emailMaxlength: (value) =>
-          value.length <= 255 ||
-          'メールアドレスは255文字以下で入力してください',
-        nameMaxlength: (value) =>
-          value.length <= 30 || '名前は30文字以下で入力してください',
         confirmCheck: (value) =>
           value === this.form.password || 'パスワードが一致しません',
         phoneNumber: (value) => {
           const format = /^\d{2,4}-\d{2,4}-\d{4}$/g
           return format.test(value) || '正しい電話番号ではありません'
+        },
+        typeCheckString: (value) => {
+          const format = /^[a-zA-Z0-9]+$/g
+          return format.test(value) || '入力できるのは半角英数字のみです'
         },
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
