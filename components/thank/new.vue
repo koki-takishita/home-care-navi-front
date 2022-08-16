@@ -126,6 +126,11 @@ export default {
       valid: false,
     }
   },
+  fetch() {
+    if (this.ReadStaffs.length === 0) {
+      this.$nuxt.context.redirect(`/offices/${this.ReadOffice.id}`)
+    }
+  },
   computed: {
     ageList() {
       const array = new Array(61)
