@@ -189,13 +189,13 @@ export default {
           value.size <= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         nameCountCheck: (value) =>
-          value.length <= 31 || '30文字以下で入力してください',
+          value.length <= 30 || '30文字以下で入力してください',
         kanaCheck: (value) => {
           const format = /^[ぁ-んー　 ]*$/ // eslint-disable-line
           return format.test(value) || 'ひらがなで入力してください'
         },
         familyCountCheck: (value) =>
-          value.length <= 31 || '30文字以下で入力してください',
+          value.length <= 30 || '30文字以下で入力してください',
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
           return (
