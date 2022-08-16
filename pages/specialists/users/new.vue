@@ -53,8 +53,8 @@
                 height="44"
                 :rules="[
                   formValidates.required,
-                  formValidates.email,
                   formValidates.emailMaxlength,
+                  formValidates.email,
                 ]"
             /></label>
           </div>
