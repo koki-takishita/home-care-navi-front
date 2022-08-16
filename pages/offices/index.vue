@@ -34,14 +34,19 @@
           </v-row>
           <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
         </v-container>
-        <div class="text-center">
+
+        <!-- <client-only></client-only>
+        リロードするとページネーション崩れるエラー対応のため
+        ハイドレーションとは？: https://zenn.dev/00_/articles/c5130802d384b8238e4c
+        原因と思われる記事: https://zenn.dev/motoishimotoi/articles/5a6642d8790eaa -->
+        <client-only>
           <v-pagination
             v-model="page"
-            :length="count"
             color="#D9DEDE"
+            :length="count"
             class="page-nation"
           ></v-pagination>
-        </div>
+        </client-only>
       </v-col>
     </v-row>
   </v-container>
@@ -130,8 +135,6 @@ export default {
       cities: [],
       selectedList: [],
       location: false,
-      page: 0,
-      count: 0,
       keywords: '',
       postCodes: '',
       searchWind: '',
