@@ -366,10 +366,10 @@
     <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
     <v-main class="color-gray">
       <!-- アプリケーションに適切なgutterを提供 -->
-      <v-container fluid class="pa-0">
+      <v-container fluid class="pa-0 pt-10">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
-        <ErrorMsg />
+        <ErrorMsg class="flash-msg-component" />
         <Nuxt />
       </v-container>
     </v-main>
@@ -503,6 +503,18 @@ export default {
 }
 </script>
 <style scoped>
+/* stylelint-disable */
+.flash-msg-component {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  z-index: 999;
+}
+/* stylelint-enable */
+
 .text-10 {
   font-size: 10px;
 }
