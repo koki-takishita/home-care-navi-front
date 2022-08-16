@@ -61,7 +61,10 @@
             <v-textarea
               id="introduction"
               v-model="staff.introduction"
-              :rules="[formValidates.introductionCountCheck]"
+              :rules="[
+                formValidates.required,
+                formValidates.introductionCountCheck,
+              ]"
               class="mt-2 font-weight-regular"
               height="80"
               outlined
