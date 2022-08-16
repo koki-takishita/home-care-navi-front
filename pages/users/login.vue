@@ -37,7 +37,7 @@
               v-model="loginInfo.email"
               :rules="[
                 formValidates.required,
-                maxLength(loginInfo.email, 'メールーアドレス'),
+                maxLength(loginInfo.email, 'メールアドレス'),
                 formValidates.email,
               ]"
               outlined
