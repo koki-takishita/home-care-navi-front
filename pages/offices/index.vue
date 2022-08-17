@@ -55,7 +55,7 @@
 import { mapActions } from 'vuex'
 export default {
   layout: 'application',
-  async asyncData({ $axios, query }) {
+  async asyncData({ $axios, query, redirect }) {
     // console.log(query)
     // ここにkeywordの内容も追記すればリロードも対応できる
     const area = query.area || ''
@@ -119,10 +119,15 @@ export default {
       }
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
-      // console.log(error)
-      if (error.message) {
+      if (
+        error.message ===
+        "Cannot read properties of undefined (reading 'status')"
+      ) {
+        redirect('/')
+      } else if (error.message) {
         alert(error.message)
       }
+
       return error
     }
   },

@@ -183,6 +183,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import { maxLength } from '@/plugins/validates'
 export default {
   layout: 'application',
   data() {
@@ -273,12 +274,7 @@ export default {
   },
   methods: {
     ...mapActions('catchErrorMsg', ['clearMsg']),
-    // default: itemは255文字で以下で入力してください
-    maxLength(value, strItem = 'item', max = 255) {
-      return (
-        value.length <= max || `${strItem}は${max}文字以下で入力してください`
-      )
-    },
+    maxLength,
     async checkPhoneNumber() {
       const params = {
         phone_number: this.form.phone_number,
