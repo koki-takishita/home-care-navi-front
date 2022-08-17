@@ -1,5 +1,5 @@
 <template>
-  <div class="w-990 mx-auto mt-n2 mb-2">
+  <div class="w-990 mx-auto mb-2 mt-n10">
     <SubTitle
       v-model="searchIcon.keyword"
       @clickKeywordsAndPostCodes="searchOfficeKeywordsAndPostCodes()"
@@ -43,6 +43,12 @@ export default {
     async searchOfficeKeywordsAndPostCodes() {
       try {
         const res = await this.$conversionKeywords(this.searchIcon.keyword)
+        // officeのレスポンスが空だったら、アラートメッセージ表示
+        if (res.offices.length === 0) {
+          throw new Error(
+            '検索ワードに一致するオフィスは、見つかりませんでした'
+          )
+        }
         this.$router.push({
           path: '/offices',
           query: {
@@ -51,7 +57,10 @@ export default {
           },
         })
       } catch (error) {
-        // console.log(error)
+        // console.dir(error)
+        if (error.message) {
+          alert(error.message)
+        }
         return error
       }
     },

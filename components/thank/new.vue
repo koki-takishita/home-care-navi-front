@@ -119,11 +119,16 @@ export default {
         required: (value) => !!value || '必須項目です',
         objRequired: (value) => !!value.id || '必須項目です',
         strLength: (value) =>
-          value.length < 120 || '120文字以内で入力してください',
+          value.length <= 120 || '120文字以内で入力してください',
         nameLength: (value) =>
           value.length < 31 || '30文字以内で入力してください',
       },
       valid: false,
+    }
+  },
+  fetch() {
+    if (this.ReadStaffs.length === 0) {
+      this.$nuxt.context.redirect(`/offices/${this.ReadOffice.id}`)
     }
   },
   computed: {

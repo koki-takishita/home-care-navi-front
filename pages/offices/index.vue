@@ -34,14 +34,19 @@
           </v-row>
           <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
         </v-container>
-        <div class="text-center">
+
+        <!-- <client-only></client-only>
+        リロードするとページネーション崩れるエラー対応のため
+        ハイドレーションとは？: https://zenn.dev/00_/articles/c5130802d384b8238e4c
+        原因と思われる記事: https://zenn.dev/motoishimotoi/articles/5a6642d8790eaa -->
+        <client-only>
           <v-pagination
             v-model="page"
-            :length="count"
             color="#D9DEDE"
+            :length="count"
             class="page-nation"
           ></v-pagination>
-        </div>
+        </client-only>
       </v-col>
     </v-row>
   </v-container>
@@ -50,7 +55,7 @@
 import { mapActions } from 'vuex'
 export default {
   layout: 'application',
-  async asyncData({ $axios, query, redirect }) {
+  async asyncData({ $axios, query }) {
     // console.log(query)
     // ここにkeywordの内容も追記すればリロードも対応できる
     const area = query.area || ''
@@ -82,10 +87,6 @@ export default {
           )}&postCodes=${postCodes}&page=${offsetPage}`
         )
         searchWind = true
-      }
-      if (offices.length === 0) {
-        alert('選択したエリアにオフィスは存在しません')
-        redirect('/top')
       }
       let searchIcon = { keyword: '' }
       if (keywords.length > 0 && postCodes.length > 0) {
@@ -119,6 +120,9 @@ export default {
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
       // console.log(error)
+      if (error.message) {
+        alert(error.message)
+      }
       return error
     }
   },
@@ -131,8 +135,6 @@ export default {
       cities: [],
       selectedList: [],
       location: false,
-      page: 0,
-      count: 0,
       keywords: '',
       postCodes: '',
       searchWind: '',
@@ -234,7 +236,7 @@ export default {
         const keywords = res.keywords
         const postCodes = res.postCodes
         if (!this.exist(offices))
-          return alert('検索結果にマッチするオフィスは存在しません')
+          return alert('検索ワードに一致するオフィスは、見つかりませんでした')
         this.offices = offices
         this.keywords = keywords
         this.postCodes = postCodes
@@ -255,7 +257,11 @@ export default {
           },
         })
       } catch (error) {
-        alert(error)
+        // console.log(error)
+        // console.dir(error)
+        if (error.message) {
+          alert(error.message)
+        }
         return error
       }
     },

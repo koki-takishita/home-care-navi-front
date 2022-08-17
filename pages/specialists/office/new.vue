@@ -240,78 +240,108 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content class="mt-6">
                 <v-sheet class="pa-3">
-                  <v-avatar
-                    size="320"
-                    color="grey lighten-3"
-                    tile
-                    class="ml-8 mb-4"
-                  >
-                    <v-img
-                      v-if="uploadImageUrl_1 !== null"
-                      :src="uploadImageUrl_1"
-                    />
-                  </v-avatar>
+                  <div class="d-none d-sm-block">
+                    <v-avatar
+                      size="320"
+                      color="grey lighten-3"
+                      tile
+                      class="ml-8 mb-4"
+                    >
+                      <v-img
+                        v-if="uploadImageUrl_1 !== null"
+                        :src="uploadImageUrl_1"
+                      />
+                    </v-avatar>
+                  </div>
+                  <div class="d-sm-none d-block">
+                    <v-avatar
+                      size="200"
+                      color="grey lighten-3"
+                      tile
+                      class="mb-4"
+                    >
+                      <v-img
+                        v-if="uploadImageUrl_1 !== null"
+                        :src="uploadImageUrl_1"
+                      />
+                    </v-avatar>
+                  </div>
                   <v-file-input
-                    v-model="image_detail_1"
-                    truncate-length="30"
+                    v-model="detail_image_1"
+                    truncate-length="20"
                     accept="image/*"
                     show-size
                     label="特徴画像1をアップロード"
                     :rules="[formValidates.fileDetailSizeCheck]"
                     prepend-icon="mdi-camera"
-                    class="image-form"
+                    class="detail-image-form"
                     @change="detailImage_1Picked"
                   ></v-file-input>
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像1の説明（任意）
-                  <v-textarea
-                    v-model="text_detail_1"
+                  <v-text-field
+                    v-model="comment_1"
                     :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像1に関する説明テキストを入れてください"
-                    height="105"
+                    height="44"
                     outlined
                     dense
                   >
-                  </v-textarea
+                  </v-text-field
                 ></label>
                 <v-sheet class="pa-3">
-                  <v-avatar
-                    size="320"
-                    color="grey lighten-3"
-                    tile
-                    class="ml-8 mb-4"
-                  >
-                    <v-img
-                      v-if="uploadImageUrl_2 !== null"
-                      :src="uploadImageUrl_2"
-                    />
-                  </v-avatar>
+                  <div class="d-none d-sm-block">
+                    <v-avatar
+                      size="320"
+                      color="grey lighten-3"
+                      tile
+                      class="ml-8 mb-4"
+                    >
+                      <v-img
+                        v-if="uploadImageUrl_2 !== null"
+                        :src="uploadImageUrl_2"
+                      />
+                    </v-avatar>
+                  </div>
+                  <div class="d-sm-none d-block">
+                    <v-avatar
+                      size="200"
+                      color="grey lighten-3"
+                      tile
+                      class="mb-4"
+                    >
+                      <v-img
+                        v-if="uploadImageUrl_2 !== null"
+                        :src="uploadImageUrl_2"
+                      />
+                    </v-avatar>
+                  </div>
                   <v-file-input
-                    v-model="image_detail_2"
-                    truncate-length="30"
+                    v-model="detail_image_2"
+                    truncate-length="20"
                     accept="image/*"
                     show-size
                     label="特徴画像2をアップロード"
                     :rules="[formValidates.fileDetailSizeCheck]"
                     prepend-icon="mdi-camera"
-                    class="image-form"
+                    class="detail-image-form"
                     @change="detailImage_2Picked"
                   ></v-file-input>
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像2の説明（任意）
-                  <v-textarea
-                    v-model="text_detail_2"
+                  <v-text-field
+                    v-model="comment_2"
                     :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像2に関する説明テキストを入れてください"
-                    height="105"
+                    height="44"
                     outlined
                     dense
                   >
-                  </v-textarea
+                  </v-text-field
                 ></label>
                 <v-form>
                   <label class="font-color-gray font-weight-black text-caption"
@@ -420,7 +450,7 @@
             depressed
             :disabled="!valid"
             color="warning"
-            @click="send"
+            @click="send()"
           >
             登録する
           </v-btn>
@@ -431,6 +461,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 const maxRoom = 101
 const totalRooms = [...Array(maxRoom).keys()]
 
@@ -519,15 +550,16 @@ export default {
       fax_number: '',
       post_code: '',
       address: '',
-      detail: '',
       service_type: '',
+
       input_image: null,
       uploadImageUrl_1: '',
-      image_detail_1: null,
-      text_detail_1: '',
+      detail_image_1: null,
+      comment_1: '',
       uploadImageUrl_2: '',
-      image_detail_2: null,
-      text_detail_2: '',
+      detail_image_2: null,
+      comment_2: '',
+
       open_date: '',
       activePicker: null,
       date: null,
@@ -553,6 +585,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions('catchErrorMsg', ['clearMsg']),
     detailImage_1Picked(file) {
       if (file !== undefined && file !== null) {
         if (file.name.lastIndexOf('.') <= 0) {
@@ -603,26 +636,55 @@ export default {
       if (this.selected.includes('土')) {
         this.flags += 64
       }
-      const params = new FormData()
-      params.append('name', this.name)
-      params.append('title', this.title)
+
+      const officeParams = new FormData()
       for (let index = 0; index <= 5; index++) {
         if (this.images[index] === undefined) {
           continue
         }
-        params.append('images[]', this.images[index])
+        officeParams.append('officeImages[]', this.images[index])
       }
-      params.append('flags', this.flags)
-      params.append('business_day_detail', this.business_day_detail)
-      params.append('phone_number', this.phone_number)
-      params.append('fax_number', this.fax_number)
-      params.append('post_code', this.post_code)
-      params.append('address', this.address)
+
+      const officeData = {
+        name: this.name,
+        title: this.title,
+        flags: this.flags,
+        business_day_detail: this.business_day_detail,
+        phone_number: this.phone_number,
+        fax_number: this.fax_number,
+        post_code: this.post_code,
+        address: this.address,
+      }
+      const officeJson = JSON.stringify(officeData)
+
+      if (this.detail_image_1 !== null) {
+        officeParams.append('detailImages[]', this.detail_image_1)
+      }
+      if (this.detail_image_2 !== null) {
+        officeParams.append('detailImages[]', this.detail_image_2)
+      }
+
+      const officeDetail = {
+        detail: this.title_detail,
+        service_type: this.service_type,
+        open_date: this.open_date,
+        rooms: this.rooms,
+        requirement: this.requirement,
+        facility: this.facility,
+        management: this.management,
+        link: this.link,
+        comment_1: this.comment_1,
+        comment_2: this.comment_2,
+      }
+      const detailJson = JSON.stringify(officeDetail)
+
+      officeParams.append('office', officeJson)
+      officeParams.append('detail', detailJson)
+
       try {
-        await this.$axios.$post(`specialists/offices`, params, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
+        await this.$axios.$post(`specialists/offices`, officeParams)
         this.$store.commit('setOfficeDate')
+
         this.$router.push('/specialists/office/edit')
       } catch (error) {
         return error
@@ -649,6 +711,7 @@ input[type='checkbox'] {
   color: red;
   text-align: center;
 }
+
 /* stylelint-disable */
 .post-form >>> fieldset {
   width: 107px;
@@ -661,6 +724,11 @@ input[type='checkbox'] {
 .image-form >>> .v-input__slot {
   width: 320px;
 }
+
+.detail-image-form >>> .v-input__slot {
+  width: 260px;
+}
+
 .room-form >>> .v-input__slot {
   width: 82px;
 }

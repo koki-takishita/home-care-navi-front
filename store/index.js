@@ -18,6 +18,10 @@ function setDefaultState() {
   }
 }
 
+export const getters = {
+  getCustomerFlag: (state) => state.customer,
+}
+
 export const mutations = {
   loginSpecialist(state) {
     state.specialist = true
