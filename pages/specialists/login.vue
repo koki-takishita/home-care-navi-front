@@ -35,7 +35,11 @@
             <v-text-field
               id="email"
               v-model="loginInfo.email"
-              :rules="[formValidates.required, formValidates.email]"
+              :rules="[
+                formValidates.required,
+                maxLength(loginInfo.email, 'メールアドレス'),
+                formValidates.email,
+              ]"
               outlined
               dense
               height="44"
@@ -117,6 +121,7 @@
 </template>
 
 <script>
+import { maxLength } from '@/plugins/validates'
 export default {
   layout: 'application_specialists',
   data() {
@@ -137,8 +142,8 @@ export default {
           return format.test(value) || '正しいメールアドレスを入力してください'
         },
         password: (value) =>
-          (value.length >= 8 && value.length <= 16) ||
-          '8文字以上16文字未満で入力してください',
+          (value.length >= 8 && value.length <= 32) ||
+          '8文字以上32文字以下で入力してください',
         typeCheckString: (value) => {
           const format = /^[a-zA-Z0-9]+$/g
           return format.test(value) || '入力できるのは半角英数字のみです'
@@ -147,6 +152,7 @@ export default {
     }
   },
   methods: {
+    maxLength,
     goResetPassword() {
       this.$router.push({
         path: '/reset-passwords',

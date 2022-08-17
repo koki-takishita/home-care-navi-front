@@ -49,6 +49,7 @@ export default {
     '~/plugins/officeSearch/selectedArea.js',
     '~/plugins/officeSearch/currentLocation.js',
     '~/plugins/officeSearch/conversionKeywords.js',
+    '~/plugins/validates.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
