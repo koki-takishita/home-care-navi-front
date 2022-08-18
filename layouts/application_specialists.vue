@@ -257,7 +257,7 @@
         </v-card>
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <div v-if="office !== true">
+            <div v-if="!$store.state.office">
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
                 to="/specialists/office/new"
