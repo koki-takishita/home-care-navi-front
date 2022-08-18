@@ -11,7 +11,7 @@ export default function ({ $auth, redirect, store }, inject) {
       store.commit('catchErrorMsg/setMsg', ['ログアウトしました'])
       redirect(logoutInfo.redirectUrl)
       store.commit('logoutUser')
-      store.commit('removeOfficeDate')
+      store.commit('deleteOfficeDate')
       return response
     } catch (error) {
       // TODO 失敗時にstoreにtype入れ込む

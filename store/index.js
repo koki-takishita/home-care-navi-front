@@ -40,7 +40,7 @@ export const mutations = {
     state.office = true
   },
 
-  removeOfficeDate(state) {
+  deleteOfficeDate(state) {
     state.office = false
   },
 
