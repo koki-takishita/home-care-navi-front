@@ -7,14 +7,19 @@ const networkError = function (store, error) {
   }
 }
 
-const authError422and401 = function (store, error) {
+const catchAPIError = function (store, error) {
   const code = error.response.status
-  if (code === 422) {
-    error422(store, error)
-  } else if (code === 401) {
-    error401(store, error)
-  } else if (code === 500) {
-    error500(store)
+  switch (code) {
+    case 401:
+    case 403:
+    case 422:
+      error401and403and422(store, error)
+      break
+    case 500:
+      error500(store)
+      break
+    default:
+      otherError(store)
   }
 }
 
@@ -31,14 +36,14 @@ const setAuthInfoToHeader = function (config, store) {
   }
 }
 
-const error422 = function (store, error) {
-  const msg = error.response.data.errors.full_messages
+const otherError = function (store) {
+  const msg = ['障害が発生しました。サイト運営者にお問い合わせください。']
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
   store.commit('catchErrorMsg/setType', 'error')
 }
 
-const error401 = function (store, error) {
+const error401and403and422 = function (store, error) {
   const msg = error.response.data.errors
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
@@ -86,7 +91,7 @@ export default function ({ $axios, store, query }) {
   // TODO onResponseError onRequestErrorで分けたい
   $axios.onResponseError((error) => {
     networkError(store, error)
-    authError422and401(store, error)
+    catchAPIError(store, error)
   })
 
   $axios.onResponse((response) => {
