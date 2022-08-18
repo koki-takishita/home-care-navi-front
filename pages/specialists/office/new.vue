@@ -467,7 +467,7 @@ const totalRooms = [...Array(maxRoom).keys()]
 
 export default {
   layout: 'application_specialists',
-  middleware: 'authentication',
+  middleware: ['authentication', 'existenceOffice'],
   data() {
     return {
       formValidates: {
@@ -683,7 +683,8 @@ export default {
 
       try {
         await this.$axios.$post(`specialists/offices`, officeParams)
-        localStorage.setItem('office_data', 'true')
+        this.$store.commit('setHasOffice', true)
+
         this.$router.push('/specialists/office/edit')
       } catch (error) {
         return error
