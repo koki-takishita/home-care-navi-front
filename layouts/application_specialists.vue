@@ -45,16 +45,7 @@
                           </v-btn>
                         </template>
                         <v-list>
-                          <div v-if="office !== true">
-                            <v-list-item to="/specialists/office/new">
-                              <v-list-item-title
-                                class="header-style text-overline text-decoration-none mr-5"
-                              >
-                                事業所登録</v-list-item-title
-                              >
-                            </v-list-item>
-                          </div>
-                          <div v-else>
+                          <div v-if="$store.state.office">
                             <v-list-item to="/specialists/office/edit">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
@@ -92,6 +83,15 @@
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
                                 利用者情報管理</v-list-item-title
+                              >
+                            </v-list-item>
+                          </div>
+                          <div v-else>
+                            <v-list-item to="/specialists/office/new">
+                              <v-list-item-title
+                                class="header-style text-overline text-decoration-none mr-5"
+                              >
+                                事業所登録</v-list-item-title
                               >
                             </v-list-item>
                           </div>
@@ -257,7 +257,7 @@
         </v-card>
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <div v-if="office !== true">
+            <div v-if="!$store.state.office">
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
                 to="/specialists/office/new"
