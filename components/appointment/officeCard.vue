@@ -73,7 +73,7 @@ export default {
       return this.office
     },
     displayImg() {
-      return this.getOffice.first_image_url !== null
+      return this.getOffice.first_image_url.length > 0
         ? this.getOffice.first_image_url
         : require('~/assets/images/no-image.png')
     },
