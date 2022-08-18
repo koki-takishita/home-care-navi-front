@@ -36,8 +36,8 @@ export const mutations = {
     state.customer = true
   },
 
-  setOfficeDate(state) {
-    state.office = true
+  setHasOffice(state, flag) {
+    state.office = flag
   },
 
   deleteOfficeDate(state) {

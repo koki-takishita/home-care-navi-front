@@ -683,7 +683,7 @@ export default {
 
       try {
         await this.$axios.$post(`specialists/offices`, officeParams)
-        this.$store.commit('setOfficeDate')
+        this.$store.commit('setOfficeData', true)
 
         this.$router.push('/specialists/office/edit')
       } catch (error) {
