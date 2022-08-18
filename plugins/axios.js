@@ -57,10 +57,6 @@ const error500 = function (store) {
   store.commit('catchErrorMsg/setType', 'error')
 }
 
-const setOfficeDate = function (officeData) {
-  localStorage.setItem('office_data', officeData)
-}
-
 const setAuthToStore = function (headers, store) {
   store.commit('setAccessToken', headers['access-token'])
   store.commit('setClient', headers.client)
@@ -79,7 +75,7 @@ const isAuthInfo = function (obj) {
 const setAuthInfoToStore = function (response, store) {
   const headers = response.headers
   if (headers.office_data) {
-    setOfficeDate(headers.office_data)
+    store.commit('setHasOffice', true)
   }
 
   if (isAuthInfo(headers)) {
