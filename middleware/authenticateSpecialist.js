@@ -1,10 +1,16 @@
 export default async function ({ $auth, store, redirect, route }) {
+  const permissionPaths = [
+    '/specialists/login',
+    '/specialists/users/new',
+    '/specialists/users/send',
+    '/reset-passwords',
+    '/reset-passwords/edit',
+    '/specialists/privacy_policy',
+    '/specialists/terms',
+    '/specialists/contacts/new',
+  ]
   if (
-    route.path !== '/specialists/login' &&
-    route.path !== '/specialists/users/new' &&
-    route.path !== '/specialists/users/send' &&
-    route.path !== '/reset-passwords' &&
-    route.path !== '/reset-passwords/edit' &&
+    !permissionPaths.includes(route.path) &&
     store.state.specialist !== true
   ) {
     await $auth.logout()
