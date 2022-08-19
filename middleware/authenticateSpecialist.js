@@ -1,6 +1,7 @@
 export default async function ({ $auth, store, redirect, route }) {
   const permissionPaths = [
     '/specialists/login',
+    '/specialists/login/',
     '/specialists/users/new',
     '/specialists/users/send',
     '/reset-passwords',
