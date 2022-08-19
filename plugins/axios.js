@@ -44,7 +44,12 @@ const otherError = function (store) {
 }
 
 const error401and403and422 = function (store, error) {
-  const msg = error.response.data.errors
+  let msg
+  if (error.response.data.errors.full_messages === undefined) {
+    msg = error.response.data.errors
+  } else {
+    msg = error.response.data.errors.full_messages
+  }
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
   store.commit('catchErrorMsg/setType', 'error')
