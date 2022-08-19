@@ -79,6 +79,9 @@ export default {
           `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
         )
         searchWind = false
+        if (offices.length === 0) {
+          throw new Error('選択したエリアにオフィスは存在しません')
+        }
       }
       if (!!postCodes.length > 0 || !!keywords.length > 0) {
         offices = await $axios.$get(
@@ -87,6 +90,11 @@ export default {
           )}&postCodes=${postCodes}&page=${offsetPage}`
         )
         searchWind = true
+        if (offices.length === 0) {
+          throw new Error(
+            '検索ワードに一致するオフィスは、見つかりませんでした'
+          )
+        }
       }
       let searchIcon = { keyword: '' }
       if (keywords.length > 0 && postCodes.length > 0) {
@@ -119,13 +127,9 @@ export default {
       }
     } catch (error) {
       // リロードして消えるようだったら有効化 console.log(error)
-      if (
-        error.message ===
-        "Cannot read properties of undefined (reading 'status')"
-      ) {
-        redirect('/')
-      } else if (error.message) {
+      if (error.message) {
         alert(error.message)
+        redirect('/')
       }
 
       return error
