@@ -1,7 +1,6 @@
 export default async function ({ $auth, store, redirect, route }) {
   const permissionPaths = [
     '/specialists/login',
-    '/specialists/login/',
     '/specialists/users/new',
     '/specialists/users/send',
     '/reset-passwords',
@@ -16,7 +15,7 @@ export default async function ({ $auth, store, redirect, route }) {
     !permissionPaths.includes(route.path) &&
     store.state.specialist !== true
   ) {
-    await $auth.logout()
+    await $auth.reset()
     return redirect('/specialists/login')
   }
 }
