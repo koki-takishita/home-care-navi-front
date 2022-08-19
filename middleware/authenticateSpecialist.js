@@ -8,6 +8,8 @@ export default async function ({ $auth, store, redirect, route }) {
     '/specialists/privacy_policy',
     '/specialists/terms',
     '/specialists/contacts/new',
+    '/specialists/contacts/confirm',
+    '/specialists/contacts/success',
   ]
   if (
     !permissionPaths.includes(route.path) &&
