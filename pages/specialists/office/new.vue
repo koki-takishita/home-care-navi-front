@@ -50,7 +50,7 @@
               formValidates.fileSizeCheck,
             ]"
             truncate-length="30"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/jpg, image/gif"
             prepend-icon="mdi-camera"
             label="事業所画像をアップロード（5枚まで）"
             class="image-form"
@@ -269,7 +269,7 @@
                   <v-file-input
                     v-model="detail_image_1"
                     truncate-length="20"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/jpg, image/gif"
                     show-size
                     label="特徴画像1をアップロード"
                     :rules="[formValidates.fileDetailSizeCheck]"
@@ -321,7 +321,7 @@
                   <v-file-input
                     v-model="detail_image_2"
                     truncate-length="20"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/jpg, image/gif"
                     show-size
                     label="特徴画像2をアップロード"
                     :rules="[formValidates.fileDetailSizeCheck]"
