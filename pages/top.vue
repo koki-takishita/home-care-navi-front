@@ -43,12 +43,6 @@ export default {
     async searchOfficeKeywordsAndPostCodes() {
       try {
         const res = await this.$conversionKeywords(this.searchIcon.keyword)
-        // officeのレスポンスが空だったら、アラートメッセージ表示
-        if (res.offices.length === 0) {
-          throw new Error(
-            '検索ワードに一致するオフィスは、見つかりませんでした'
-          )
-        }
         this.$router.push({
           path: '/offices',
           query: {
@@ -57,11 +51,21 @@ export default {
           },
         })
       } catch (error) {
-        // console.dir(error)
-        if (error.message) {
-          alert(error.message)
+        const msg = [
+          '不明なエラーです。consoleを確認してください。 page/offices/index.vue',
+        ]
+        switch (error.name) {
+          case 'Error': // officeが見つからない
+            alert(error.message)
+            break
+          case 'NetworkError': // 通信エラー
+            break
+          default:
+            // console.dir(error)
+            store.commit('catchErrorMsg/clearMsg')
+            store.commit('catchErrorMsg/setMsg', msg)
+            store.commit('catchErrorMsg/setType', 'error')
         }
-        return error
       }
     },
     async searchOfficeLocation() {
