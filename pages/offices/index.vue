@@ -55,7 +55,7 @@
 import { mapActions } from 'vuex'
 export default {
   layout: 'application',
-  async asyncData({ $axios, query, redirect }) {
+  async asyncData({ $axios, query, redirect, store }) {
     // console.log(query)
     // ここにkeywordの内容も追記すればリロードも対応できる
     const area = query.area || ''
@@ -126,10 +126,24 @@ export default {
         searchIcon,
       }
     } catch (error) {
-      // リロードして消えるようだったら有効化 console.log(error)
-      if (error.message) {
-        alert(error.message)
-        redirect('/')
+      // console.dir(error)
+      const msg = [
+        '不明なエラーです。consoleを確認してください。 page/offices/index.vue 137',
+      ]
+      switch (error.name) {
+        case 'Error': // officeが見つからない
+          alert(error.message)
+          redirect('/')
+          break
+        case 'NetworkError': // 通信エラー
+          redirect('/')
+          break
+        default:
+          // console.dir(error)
+          store.commit('catchErrorMsg/clearMsg')
+          store.commit('catchErrorMsg/setMsg', msg)
+          store.commit('catchErrorMsg/setType', 'error')
+          redirect('/')
       }
 
       return error
@@ -244,8 +258,6 @@ export default {
         const offices = res.offices
         const keywords = res.keywords
         const postCodes = res.postCodes
-        if (!this.exist(offices))
-          return alert('検索ワードに一致するオフィスは、見つかりませんでした')
         this.offices = offices
         this.keywords = keywords
         this.postCodes = postCodes
@@ -266,12 +278,21 @@ export default {
           },
         })
       } catch (error) {
-        // console.log(error)
-        // console.dir(error)
-        if (error.message) {
-          alert(error.message)
+        const msg = [
+          '不明なエラーです。consoleを確認してください。 page/offices/index.vue 137',
+        ]
+        switch (error.name) {
+          case 'Error': // officeが見つからない
+            alert(error.message)
+            break
+          case 'NetworkError': // 通信エラー
+            break
+          default:
+            // console.dir(error)
+            store.commit('catchErrorMsg/clearMsg')
+            store.commit('catchErrorMsg/setMsg', msg)
+            store.commit('catchErrorMsg/setType', 'error')
         }
-        return error
       }
     },
     exist(obj) {

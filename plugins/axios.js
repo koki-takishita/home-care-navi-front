@@ -4,6 +4,9 @@ const networkError = function (store, error) {
     const msg = ['送信ができませんでした。しばらく経ってから再度お願いします。']
     store.commit('catchErrorMsg/setMsg', msg)
     store.commit('catchErrorMsg/setType', 'error')
+    const e = new Error('Apiと通信できませんでした')
+    e.name = 'NetworkError'
+    throw e
   }
 }
 
