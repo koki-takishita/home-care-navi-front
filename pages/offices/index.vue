@@ -128,7 +128,7 @@ export default {
     } catch (error) {
       // console.dir(error)
       const msg = [
-        '不明なエラーです。consoleを確認してください。 page/offices/index.vue 137',
+        '不明なエラーです。consoleを確認してください。 page/offices/index.vue',
       ]
       switch (error.name) {
         case 'Error': // officeが見つからない
