@@ -123,15 +123,13 @@ const searchOfficeKeywords = async function (
   postCodes = null,
   axios
 ) {
-  try {
-    const offices = await axios.$get(
-      `offices?keywords=${keywords}&postCodes=${postCodes}&page=${0}`
-    )
-    return offices
-  } catch (error) {
-    // console.log(error)
-    return error
+  const offices = await axios.$get(
+    `offices?keywords=${keywords}&postCodes=${postCodes}&page=${0}`
+  )
+  if (offices.length === 0) {
+    throw new Error('検索ワードに一致するオフィスは、見つかりませんでした')
   }
+  return offices
 }
 
 export default function ({ $axios }, inject) {
@@ -157,7 +155,6 @@ export default function ({ $axios }, inject) {
       ["さんぷる", "113-5511", "2-11-39", "080-1111-1111", "014-4155", "さんぷる3"]
       => ['サンプル', 'サンプル3'] */
       const requestKeywords = removePostCode(keywordsArry)
-      // this.searchOfficeKeywords(requestKeywords, requestPostalCodes)
       const res = await searchOfficeKeywords(
         requestKeywords,
         requestPostalCodes,
