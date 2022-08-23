@@ -8,7 +8,7 @@
             >事業所名
             <v-text-field
               id="name"
-              v-model="name"
+              v-model.trim="name"
               :rules="[formValidates.required, formValidates.nameCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="ケアパークむかい風"
@@ -20,7 +20,7 @@
             >特徴タイトル
             <v-text-field
               id="title"
-              v-model="title"
+              v-model.trim="title"
               :rules="[formValidates.required, formValidates.titleCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="事業所紹介タイトル"
@@ -32,7 +32,7 @@
             >特徴詳細
             <v-textarea
               id="title_detail"
-              v-model="title_detail"
+              v-model.trim="title_detail"
               :rules="[formValidates.required, formValidates.textCountCheck]"
               class="mt-2 font-weight-regular"
               placeholder="特徴詳細のテキストを入れてください"
@@ -145,7 +145,7 @@
             >営業日に関する説明
             <v-textarea
               id="business_day_detail"
-              v-model="business_day_detail"
+              v-model.trim="business_day_detail"
               :rules="[
                 formValidates.required,
                 formValidates.businessDayDetailCountCheck,
@@ -162,7 +162,7 @@
             >電話番号
             <v-text-field
               id="phone_number"
-              v-model="phone_number"
+              v-model.trim="phone_number"
               :rules="[formValidates.required, formValidates.phoneNumber]"
               class="mt-2 font-weight-regular"
               placeholder="080-1234-5678"
@@ -174,7 +174,7 @@
             >FAX
             <v-text-field
               id="fax_number"
-              v-model="fax_number"
+              v-model.trim="fax_number"
               :rules="[formValidates.faxNumber]"
               class="mt-2 mb-2 font-weight-regular"
               placeholder="090-8765-4321"
@@ -185,8 +185,8 @@
         </v-col>
         <v-text-field
           id="post_code"
-          v-model="post_code"
-          :rules="[formValidates.required, formValidates.postCode]"
+          v-model.trim="post_code"
+          :rules="[formValidates.requiredPostcode, formValidates.postCode]"
           outlined
           dense
           height="44"
@@ -203,7 +203,7 @@
           <div class="mt-n2">
             <v-text-field
               id="address"
-              v-model="address"
+              v-model.trim="address"
               :rules="[formValidates.required]"
               outlined
               dense
@@ -218,7 +218,7 @@
             >類型
             <v-text-field
               id="service_type"
-              v-model="service_type"
+              v-model.trim="service_type"
               :rules="[
                 formValidates.required,
                 formValidates.serviceTypeCountCheck,
@@ -281,7 +281,7 @@
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像1の説明（任意）
                   <v-text-field
-                    v-model="comment_1"
+                    v-model.trim="comment_1"
                     :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像1に関する説明テキストを入れてください"
@@ -333,7 +333,7 @@
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像2の説明（任意）
                   <v-text-field
-                    v-model="comment_2"
+                    v-model.trim="comment_2"
                     :rules="[formValidates.textDetailCountCheck]"
                     class="mt-2 font-weight-regular"
                     placeholder="特徴画像2に関する説明テキストを入れてください"
@@ -398,7 +398,7 @@
                   <label class="font-color-gray font-weight-black text-caption"
                     >入居時の要件（任意）
                     <v-text-field
-                      v-model="requirement"
+                      v-model.trim="requirement"
                       class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                       placeholder="例）満60歳以上の方"
                       outlined
@@ -409,7 +409,7 @@
                   <label class="font-color-gray font-weight-black text-caption"
                     >共用設備（任意）
                     <v-text-field
-                      v-model="facility"
+                      v-model.trim="facility"
                       class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                       placeholder="例）エントランス、個浴、大浴場"
                       outlined
@@ -420,7 +420,7 @@
                   <label class="font-color-gray font-weight-black text-caption"
                     >経営・事業主体（任意）
                     <v-text-field
-                      v-model="management"
+                      v-model.trim="management"
                       class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                       placeholder="例）株式会社ホームケアナビ"
                       outlined
@@ -431,7 +431,7 @@
                   <label class="font-color-gray font-weight-black text-caption"
                     >公式サイトURL（任意）
                     <v-text-field
-                      v-model="link"
+                      v-model.trim="link"
                       class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
                       placeholder="例）https://www.google.co.jp/"
                       outlined
@@ -471,7 +471,10 @@ export default {
   data() {
     return {
       formValidates: {
-        required: (value) => !!value || '必須項目です',
+        /* value.match(/^\s+?$/) 半角・全角スペースを感知、スペースのみの登録NG */
+        required: (value) =>
+          (!!value && !value.match(/^\s+?$/)) || '必須項目です',
+        requiredPostcode: (value) => !!value || '必須項目です',
         nameCountCheck: (value) =>
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
