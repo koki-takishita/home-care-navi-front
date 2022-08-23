@@ -186,7 +186,7 @@
         <v-text-field
           id="post_code"
           v-model.trim="post_code"
-          :rules="[formValidates.requiredFax, formValidates.postCode]"
+          :rules="[formValidates.requiredPostcode, formValidates.postCode]"
           outlined
           dense
           height="44"
@@ -474,7 +474,7 @@ export default {
         /* value.match(/^\s+?$/) 半角・全角スペースを感知、スペースのみの登録NG */
         required: (value) =>
           (!!value && !value.match(/^\s+?$/)) || '必須項目です',
-        requiredFax: (value) => !!value || '必須項目です',
+        requiredPostcode: (value) => !!value || '必須項目です',
         nameCountCheck: (value) =>
           value.length <= 30 || '30文字以下で入力してください',
         titleCountCheck: (value) =>
