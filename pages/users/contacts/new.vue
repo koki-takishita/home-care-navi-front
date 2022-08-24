@@ -98,10 +98,6 @@ export default {
         required: (value) => !!value || '必須項目です',
         nameCountCheck: (value) =>
           value.length <= 30 || '30文字以下で入力してください',
-        typeCheckString: (value) => {
-          const format = /^[a-zA-Z0-9]+$/g
-          return format.test(value) || '入力できるのは半角英数字のみです'
-        },
         emailCountCheck: (value) =>
           value.length <= 255 || '255文字以下で入力してください',
         email: (value) => {
