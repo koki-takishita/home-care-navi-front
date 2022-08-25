@@ -18,7 +18,7 @@
             v-model="image"
             truncate-length="20"
             :rules="[formValidates.fileSizeCheck]"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/jpg, image/gif"
             prepend-icon="mdi-camera"
             label="画像をアップロードする"
             class="mt-15 ml-3 image-form"
@@ -59,7 +59,10 @@
             <v-textarea
               id="introduction"
               v-model="introduction"
-              :rules="[formValidates.introductionCountCheck]"
+              :rules="[
+                formValidates.required,
+                formValidates.introductionCountCheck,
+              ]"
               class="mt-2 font-weight-regular"
               height="80"
               outlined

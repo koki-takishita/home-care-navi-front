@@ -18,7 +18,7 @@
             v-model="image"
             truncate-length="20"
             :rules="[formValidates.fileSizeCheck]"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/jpg, image/gif"
             prepend-icon="mdi-camera"
             label="画像をアップロードする"
             class="mt-15 ml-3 image-form"
@@ -179,13 +179,13 @@ export default {
           value.size <= 10000000 ||
           '画像サイズは10MB以下でアップロードしてください',
         nameCountCheck: (value) =>
-          value.length <= 31 || '30文字以下で入力してください',
+          value.length <= 30 || '30文字以下で入力してください',
         kanaCheck: (value) => {
           const format = /^[ぁ-んー　 ]*$/ // eslint-disable-line
           return format.test(value) || 'ひらがなで入力してください'
         },
         familyCountCheck: (value) =>
-          value.length <= 31 || '30文字以下で入力してください',
+          value.length <= 30 || '30文字以下で入力してください',
         postCode: (value) => {
           const format = /^[0-9]{3}-[0-9]{4}$/g
           return (

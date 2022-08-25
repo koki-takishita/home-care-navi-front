@@ -45,16 +45,7 @@
                           </v-btn>
                         </template>
                         <v-list>
-                          <div v-if="office !== true">
-                            <v-list-item to="/specialists/office/new">
-                              <v-list-item-title
-                                class="header-style text-overline text-decoration-none mr-5"
-                              >
-                                事業所登録</v-list-item-title
-                              >
-                            </v-list-item>
-                          </div>
-                          <div v-else>
+                          <div v-if="$store.state.office">
                             <v-list-item to="/specialists/office/edit">
                               <v-list-item-title
                                 class="header-style text-overline text-decoration-none mr-5"
@@ -92,6 +83,15 @@
                                 class="header-style text-overline text-decoration-none mr-5"
                               >
                                 利用者情報管理</v-list-item-title
+                              >
+                            </v-list-item>
+                          </div>
+                          <div v-else>
+                            <v-list-item to="/specialists/office/new">
+                              <v-list-item-title
+                                class="header-style text-overline text-decoration-none mr-5"
+                              >
+                                事業所登録</v-list-item-title
                               >
                             </v-list-item>
                           </div>
@@ -255,7 +255,7 @@
         </v-card>
         <v-list v-if="$auth.loggedIn" nav dense class="pa-0">
           <v-list-item-group v-model="group">
-            <div v-if="office !== true">
+            <div v-if="!$store.state.office">
               <v-list-item
                 class="pa-0 ma-0 px-6 py-4 min-height-20"
                 to="/specialists/office/new"
@@ -365,10 +365,10 @@
     <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
     <v-main class="color-gray">
       <!-- アプリケーションに適切なgutterを提供 -->
-      <v-container fluid class="pa-0">
+      <v-container fluid class="pa-0 pt-10">
         <!-- vue-routerを使用する場合 -->
         <!--<router-view></router-view>-->
-        <ErrorMsg />
+        <ErrorMsg class="flash-msg-component" />
         <Nuxt />
       </v-container>
     </v-main>
@@ -502,6 +502,18 @@ export default {
 }
 </script>
 <style scoped>
+/* stylelint-disable */
+.flash-msg-component {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  z-index: 999;
+}
+/* stylelint-enable */
+
 .text-10 {
   font-size: 10px;
 }

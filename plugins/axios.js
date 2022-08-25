@@ -3,17 +3,26 @@ const networkError = function (store, error) {
     store.commit('catchErrorMsg/clearMsg')
     const msg = ['送信ができませんでした。しばらく経ってから再度お願いします。']
     store.commit('catchErrorMsg/setMsg', msg)
+    store.commit('catchErrorMsg/setType', 'error')
+    const e = new Error('Apiと通信できませんでした')
+    e.name = 'NetworkError'
+    throw e
   }
 }
 
-const authError422and401 = function (store, error) {
+const catchAPIError = function (store, error) {
   const code = error.response.status
-  if (code === 422) {
-    error422(store, error)
-  } else if (code === 401) {
-    error401(store, error)
-  } else if (code === 500) {
-    error500(store)
+  switch (code) {
+    case 401:
+    case 403:
+    case 422:
+      error401and403and422(store, error)
+      break
+    case 500:
+      error500(store)
+      break
+    default:
+      otherError(store)
   }
 }
 
@@ -30,26 +39,30 @@ const setAuthInfoToHeader = function (config, store) {
   }
 }
 
-const error422 = function (store, error) {
-  const msg = error.response.data.errors.full_messages
+const otherError = function (store) {
+  const msg = ['障害が発生しました。サイト運営者にお問い合わせください。']
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
+  store.commit('catchErrorMsg/setType', 'error')
 }
 
-const error401 = function (store, error) {
-  const msg = error.response.data.errors
+const error401and403and422 = function (store, error) {
+  let msg
+  if (error.response.data.errors.full_messages === undefined) {
+    msg = error.response.data.errors
+  } else {
+    msg = error.response.data.errors.full_messages
+  }
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
+  store.commit('catchErrorMsg/setType', 'error')
 }
 
 const error500 = function (store) {
   const msg = ['サーバー側のエラーです。しばらく経ってから再度お願いします。']
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
-}
-
-const setOfficeDate = function (officeData) {
-  localStorage.setItem('office_data', officeData)
+  store.commit('catchErrorMsg/setType', 'error')
 }
 
 const setAuthToStore = function (headers, store) {
@@ -70,7 +83,7 @@ const isAuthInfo = function (obj) {
 const setAuthInfoToStore = function (response, store) {
   const headers = response.headers
   if (headers.office_data) {
-    setOfficeDate(headers.office_data)
+    store.commit('setHasOffice', true)
   }
 
   if (isAuthInfo(headers)) {
@@ -82,7 +95,7 @@ export default function ({ $axios, store, query }) {
   // TODO onResponseError onRequestErrorで分けたい
   $axios.onResponseError((error) => {
     networkError(store, error)
-    authError422and401(store, error)
+    catchAPIError(store, error)
   })
 
   $axios.onResponse((response) => {

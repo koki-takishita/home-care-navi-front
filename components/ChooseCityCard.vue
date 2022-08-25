@@ -123,6 +123,7 @@ export default {
       // TODO 複数対応
       choosePrefecture: '',
       chooseItems: [],
+      chooseArea: '',
     }
   },
   computed: {
@@ -151,6 +152,8 @@ export default {
     if (this.cities.length === 0) {
       this.prefectures = this.getCities
     }
+    this.chooseArea = this.getCurrentArea
+    this.choosePrefecture = this.getCurrentPrefecture
   },
   methods: {
     ...mapActions('areaData', [

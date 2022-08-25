@@ -34,14 +34,19 @@
           </v-row>
           <p v-else class="ma-0">条件にマッチする事業所は存在しません</p>
         </v-container>
-        <div class="text-center">
+
+        <!-- <client-only></client-only>
+        リロードするとページネーション崩れるエラー対応のため
+        ハイドレーションとは？: https://zenn.dev/00_/articles/c5130802d384b8238e4c
+        原因と思われる記事: https://zenn.dev/motoishimotoi/articles/5a6642d8790eaa -->
+        <client-only>
           <v-pagination
             v-model="page"
-            :length="count"
             color="#D9DEDE"
+            :length="count"
             class="page-nation"
           ></v-pagination>
-        </div>
+        </client-only>
       </v-col>
     </v-row>
   </v-container>
@@ -50,7 +55,7 @@
 import { mapActions } from 'vuex'
 export default {
   layout: 'application',
-  async asyncData({ $axios, query, redirect }) {
+  async asyncData({ $axios, query, redirect, store }) {
     // console.log(query)
     // ここにkeywordの内容も追記すればリロードも対応できる
     const area = query.area || ''
@@ -74,6 +79,9 @@ export default {
           `offices?prefecture=${prefecture}&cities=${cities}&page=${offsetPage}`
         )
         searchWind = false
+        if (offices.length === 0) {
+          throw new Error('選択したエリアにオフィスは存在しません')
+        }
       }
       if (!!postCodes.length > 0 || !!keywords.length > 0) {
         offices = await $axios.$get(
@@ -82,6 +90,11 @@ export default {
           )}&postCodes=${postCodes}&page=${offsetPage}`
         )
         searchWind = true
+        if (offices.length === 0) {
+          throw new Error(
+            '検索ワードに一致するオフィスは、見つかりませんでした'
+          )
+        }
       }
       let searchIcon = { keyword: '' }
       if (keywords.length > 0 && postCodes.length > 0) {
@@ -113,11 +126,26 @@ export default {
         searchIcon,
       }
     } catch (error) {
-      // リロードして消えるようだったら有効化 console.log(error)
-      // console.log(error)
-      if (error.message) {
-        alert(error.message)
+      // console.dir(error)
+      const msg = [
+        '不明なエラーです。consoleを確認してください。 page/offices/index.vue',
+      ]
+      switch (error.name) {
+        case 'Error': // officeが見つからない
+          alert(error.message)
+          redirect('/')
+          break
+        case 'NetworkError': // 通信エラー
+          redirect('/')
+          break
+        default:
+          // console.dir(error)
+          store.commit('catchErrorMsg/clearMsg')
+          store.commit('catchErrorMsg/setMsg', msg)
+          store.commit('catchErrorMsg/setType', 'error')
+          redirect('/')
       }
+
       return error
     }
   },
@@ -130,8 +158,6 @@ export default {
       cities: [],
       selectedList: [],
       location: false,
-      page: 0,
-      count: 0,
       keywords: '',
       postCodes: '',
       searchWind: '',
@@ -232,8 +258,6 @@ export default {
         const offices = res.offices
         const keywords = res.keywords
         const postCodes = res.postCodes
-        if (!this.exist(offices))
-          return alert('検索ワードに一致するオフィスは、見つかりませんでした')
         this.offices = offices
         this.keywords = keywords
         this.postCodes = postCodes
@@ -254,12 +278,21 @@ export default {
           },
         })
       } catch (error) {
-        // console.log(error)
-        // console.dir(error)
-        if (error.message) {
-          alert(error.message)
+        const msg = [
+          '不明なエラーです。consoleを確認してください。 page/offices/index.vue',
+        ]
+        switch (error.name) {
+          case 'Error': // officeが見つからない
+            alert(error.message)
+            break
+          case 'NetworkError': // 通信エラー
+            break
+          default:
+            // console.dir(error)
+            store.commit('catchErrorMsg/clearMsg')
+            store.commit('catchErrorMsg/setMsg', msg)
+            store.commit('catchErrorMsg/setType', 'error')
         }
-        return error
       }
     },
     exist(obj) {

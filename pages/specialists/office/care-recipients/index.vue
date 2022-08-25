@@ -90,7 +90,7 @@
       large
       color="white"
       class="mt-8 mb-10"
-      to="care-recipients/new"
+      @click="hasStaff"
     >
       <div class="delete-button font-weight-bold">
         <v-icon class="mb-1">mdi-plus</v-icon>
@@ -119,6 +119,9 @@ export default {
       const res = await $axios.$get(
         `specialists/offices/care_recipients?page=${offsetPage}`
       )
+      const staffs = await $axios.$get(`specialists/offices/staffs?page=1`)
+      const staffsCount = staffs.data_length
+
       let count = res.data_length
       count = count / 10 || 0
       count = Math.ceil(count)
@@ -126,6 +129,7 @@ export default {
         count = 1
       }
       return {
+        staffsCount,
         page,
         count,
         care_recipients: res.care_recipients,
@@ -153,6 +157,17 @@ export default {
     },
   },
   methods: {
+    hasStaff() {
+      this.staffsCount
+        ? this.goRegistrationPage()
+        : this.alertRegistrationStaff()
+    },
+    goRegistrationPage() {
+      this.$router.push('/specialists/office/care-recipients/new')
+    },
+    alertRegistrationStaff() {
+      alert('スタッフを登録してください')
+    },
     async getCareRecipients(page = 1) {
       try {
         const offsetPage = page - 1
