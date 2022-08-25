@@ -176,7 +176,7 @@ export default {
         required: (value) => !!value || '必須項目です',
         fileSizeCheck: (value) =>
           !value ||
-          value.size <= 10000000 ||
+          value.size <= 10485760 ||
           '画像サイズは10MB以下でアップロードしてください',
         nameCountCheck: (value) =>
           value.length <= 30 || '30文字以下で入力してください',
