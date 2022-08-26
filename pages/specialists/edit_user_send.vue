@@ -11,11 +11,8 @@
         </p>
       </div>
       <div class="mx-auto mt-4 text-center top-link mb-16">
-        <nuxt-link
-          to="/specialists/office/appointments?page=1"
-          style="color: #f09c3c"
-        >
-          <p>予約状況画面に戻る</p>
+        <nuxt-link to="/specialists/office/new" style="color: #f09c3c">
+          <p>トップページに戻る</p>
         </nuxt-link>
       </div>
     </v-card-text>

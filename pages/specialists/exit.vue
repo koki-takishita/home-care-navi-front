@@ -9,21 +9,16 @@
 
     <v-card-text class="mt-2">
       <div class="form-wrapper mx-auto">
-        <div class="px-4 pt-4 d-none d-sm-block mt-6 mb-8 text-center">
-          <div class="mb-8">
+        <div class="px-4 pt-4 d-none d-sm-block mt-6 mb-4 text-center">
+          <div class="mb-4">
             <p class="grey--text text--darken-4">
               退会後はこれまでの予約情報などは全て削除されます。
             </p>
           </div>
           <div class="mb-2">
             <p class="grey--text text--darken-4">
-              また、以下の機能が使用できなくなります。
+              また、ログイン後の全ての機能が使用できなくなります。
             </p>
-          </div>
-          <div class="grey--text text--darken-4">
-            <li>ブックマーク</li>
-            <li>予約</li>
-            <li>お礼投稿</li>
           </div>
         </div>
         <div class="d-flex d-sm-none">
@@ -35,13 +30,8 @@
             </div>
             <div class="mb-2">
               <p class="grey--text text--darken-4">
-                また、以下の機能が使用できなくなります。
+                また、ログイン後の全ての機能が使用できなくなります。
               </p>
-            </div>
-            <div class="grey--text text--darken-4">
-              <li>ブックマーク</li>
-              <li>予約</li>
-              <li>お礼投稿</li>
             </div>
           </div>
         </div>
@@ -50,7 +40,7 @@
           <v-dialog v-model="dialog" persistent max-width="300">
             <template #activator="{ on, attrs }">
               <v-btn
-                class="warning pa-0 text-h6 d-none d-sm-block"
+                class="warning pa-0 text-h6 d-none d-sm-block mt-2"
                 block
                 max-width="520"
                 min-width="343"
