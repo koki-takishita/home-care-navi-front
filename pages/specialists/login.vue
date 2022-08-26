@@ -151,11 +151,6 @@ export default {
       },
     }
   },
-  created() {
-    if (this.$auth.loggedIn) {
-      this.$auth.reset()
-    }
-  },
   methods: {
     maxLength,
     goResetPassword() {
