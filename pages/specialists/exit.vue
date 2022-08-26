@@ -9,28 +9,44 @@
 
     <v-card-text class="mt-2">
       <div class="form-wrapper mx-auto">
-        <div class="px-4 pt-4 d-none d-sm-block mt-6 mb-4 text-center">
-          <div class="mb-4">
+        <div class="px-4 pt-4 d-none d-sm-block mt-6 mb-8 text-center">
+          <div class="mb-8">
             <p class="grey--text text--darken-4">
               退会後はこれまでの予約情報などは全て削除されます。
             </p>
           </div>
+          <div class="grey--text text--darken-4 mb-4">
+            <li>オフィスの登録・編集</li>
+            <li>予約履歴機能</li>
+            <li>お礼履歴機能</li>
+            <li>スタッフ登録・編集・一覧</li>
+            <li>利用者登録・編集・一覧</li>
+            <li>登録情報の確認</li>
+          </div>
           <div class="mb-2">
             <p class="grey--text text--darken-4">
-              また、ログイン後の全ての機能が使用できなくなります。
+              また、これらのデータも削除されます。
             </p>
           </div>
         </div>
         <div class="d-flex d-sm-none">
           <div class="px-4 mt-6 mb-8">
-            <div class="mb-8">
+            <div class="mb-2">
               <p class="grey--text text--darken-4">
                 退会後はこれまでの予約情報などは全て削除されます。
               </p>
             </div>
-            <div class="mb-2">
+            <div class="grey--text text--darken-4 mb-4">
+              <li>オフィスの登録・編集</li>
+              <li>予約履歴機能</li>
+              <li>お礼履歴機能</li>
+              <li>スタッフ登録・編集・一覧</li>
+              <li>利用者登録・編集・一覧</li>
+              <li>登録情報の確認</li>
+            </div>
+            <div class="mb-8">
               <p class="grey--text text--darken-4">
-                また、ログイン後の全ての機能が使用できなくなります。
+                また、これらのデータも削除されます。
               </p>
             </div>
           </div>
@@ -40,7 +56,7 @@
           <v-dialog v-model="dialog" persistent max-width="300">
             <template #activator="{ on, attrs }">
               <v-btn
-                class="warning pa-0 text-h6 d-none d-sm-block mt-2"
+                class="warning pa-0 text-h6 d-none d-sm-block"
                 block
                 max-width="520"
                 min-width="343"
