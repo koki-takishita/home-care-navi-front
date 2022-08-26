@@ -1,6 +1,6 @@
 module.exports = {
   launch: {
-    headless: false,
+    headless: true,
     slowMo: 250,
     innerWidth: 1280,
     innerHeight: 800,
