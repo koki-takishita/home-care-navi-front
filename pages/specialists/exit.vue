@@ -15,7 +15,7 @@
               退会後はこれまでの予約情報などは全て削除されます。
             </p>
           </div>
-          <div class="grey--text text--darken-4 mb-4">
+          <div class="grey--text text--darken-4 mb-4 text-left ml-150">
             <li>オフィスの登録・編集</li>
             <li>予約履歴機能</li>
             <li>お礼履歴機能</li>
@@ -174,6 +174,9 @@ export default {
 }
 .mt-n-2 {
   margin-top: -2px;
+}
+.ml-150 {
+  margin-left: 150px;
 }
 .font-color-gray {
   color: #6d7570;
