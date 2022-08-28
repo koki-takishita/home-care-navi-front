@@ -448,8 +448,8 @@
     </v-footer>
   </v-app>
 </template>
-
 <script>
+import { mapGetters } from 'vuex'
 export default {
   layout: 'top',
   middleware: 'authenticateSpecialist',
@@ -471,6 +471,9 @@ export default {
       office_id: '',
     }
   },
+  computed: {
+    ...mapGetters(['getOffice']),
+  },
   watch: {
     $route() {
       if (typeof window.localStorage.office_data !== 'undefined') {
@@ -487,10 +490,15 @@ export default {
       this.office = false
     }
   },
-
   methods: {
     topPage() {
+      if (!this.getOffice) {
+        return this.goOfficeNewPage()
+      }
       this.$auth.loggedIn ? this.goAppointmentsPage() : this.goLoginPage()
+    },
+    goOfficeNewPage() {
+      this.$router.push('/specialists/office/new')
     },
     goLoginPage() {
       this.$router.push('/specialists/login')

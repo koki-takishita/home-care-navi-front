@@ -16,14 +16,28 @@ const catchAPIError = function (store, error) {
     case 401:
     case 403:
     case 422:
+      if (skipErrorCatch(error, ['check-phone-number'])) {
+        return
+      }
       error401and403and422(store, error)
       break
+    /* case 404: TODO パスワードリセット404の対応
+      if (skipErrorCatch(error, ['reset-passwords'])) {
+        return
+      }
+      // console.dir(response)
+      break */
     case 500:
       error500(store)
       break
     default:
       otherError(store)
   }
+}
+
+const skipErrorCatch = function (error, skipEndPoints) {
+  const url = error.response.config.url
+  return skipEndPoints.includes(url)
 }
 
 const setAuthInfoToHeader = function (config, store) {

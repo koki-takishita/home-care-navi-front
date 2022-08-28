@@ -254,16 +254,21 @@ export default {
         // apiへリクエスト
         // 200 case 'string'
         // 403 case 'object'
-        const res = await this.checkPhoneNumber()
-        switch (typeof res) {
-          case 'string':
-            msg = res
-            this.form.phoneNumberCheck = true
-            break
-          case 'object':
-            msg = res.response.data.message
-            this.errors.push(msg)
-            break
+        try {
+          const res = await this.checkPhoneNumber()
+          switch (typeof res) {
+            case 'string':
+              msg = res
+              this.form.phoneNumberCheck = true
+              break
+            case 'object':
+              msg = res.response.data.message
+              this.errors.push(msg)
+              break
+          }
+        } catch (error) {
+          // console.dir(error)
+          return error
         }
       } else {
         this.errors.pop()
