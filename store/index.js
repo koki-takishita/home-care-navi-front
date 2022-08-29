@@ -20,6 +20,7 @@ function setDefaultState() {
 
 export const getters = {
   getCustomerFlag: (state) => state.customer,
+  getOffice: (state) => state.office,
 }
 
 export const mutations = {

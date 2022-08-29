@@ -147,7 +147,7 @@ export default {
     },
     displayComments() {
       return this.office.thank.comments === undefined
-        ? this.office.detail.message
+        ? this.office.thank.message
         : this.office.thank.comments
     },
     listItems() {
