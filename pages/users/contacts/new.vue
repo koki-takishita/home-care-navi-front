@@ -9,7 +9,6 @@
           :content.sync="content"
           @moveConfirmPage="changeStep"
         />
-        <v-btn color="primary" @click="e1 = 2"> Continue </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2">
@@ -21,14 +20,10 @@
           @createContact="createContact"
           @moveConfirmPage="changeStep"
         />
-
-        <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
         <ContactSuccess />
-
-        <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>

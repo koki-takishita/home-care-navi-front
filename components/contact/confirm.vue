@@ -1,5 +1,5 @@
 <template>
-  <v-card width="750" class="mx-auto my-2">
+  <v-card flat width="750" class="mx-auto my-2">
     <div class="px-4 pt-4 d-sm-block">
       <h4 class="display-1 text-h6 font-weight-black">
         入力内容をご確認ください
