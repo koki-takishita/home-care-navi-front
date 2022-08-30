@@ -73,9 +73,8 @@ export default {
   },
   methods: {
     async applyForPasswordReset() {
-      const type = this.type === 'specialist' ? 'specialists/users' : 'customer'
       try {
-        await this.$axios.$post(`${type}/password`, {
+        await this.$axios.$post('reset-password', {
           email: this.email,
           redirect_url: this.redirectUrl,
         })
