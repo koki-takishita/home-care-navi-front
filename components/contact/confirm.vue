@@ -57,7 +57,6 @@
 
 <script>
 export default {
-  layout: 'application',
   props: {
     types: {
       type: String,

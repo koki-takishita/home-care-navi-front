@@ -11,7 +11,7 @@
             <v-text-field
               id="name"
               v-model="Name"
-              :rules="[formValidates.required, formValidates.MaxLength]"
+              :rules="[formValidates.required, formValidates.nameMaxLength]"
               class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
               placeholder="田中 太郎"
               outlined
@@ -88,7 +88,6 @@
 
 <script>
 export default {
-  layout: 'application',
   props: {
     types: {
       type: String,
