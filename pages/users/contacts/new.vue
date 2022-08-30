@@ -27,7 +27,7 @@
       </v-stepper-content>
 
       <v-stepper-content step="3">
-        <v-card class="mb-12" color="grey lighten-1" height="200px">3</v-card>
+        <ContactSuccess />
 
         <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
 
