@@ -83,9 +83,6 @@ export default {
           },
         })
       } catch (error) {
-        const msg = error.response.data.message
-        this.$store.commit('catchErrorMsg/setType', 'error')
-        this.$store.commit('catchErrorMsg/setMsg', [msg])
         return error
       }
     },
