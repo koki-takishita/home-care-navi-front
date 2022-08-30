@@ -57,9 +57,8 @@ export default {
   },
   methods: {
     async resetPassword() {
-      const type = this.type === 'specialist' ? 'specialists/users' : 'customer'
       try {
-        await this.$axios.$put(`${type}/password`, {
+        await this.$axios.$put('reset-password', {
           password: this.password,
           password_confirmation: this.passwordConfirmation,
         })

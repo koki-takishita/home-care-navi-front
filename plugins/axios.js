@@ -21,12 +21,12 @@ const catchAPIError = function (store, error) {
       }
       error401and403and422(store, error)
       break
-    /* case 404: TODO パスワードリセット404の対応
-      if (skipErrorCatch(error, ['reset-passwords'])) {
+    case 404:
+      if (skipErrorCatch(error, ['reset-password'])) {
         return
       }
-      // console.dir(response)
-      break */
+      error401and403and422(store, error)
+      break
     case 500:
       error500(store)
       break
@@ -67,6 +67,7 @@ const error401and403and422 = function (store, error) {
   } else {
     msg = error.response.data.errors.full_messages
   }
+
   store.commit('catchErrorMsg/clearMsg')
   store.commit('catchErrorMsg/setMsg', msg)
   store.commit('catchErrorMsg/setType', 'error')
