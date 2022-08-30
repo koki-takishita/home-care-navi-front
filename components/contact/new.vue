@@ -39,6 +39,7 @@
             <v-col>
               <v-select
                 v-model="Types"
+                class="font-weight-light"
                 :items="items"
                 outlined
                 dense
@@ -47,13 +48,16 @@
             </v-col>
           </v-row>
         </label>
-        <label class="font-color-gray text-caption"
+        <label class="font-color-gray text-caption font-weight-black"
           >お問い合わせ内容
           <v-textarea
             v-model="Content"
+            class="font-weight-light"
             outlined
             required="required"
             placeholder="入力してください"
+            auto-grow
+            height="261"
           />
         </label>
 
