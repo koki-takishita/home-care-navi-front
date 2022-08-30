@@ -19,19 +19,16 @@
           :types.sync="types"
           :content.sync="content"
           @createContact="createContact"
+          @moveConfirmPage="changeStep"
         />
 
         <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
-
-        <v-btn text> Cancel </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
         <ContactSuccess />
 
         <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
-
-        <v-btn text> Cancel </v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>

@@ -46,13 +46,9 @@
           </v-btn>
         </v-card-actions>
         <div class="mx-auto mt-4 text-center top-link mb-4">
-          <a
-            style="color: #f06364"
-            class="text-decoration-none"
-            href="/users/contacts/new"
-          >
-            もどる
-          </a>
+          <p class="mx-auto mt-4 text-center top-link mb-4" @click="backPage">
+            <font :color="linkColor" class="link-color" size="2">もどる</font>
+          </p>
         </div>
       </v-form>
     </v-card-text>
@@ -93,8 +89,19 @@ export default {
     ReadTypes() {
       return this.types
     },
+    linkColor() {
+      return '#F06364'
+    },
   },
   methods: {
+    backPage() {
+      const obj = {}
+      obj.step = 1
+      obj.name = this.name
+      obj.content = this.content
+      obj.types = this.types
+      this.$emit('moveConfirmPage', obj)
+    },
     clickCreateContact() {
       this.$emit('createContact')
     },
@@ -115,3 +122,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.link-color {
+  cursor: pointer;
+}
+</style>
