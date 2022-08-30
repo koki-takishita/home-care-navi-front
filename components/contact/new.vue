@@ -11,6 +11,7 @@
             <v-text-field
               id="name"
               v-model="Name"
+              :rules="[formValidates.required, formValidates.MaxLength]"
               class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
               placeholder="田中 太郎"
               outlined
@@ -24,6 +25,11 @@
             >返信用メールアドレス
             <v-text-field
               v-model="Email"
+              :rules="[
+                formValidates.required,
+                formValidates.email,
+                formValidates.emailMaxLength,
+              ]"
               class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
               outlined
               dense
@@ -39,6 +45,7 @@
             <v-col>
               <v-select
                 v-model="Types"
+                :rules="[formValidates.required]"
                 class="font-weight-light"
                 :items="items"
                 outlined
@@ -52,6 +59,7 @@
           >お問い合わせ内容
           <v-textarea
             v-model="Content"
+            :rules="[formValidates.required]"
             class="font-weight-light"
             outlined
             required="required"
@@ -103,19 +111,19 @@ export default {
     return {
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
       valid: false,
-      // formValidates: {
-      //   required: (value) => !!value || '必須項目です',
-      //   nameCountCheck: (value) =>
-      //     value.length <= 30 || '30文字以下で入力してください',
-      //   emailCountCheck: (value) =>
-      //     value.length <= 255 || '255文字以下で入力してください',
-      //   email: (value) => {
-      //     const format =
-      //       // eslint-disable-next-line no-control-regex
-      //       /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
-      //     return format.test(value) || '正しいメールアドレスを入力してください'
-      //   },
-      // },
+      formValidates: {
+        required: (value) => !!value || '必須項目です',
+        nameMaxLength: (value) =>
+          value.length <= 30 || '30文字以下で入力してください',
+        emailMaxLength: (value) =>
+          value.length <= 255 || '255文字以下で入力してください',
+        email: (value) => {
+          const format =
+            // eslint-disable-next-line no-control-regex
+            /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21-\x5A\x53-\x7F]|\\[\x01-\x09\x0B\x0C\x0E-\x7F])+)\])$/g
+          return format.test(value) || '正しいメールアドレスを入力してください'
+        },
+      },
     }
   },
   computed: {
