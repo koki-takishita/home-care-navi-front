@@ -243,7 +243,7 @@ export default {
     },
   },
   watch: {
-    // form.phene_numberの値がusersテーブルとofficesテーブルの被りがないかチェック
+    // form.phone_numberの値がusersテーブルとofficesテーブルの被りがないかチェック
     // 被りがあったら、'登録済みの電話番号です。'を表示 エラーメッセージはapiのレスポンスを使用している
     async 'form.phone_number'() {
       // form.phone_numberの値が変化したらだたちにfalseにする
