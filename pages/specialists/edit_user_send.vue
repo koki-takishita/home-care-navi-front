@@ -21,7 +21,6 @@
 <script>
 export default {
   layout: 'application_specialists',
-  css: ['~/assets/variables.scss'],
 }
 </script>
 

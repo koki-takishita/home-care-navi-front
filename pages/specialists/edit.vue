@@ -253,8 +253,8 @@ export default {
           phone_number: this.user.phone_number,
           post_code: this.user.post_code,
           address: this.user.address,
-          // 本番環境では変更しなければなりません
-          redirect_url: 'http://localhost:8000/specialists/login',
+          redirect_url:
+            'https://home-care-navi-v2.herokuapp.com/specialists/login',
         })
         if (window.localStorage.current_email === this.user.email) {
           this.$router.push('/specialists/profile')
