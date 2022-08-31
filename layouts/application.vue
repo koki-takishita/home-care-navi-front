@@ -97,6 +97,7 @@
                   src="~/assets/images/header-icon.svg"
                   width="157.44"
                   height="28"
+                  @click="topPage"
                 />
               </div>
             </v-toolbar-title>
