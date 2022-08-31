@@ -60,9 +60,6 @@ export default {
     }
   },
   methods: {
-    backPage() {
-      this.$router.push(`/offices/${this.office.id}`)
-    },
     changeStep(obj) {
       const content = obj.content || ''
       const name = obj.name
