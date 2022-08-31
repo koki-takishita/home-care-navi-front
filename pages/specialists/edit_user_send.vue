@@ -11,8 +11,8 @@
         </p>
       </div>
       <div class="mx-auto mt-4 text-center top-link mb-16">
-        <nuxt-link to="../top" style="color: #f06364">
-          <p>ホームケアナビトップに戻る</p>
+        <nuxt-link to="/specialists/office/new" style="color: #f09c3c">
+          <p>トップページに戻る</p>
         </nuxt-link>
       </div>
     </v-card-text>
@@ -20,7 +20,7 @@
 </template>
 <script>
 export default {
-  layout: 'application',
+  layout: 'application_specialists',
 }
 </script>
 

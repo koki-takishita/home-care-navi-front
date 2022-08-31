@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined width="750" class="mx-auto mt-10">
+  <v-card flat width="750" class="mx-auto mt-10">
     <v-card-text>
       <div>
         <h1 class="text-center mt-8 title-text d-none d-sm-block">
@@ -22,9 +22,3 @@
     </v-card-text>
   </v-card>
 </template>
-<script>
-export default {
-  layout: 'application',
-  css: ['~/assets/variables.scss'],
-}
-</script>

@@ -1,93 +1,57 @@
 <template>
-  <v-card width="750" class="mx-auto mb-2">
-    <div class="px-4 pt-4 d-sm-block">
-      <h4 class="display-1 text-h6 font-weight-black">お問い合わせ</h4>
-    </div>
-    <v-card-text>
-      <v-form v-model="valid">
-        <div>
-          <label class="font-color-gray font-weight-black text-caption"
-            >お名前
-            <v-text-field
-              id="name"
-              v-model="name"
-              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
-              placeholder="田中 太郎"
-              outlined
-              dense
-              height="44"
-              :rules="[formValidates.required, formValidates.nameCountCheck]"
-          /></label>
-        </div>
+  <v-stepper v-model="e1" class="mb-4 mx-auto" max-width="750" flat>
+    <v-stepper-items>
+      <v-stepper-content step="1">
+        <ContactNew
+          :name.sync="name"
+          :email.sync="email"
+          :types.sync="types"
+          :content.sync="content"
+          @moveConfirmPage="changeStep"
+        />
+      </v-stepper-content>
 
-        <div class="mt-n-2">
-          <label class="font-color-gray font-weight-black text-caption"
-            >返信用メールアドレス
-            <v-text-field
-              v-model="email"
-              class="overwrite-fieldset-border-top-width mt-2 font-weight-regular"
-              outlined
-              dense
-              placeholder="homecarenavi@mail.com"
-              type="email"
-              height="44"
-              :rules="[
-                formValidates.required,
-                formValidates.email,
-                formValidates.emailCountCheck,
-              ]"
-          /></label>
-        </div>
+      <v-stepper-content step="2">
+        <ContactConfirm
+          :name.sync="name"
+          :email.sync="email"
+          :types.sync="types"
+          :content.sync="content"
+          @createContact="createContact"
+          @moveConfirmPage="changeStep"
+        />
+      </v-stepper-content>
 
-        <label class="font-color-gray font-weight-black text-caption">
-          利用者区分
-          <v-row>
-            <v-col>
-              <v-select
-                v-model="types"
-                :items="items"
-                outlined
-                dense
-                placeholder="ユーザー"
-                :rules="[formValidates.required]"
-              ></v-select>
-            </v-col>
-          </v-row>
-        </label>
-        <label class="font-color-gray text-caption"
-          >お問い合わせ内容
-          <v-textarea
-            v-model="content"
-            outlined
-            required="required"
-            placeholder="入力してください"
-            :rules="[formValidates.required]"
-          />
-        </label>
-
-        <v-card-actions class="pa-0">
-          <v-btn
-            class="error text-h6 block"
-            block
-            :disabled="!valid"
-            max-width="520"
-            min-width="343"
-            height="60"
-            href="/users/contacts/confirm"
-            @click="SendConfirmPage"
-            >この内容で問い合わせる</v-btn
-          >
-        </v-card-actions>
-      </v-form>
-    </v-card-text>
-  </v-card>
+      <v-stepper-content step="3">
+        <ContactSuccess />
+      </v-stepper-content>
+    </v-stepper-items>
+  </v-stepper>
 </template>
-
 <script>
 export default {
   layout: 'application',
+  asyncData({ query }) {
+    const currentE1 = query.step
+    const name = query.name || ''
+    const types = query.types || ''
+    const email = query.email || ''
+    const content = query.content || ''
+    try {
+      return {
+        name,
+        types,
+        email,
+        e1: currentE1,
+        content,
+      }
+    } catch (error) {
+      return error
+    }
+  },
   data() {
     return {
+      e1: 1,
       items: ['ユーザー', 'ケアマネージャー', '事業所', 'その他'],
       name: '',
       email: '',
@@ -109,74 +73,44 @@ export default {
       },
     }
   },
-  mounted() {
-    const name = sessionStorage.getItem('contact.name')
-    const email = sessionStorage.getItem('contact.email')
-    const types = sessionStorage.getItem('contact.types')
-    const content = sessionStorage.getItem('contact.content')
-    if (name != null && email != null && types != null && content != null) {
-      this.name = sessionStorage.getItem('contact.name')
-      this.email = sessionStorage.getItem('contact.email')
-      this.types = sessionStorage.getItem('contact.types')
-      this.content = sessionStorage.getItem('contact.content')
-    }
-  },
-
   methods: {
-    SendConfirmPage() {
-      sessionStorage.setItem('contact.name', this.name)
-      sessionStorage.setItem('contact.email', this.email)
-      sessionStorage.setItem('contact.types', this.types)
-      sessionStorage.setItem('contact.content', this.content)
+    changeStep(obj) {
+      const content = obj.content || ''
+      const name = obj.name
+      const step = obj.step
+      const email = obj.email
+      const types = obj.types
+      this.e1 = step
+      this.$router.push({
+        path: `/users/contacts/new`,
+        query: {
+          step,
+          name,
+          content,
+          types,
+          email,
+        },
+      })
+    },
+    async createContact() {
+      try {
+        await this.$axios.$post(`contacts`, {
+          name: this.name,
+          email: this.email,
+          types: this.types,
+          content: this.content,
+        })
+        this.e1 = 3
+        this.$router.push({
+          path: `/users/contacts/new`,
+          query: {
+            step: this.e1,
+          },
+        })
+      } catch (error) {
+        return error
+      }
     },
   },
 }
 </script>
-
-<style scoped>
-.form-wrapper {
-  max-width: 520px;
-}
-
-.px-px-115 {
-  padding: 0 115px;
-}
-
-.set-width-343 {
-  width: 343px;
-}
-
-.set-height-44 {
-  height: 44px;
-}
-
-/* stylelint-disable */
-.post-form >>> fieldset {
-  width: 107px;
-}
-
-.post-form >>> .v-text-field__slot {
-  max-width: 82px;
-}
-
-.v-text-field--outlined >>> fieldset {
-  border-color: #d9dede;
-}
-
-.mt-n-2 {
-  margin-top: -2px;
-}
-
-.font-color-gray {
-  color: #6d7570;
-}
-
-::v-deep input::placeholder {
-  color: #d9dede !important;
-}
-
-.set-max-width-520 {
-  max-width: 520px;
-  min-width: 343px;
-}
-</style>
