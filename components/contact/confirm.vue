@@ -99,6 +99,7 @@ export default {
       obj.name = this.name
       obj.content = this.content
       obj.types = this.types
+      obj.email = this.email
       this.$emit('moveConfirmPage', obj)
     },
     clickCreateContact() {

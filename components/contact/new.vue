@@ -168,6 +168,7 @@ export default {
       obj.step = 2
       obj.name = this.name
       obj.types = this.types
+      obj.email = this.email
       obj.content = this.content
       this.$emit('moveConfirmPage', obj)
     },

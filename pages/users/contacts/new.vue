@@ -31,6 +31,24 @@
 <script>
 export default {
   layout: 'application',
+  asyncData({ query }) {
+    const currentE1 = query.step
+    const name = query.name || ''
+    const types = query.types || ''
+    const email = query.email || ''
+    const content = query.content || ''
+    try {
+      return {
+        name,
+        types,
+        email,
+        e1: currentE1,
+        content,
+      }
+    } catch (error) {
+      return error
+    }
+  },
   data() {
     return {
       e1: 1,
@@ -49,6 +67,8 @@ export default {
       const content = obj.content || ''
       const name = obj.name
       const step = obj.step
+      const email = obj.email
+      const types = obj.types
       this.e1 = step
       this.$router.push({
         path: `/users/contacts/new`,
@@ -56,6 +76,8 @@ export default {
           step,
           name,
           content,
+          types,
+          email,
         },
       })
     },
