@@ -278,7 +278,7 @@
                     @change="detailImage_1Picked"
                   ></v-file-input>
                   <p v-if="inputImageNoComment_1" class="image-text-link-error">
-                    こちらの画像を設定する場合は特徴画像1の説明も設定してください
+                    特徴画像１を登録する場合、特徴画像1の説明は必須となります
                   </p>
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
@@ -295,7 +295,7 @@
                   </v-text-field
                 ></label>
                 <p v-if="noImageInputComment_1" class="image-text-link-error">
-                  こちらの説明文を設定する場合は特徴画像1も設定してください
+                  特徴画像1の説明を登録する場合、特徴画像１は必須となります
                 </p>
                 <v-sheet class="pa-3">
                   <div class="d-none d-sm-block">
@@ -337,7 +337,7 @@
                   ></v-file-input>
                 </v-sheet>
                 <p v-if="inputImageNoComment_2" class="image-text-link-error">
-                  こちらの画像を設定する場合は特徴画像2の説明も設定してくだい
+                  特徴画像2を登録する場合、特徴画像2の説明は必須となります
                 </p>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像2の説明（任意）
@@ -353,7 +353,7 @@
                   </v-text-field
                 ></label>
                 <p v-if="noImageInputComment_2" class="image-text-link-error">
-                  こちらの説明文を設定する場合は特徴画像2も設定してください
+                  特徴画像2の説明を登録する場合、特徴画像2は必須となります
                 </p>
                 <v-form>
                   <label class="font-color-gray font-weight-black text-caption"
