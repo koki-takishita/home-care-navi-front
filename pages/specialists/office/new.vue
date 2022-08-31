@@ -277,6 +277,9 @@
                     class="detail-image-form"
                     @change="detailImage_1Picked"
                   ></v-file-input>
+                  <p v-if="inputImageNoComment_1" class="image-text-link-error">
+                    特徴画像１を登録する場合、特徴画像1の説明は必須となります
+                  </p>
                 </v-sheet>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像1の説明（任意）
@@ -291,6 +294,9 @@
                   >
                   </v-text-field
                 ></label>
+                <p v-if="noImageInputComment_1" class="image-text-link-error">
+                  特徴画像1の説明を登録する場合、特徴画像１は必須となります
+                </p>
                 <v-sheet class="pa-3">
                   <div class="d-none d-sm-block">
                     <v-avatar
@@ -330,6 +336,9 @@
                     @change="detailImage_2Picked"
                   ></v-file-input>
                 </v-sheet>
+                <p v-if="inputImageNoComment_2" class="image-text-link-error">
+                  特徴画像2を登録する場合、特徴画像2の説明は必須となります
+                </p>
                 <label class="font-color-gray font-weight-black text-caption"
                   >特徴画像2の説明（任意）
                   <v-text-field
@@ -343,6 +352,9 @@
                   >
                   </v-text-field
                 ></label>
+                <p v-if="noImageInputComment_2" class="image-text-link-error">
+                  特徴画像2の説明を登録する場合、特徴画像2は必須となります
+                </p>
                 <v-form>
                   <label class="font-color-gray font-weight-black text-caption"
                     >開設年月（任意）
@@ -448,7 +460,7 @@
             x-large
             block
             depressed
-            :disabled="!valid"
+            :disabled="!valid || detail_image_Check_1 || detail_image_Check_2"
             color="warning"
             @click="send()"
           >
@@ -577,6 +589,38 @@ export default {
       valid: false,
       isShow: true,
     }
+  },
+  computed: {
+    inputImageNoComment_1() {
+      return this.detail_image_1 !== null && this.comment_1 === ''
+    },
+    inputImageNoComment_2() {
+      return this.detail_image_2 !== null && this.comment_2 === ''
+    },
+    noImageInputComment_1() {
+      return this.detail_image_1 === null && this.comment_1 !== ''
+    },
+    noImageInputComment_2() {
+      return this.detail_image_2 === null && this.comment_2 !== ''
+    },
+    detail_image_Check_1() {
+      if (this.detail_image_1 !== null && this.comment_1 === '') {
+        return true
+      } else if (this.detail_image_1 === null && this.comment_1 !== '') {
+        return true
+      } else {
+        return false
+      }
+    },
+    detail_image_Check_2() {
+      if (this.detail_image_2 !== null && this.comment_2 === '') {
+        return true
+      } else if (this.detail_image_2 === null && this.comment_2 !== '') {
+        return true
+      } else {
+        return false
+      }
+    },
   },
   watch: {
     selected: {
@@ -711,6 +755,11 @@ input[type='checkbox'] {
 }
 
 .holiday-error-text {
+  color: red;
+  text-align: center;
+}
+
+.image-text-link-error {
   color: red;
   text-align: center;
 }

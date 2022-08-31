@@ -1,5 +1,5 @@
 <template>
-  <v-card width="750" class="mx-auto my-2">
+  <v-card flat width="750" class="mx-auto my-2">
     <div class="px-4 pt-4 d-sm-block">
       <h4 class="display-1 text-h6 font-weight-black">
         入力内容をご確認ください
@@ -9,22 +9,22 @@
       <v-form>
         <p class="font-color-gray font-weight-black">お名前</p>
         <p>
-          {{ name }}
+          {{ ReadName }}
         </p>
 
         <p class="font-color-gray font-weight-black">返信用メールアドレス</p>
         <p>
-          {{ email }}
+          {{ ReadEmail }}
         </p>
 
         <p class="font-color-gray font-weight-black">利用者区分</p>
         <p>
-          {{ types }}
+          {{ ReadTypes }}
         </p>
 
         <p class="font-color-gray font-weight-black">お問い合わせ内容</p>
         <p>
-          {{ content }}
+          {{ ReadContent }}
         </p>
 
         <div class="text-center mt-12">
@@ -40,19 +40,15 @@
             max-width="520"
             min-width="343"
             height="60"
-            @click="SendSuccessPage(), RemoveItemFromSessionStorage()"
+            @click="clickCreateContact()"
           >
             送信する
           </v-btn>
         </v-card-actions>
         <div class="mx-auto mt-4 text-center top-link mb-4">
-          <a
-            style="color: #f06364"
-            class="text-decoration-none"
-            href="/users/contacts/new"
-          >
-            もどる
-          </a>
+          <p class="mx-auto mt-4 text-center top-link mb-4" @click="backPage">
+            <font :color="linkColor" class="link-color" size="2">もどる</font>
+          </p>
         </div>
       </v-form>
     </v-card-text>
@@ -61,28 +57,54 @@
 
 <script>
 export default {
-  layout: 'application',
-  data() {
-    return {
-      name: '',
-      email: '',
-      types: '',
-      content: '',
-    }
+  props: {
+    types: {
+      type: String,
+      default: null,
+    },
+    email: {
+      type: String,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    content: {
+      type: String,
+      default: null,
+    },
   },
-  mounted() {
-    const name = sessionStorage.getItem('contact.name')
-    const email = sessionStorage.getItem('contact.email')
-    const types = sessionStorage.getItem('contact.types')
-    const content = sessionStorage.getItem('contact.content')
-    if (name != null && email != null && types != null && content != null) {
-      this.name = sessionStorage.getItem('contact.name')
-      this.email = sessionStorage.getItem('contact.email')
-      this.types = sessionStorage.getItem('contact.types')
-      this.content = sessionStorage.getItem('contact.content')
-    }
+  computed: {
+    ReadName() {
+      return this.name
+    },
+    ReadEmail() {
+      return this.email
+    },
+    ReadContent() {
+      return this.content
+    },
+    ReadTypes() {
+      return this.types
+    },
+    linkColor() {
+      return '#F06364'
+    },
   },
   methods: {
+    backPage() {
+      const obj = {}
+      obj.step = 1
+      obj.name = this.name
+      obj.content = this.content
+      obj.types = this.types
+      obj.email = this.email
+      this.$emit('moveConfirmPage', obj)
+    },
+    clickCreateContact() {
+      this.$emit('createContact')
+    },
     async SendSuccessPage() {
       try {
         const response = await this.$axios.$post(`contacts`, {
@@ -97,12 +119,11 @@ export default {
         return error
       }
     },
-    RemoveItemFromSessionStorage() {
-      sessionStorage.removeItem('contact.name')
-      sessionStorage.removeItem('contact.email')
-      sessionStorage.removeItem('contact.types')
-      sessionStorage.removeItem('contact.content')
-    },
   },
 }
 </script>
+<style scoped>
+.link-color {
+  cursor: pointer;
+}
+</style>
