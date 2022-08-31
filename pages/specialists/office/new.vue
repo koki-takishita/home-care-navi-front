@@ -460,7 +460,7 @@
             x-large
             block
             depressed
-            :disabled="!valid || detail_image_Check"
+            :disabled="!valid || detail_image_Check_1 || detail_image_Check_2"
             color="warning"
             @click="send()"
           >
@@ -603,12 +603,17 @@ export default {
     noImageInputComment_2() {
       return this.detail_image_2 === null && this.comment_2 !== ''
     },
-    detail_image_Check() {
+    detail_image_Check_1() {
       if (this.detail_image_1 !== null && this.comment_1 === '') {
         return true
       } else if (this.detail_image_1 === null && this.comment_1 !== '') {
         return true
-      } else if (this.detail_image_2 !== null && this.comment_2 === '') {
+      } else {
+        return false
+      }
+    },
+    detail_image_Check_2() {
+      if (this.detail_image_2 !== null && this.comment_2 === '') {
         return true
       } else if (this.detail_image_2 === null && this.comment_2 !== '') {
         return true
