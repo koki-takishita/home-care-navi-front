@@ -6,7 +6,7 @@
     />
     <div class="mx-auto h-74 d-none d-md-flex align-end">
       <p class="color-dark-gray font-weight-black text-body-1">
-        エリアから探す
+        エリアから探すあああ
       </p>
     </div>
     <div :class="toggleClassByBreakpoints">
